@@ -3577,6 +3577,283 @@ input[type="file"] { display: none; }
 }
 
 /* ----------------------------------------------------------------
+   SearchTrigger + SearchPalette — busca global ⌘K.
+---------------------------------------------------------------- */
+
+/* === Trigger no header === */
+.search-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 10px 5px 8px;
+  background: transparent;
+  border: 1px solid var(--rule-soft);
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease);
+}
+.search-trigger:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.search-trigger-icon {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  line-height: 1;
+  transform: translateY(-1px);
+}
+.search-trigger-label {
+  flex: 1;
+  text-align: left;
+  min-width: 80px;
+}
+.search-trigger-kbd {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--ink-faint);
+  border: 1px solid var(--rule-soft);
+  padding: 2px 5px;
+  line-height: 1;
+}
+.search-trigger:hover .search-trigger-kbd {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+/* Variante compacta (sidebar footer) — só ícone */
+.search-trigger.compact {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  justify-content: center;
+  border: none;
+}
+.search-trigger.compact .search-trigger-kbd {
+  display: none;
+}
+.search-trigger.compact .search-trigger-icon {
+  font-size: 22px;
+  font-style: italic;
+  font-weight: 300;
+  transform: translateY(-2px);
+}
+
+/* === Backdrop + Palette === */
+.search-backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--scrim, rgba(0, 0, 0, 0.5));
+  z-index: 200;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 80px 20px 20px;
+  animation: search-backdrop-in var(--dur-fast) var(--ease) both;
+}
+@keyframes search-backdrop-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.search-palette {
+  width: 100%;
+  max-width: 620px;
+  max-height: calc(100vh - 160px);
+  background: var(--bg-panel);
+  border: 1px solid var(--ink);
+  display: flex;
+  flex-direction: column;
+  animation: search-palette-in var(--dur) var(--ease) both;
+}
+@keyframes search-palette-in {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Input row */
+.search-input-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.search-input-icon {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--ink-faint);
+  transform: translateY(-2px);
+}
+.search-input {
+  flex: 1;
+  appearance: none;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0;
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 300;
+  color: var(--ink);
+  letter-spacing: -0.005em;
+}
+.search-input::placeholder {
+  color: var(--ink-faint);
+  font-style: italic;
+}
+.search-input-kbd {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  border: 1px solid var(--rule-soft);
+  padding: 2px 6px;
+  line-height: 1;
+}
+
+/* Results */
+.search-results {
+  overflow-y: auto;
+  flex: 1;
+  padding: 4px 0;
+}
+.search-results::-webkit-scrollbar { width: 6px; }
+.search-results::-webkit-scrollbar-thumb { background: var(--rule-soft); }
+
+.search-group {
+  padding: 6px 0;
+}
+.search-group-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  padding: 6px 16px 4px;
+}
+
+.search-result {
+  width: 100%;
+  appearance: none;
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 16px;
+  cursor: pointer;
+  text-align: left;
+  border-left: 2px solid transparent;
+  transition: background var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease);
+}
+.search-result.active {
+  background: var(--bg-sunken);
+  border-left-color: var(--accent);
+}
+.search-result-n {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--ink-faint);
+  width: 22px;
+  flex-shrink: 0;
+}
+.search-result-swatch {
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--rule-soft);
+  flex-shrink: 0;
+}
+.search-result-label {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-serif);
+  font-size: 15px;
+  color: var(--ink);
+  letter-spacing: -0.005em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.search-result-meta {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  flex-shrink: 0;
+}
+.search-result.active .search-result-label {
+  color: var(--accent);
+}
+
+/* Empty state */
+.search-empty {
+  padding: 28px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+  font-family: var(--font-serif);
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+.search-empty-q {
+  font-style: italic;
+  color: var(--ink);
+}
+
+/* Footer com hints de teclado */
+.search-foot {
+  display: flex;
+  gap: 16px;
+  padding: 10px 16px;
+  border-top: 1px solid var(--rule-soft);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.search-foot kbd {
+  display: inline-block;
+  padding: 1px 4px;
+  margin-right: 4px;
+  border: 1px solid var(--rule-soft);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--ink-soft);
+  line-height: 1;
+}
+
+/* Sidebar footer cluster que abriga search + settings */
+.sidebar-footer-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+@media (max-width: 560px) {
+  .search-trigger:not(.compact) .search-trigger-label,
+  .search-trigger:not(.compact) .search-trigger-kbd {
+    display: none;
+  }
+  .search-trigger:not(.compact) {
+    padding: 6px 8px;
+  }
+}
+
+/* ----------------------------------------------------------------
    SettingsMenu — disparador único + popover com idioma/tema/nav.
 ---------------------------------------------------------------- */
 .settings-menu {

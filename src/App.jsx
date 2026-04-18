@@ -24,6 +24,11 @@ import { ALL_ROUTE_IDS, ROUTES, TOOL_ROUTE_IDS } from "./lib/routes.js";
 import { SidebarToggle, BackToTop } from "./ds/primitives.jsx";
 import { PageNav } from "./ds/PageNav.jsx";
 import { SettingsMenu } from "./ds/SettingsMenu.jsx";
+import {
+  SearchPalette,
+  SearchTrigger,
+  useSearchHotkey,
+} from "./ds/SearchPalette.jsx";
 
 import Overview from "./pages/Overview.jsx";
 import Principles from "./pages/Principles.jsx";
@@ -117,6 +122,10 @@ export default function App() {
 
   const toggleSidebar = useCallback(() => setCollapsed((c) => !c), []);
 
+  // ⌘/Ctrl + K — abre a paleta de busca (atalho global)
+  const [searchOpen, setSearchOpen] = useState(false);
+  useSearchHotkey(useCallback(() => setSearchOpen(true), []));
+
   // Atalho: Ctrl/Cmd + B  (convenção de editores; não conflita com o navegador)
   useEffect(() => {
     const handler = (e) => {
@@ -144,6 +153,7 @@ export default function App() {
           navigate={navigate}
           navMode={navMode}
           setNavMode={setNavMode}
+          openSearch={() => setSearchOpen(true)}
         />
       ) : (
         <AppSidebar
@@ -153,6 +163,7 @@ export default function App() {
           toggleSidebar={toggleSidebar}
           navMode={navMode}
           setNavMode={setNavMode}
+          openSearch={() => setSearchOpen(true)}
         />
       )}
       <main className={`content ${TOOL_ROUTE_IDS.has(current) ? "content--tool" : ""}`}>
@@ -170,6 +181,11 @@ export default function App() {
       </main>
       <Footer onNavigate={navigate} />
       <BackToTop />
+      <SearchPalette
+        open={searchOpen}
+        onClose={() => setSearchOpen(false)}
+        onNavigate={navigate}
+      />
     </div>
   );
 }
@@ -178,7 +194,7 @@ export default function App() {
    AppNavbar — composição real da Navbar do Atelier.
    Documenta, no próprio uso, a árvore exposta na página #/navbar.
 ---------------------------------------------------------------- */
-function AppNavbar({ current, navigate, navMode, setNavMode }) {
+function AppNavbar({ current, navigate, navMode, setNavMode, openSearch }) {
   const { t } = useT();
   return (
     <Navbar current={current} onNavigate={navigate}>
@@ -212,6 +228,7 @@ function AppNavbar({ current, navigate, navMode, setNavMode }) {
         })}
       </NavbarNav>
       <NavbarActions>
+        <SearchTrigger onClick={openSearch} />
         <SettingsMenu
           navMode={navMode}
           onToggleNavMode={setNavMode}
@@ -233,6 +250,7 @@ function AppSidebar({
   toggleSidebar,
   navMode,
   setNavMode,
+  openSearch,
 }) {
   const { t } = useT();
   return (
@@ -276,11 +294,14 @@ function AppSidebar({
           <br />
           {t("nav.footer.stack")}
         </div>
-        <SettingsMenu
-          navMode={navMode}
-          onToggleNavMode={setNavMode}
-          placement="top-end"
-        />
+        <div className="sidebar-footer-actions">
+          <SearchTrigger onClick={openSearch} compact />
+          <SettingsMenu
+            navMode={navMode}
+            onToggleNavMode={setNavMode}
+            placement="top-end"
+          />
+        </div>
       </SidebarFooter>
     </Sidebar>
   );
