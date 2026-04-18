@@ -2360,12 +2360,16 @@ input[type="file"] { display: none; }
   color: var(--ink-faint);
 }
 
-/* Item rico (com descrição) — sem coluna do número, ocupa tudo.
-   Layout fica mais aberto, igual ao shadcn. */
+/* Item rico (com descrição) — mantém a coluna do número editorial
+   (assinatura do Atelier) mas alinha pelo topo, para o número
+   acompanhar a primeira linha (label) e não a base. */
 .nav-menu-item.rich {
-  grid-template-columns: 1fr;
-  padding: 10px 14px;
   align-items: flex-start;
+  padding: 10px 12px;
+}
+.nav-menu-item.rich .n {
+  /* Pequeno ajuste óptico: alinha com a baseline do label de 15px */
+  padding-top: 4px;
 }
 
 .nav-menu-item:hover {

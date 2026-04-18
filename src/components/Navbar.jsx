@@ -124,7 +124,7 @@ export function NavbarDropdownItem({
           }
         }}
       >
-        {!rich && n != null && <span className="n">{n}</span>}
+        {n != null && <span className="n">{n}</span>}
         <span className="text">
           <span className="label">{children}</span>
           {rich && <span className="desc">{description}</span>}
