@@ -282,7 +282,6 @@ html::-webkit-scrollbar-thumb {
   height: 100vh;
   width: var(--sidebar-w);
   padding: var(--space-6) var(--space-5) var(--space-5);
-  border-right: 1px solid var(--rule);
   background: var(--bg-panel);
   display: flex;
   flex-direction: column;
@@ -2111,8 +2110,6 @@ button.ds-avatar:focus-visible {
     position: static;
     height: auto;
     width: auto;
-    border-right: none;
-    border-bottom: 1px solid var(--rule);
     display: block;
     overflow: visible;
     transform: none !important;
