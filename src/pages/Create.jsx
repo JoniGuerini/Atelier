@@ -44,6 +44,22 @@ import { STUDIO_PRESETS, shuffleTheme } from "../ds/studioPresets.js";
    ================================================================ */
 
 const STORAGE_KEY = "atelier.studioTheme";
+const APP_THEME_KEY = "atelier.theme"; // chave usada pelo bootstrap em index.html
+
+/** Lê o tema atual do app (light|dark) — primeiro do localStorage,
+ *  depois do atributo data-theme do <html>, com fallback "light".
+ *  É a mesma estratégia do bootstrap em index.html. */
+function readAppTheme() {
+  if (typeof window === "undefined") return "light";
+  try {
+    const saved = window.localStorage.getItem(APP_THEME_KEY);
+    if (saved === "light" || saved === "dark") return saved;
+  } catch {
+    /* ignore */
+  }
+  const attr = document.documentElement.getAttribute("data-theme");
+  return attr === "dark" ? "dark" : "light";
+}
 
 function readInitial() {
   if (typeof window === "undefined") return DEFAULT_THEME;
@@ -53,7 +69,9 @@ function readInitial() {
   } catch {
     /* ignore */
   }
-  return DEFAULT_THEME;
+  // Sem nada salvo no Studio: nasce alinhado ao tema atual do app
+  // (se a pessoa está em dark mode, o mural abre em dark mode também).
+  return { ...DEFAULT_THEME, theme: readAppTheme() };
 }
 
 export default function Create() {
