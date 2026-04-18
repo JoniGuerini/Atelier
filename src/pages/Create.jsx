@@ -9,7 +9,6 @@ import {
 } from "../ds/primitives.jsx";
 import { Card, CardKicker, CardTitle, CardBody, CardFooter } from "../ds/Card.jsx";
 import { Alert } from "../ds/Alert.jsx";
-import { Tabs, TabList, Tab, TabPanels, TabPanel } from "../ds/Tabs.jsx";
 import { useT } from "../lib/i18n.jsx";
 import {
   ACCENT_PRESETS,
@@ -25,11 +24,15 @@ import {
 import { STUDIO_PRESETS, shuffleTheme } from "../ds/studioPresets.js";
 
 /* ================================================================
-   Create — Studio do Atelier.
+   Create — Studio do Atelier (refatorado).
    ----------------------------------------------------------------
-   Painel de controles à esquerda, preview ao vivo à direita.
-   Todas as mudanças ficam ESCOPADAS no preview (CSS vars no
-   <div data-studio-scope>) — o resto do site continua intacto.
+   Layout:
+     [ Painel sticky 280px ] [ Trilho de blocos com scroll horizontal ]
+
+   Painel: sem tabs. Cada controle é um "card" compacto que abre
+   inline as opções (via <details>). Os blocos do preview ficam em
+   linha horizontal com overflow-x: auto, igual o shadcn/ui Create —
+   o usuário rola para o lado sem perder a referência dos controles.
    ================================================================ */
 
 const STORAGE_KEY = "atelier.studioTheme";
@@ -48,9 +51,8 @@ function readInitial() {
 export default function Create() {
   const { t, tr } = useT();
   const [theme, setTheme] = useState(readInitial);
-  const [tab, setTab] = useState("style");
+  const [exportOpen, setExportOpen] = useState(false);
 
-  // Persiste no localStorage (sem afetar o tema global do site)
   useEffect(() => {
     if (typeof window === "undefined") return;
     try {
@@ -66,6 +68,29 @@ export default function Create() {
 
   const previewStyle = useMemo(() => themeToStyle(theme), [theme]);
   const css = useMemo(() => themeToCss(theme), [theme]);
+
+  // Resolve labels do estado atual para mostrar nos cards do painel
+  const accentLabel =
+    ACCENT_PRESETS.find((p) => p.id === theme.accent)?.label || "—";
+  const baseLabel =
+    BASE_PRESETS.find((p) => p.id === theme.base)?.label || "—";
+  const fontPreset = FONT_PRESETS.find((p) => p.id === theme.font);
+  const fontLabel = fontPreset?.label || "—";
+  const spacingLabel =
+    SPACING_PRESETS.find((p) => p.id === theme.spacing)?.label || "—";
+  const themeLabel =
+    theme.theme === "dark"
+      ? t("pages.create.controls.themeDark")
+      : t("pages.create.controls.themeLight");
+
+  const activePreset = STUDIO_PRESETS.find(
+    (p) =>
+      p.theme.accent === theme.accent &&
+      p.theme.base === theme.base &&
+      p.theme.font === theme.font &&
+      p.theme.spacing === theme.spacing &&
+      p.theme.theme === theme.theme
+  );
 
   return (
     <>
@@ -84,236 +109,295 @@ export default function Create() {
 
       <div className="studio">
         {/* ========== Painel de controles ========== */}
-        <aside className="studio-controls">
-          <Tabs value={tab} onChange={setTab}>
-            <TabList>
-              <Tab value="style">{t("pages.create.tabs.style")}</Tab>
-              <Tab value="presets">{t("pages.create.tabs.presets")}</Tab>
-              <Tab value="advanced">{t("pages.create.tabs.advanced")}</Tab>
-              <Tab value="export">{t("pages.create.tabs.export")}</Tab>
-            </TabList>
-
-            <TabPanels>
-              {/* ----- Style ----- */}
-              <TabPanel value="style">
-                <ControlGroup label={t("pages.create.controls.theme")}>
-                  <Segmented
-                    options={THEME_OPTIONS.map((o) => ({
-                      id: o.id,
-                      label: o.label,
-                    }))}
-                    value={theme.theme}
-                    onChange={update("theme")}
-                  />
-                </ControlGroup>
-
-                <ControlGroup label={t("pages.create.controls.accent")}>
-                  <Swatches
-                    options={ACCENT_PRESETS}
-                    value={theme.accent}
-                    onChange={update("accent")}
-                  />
-                </ControlGroup>
-
-                <ControlGroup label={t("pages.create.controls.base")}>
-                  <Segmented
-                    options={BASE_PRESETS.map((o) => ({
-                      id: o.id,
-                      label: o.label,
-                    }))}
-                    value={theme.base}
-                    onChange={update("base")}
-                  />
-                </ControlGroup>
-
-                <ControlGroup label={t("pages.create.controls.font")}>
-                  <FontList
-                    options={FONT_PRESETS}
-                    value={theme.font}
-                    onChange={update("font")}
-                  />
-                </ControlGroup>
-
-                <ControlGroup label={t("pages.create.controls.spacing")}>
-                  <Segmented
-                    options={SPACING_PRESETS.map((o) => ({
-                      id: o.id,
-                      label: o.label,
-                    }))}
-                    value={theme.spacing}
-                    onChange={update("spacing")}
-                  />
-                </ControlGroup>
-              </TabPanel>
-
-              {/* ----- Presets ----- */}
-              <TabPanel value="presets">
-                <PresetList
-                  presets={STUDIO_PRESETS}
-                  current={theme}
-                  onPick={(p) => setTheme({ ...DEFAULT_THEME, ...p })}
-                />
-              </TabPanel>
-
-              {/* ----- Advanced ----- */}
-              <TabPanel value="advanced">
-                <Alert variant="warn" title={t("pages.create.advanced.warnTitle")}>
-                  {tr("pages.create.advanced.warnBody")}
-                </Alert>
-
-                <ControlGroup
-                  label={t("pages.create.advanced.radius")}
-                  hint={`${theme.radius}px`}
-                >
-                  <input
-                    type="range"
-                    className="studio-range"
-                    min={RADIUS_RANGE.min}
-                    max={RADIUS_RANGE.max}
-                    step={RADIUS_RANGE.step}
-                    value={theme.radius}
-                    onChange={(e) => update("radius")(Number(e.target.value))}
-                  />
-                </ControlGroup>
-              </TabPanel>
-
-              {/* ----- Export ----- */}
-              <TabPanel value="export">
-                <p className="studio-export-intro">
-                  {tr("pages.create.export.intro")}
-                </p>
-                <pre className="studio-export-code">{css}</pre>
-                <div className="studio-export-actions">
-                  <CopyButton
-                    text={css}
-                    label={t("pages.create.export.copy")}
-                    copiedLabel={t("pages.create.export.copied")}
-                  />
-                  <Button
-                    onClick={() => downloadCss(css)}
-                    variant="ghost"
-                    size="sm"
+        <aside className="studio-panel">
+          <ControlCard
+            label={t("pages.create.controls.preset")}
+            value={activePreset?.label || t("pages.create.controls.custom")}
+            iconChar="✦"
+          >
+            <div className="studio-options">
+              {STUDIO_PRESETS.map((p) => {
+                const active = activePreset?.id === p.id;
+                return (
+                  <button
+                    key={p.id}
+                    type="button"
+                    className={`studio-option ${active ? "active" : ""}`}
+                    onClick={() =>
+                      setTheme({ ...DEFAULT_THEME, ...p.theme })
+                    }
                   >
-                    {t("pages.create.export.download")}
-                  </Button>
-                </div>
-              </TabPanel>
-            </TabPanels>
-          </Tabs>
+                    <span className="studio-option-label">{p.label}</span>
+                    <span className="studio-option-desc">{p.description}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </ControlCard>
+
+          <ControlCard
+            label={t("pages.create.controls.theme")}
+            value={themeLabel}
+            iconChar={theme.theme === "dark" ? "◐" : "○"}
+          >
+            <Segmented
+              options={THEME_OPTIONS.map((o) => ({
+                id: o.id,
+                label:
+                  o.id === "dark"
+                    ? t("pages.create.controls.themeDark")
+                    : t("pages.create.controls.themeLight"),
+              }))}
+              value={theme.theme}
+              onChange={update("theme")}
+            />
+          </ControlCard>
+
+          <ControlCard
+            label={t("pages.create.controls.accent")}
+            value={accentLabel}
+            iconColor={
+              ACCENT_PRESETS.find((p) => p.id === theme.accent)?.accent
+            }
+          >
+            <Swatches
+              options={ACCENT_PRESETS}
+              value={theme.accent}
+              onChange={update("accent")}
+            />
+          </ControlCard>
+
+          <ControlCard
+            label={t("pages.create.controls.base")}
+            value={baseLabel}
+            iconChar="▢"
+          >
+            <Segmented
+              options={BASE_PRESETS.map((o) => ({
+                id: o.id,
+                label: o.label,
+              }))}
+              value={theme.base}
+              onChange={update("base")}
+            />
+          </ControlCard>
+
+          <ControlCard
+            label={t("pages.create.controls.font")}
+            value={fontLabel}
+            iconChar="Aa"
+            iconStyle={fontPreset ? { fontFamily: fontPreset.serif } : undefined}
+          >
+            <FontList
+              options={FONT_PRESETS}
+              value={theme.font}
+              onChange={update("font")}
+            />
+          </ControlCard>
+
+          <ControlCard
+            label={t("pages.create.controls.spacing")}
+            value={spacingLabel}
+            iconChar="↔"
+          >
+            <Segmented
+              options={SPACING_PRESETS.map((o) => ({
+                id: o.id,
+                label: o.label,
+              }))}
+              value={theme.spacing}
+              onChange={update("spacing")}
+            />
+          </ControlCard>
+
+          <ControlCard
+            label={t("pages.create.controls.advanced")}
+            value={
+              theme.radius > 0
+                ? `${theme.radius}px`
+                : t("pages.create.controls.offCanon")
+            }
+            iconChar="⚙"
+            tone={theme.radius > 0 ? "warn" : undefined}
+          >
+            <p className="studio-warn-note">
+              {tr("pages.create.advanced.warnBody")}
+            </p>
+            <div className="studio-range-row">
+              <span className="studio-range-label">
+                {t("pages.create.advanced.radius")}
+              </span>
+              <input
+                type="range"
+                className="studio-range"
+                min={RADIUS_RANGE.min}
+                max={RADIUS_RANGE.max}
+                step={RADIUS_RANGE.step}
+                value={theme.radius}
+                onChange={(e) => update("radius")(Number(e.target.value))}
+              />
+              <span className="studio-range-value">{theme.radius}px</span>
+            </div>
+          </ControlCard>
 
           <div className="studio-actions">
-            <Button onClick={shuffle} variant="ghost" size="sm">
+            <Button onClick={shuffle} size="sm">
               {t("pages.create.actions.shuffle")}
             </Button>
             <Button onClick={reset} variant="ghost" size="sm">
               {t("pages.create.actions.reset")}
             </Button>
+            <Button
+              onClick={() => setExportOpen((v) => !v)}
+              variant="primary"
+              size="sm"
+            >
+              {exportOpen
+                ? t("pages.create.actions.hideExport")
+                : t("pages.create.actions.export")}
+            </Button>
           </div>
+
+          {exportOpen && (
+            <div className="studio-export">
+              <p className="studio-export-intro">
+                {tr("pages.create.export.intro")}
+              </p>
+              <pre className="studio-export-code">{css}</pre>
+              <div className="studio-export-actions">
+                <CopyButton
+                  text={css}
+                  label={t("pages.create.export.copy")}
+                  copiedLabel={t("pages.create.export.copied")}
+                />
+                <Button
+                  onClick={() => downloadCss(css)}
+                  variant="ghost"
+                  size="sm"
+                >
+                  {t("pages.create.export.download")}
+                </Button>
+              </div>
+            </div>
+          )}
         </aside>
 
-        {/* ========== Preview ========== */}
-        <div className="studio-preview" style={previewStyle} data-studio-scope>
-          <PreviewSection
-            kicker={t("pages.create.preview.typeKicker")}
-            title={t("pages.create.preview.typeTitle")}
-          >
-            <h1
-              style={{
-                fontFamily: "var(--font-serif)",
-                fontSize: 56,
-                fontWeight: 300,
-                letterSpacing: "-0.02em",
-                lineHeight: 1.05,
-                marginBottom: "var(--space-3)",
-              }}
+        {/* ========== Trilho de blocos (horizontal scroll) ========== */}
+        <div className="studio-rail-wrap">
+          <div className="studio-rail" style={previewStyle} data-studio-scope>
+            {/* Bloco 1 — Tipografia */}
+            <PreviewBlock
+              kicker={t("pages.create.preview.typeKicker")}
+              title={t("pages.create.preview.typeTitle")}
+              wide
             >
-              {t("pages.create.preview.headlineA")}{" "}
-              <em
+              <h1
                 style={{
-                  fontStyle: "italic",
-                  color: "var(--accent)",
+                  fontFamily: "var(--font-serif)",
+                  fontSize: 44,
+                  fontWeight: 300,
+                  letterSpacing: "-0.02em",
+                  lineHeight: 1.05,
+                  marginBottom: "var(--space-3)",
+                  color: "var(--ink)",
                 }}
               >
-                {t("pages.create.preview.headlineB")}
-              </em>
-            </h1>
-            <p
-              style={{
-                fontFamily: "var(--font-serif)",
-                fontSize: 17,
-                lineHeight: 1.6,
-                color: "var(--ink-soft)",
-                maxWidth: 540,
-              }}
-            >
-              {t("pages.create.preview.body")}
-            </p>
-          </PreviewSection>
+                {t("pages.create.preview.headlineA")}{" "}
+                <em
+                  style={{
+                    fontStyle: "italic",
+                    color: "var(--accent)",
+                  }}
+                >
+                  {t("pages.create.preview.headlineB")}
+                </em>
+              </h1>
+              <p
+                style={{
+                  fontFamily: "var(--font-serif)",
+                  fontSize: 16,
+                  lineHeight: 1.6,
+                  color: "var(--ink-soft)",
+                }}
+              >
+                {t("pages.create.preview.body")}
+              </p>
+              <div
+                style={{
+                  marginTop: "var(--space-4)",
+                  fontFamily: "var(--font-mono)",
+                  fontSize: 11,
+                  letterSpacing: "0.18em",
+                  textTransform: "uppercase",
+                  color: "var(--ink-faint)",
+                }}
+              >
+                {t("pages.create.preview.typeSpec")}
+              </div>
+            </PreviewBlock>
 
-          <PreviewSection
-            kicker={t("pages.create.preview.cardsKicker")}
-            title={t("pages.create.preview.cardsTitle")}
-          >
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "var(--space-4)",
-              }}
+            {/* Bloco 2 — Card editorial */}
+            <PreviewBlock
+              kicker={t("pages.create.preview.card1Kicker")}
+              title={t("pages.create.preview.cardsTitle")}
             >
               <Card>
                 <CardKicker>{t("pages.create.preview.card1Kicker")}</CardKicker>
                 <CardTitle>
-                  {t("pages.create.preview.card1TitleA")}
-                  <em> {t("pages.create.preview.card1TitleB")}</em>
+                  {t("pages.create.preview.card1TitleA")}{" "}
+                  <em>{t("pages.create.preview.card1TitleB")}</em>
                 </CardTitle>
                 <CardBody>{t("pages.create.preview.card1Body")}</CardBody>
                 <CardFooter>{t("pages.create.preview.card1Foot")}</CardFooter>
               </Card>
+            </PreviewBlock>
+
+            {/* Bloco 3 — Card com CTA */}
+            <PreviewBlock
+              kicker={t("pages.create.preview.card2Kicker")}
+              title={t("pages.create.preview.card2Title")}
+            >
               <Card>
                 <CardKicker>{t("pages.create.preview.card2Kicker")}</CardKicker>
                 <CardTitle>
-                  {t("pages.create.preview.card2TitleA")}
-                  <em> {t("pages.create.preview.card2TitleB")}</em>
+                  {t("pages.create.preview.card2TitleA")}{" "}
+                  <em>{t("pages.create.preview.card2TitleB")}</em>
                 </CardTitle>
                 <CardBody>{t("pages.create.preview.card2Body")}</CardBody>
                 <CardFooter>
-                  <Button variant="primary" size="sm">
-                    {t("pages.create.preview.card2Cta")}
-                  </Button>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      width: "100%",
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontFamily: "var(--font-mono)",
+                        fontSize: 11,
+                        letterSpacing: "0.18em",
+                        textTransform: "uppercase",
+                        color: "var(--ink-faint)",
+                      }}
+                    >
+                      {t("pages.create.preview.card2Price")}
+                    </span>
+                    <Button variant="primary" size="sm">
+                      {t("pages.create.preview.card2Cta")}
+                    </Button>
+                  </div>
                 </CardFooter>
               </Card>
-            </div>
-          </PreviewSection>
+            </PreviewBlock>
 
-          <PreviewSection
-            kicker={t("pages.create.preview.controlsKicker")}
-            title={t("pages.create.preview.controlsTitle")}
-          >
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "var(--space-4)",
-              }}
+            {/* Bloco 4 — Botões + Badges */}
+            <PreviewBlock
+              kicker={t("pages.create.preview.controlsKicker")}
+              title={t("pages.create.preview.controlsTitle")}
             >
-              <Field
-                label={t("pages.create.preview.fieldLabel")}
-                hint={t("pages.create.preview.fieldHint")}
-              >
-                <Input
-                  placeholder={t("pages.create.preview.fieldPh")}
-                  defaultValue=""
-                />
-              </Field>
-              <div
-                style={{
-                  display: "flex",
-                  gap: 8,
-                  flexWrap: "wrap",
-                  alignItems: "flex-end",
-                }}
-              >
+              <div style={{ display: "grid", gap: "var(--space-3)" }}>
                 <Button variant="primary">
                   {t("pages.create.preview.btnPrimary")}
                 </Button>
@@ -325,42 +409,157 @@ export default function Create() {
                   {t("pages.create.preview.btnGhost")}
                 </Button>
               </div>
-            </div>
+              <div
+                style={{
+                  display: "flex",
+                  gap: 6,
+                  marginTop: "var(--space-4)",
+                  flexWrap: "wrap",
+                }}
+              >
+                <Badge dot variant="ok">
+                  {t("pages.create.preview.badgeOk")}
+                </Badge>
+                <Badge dot variant="warn">
+                  {t("pages.create.preview.badgeWarn")}
+                </Badge>
+                <Badge dot variant="accent">
+                  {t("pages.create.preview.badgeAccent")}
+                </Badge>
+                <Badge>{t("pages.create.preview.badgeDefault")}</Badge>
+              </div>
+            </PreviewBlock>
 
-            <div
-              style={{
-                display: "flex",
-                gap: 8,
-                marginTop: "var(--space-4)",
-                flexWrap: "wrap",
-              }}
+            {/* Bloco 5 — Form */}
+            <PreviewBlock
+              kicker={t("pages.create.preview.formKicker")}
+              title={t("pages.create.preview.formTitle")}
             >
-              <Badge dot variant="ok">
-                {t("pages.create.preview.badgeOk")}
-              </Badge>
-              <Badge dot variant="warn">
-                {t("pages.create.preview.badgeWarn")}
-              </Badge>
-              <Badge dot variant="accent">
-                {t("pages.create.preview.badgeAccent")}
-              </Badge>
-              <Badge>{t("pages.create.preview.badgeDefault")}</Badge>
-            </div>
-          </PreviewSection>
+              <div style={{ display: "grid", gap: "var(--space-3)" }}>
+                <Field
+                  label={t("pages.create.preview.fieldLabel")}
+                  hint={t("pages.create.preview.fieldHint")}
+                >
+                  <Input placeholder={t("pages.create.preview.fieldPh")} />
+                </Field>
+                <Field label={t("pages.create.preview.field2Label")}>
+                  <Input
+                    type="email"
+                    placeholder={t("pages.create.preview.field2Ph")}
+                  />
+                </Field>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: 8,
+                    paddingTop: "var(--space-3)",
+                    borderTop: "1px solid var(--rule-soft)",
+                  }}
+                >
+                  <Button variant="ghost" size="sm">
+                    {t("pages.create.preview.btnGhost")}
+                  </Button>
+                  <Button variant="primary" size="sm">
+                    {t("pages.create.preview.btnPrimary")}
+                  </Button>
+                </div>
+              </div>
+            </PreviewBlock>
 
-          <PreviewSection
-            kicker={t("pages.create.preview.alertsKicker")}
-            title={t("pages.create.preview.alertsTitle")}
-          >
-            <div style={{ display: "grid", gap: "var(--space-3)" }}>
-              <Alert variant="info" title={t("pages.create.preview.alertInfoTitle")}>
-                {t("pages.create.preview.alertInfoBody")}
-              </Alert>
-              <Alert variant="ok" title={t("pages.create.preview.alertOkTitle")}>
-                {t("pages.create.preview.alertOkBody")}
-              </Alert>
-            </div>
-          </PreviewSection>
+            {/* Bloco 6 — Alertas */}
+            <PreviewBlock
+              kicker={t("pages.create.preview.alertsKicker")}
+              title={t("pages.create.preview.alertsTitle")}
+            >
+              <div style={{ display: "grid", gap: "var(--space-3)" }}>
+                <Alert
+                  variant="info"
+                  title={t("pages.create.preview.alertInfoTitle")}
+                >
+                  {t("pages.create.preview.alertInfoBody")}
+                </Alert>
+                <Alert
+                  variant="ok"
+                  title={t("pages.create.preview.alertOkTitle")}
+                >
+                  {t("pages.create.preview.alertOkBody")}
+                </Alert>
+                <Alert
+                  variant="warn"
+                  title={t("pages.create.preview.alertWarnTitle")}
+                >
+                  {t("pages.create.preview.alertWarnBody")}
+                </Alert>
+              </div>
+            </PreviewBlock>
+
+            {/* Bloco 7 — Métrica grande (estilo dashboard) */}
+            <PreviewBlock
+              kicker={t("pages.create.preview.metricKicker")}
+              title={t("pages.create.preview.metricTitle")}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 6,
+                  paddingBottom: "var(--space-4)",
+                  borderBottom: "1px solid var(--rule-soft)",
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: 10,
+                    letterSpacing: "0.2em",
+                    textTransform: "uppercase",
+                    color: "var(--ink-faint)",
+                  }}
+                >
+                  {t("pages.create.preview.metricLabel")}
+                </span>
+                <span
+                  style={{
+                    fontFamily: "var(--font-serif)",
+                    fontSize: 48,
+                    fontWeight: 300,
+                    letterSpacing: "-0.02em",
+                    color: "var(--ink)",
+                    lineHeight: 1,
+                  }}
+                >
+                  {t("pages.create.preview.metricValue")}
+                </span>
+                <span
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: 12,
+                    color: "var(--accent)",
+                  }}
+                >
+                  {t("pages.create.preview.metricDelta")}
+                </span>
+              </div>
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  gap: "var(--space-3)",
+                  paddingTop: "var(--space-3)",
+                }}
+              >
+                <SmallMetric
+                  label={t("pages.create.preview.metric2Label")}
+                  value={t("pages.create.preview.metric2Value")}
+                />
+                <SmallMetric
+                  label={t("pages.create.preview.metric3Label")}
+                  value={t("pages.create.preview.metric3Value")}
+                />
+              </div>
+            </PreviewBlock>
+          </div>
+          <div className="studio-rail-fade" aria-hidden="true" />
         </div>
       </div>
     </>
@@ -384,15 +583,34 @@ function downloadCss(css) {
    Subcomponentes do Studio
    ================================================================ */
 
-function ControlGroup({ label, hint, children }) {
+function ControlCard({
+  label,
+  value,
+  iconChar,
+  iconColor,
+  iconStyle,
+  tone,
+  children,
+}) {
   return (
-    <div className="studio-group">
-      <div className="studio-group-head">
-        <span className="studio-group-label">{label}</span>
-        {hint && <span className="studio-group-hint">{hint}</span>}
-      </div>
-      {children}
-    </div>
+    <details className={`studio-card ${tone ? `tone-${tone}` : ""}`}>
+      <summary className="studio-card-summary">
+        <span className="studio-card-meta">
+          <span className="studio-card-label">{label}</span>
+          <span className="studio-card-value">{value}</span>
+        </span>
+        <span
+          className="studio-card-icon"
+          style={iconColor ? { background: iconColor, ...iconStyle } : iconStyle}
+        >
+          {!iconColor && iconChar}
+        </span>
+        <span className="studio-card-chev" aria-hidden="true">
+          ▾
+        </span>
+      </summary>
+      <div className="studio-card-body">{children}</div>
+    </details>
   );
 }
 
@@ -455,40 +673,42 @@ function FontList({ options, value, onChange }) {
   );
 }
 
-function PresetList({ presets, current, onPick }) {
+function PreviewBlock({ kicker, title, wide, children }) {
   return (
-    <div className="studio-preset-list">
-      {presets.map((p) => {
-        const active =
-          p.theme.accent === current.accent &&
-          p.theme.base === current.base &&
-          p.theme.font === current.font &&
-          p.theme.spacing === current.spacing &&
-          p.theme.theme === current.theme;
-        return (
-          <button
-            key={p.id}
-            type="button"
-            className={`studio-preset ${active ? "active" : ""}`}
-            onClick={() => onPick(p.theme)}
-          >
-            <span className="studio-preset-label">{p.label}</span>
-            <span className="studio-preset-desc">{p.description}</span>
-          </button>
-        );
-      })}
-    </div>
+    <article className={`studio-block ${wide ? "wide" : ""}`}>
+      <header className="studio-block-head">
+        <span className="studio-block-kicker">{kicker}</span>
+        <h3 className="studio-block-title">{title}</h3>
+      </header>
+      <div className="studio-block-body">{children}</div>
+    </article>
   );
 }
 
-function PreviewSection({ kicker, title, children }) {
+function SmallMetric({ label, value }) {
   return (
-    <section className="studio-preview-section">
-      <header className="studio-preview-head">
-        <span className="kicker">{kicker}</span>
-        <h3 className="title">{title}</h3>
-      </header>
-      <div className="studio-preview-body">{children}</div>
-    </section>
+    <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+      <span
+        style={{
+          fontFamily: "var(--font-mono)",
+          fontSize: 10,
+          letterSpacing: "0.18em",
+          textTransform: "uppercase",
+          color: "var(--ink-faint)",
+        }}
+      >
+        {label}
+      </span>
+      <span
+        style={{
+          fontFamily: "var(--font-serif)",
+          fontSize: 22,
+          fontWeight: 300,
+          color: "var(--ink)",
+        }}
+      >
+        {value}
+      </span>
+    </div>
   );
 }

@@ -2948,56 +2948,143 @@ input[type="file"] { display: none; }
   }
 }
 
-/* ----------------------------------------------------------------
-   Studio — playground de personalização (página #/create).
----------------------------------------------------------------- */
+/* ================================================================
+   Studio — playground de personalização (#/create).
+   Layout: painel sticky (esq) + trilho horizontal de blocos (dir).
+================================================================ */
 .studio {
   display: grid;
-  grid-template-columns: 320px 1fr;
+  grid-template-columns: 280px 1fr;
   gap: var(--space-5);
-  margin-top: var(--space-6);
+  margin-top: var(--space-5);
   align-items: start;
+  /* permite o trilho vazar até a borda da viewport pra dar a sensação
+     de "infinito" — o fade da direita reforça o convite a rolar */
+  margin-right: calc(0px - var(--space-5));
 }
-.studio-controls {
+
+/* ==================== Painel de controles ==================== */
+.studio-panel {
   position: sticky;
   top: var(--space-5);
-  border: 1px solid var(--rule-soft);
-  background: var(--bg-panel);
-  padding: var(--space-4);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-  max-height: calc(100vh - var(--space-7));
-  overflow: auto;
-}
-.studio-controls .ds-tab-panels {
-  margin-top: var(--space-3);
-}
-.studio-controls .ds-tab-panel {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-}
-.studio-group {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  max-height: calc(100vh - var(--space-7));
+  overflow: auto;
+  padding-right: 4px;
 }
-.studio-group-head {
+
+/* Cada controle é um <details> com cara de card */
+.studio-card {
+  border: 1px solid var(--rule-soft);
+  background: var(--bg-panel);
+  transition: border-color var(--dur-fast) var(--ease),
+              background var(--dur-fast) var(--ease);
+}
+.studio-card:hover {
+  border-color: var(--ink-faint);
+}
+.studio-card[open] {
+  border-color: var(--ink);
+}
+.studio-card.tone-warn {
+  border-color: var(--warn);
+}
+
+.studio-card-summary {
+  list-style: none;
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+}
+.studio-card-summary::-webkit-details-marker { display: none; }
+.studio-card-meta {
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
 }
-.studio-group-label {
+.studio-card-label {
   font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.2em;
+  font-size: 9px;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--ink-faint);
 }
-.studio-group-hint {
-  font-family: var(--font-mono);
-  font-size: 11px;
+.studio-card-value {
+  font-family: var(--font-serif);
+  font-size: 15px;
+  color: var(--ink);
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.studio-card-icon {
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--rule-soft);
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 12px;
+  font-family: var(--font-serif);
+  line-height: 1;
+}
+.studio-card-chev {
+  font-size: 10px;
+  color: var(--ink-faint);
+  transition: transform var(--dur-fast) var(--ease);
+}
+.studio-card[open] .studio-card-chev { transform: rotate(180deg); }
+
+.studio-card-body {
+  border-top: 1px solid var(--rule-soft);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.studio-options {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.studio-option {
+  appearance: none;
+  background: transparent;
+  border: 1px solid var(--rule-soft);
+  padding: 8px 10px;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  transition: border-color var(--dur-fast) var(--ease),
+              background var(--dur-fast) var(--ease);
+}
+.studio-option:hover { border-color: var(--ink-soft); }
+.studio-option.active {
+  border-color: var(--ink);
+  background: var(--bg-sunken);
+}
+.studio-option-label {
+  font-family: var(--font-serif);
+  font-size: 14px;
+  color: var(--ink);
+}
+.studio-option-desc {
+  font-family: var(--font-serif);
+  font-size: 12px;
+  font-style: italic;
   color: var(--ink-soft);
 }
 
@@ -3013,9 +3100,9 @@ input[type="file"] { display: none; }
   background: transparent;
   border: 0;
   border-right: 1px solid var(--rule-soft);
-  padding: 8px 10px;
+  padding: 7px 8px;
   font-family: var(--font-serif);
-  font-size: 13px;
+  font-size: 12.5px;
   color: var(--ink-soft);
   cursor: pointer;
   transition: background var(--dur-fast) var(--ease),
@@ -3028,7 +3115,7 @@ input[type="file"] { display: none; }
   color: var(--ink-inverse);
 }
 
-/* Color swatches */
+/* Swatches de cor */
 .studio-swatches {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
@@ -3040,18 +3127,17 @@ input[type="file"] { display: none; }
   width: 100%;
   aspect-ratio: 1 / 1;
   cursor: pointer;
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: transform var(--dur-fast) var(--ease);
 }
-.studio-swatch:hover { transform: scale(1.05); }
+.studio-swatch:hover { transform: scale(1.06); }
 .studio-swatch .check {
   color: #fff;
-  font-size: 14px;
+  font-size: 13px;
   opacity: 0;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
   transition: opacity var(--dur-fast) var(--ease);
 }
 .studio-swatch.active .check { opacity: 1; }
@@ -3070,7 +3156,7 @@ input[type="file"] { display: none; }
   appearance: none;
   border: 1px solid var(--rule-soft);
   background: transparent;
-  padding: 10px 12px;
+  padding: 8px 10px;
   cursor: pointer;
   text-align: left;
   display: flex;
@@ -3085,19 +3171,45 @@ input[type="file"] { display: none; }
   background: var(--bg-sunken);
 }
 .studio-font-name {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 400;
   color: var(--ink);
 }
 .studio-font-desc {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 9px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--ink-faint);
 }
 
 /* Range (advanced) */
+.studio-warn-note {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+  margin: 0;
+}
+.studio-range-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+}
+.studio-range-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.studio-range-value {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink);
+}
 .studio-range {
   width: 100%;
   appearance: none;
@@ -3121,124 +3233,145 @@ input[type="file"] { display: none; }
   border: 2px solid var(--bg);
 }
 
-/* Preset list */
-.studio-preset-list {
-  display: flex;
-  flex-direction: column;
+/* Bottom actions */
+.studio-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 6px;
+  border-top: 1px solid var(--rule-soft);
+  padding-top: 12px;
+  margin-top: 4px;
 }
-.studio-preset {
-  appearance: none;
-  background: transparent;
-  border: 1px solid var(--rule-soft);
-  padding: 12px 14px;
-  text-align: left;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  transition: border-color var(--dur-fast) var(--ease),
-              background var(--dur-fast) var(--ease);
-}
-.studio-preset:hover { border-color: var(--ink-soft); }
-.studio-preset.active {
-  border-color: var(--ink);
-  background: var(--bg-sunken);
-}
-.studio-preset-label {
-  font-family: var(--font-serif);
-  font-size: 16px;
-  color: var(--ink);
-}
-.studio-preset-desc {
-  font-family: var(--font-serif);
-  font-size: 13px;
-  font-style: italic;
-  color: var(--ink-soft);
+.studio-actions .ds-btn:last-child {
+  grid-column: span 2;
 }
 
-/* Export tab */
+/* Export panel */
+.studio-export {
+  border: 1px solid var(--rule-soft);
+  background: var(--bg-panel);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 .studio-export-intro {
   font-family: var(--font-serif);
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.5;
   color: var(--ink-soft);
-  margin-bottom: var(--space-3);
+  margin: 0;
 }
 .studio-export-code {
   background: var(--code-bg);
   color: var(--code-ink);
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10.5px;
   line-height: 1.55;
-  padding: 14px 16px;
-  margin: 0 0 var(--space-3);
+  padding: 12px;
+  margin: 0;
   overflow: auto;
   white-space: pre;
-  max-height: 320px;
+  max-height: 240px;
 }
 .studio-export-actions {
   display: flex;
   gap: 8px;
 }
 
-/* Bottom actions (shuffle/reset) */
-.studio-actions {
-  display: flex;
-  justify-content: space-between;
-  border-top: 1px solid var(--rule-soft);
-  padding-top: var(--space-3);
+/* ==================== Trilho de blocos ==================== */
+.studio-rail-wrap {
+  position: relative;
+  /* esticamos até onde o conteúdo da página termina */
+  min-width: 0;
 }
-
-/* ===== Preview area ===== */
-.studio-preview {
-  border: 1px solid var(--rule-soft);
-  padding: var(--space-6);
+.studio-rail {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-6);
-  min-height: 600px;
-  /* CSS vars são sobrescritas via inline style — tudo aqui dentro
-     herda o tema customizado. background e color são aplicados no
-     style também (themeToStyle), garantindo o contraste correto. */
+  gap: var(--space-4);
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: var(--space-5);
+  padding-right: var(--space-7);
+  border: 1px solid var(--rule-soft);
+  scroll-snap-type: x proximity;
+  /* tema customizado é injetado via inline-style aqui (themeToStyle):
+     todos os componentes lá dentro usam var(--accent) etc., e
+     reagem instantaneamente ao usuário mexer nos controles. */
   transition: background var(--dur) var(--ease),
               color var(--dur) var(--ease);
 }
-.studio-preview-section {
+/* Scrollbar elegante para o trilho */
+.studio-rail::-webkit-scrollbar { height: 8px; }
+.studio-rail::-webkit-scrollbar-track { background: transparent; }
+.studio-rail::-webkit-scrollbar-thumb {
+  background: var(--rule-soft);
+  border-radius: 0;
+}
+.studio-rail::-webkit-scrollbar-thumb:hover { background: var(--ink-faint); }
+
+.studio-rail-fade {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  bottom: 9px; /* deixa a scrollbar visível */
+  width: 60px;
+  pointer-events: none;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--bg) 100%
+  );
+}
+
+.studio-block {
+  flex: 0 0 320px;
+  scroll-snap-align: start;
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
-  padding-bottom: var(--space-5);
-  border-bottom: 1px solid var(--rule-soft);
+  padding: var(--space-4);
+  border: 1px solid var(--rule-soft);
+  background: var(--bg-panel);
+  min-height: 380px;
+  transition: border-color var(--dur-fast) var(--ease);
 }
-.studio-preview-section:last-child {
-  border-bottom: 0;
-  padding-bottom: 0;
+.studio-block.wide {
+  flex: 0 0 440px;
 }
-.studio-preview-head {
+.studio-block:hover {
+  border-color: var(--ink-faint);
+}
+.studio-block-head {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--rule-soft);
 }
-.studio-preview-head .kicker {
+.studio-block-kicker {
   font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.2em;
+  font-size: 9px;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--ink-faint);
 }
-.studio-preview-head .title {
+.studio-block-title {
   font-family: var(--font-serif);
-  font-size: 22px;
+  font-size: 17px;
   font-weight: 300;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.005em;
   color: var(--ink);
   margin: 0;
+}
+.studio-block-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
 }
 
 /* ===== Advanced — border-radius opcional =====
    Aplica-se SOMENTE dentro de [data-studio-scope] e SOMENTE quando
-   o usuário move o slider (a var fica indefinida por padrão). */
+   o usuário move o slider (var fica indefinida por padrão). */
 [data-studio-scope] .ds-card,
 [data-studio-scope] .ds-btn,
 [data-studio-scope] .ds-input,
@@ -3247,18 +3380,22 @@ input[type="file"] { display: none; }
 [data-studio-scope] .ds-badge,
 [data-studio-scope] .ds-alert,
 [data-studio-scope] .ds-modal,
-[data-studio-scope] .ds-avatar {
+[data-studio-scope] .ds-avatar,
+[data-studio-scope] .studio-block {
   border-radius: var(--studio-radius, 0);
 }
 
 @media (max-width: 900px) {
   .studio {
     grid-template-columns: 1fr;
+    margin-right: 0;
   }
-  .studio-controls {
+  .studio-panel {
     position: static;
     max-height: none;
   }
+  .studio-block { flex-basis: 280px; }
+  .studio-block.wide { flex-basis: 320px; }
 }
 
 /* ----------------------------------------------------------------
