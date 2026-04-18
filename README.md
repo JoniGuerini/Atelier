@@ -1,5 +1,9 @@
 <p align="center">
-  <img src="docs/hero.png" alt="Atelier — a quiet manual for editorial interfaces" width="100%" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/hero.dark.png" />
+    <source media="(prefers-color-scheme: light)" srcset="docs/hero.png" />
+    <img src="docs/hero.png" alt="Atelier — a quiet manual for editorial interfaces" width="100%" />
+  </picture>
 </p>
 
 <p align="center">
