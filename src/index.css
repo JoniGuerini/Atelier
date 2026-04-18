@@ -3500,19 +3500,21 @@ input[type="file"] { display: none; }
   display: inline-flex;
 }
 .settings-menu-trigger {
-  width: 32px;
+  width: 28px;
   height: 28px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   background: transparent;
-  border: 1px solid var(--rule);
+  border: none;
   color: var(--ink-soft);
   cursor: pointer;
   padding: 0;
-  transition: border-color var(--dur-fast) var(--ease),
-    color var(--dur-fast) var(--ease),
-    background var(--dur-fast) var(--ease);
+  transition: color var(--dur-fast) var(--ease);
+}
+.settings-menu-trigger:hover,
+.settings-menu.open .settings-menu-trigger {
+  color: var(--accent);
 }
 
 /* Glyph editorial — usa a mesma família tipográfica da página
@@ -3522,21 +3524,12 @@ input[type="file"] { display: none; }
   font-family: var(--font-serif);
   font-style: italic;
   font-weight: 300;
-  font-size: 22px;
+  font-size: 24px;
   line-height: 1;
   letter-spacing: 0.02em;
   /* Pequeno ajuste óptico — o ellipsis se assenta um pouco abaixo
-     da linha base; trazemos pra cima para centrar com o quadrado. */
+     da linha base; trazemos pra cima para centrar verticalmente. */
   transform: translateY(-3px);
-}
-.settings-menu-trigger:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-}
-.settings-menu.open .settings-menu-trigger {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--bg);
 }
 
 .settings-menu-panel {
