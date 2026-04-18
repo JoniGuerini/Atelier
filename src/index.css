@@ -464,7 +464,7 @@ html::-webkit-scrollbar-thumb {
 .locale-btn:last-child { border-right: none; }
 .locale-btn:hover { color: var(--ink); }
 .locale-btn.active {
-  background: var(--ink);
+  background: var(--accent);
   color: var(--bg);
 }
 
@@ -494,7 +494,7 @@ html::-webkit-scrollbar-thumb {
 .theme-btn:last-child { border-right: none; }
 .theme-btn:hover { color: var(--ink); }
 .theme-btn.active {
-  background: var(--ink);
+  background: var(--accent);
   color: var(--bg);
 }
 .theme-btn svg {
