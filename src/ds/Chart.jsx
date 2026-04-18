@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 /* ================================================================
    Chart — visualizações editoriais.
    ----------------------------------------------------------------
@@ -9,6 +11,8 @@
        opacas. Acento usado com parcimônia (apenas no item destacado).
      · Composable. Wrappers `<Chart>` / `<ChartHeader>` / `<ChartLegend>`
        são opcionais — cada chart funciona standalone também.
+     · Tooltips ao passar o mouse — bloco mono pequeno, fiel à voz
+       editorial do Atelier.
 
    Exemplos:
      <Chart>
@@ -82,6 +86,36 @@ function polarToCartesian(cx, cy, r, deg) {
   return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
 }
 
+/* ================================================================
+   ChartFrame — wrapper relative que sustenta um tooltip absoluto
+   posicionado por % sobre o SVG. Usado internamente por todos os
+   charts que reagem a hover.
+================================================================ */
+
+function ChartFrame({ children, tooltip }) {
+  return (
+    <div className="ds-chart-frame">
+      {children}
+      {tooltip && (
+        <div
+          className="ds-chart-tooltip"
+          style={{
+            left: `${tooltip.xPct}%`,
+            top: `${tooltip.yPct}%`,
+          }}
+          role="tooltip"
+        >
+          <span className="ds-chart-tooltip-label">{tooltip.label}</span>
+          <span className="ds-chart-tooltip-value">{tooltip.value}</span>
+          {tooltip.sub && (
+            <span className="ds-chart-tooltip-sub">{tooltip.sub}</span>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function arcPath(cx, cy, r, startDeg, endDeg, innerR = 0) {
   // Trata ângulo total = 360 (1 fatia) com dois arcos para evitar zero-length
   const sweep = endDeg - startDeg;
@@ -138,6 +172,7 @@ export function BarChart({
   accentIndex,
   showValues = false,
   yTicks = 4,
+  valueLabel,
   className = "",
 }) {
   const norm = normalizeData(data);
@@ -156,7 +191,6 @@ export function BarChart({
   const barW = (innerW / norm.length) * 0.66;
   const gap = (innerW / norm.length) * 0.34;
 
-  // Tick lines no eixo Y (sutis, var(--rule-faint))
   const ticks = Array.from({ length: yTicks + 1 }, (_, i) => {
     const v = (max / yTicks) * i;
     const y = padT + innerH - (v / max) * innerH;
@@ -165,83 +199,115 @@ export function BarChart({
 
   const accent = accentIndex ?? norm.length - 1;
 
-  return (
-    <svg
-      viewBox={`0 0 ${W} ${H}`}
-      className={`ds-chart-svg ${className}`}
-      style={{ width: "100%", height: "auto" }}
-      role="img"
-    >
-      {/* tick lines */}
-      {ticks.map((t, i) => (
-        <line
-          key={i}
-          x1={padL}
-          x2={W - padR}
-          y1={t.y}
-          y2={t.y}
-          stroke="var(--rule-faint)"
-          strokeWidth="1"
-        />
-      ))}
-      {/* tick labels (eixo Y) */}
-      {ticks.map((t, i) => (
-        <text
-          key={`l${i}`}
-          x={padL - 8}
-          y={t.y + 4}
-          textAnchor="end"
-          fontFamily="var(--font-mono)"
-          fontSize="11"
-          fill="var(--ink-faint)"
-        >
-          {Math.round(t.v)}
-        </text>
-      ))}
-      {/* bars */}
-      {norm.map((d, i) => {
+  const [hover, setHover] = useState(null);
+  const tooltip = hover != null
+    ? (() => {
+        const d = norm[hover];
         const h = (d.value / max) * innerH;
-        const x = padL + i * (barW + gap) + gap / 2;
+        const x = padL + hover * (barW + gap) + gap / 2 + barW / 2;
         const y = padT + innerH - h;
-        const isAccent = i === accent;
-        return (
-          <g key={i}>
-            <rect
-              x={x}
-              y={y}
-              width={barW}
-              height={Math.max(h, 1)}
-              fill={isAccent ? "var(--accent)" : "var(--ink-faint)"}
-            />
-            {showValues && (
-              <text
-                x={x + barW / 2}
-                y={y - 6}
-                textAnchor="middle"
-                fontFamily="var(--font-mono)"
-                fontSize="11"
-                fill={isAccent ? "var(--accent)" : "var(--ink-soft)"}
-              >
-                {pad(d.value)}
-              </text>
-            )}
-            {labels && labels[i] && (
-              <text
-                x={x + barW / 2}
-                y={H - 10}
-                textAnchor="middle"
-                fontFamily="var(--font-mono)"
-                fontSize="11"
-                fill="var(--ink-faint)"
-                style={{ letterSpacing: "0.1em" }}
-              >
-                {labels[i]}
-              </text>
-            )}
-          </g>
-        );
-      })}
-    </svg>
+        return {
+          xPct: (x / W) * 100,
+          yPct: (y / H) * 100,
+          label: labels?.[hover] || `#${hover + 1}`,
+          value: pad(d.value),
+          sub: valueLabel,
+        };
+      })()
+    : null;
+
+  return (
+    <ChartFrame tooltip={tooltip}>
+      <svg
+        viewBox={`0 0 ${W} ${H}`}
+        className={`ds-chart-svg ${className}`}
+        style={{ width: "100%", height: "auto" }}
+        role="img"
+        onMouseLeave={() => setHover(null)}
+      >
+        {ticks.map((t, i) => (
+          <line
+            key={i}
+            x1={padL}
+            x2={W - padR}
+            y1={t.y}
+            y2={t.y}
+            stroke="var(--rule-faint)"
+            strokeWidth="1"
+          />
+        ))}
+        {ticks.map((t, i) => (
+          <text
+            key={`l${i}`}
+            x={padL - 8}
+            y={t.y + 4}
+            textAnchor="end"
+            fontFamily="var(--font-mono)"
+            fontSize="11"
+            fill="var(--ink-faint)"
+          >
+            {Math.round(t.v)}
+          </text>
+        ))}
+        {norm.map((d, i) => {
+          const h = (d.value / max) * innerH;
+          const x = padL + i * (barW + gap) + gap / 2;
+          const y = padT + innerH - h;
+          const isAccent = i === accent;
+          const isHover = i === hover;
+          return (
+            <g
+              key={i}
+              onMouseEnter={() => setHover(i)}
+              style={{ cursor: "pointer" }}
+            >
+              {/* hover hit area (full column, easy to grab) */}
+              <rect
+                x={padL + i * (barW + gap)}
+                y={padT}
+                width={barW + gap}
+                height={innerH + padB - 14}
+                fill="transparent"
+              />
+              <rect
+                x={x}
+                y={y}
+                width={barW}
+                height={Math.max(h, 1)}
+                fill={isAccent ? "var(--accent)" : "var(--ink-faint)"}
+                opacity={hover != null && !isHover ? 0.45 : 1}
+                style={{ transition: "opacity 120ms ease" }}
+              />
+              {showValues && (
+                <text
+                  x={x + barW / 2}
+                  y={y - 6}
+                  textAnchor="middle"
+                  fontFamily="var(--font-mono)"
+                  fontSize="11"
+                  fill={isAccent ? "var(--accent)" : "var(--ink-soft)"}
+                >
+                  {pad(d.value)}
+                </text>
+              )}
+              {labels && labels[i] && (
+                <text
+                  x={x + barW / 2}
+                  y={H - 10}
+                  textAnchor="middle"
+                  fontFamily="var(--font-mono)"
+                  fontSize="11"
+                  fill={isHover ? "var(--ink)" : "var(--ink-faint)"}
+                  style={{ letterSpacing: "0.1em", transition: "fill 120ms ease" }}
+                >
+                  {labels[i]}
+                </text>
+              )}
+            </g>
+          );
+        })}
+      </svg>
+    </ChartFrame>
   );
 }
 
@@ -268,6 +334,7 @@ export function LineChart({
   yTicks = 4,
   showDots = true,
   accentIndex,
+  valueLabel,
   className = "",
 }) {
   const norm = normalizeData(data);
@@ -294,79 +361,126 @@ export function LineChart({
   });
 
   const accent = accentIndex ?? values.length - 1;
+  const [hover, setHover] = useState(null);
+
+  // Calcula o índice mais próximo do mouse via getBoundingClientRect.
+  const handleMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const xPx = e.clientX - rect.left;
+    const xRatio = xPx / rect.width; // 0..1 dentro do svg
+    const xSvg = xRatio * W;
+    // converte para índice (com clamp)
+    const xInner = xSvg - padL;
+    const idx = Math.round(xInner / stepX);
+    if (idx >= 0 && idx < values.length) setHover(idx);
+  };
+
+  const tooltip = hover != null
+    ? (() => {
+        const v = values[hover];
+        const x = padL + hover * stepX;
+        const y = padT + innerH - ((v - min) / range) * innerH;
+        return {
+          xPct: (x / W) * 100,
+          yPct: (y / H) * 100,
+          label: labels?.[hover] || `#${hover + 1}`,
+          value: pad(v),
+          sub: valueLabel,
+        };
+      })()
+    : null;
 
   return (
-    <svg
-      viewBox={`0 0 ${W} ${H}`}
-      className={`ds-chart-svg ${className}`}
-      style={{ width: "100%", height: "auto" }}
-      role="img"
-    >
-      {ticks.map((t, i) => (
-        <line
-          key={i}
-          x1={padL}
-          x2={W - padR}
-          y1={t.y}
-          y2={t.y}
-          stroke="var(--rule-faint)"
-          strokeWidth="1"
-        />
-      ))}
-      {ticks.map((t, i) => (
-        <text
-          key={`l${i}`}
-          x={padL - 8}
-          y={t.y + 4}
-          textAnchor="end"
-          fontFamily="var(--font-mono)"
-          fontSize="11"
-          fill="var(--ink-faint)"
-        >
-          {Math.round(t.v)}
-        </text>
-      ))}
-      <path
-        d={path}
-        fill="none"
-        stroke="var(--accent)"
-        strokeWidth="2"
-        strokeLinejoin="round"
-        strokeLinecap="round"
-      />
-      {showDots &&
-        values.map((v, i) => {
-          const x = padL + i * stepX;
-          const y = padT + innerH - ((v - min) / range) * innerH;
-          const isAccent = i === accent;
-          return (
-            <circle
-              key={i}
-              cx={x}
-              cy={y}
-              r={isAccent ? 5 : 3}
-              fill={isAccent ? "var(--accent)" : "var(--bg-panel)"}
-              stroke="var(--accent)"
-              strokeWidth="1.75"
-            />
-          );
-        })}
-      {labels &&
-        labels.map((l, i) => (
-          <text
+    <ChartFrame tooltip={tooltip}>
+      <svg
+        viewBox={`0 0 ${W} ${H}`}
+        className={`ds-chart-svg ${className}`}
+        style={{ width: "100%", height: "auto" }}
+        role="img"
+        onMouseMove={handleMove}
+        onMouseLeave={() => setHover(null)}
+      >
+        {ticks.map((t, i) => (
+          <line
             key={i}
-            x={padL + i * stepX}
-            y={H - 10}
-            textAnchor="middle"
+            x1={padL}
+            x2={W - padR}
+            y1={t.y}
+            y2={t.y}
+            stroke="var(--rule-faint)"
+            strokeWidth="1"
+          />
+        ))}
+        {ticks.map((t, i) => (
+          <text
+            key={`l${i}`}
+            x={padL - 8}
+            y={t.y + 4}
+            textAnchor="end"
             fontFamily="var(--font-mono)"
             fontSize="11"
             fill="var(--ink-faint)"
-            style={{ letterSpacing: "0.1em" }}
           >
-            {l}
+            {Math.round(t.v)}
           </text>
         ))}
-    </svg>
+        {/* guideline vertical no hover */}
+        {hover != null && (
+          <line
+            x1={padL + hover * stepX}
+            x2={padL + hover * stepX}
+            y1={padT}
+            y2={padT + innerH}
+            stroke="var(--ink-faint)"
+            strokeDasharray="2 3"
+            strokeWidth="1"
+          />
+        )}
+        <path
+          d={path}
+          fill="none"
+          stroke="var(--accent)"
+          strokeWidth="2"
+          strokeLinejoin="round"
+          strokeLinecap="round"
+        />
+        {showDots &&
+          values.map((v, i) => {
+            const x = padL + i * stepX;
+            const y = padT + innerH - ((v - min) / range) * innerH;
+            const isAccent = i === accent;
+            const isHover = i === hover;
+            const r = isHover ? 6 : isAccent ? 5 : 3;
+            return (
+              <circle
+                key={i}
+                cx={x}
+                cy={y}
+                r={r}
+                fill={isAccent || isHover ? "var(--accent)" : "var(--bg-panel)"}
+                stroke="var(--accent)"
+                strokeWidth="1.75"
+                style={{ transition: "r 120ms ease" }}
+              />
+            );
+          })}
+        {labels &&
+          labels.map((l, i) => (
+            <text
+              key={i}
+              x={padL + i * stepX}
+              y={H - 10}
+              textAnchor="middle"
+              fontFamily="var(--font-mono)"
+              fontSize="11"
+              fill={i === hover ? "var(--ink)" : "var(--ink-faint)"}
+              style={{ letterSpacing: "0.1em", transition: "fill 120ms ease" }}
+            >
+              {l}
+            </text>
+          ))}
+      </svg>
+    </ChartFrame>
   );
 }
 
@@ -379,6 +493,7 @@ export function AreaChart({
   labels,
   height = 220,
   yTicks = 4,
+  valueLabel,
   className = "",
 }) {
   const norm = normalizeData(data);
@@ -409,68 +524,117 @@ export function AreaChart({
     return { v, y };
   });
 
+  const [hover, setHover] = useState(null);
+  const handleMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const xRatio = (e.clientX - rect.left) / rect.width;
+    const xSvg = xRatio * W;
+    const idx = Math.round((xSvg - padL) / stepX);
+    if (idx >= 0 && idx < values.length) setHover(idx);
+  };
+
+  const tooltip = hover != null
+    ? (() => {
+        const v = values[hover];
+        const x = padL + hover * stepX;
+        const y = padT + innerH - ((v - min) / range) * innerH;
+        return {
+          xPct: (x / W) * 100,
+          yPct: (y / H) * 100,
+          label: labels?.[hover] || `#${hover + 1}`,
+          value: pad(v),
+          sub: valueLabel,
+        };
+      })()
+    : null;
+
   return (
-    <svg
-      viewBox={`0 0 ${W} ${H}`}
-      className={`ds-chart-svg ${className}`}
-      style={{ width: "100%", height: "auto" }}
-      role="img"
-    >
-      <defs>
-        <linearGradient id={gradId} x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.28" />
-          <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
-        </linearGradient>
-      </defs>
-      {ticks.map((t, i) => (
-        <line
-          key={i}
-          x1={padL}
-          x2={W - padR}
-          y1={t.y}
-          y2={t.y}
-          stroke="var(--rule-faint)"
-          strokeWidth="1"
-        />
-      ))}
-      {ticks.map((t, i) => (
-        <text
-          key={`l${i}`}
-          x={padL - 8}
-          y={t.y + 4}
-          textAnchor="end"
-          fontFamily="var(--font-mono)"
-          fontSize="11"
-          fill="var(--ink-faint)"
-        >
-          {Math.round(t.v)}
-        </text>
-      ))}
-      <path d={areaPath} fill={`url(#${gradId})`} />
-      <path
-        d={linePath}
-        fill="none"
-        stroke="var(--accent)"
-        strokeWidth="2"
-        strokeLinejoin="round"
-        strokeLinecap="round"
-      />
-      {labels &&
-        labels.map((l, i) => (
-          <text
+    <ChartFrame tooltip={tooltip}>
+      <svg
+        viewBox={`0 0 ${W} ${H}`}
+        className={`ds-chart-svg ${className}`}
+        style={{ width: "100%", height: "auto" }}
+        role="img"
+        onMouseMove={handleMove}
+        onMouseLeave={() => setHover(null)}
+      >
+        <defs>
+          <linearGradient id={gradId} x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.28" />
+            <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        {ticks.map((t, i) => (
+          <line
             key={i}
-            x={padL + i * stepX}
-            y={H - 10}
-            textAnchor="middle"
+            x1={padL}
+            x2={W - padR}
+            y1={t.y}
+            y2={t.y}
+            stroke="var(--rule-faint)"
+            strokeWidth="1"
+          />
+        ))}
+        {ticks.map((t, i) => (
+          <text
+            key={`l${i}`}
+            x={padL - 8}
+            y={t.y + 4}
+            textAnchor="end"
             fontFamily="var(--font-mono)"
             fontSize="11"
             fill="var(--ink-faint)"
-            style={{ letterSpacing: "0.1em" }}
           >
-            {l}
+            {Math.round(t.v)}
           </text>
         ))}
-    </svg>
+        {hover != null && (
+          <line
+            x1={padL + hover * stepX}
+            x2={padL + hover * stepX}
+            y1={padT}
+            y2={padT + innerH}
+            stroke="var(--ink-faint)"
+            strokeDasharray="2 3"
+            strokeWidth="1"
+          />
+        )}
+        <path d={areaPath} fill={`url(#${gradId})`} />
+        <path
+          d={linePath}
+          fill="none"
+          stroke="var(--accent)"
+          strokeWidth="2"
+          strokeLinejoin="round"
+          strokeLinecap="round"
+        />
+        {hover != null && (
+          <circle
+            cx={padL + hover * stepX}
+            cy={padT + innerH - ((values[hover] - min) / range) * innerH}
+            r="5"
+            fill="var(--accent)"
+            stroke="var(--bg-panel)"
+            strokeWidth="2"
+          />
+        )}
+        {labels &&
+          labels.map((l, i) => (
+            <text
+              key={i}
+              x={padL + i * stepX}
+              y={H - 10}
+              textAnchor="middle"
+              fontFamily="var(--font-mono)"
+              fontSize="11"
+              fill={i === hover ? "var(--ink)" : "var(--ink-faint)"}
+              style={{ letterSpacing: "0.1em", transition: "fill 120ms ease" }}
+            >
+              {l}
+            </text>
+          ))}
+      </svg>
+    </ChartFrame>
   );
 }
 
@@ -500,49 +664,71 @@ function PieOrDonut({ data, height = 200, donut = false, className = "" }) {
   let startDeg = 0;
   const slices = norm.map((d, i) => {
     const sweep = (d.value / total) * 360;
+    const midDeg = startDeg + sweep / 2;
     const path = arcPath(cx, cy, r, startDeg, startDeg + sweep, innerR);
+    // posição "no meio" da fatia, a meio caminho entre o centro e a borda
+    const tipR = donut ? (innerR + r) / 2 : r * 0.55;
+    const tip = polarToCartesian(cx, cy, tipR, midDeg);
     const slice = {
       path,
       color: SLICE_TONES[i % SLICE_TONES.length],
       label: d.label,
       value: d.value,
       pct: (d.value / total) * 100,
+      tip,
     };
     startDeg += sweep;
     return slice;
   });
 
+  const [hover, setHover] = useState(null);
+  const tooltip = hover != null
+    ? {
+        xPct: (slices[hover].tip.x / W) * 100,
+        yPct: (slices[hover].tip.y / H) * 100,
+        label: slices[hover].label || `#${hover + 1}`,
+        value: pad(slices[hover].value),
+        sub: `${slices[hover].pct.toFixed(1)} %`,
+      }
+    : null;
+
   return (
-    <svg
-      viewBox={`0 0 ${W} ${H}`}
-      className={`ds-chart-svg ${className}`}
-      width={H}
-      height={H}
-      role="img"
-    >
-      {slices.map((s, i) => (
-        <path
-          key={i}
-          d={s.path}
-          fill={s.color}
-          stroke="var(--bg-panel)"
-          strokeWidth="1.5"
-        />
-      ))}
-      {donut && (
-        <text
-          x={cx}
-          y={cy + 4}
-          textAnchor="middle"
-          fontFamily="var(--font-serif)"
-          fontSize={Math.round(H * 0.12)}
-          fontWeight="300"
-          fill="var(--ink)"
-        >
-          {Math.round(total)}
-        </text>
-      )}
-    </svg>
+    <ChartFrame tooltip={tooltip}>
+      <svg
+        viewBox={`0 0 ${W} ${H}`}
+        className={`ds-chart-svg ${className}`}
+        style={{ width: H, height: H }}
+        role="img"
+        onMouseLeave={() => setHover(null)}
+      >
+        {slices.map((s, i) => (
+          <path
+            key={i}
+            d={s.path}
+            fill={s.color}
+            stroke="var(--bg-panel)"
+            strokeWidth="1.5"
+            opacity={hover != null && hover !== i ? 0.55 : 1}
+            style={{ transition: "opacity 120ms ease", cursor: "pointer" }}
+            onMouseEnter={() => setHover(i)}
+          />
+        ))}
+        {donut && (
+          <text
+            x={cx}
+            y={cy + 4}
+            textAnchor="middle"
+            fontFamily="var(--font-serif)"
+            fontSize={Math.round(H * 0.12)}
+            fontWeight="300"
+            fill="var(--ink)"
+            pointerEvents="none"
+          >
+            {Math.round(total)}
+          </text>
+        )}
+      </svg>
+    </ChartFrame>
   );
 }
 
