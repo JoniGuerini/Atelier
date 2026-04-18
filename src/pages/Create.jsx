@@ -89,7 +89,10 @@ export default function Create() {
   }, [theme]);
 
   const update = (key) => (value) => setTheme((p) => ({ ...p, [key]: value }));
-  const reset = () => setTheme(DEFAULT_THEME);
+  // Reset volta aos defaults, mas mantém o tema light/dark alinhado
+  // ao que o usuário está usando no resto do app — assim "restaurar"
+  // não dá um salto de paleta inesperado.
+  const reset = () => setTheme({ ...DEFAULT_THEME, theme: readAppTheme() });
   const shuffle = () => setTheme((p) => shuffleTheme(p));
 
   const previewStyle = useMemo(() => themeToStyle(theme), [theme]);
