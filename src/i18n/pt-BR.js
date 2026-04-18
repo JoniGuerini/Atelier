@@ -1,0 +1,1255 @@
+const ptBR = {
+  common: {
+    viewCode: "Ver código",
+    hideCode: "Ocultar código",
+    copy: "Copiar",
+    copied: "Copiado",
+    cancel: "Cancelar",
+    confirm: "Confirmar",
+    close: "Fechar",
+    save: "Salvar",
+    discard: "Descartar",
+    subscribe: "Assinar",
+    retry: "Tentar novamente",
+    back: "Voltar",
+    next: "Próximo",
+    previous: "Anterior",
+    props: "Props",
+    prop: "Prop",
+    type: "Tipo",
+    default: "Padrão",
+    example: "Exemplo",
+    import: "import",
+    collapseSidebar: "Recolher menu",
+    expandSidebar: "Expandir menu",
+    backToTop: "Voltar ao topo",
+  },
+
+  theme: {
+    label: "Tema",
+    light: "Claro",
+    dark: "Escuro",
+    switchToLight: "Mudar para o modo claro",
+    switchToDark: "Mudar para o modo escuro",
+  },
+
+  nav: {
+    brand: { title: "Atelier", caption: "Design System · v0.1" },
+    groups: {
+      start: "Início",
+      foundations: "Fundamentos",
+      components: "Componentes",
+      patterns: "Padrões",
+      reference: "Referência",
+    },
+    items: {
+      overview: "Visão geral",
+      principles: "Princípios",
+      colors: "Cores",
+      typography: "Tipografia",
+      spacing: "Espaçamento",
+      icons: "Glifos",
+      buttons: "Botões",
+      inputs: "Campos",
+      controls: "Controles",
+      badges: "Badges",
+      avatars: "Avatares",
+      alerts: "Alertas",
+      cards: "Cards",
+      tabs: "Abas",
+      tables: "Tabelas",
+      overlays: "Sobreposições",
+      feedback: "Feedback",
+      dropzone: "Dropzone",
+      forms: "Formulários",
+      emptyStates: "Estados vazios",
+      sidebar: "Sidebar",
+      navbar: "Navbar",
+      code: "Para devs · código",
+    },
+    footer: {
+      study: "Um estudo silencioso",
+      stack: "React · Vite · 2026",
+      language: "Idioma",
+      theme: "Tema",
+    },
+    mode: {
+      label: "Navegação",
+      sidebar: "Lateral",
+      navbar: "Superior",
+    },
+    navLabel: "Navegação principal",
+  },
+
+  /* ============================================================ */
+  footer: {
+    navLabel: "Navegação de rodapé",
+    socialLabel: "Redes sociais",
+    tagline: "Um manual silencioso para interfaces editoriais.",
+    stack: "React · Vite · 2026",
+    copyright: "Atelier · feito com cuidado",
+    groups: {
+      foundations: "Fundamentos",
+      components: "Componentes",
+      patterns: "Padrões",
+      atelier: "Ateliê",
+    },
+    links: {
+      /* foundations */
+      principles: "Princípios",
+      colors: "Cores",
+      typography: "Tipografia",
+      spacing: "Espaçamento",
+      icons: "Glifos",
+      /* components */
+      buttons: "Botões",
+      inputs: "Campos",
+      avatars: "Avatares",
+      badges: "Badges",
+      cards: "Cards",
+      tables: "Tabelas",
+      /* patterns */
+      forms: "Formulários",
+      empty_states: "Estados vazios",
+      sidebar: "Sidebar",
+      navbar: "Navbar",
+      dropzone: "Dropzone",
+      /* atelier */
+      overview: "Visão geral",
+      code: "Para devs · código",
+    },
+    social: {
+      github: "https://github.com/",
+      linkedin: "https://www.linkedin.com/in/joniguerini/",
+    },
+  },
+
+  /* ============================================================ */
+  pages: {
+    /* ------------- Overview ------------- */
+    overview: {
+      lead: "Atelier · Um manual silencioso",
+      titleA: "Um design system [acc]editorial[/acc],",
+      titleB: "feito para respirar.",
+      metaLabel: "Edição",
+      meta: "Nº 01 · 2026",
+      intro:
+        "[em]Atelier[/em] é uma coleção enxuta de princípios, fundamentos e componentes. Pensado como uma revista de arquitetura — margens generosas, tipos vivos, gestos precisos. Nada estridente. Nada supérfluo.",
+      cards: [
+        {
+          kicker: "I · Fundamentos",
+          titleA: "A matéria-",
+          titleB: "prima",
+          body:
+            "Cores, tipografia, espaçamento, grid e glifos. A espinha silenciosa sobre a qual tudo se apoia.",
+          cta: "Explorar cores",
+          to: "colors",
+        },
+        {
+          kicker: "II · Componentes",
+          titleA: "Os ",
+          titleB: "instrumentos",
+          body:
+            "Botões, campos, cartões, alertas, abas — cada um refinado e previsível. Sem decorações gratuitas.",
+          cta: "Ver componentes",
+          to: "buttons",
+        },
+        {
+          kicker: "III · Padrões",
+          titleA: "As ",
+          titleB: "composições",
+          body:
+            "Formulários, estados vazios, navegação. Receitas para combinar bem aquilo que já está pronto.",
+          cta: "Ver padrões",
+          to: "forms",
+        },
+      ],
+      indexLabel: "índice",
+      quickStartKicker: "Começo rápido",
+      quickStartBody:
+        "Comece pela [em]Visão dos princípios[/em] para entender a filosofia, ou salte direto para componentes se já está implementando.",
+      readPrinciples: "Ler os princípios",
+      goComponents: "Ir para componentes",
+      forDevs: "Para devs · código →",
+      glanceKicker: "Em um olhar",
+      badges: {
+        react: "React 18",
+        vite: "Vite 5",
+        fraunces: "Fraunces",
+        mono: "JetBrains Mono",
+        editorial: "Editorial",
+        a11y: "Acessível",
+        light: "Sem dependências pesadas",
+      },
+      quote: "“Boa tipografia é invisível. Boa interface, também.”",
+      quoteAuthor: "— o manifesto",
+    },
+
+    /* ------------- Principles ------------- */
+    principles: {
+      lead: "I · O manifesto",
+      titleA: "Seis [acc]princípios[/acc] que",
+      titleB: "guiam cada decisão.",
+      metaLabel: "Capítulo",
+      meta: "Princípios",
+      intro:
+        "Um sistema é tão consistente quanto as convicções que o sustentam. Estas são as nossas — [em]curtas, obstinadas e revisitadas a cada edição[/em].",
+      sectionTitleA: "Os ",
+      sectionTitleB: "seis",
+      sectionKicker: "manifesto",
+      items: [
+        {
+          n: "01",
+          title: "Silêncio como default",
+          body:
+            "Interface não é vitrine. A cor mais ruidosa — o vermelho — é usada com parcimônia, como anotação à margem. Tudo começa em repouso.",
+        },
+        {
+          n: "02",
+          title: "Tipografia antes de pixels",
+          body:
+            "A hierarquia é tipográfica, não cromática. Tamanho, itálico e espaço fazem o trabalho pesado. Cores apenas confirmam o que a fonte já disse.",
+        },
+        {
+          n: "03",
+          title: "Ângulos retos",
+          body:
+            "Nenhum border-radius. Nenhuma sombra. A geometria é editorial: papel, tinta, régua. A interface lembra um caderno bem encadernado.",
+        },
+        {
+          n: "04",
+          title: "Medida humana",
+          body:
+            "Colunas máximas de 1080px. Linhas nunca ultrapassam 70 caracteres. O olho precisa descansar entre as palavras.",
+        },
+        {
+          n: "05",
+          title: "Gestos previsíveis",
+          body:
+            "Cada animação dura entre 120 e 320 ms, com easing único. O movimento é discreto — confirma ações, não as anuncia.",
+        },
+        {
+          n: "06",
+          title: "Acessível por construção",
+          body:
+            "Contraste mínimo de 4.5:1 no corpo de texto. Focos visíveis. Componentes navegáveis por teclado. Tudo como deveria ser.",
+        },
+      ],
+    },
+
+    /* ------------- Colors ------------- */
+    colors: {
+      lead: "Fundamento · 02",
+      titleA: "A ",
+      titleB: "paleta",
+      metaLabel: "Tokens",
+      meta: "19 cores",
+      intro:
+        "Quatro famílias: [em]superfícies[/em] para apoiar o olho, [em]tinta[/em] para o conteúdo, [em]acento[/em] para pontuar, e [em]semânticas[/em] para estados. Nada mais.",
+      sections: {
+        theme: {
+          num: "i",
+          title: "Tema",
+          kicker: "light · dark",
+          desc:
+            "Tokens [acc]cromáticos[/acc] são organizados em camadas: invariantes (espaço, tipografia, motion) e cromáticos (por tema). Na primeira visita, o tema inicial segue o [em]prefers-color-scheme[/em] do sistema; depois disso, sua escolha prevalece e é preservada. Abaixo, as paletas se apresentam em ambos os modos — o hex em destaque é o [em]ativo[/em]; o secundário é o par oposto.",
+        },
+        surface: {
+          num: "ii",
+          title: "Superfícies",
+          kicker: "backgrounds",
+          desc:
+            "O fundo é papel, não tela. Um creme quente que suaviza o contraste e imita o descanso do impresso.",
+        },
+        ink: {
+          num: "iii",
+          title: "Tinta",
+          kicker: "typography",
+          desc:
+            "Quatro níveis de presença — do título impositivo ao metadado quase apagado.",
+        },
+        accent: {
+          num: "iv",
+          title: "Acento",
+          kicker: "emphasis",
+          desc:
+            "Usado como anotação em vermelho — bordas de foco, numerais editoriais, pontuação pontual. Nunca em grandes áreas.",
+        },
+        semantic: {
+          num: "v",
+          title: "Semânticas",
+          kicker: "status",
+          desc:
+            "Pares (ink + soft) para comunicar sucesso, alerta, perigo e informação sem alterar o tom da página.",
+        },
+      },
+      swatches: {
+        paper: "Papel",
+        panel: "Painel",
+        sunken: "Afundado",
+        inverse: "Inverso",
+        ink: "Tinta",
+        inkSoft: "Tinta suave",
+        inkFaint: "Tinta tênue",
+        inkInverse: "Tinta inversa",
+        accent: "Acento",
+        accentInk: "Acento tinta",
+        accentSoft: "Acento suave",
+        success: "Sucesso",
+        successSoft: "Sucesso suave",
+        warning: "Atenção",
+        warningSoft: "Atenção suave",
+        danger: "Perigo",
+        dangerSoft: "Perigo suave",
+        info: "Info",
+        infoSoft: "Info suave",
+      },
+    },
+
+    /* ------------- Typography ------------- */
+    typography: {
+      lead: "Fundamento · 03",
+      titleA: "A ",
+      titleB: "tipografia",
+      metaLabel: "Famílias",
+      meta: "Fraunces · JetBrains Mono",
+      intro:
+        "Duas famílias fazem todo o trabalho. [em]Fraunces[/em] para leitura e ênfase, [em]JetBrains Mono[/em] para metadados e código. O itálico é a única decoração permitida.",
+      specimensTitle: "Especimens",
+      specimensKicker: "hierarchy",
+      scaleTitle: "Escala",
+      scaleKicker: "ratios",
+      scaleDesc:
+        "Proporção perfect-fifth (1.5) para a serifada, reduzida para passos discretos na monoespaçada. Nunca mais de seis níveis por tela.",
+      specimens: {
+        display: {
+          meta: "Display",
+          weight: "300 · italic optional",
+          textA: "A ",
+          textB: "manhã",
+          textC: " começa no título.",
+        },
+        headline: {
+          meta: "Headline",
+          weight: "300",
+          textA: "Os silêncios também ",
+          textB: "têm",
+          textC: " voz.",
+        },
+        title: {
+          meta: "Title",
+          weight: "300",
+          text: "Um parágrafo bem respirado convida o leitor.",
+        },
+        body: {
+          meta: "Body serif",
+          weight: "400",
+          text:
+            "A tipografia do Atelier apoia-se em Fraunces — um serif moderno com formas vivas, optical sizing e um itálico expressivo usado apenas em ênfase.",
+        },
+        caption: {
+          meta: "Caption",
+          weight: "500 · uppercase",
+          text: "Metadado · rodapé · etiqueta",
+        },
+        mono: { meta: "Mono inline", weight: "400", text: "--accent: #c8361d;" },
+      },
+    },
+
+    /* ------------- Spacing ------------- */
+    spacing: {
+      lead: "Fundamento · 04",
+      titleA: "O ",
+      titleB: "espaço",
+      metaLabel: "Base",
+      meta: "8pt",
+      intro:
+        "Toda medida é múltipla de 4 — com preferência por 8. O espaço é o principal [em]material[/em] de composição: respira o layout e dita o ritmo da leitura.",
+      scaleTitle: "Escala",
+      scaleKicker: "8pt grid",
+      gridTitle: "Grid editorial",
+      gridKicker: "12 columns",
+      gridDesc:
+        "Uma coluna máxima de 1080px sobre 12 subcolunas. Calhas de 24px. O conteúdo respeita margens generosas em todas as direções.",
+      rulesTitle: "Regras de uso",
+      rulesKicker: "rhythm",
+      rules: [
+        {
+          n: "I",
+          t: "Dentro de um componente",
+          b:
+            "Use 4–12px. Nunca mais. O componente deve parecer um objeto coeso.",
+        },
+        {
+          n: "II",
+          t: "Entre componentes",
+          b:
+            "Use 16–32px. O espaço separa sem dividir — como parágrafos em um ensaio.",
+        },
+        {
+          n: "III",
+          t: "Entre seções",
+          b: "Use 48–96px. A mudança de assunto pede pausa. Ofereça pausa.",
+        },
+      ],
+    },
+
+    /* ------------- Icons ------------- */
+    icons: {
+      lead: "Fundamento · 05",
+      titleA: "Os ",
+      titleB: "glifos",
+      metaLabel: "Biblioteca",
+      meta: "Apenas o essencial",
+      intro:
+        "Usamos glifos tipográficos antes de ícones desenhados. Caracteres Unicode renderizados em Fraunces carregam a mesma linguagem do texto — [em]menos ruído, mais coesão[/em].",
+      repertoireTitle: "Repertório",
+      repertoireKicker: "unicode",
+      contextTitle: "Em contexto",
+      contextKicker: "inline usage",
+      contextDesc:
+        "Em meio ao texto, o glifo deve ter o mesmo peso tipográfico. Em destaque (numerais, setas editoriais), aceita o acento em vermelho.",
+      contextPhrase: "Continue lendo",
+      contextPhraseB: " avance para a próxima seção. Ou volte ",
+      contextPhraseC: " ao topo.",
+      names: {
+        arrow: "seta",
+        enter: "retornar",
+        close: "fechar",
+        add: "adicionar",
+        remove: "remover",
+        more: "mais",
+        section: "seção",
+        paragraph: "parágrafo",
+        check: "confirmar",
+        alert: "alertar",
+        info: "info",
+        help: "ajuda",
+      },
+    },
+
+    /* ------------- Buttons ------------- */
+    buttons: {
+      lead: "Componente · 06",
+      titleA: "Os ",
+      titleB: "botões",
+      metaLabel: "Variantes",
+      meta: "5 · 3 tamanhos",
+      intro:
+        "O botão é o gesto. Cinco variantes cobrem da chamada principal ao link discreto. Todos em caixa alta, monoespaçados, sem arredondar — [em]clicáveis à primeira vista[/em].",
+      variants: { title: "Variantes", kicker: "hierarchy", caption: "Cinco variantes" },
+      sizes: { title: "Tamanhos", kicker: "sm · md · lg", caption: "Três tamanhos" },
+      states: { title: "Estados", kicker: "hover · disabled", caption: "Desabilitado e focado" },
+      glyphs: {
+        titleA: "Com ",
+        titleB: "glifo",
+        kicker: "inline mark",
+        caption: "Glifos tipográficos",
+      },
+      group: {
+        title: "Em um grupo",
+        kicker: "actions row",
+        caption: "Barra de ações",
+      },
+      sidebarToggle: {
+        title: "Recolher a navegação",
+        kicker: "sidebar toggle",
+        caption: "Dois estados, um gesto",
+        note:
+          "O [acc]SidebarToggle[/acc] é um botão dedicado para retrair o menu lateral. Ele é [em]totalmente controlado[/em] — recebe [em]collapsed[/em] e [em]onToggle[/em]. O chevron gira 180° quando a sidebar está recolhida. Use [em]Ctrl + B[/em] para alternar sem tirar as mãos do teclado.",
+      },
+      backToTop: {
+        title: "Voltar ao topo",
+        kicker: "back to top",
+        caption: "Aparece depois do scroll",
+        note:
+          "O [acc]BackToTop[/acc] é [em]autocontido[/em]: observa o scroll e aparece com fade suave depois de [em]threshold[/em] pixels (padrão 320). Ao clicar, rola a página até o topo — com [em]smooth scroll[/em] ou instantâneo, conforme a preferência do sistema. Está sempre presente nesta página; role para baixo para vê-lo surgir no canto inferior-direito.",
+      },
+      labels: {
+        primary: "Confirmar",
+        secondary: "Secundário",
+        accent: "Ação em destaque",
+        ghost: "Fantasma",
+        link: "Link editorial",
+        sm: "Pequeno",
+        md: "Médio",
+        lg: "Grande",
+        active: "Ativo",
+        disabled: "Desabilitado",
+        next: "Avançar",
+        newItem: "Novo item",
+        download: "Baixar",
+        cancel: "Cancelar",
+        draft: "Rascunho",
+        publish: "Publicar",
+      },
+    },
+
+    /* ------------- Inputs ------------- */
+    inputs: {
+      lead: "Componente · 07",
+      titleA: "Os ",
+      titleB: "campos",
+      metaLabel: "Tipos",
+      meta: "Input · Textarea · Select",
+      intro:
+        "Campos silenciosos — bordas suaves até receberem o foco. Nenhum truque; apenas um fio fino e legível que se torna [em]vermelho[/em] quando há atenção.",
+      text: { title: "Texto", kicker: "input", caption: "Input padrão" },
+      textarea: {
+        title: "Áreas de texto",
+        kicker: "textarea",
+        caption: "Para conteúdo longo",
+      },
+      select: { title: "Seleção", kicker: "select", caption: "Listas suspensas" },
+      labels: {
+        fullName: "Nome completo",
+        fullNameHint: "Como gostaria de ser chamado?",
+        fullNamePh: "Clara Almeida",
+        email: "E-mail",
+        emailHint: "Endereço válido e único",
+        emailError: "E-mail inválido.",
+        disabled: "Desabilitado",
+        disabledValue: "Não é possível editar",
+        about: "Sobre você",
+        aboutHint: "Máximo 280 caracteres.",
+        aboutPh: "Uma linha, um parágrafo, um ensaio breve…",
+        edition: "Edição",
+        format: "Formato",
+        formatOpts: ["Revista", "Jornal", "Livro"],
+      },
+    },
+
+    /* ------------- Controls ------------- */
+    controls: {
+      lead: "Componente · 08",
+      titleA: "Os ",
+      titleB: "controles",
+      metaLabel: "Binários",
+      meta: "Checkbox · Radio · Switch",
+      intro:
+        "Toque único, resposta imediata. Os controles vestem a mesma geometria dos campos — bordas retas, marcadores sólidos em [em]vermelho[/em] quando ativos.",
+      check: {
+        title: "Caixas de seleção",
+        kicker: "checkbox",
+        caption: "Múltipla escolha",
+      },
+      radio: {
+        title: "Botões de rádio",
+        kicker: "radio",
+        caption: "Escolha única",
+      },
+      switch: {
+        title: "Interruptores",
+        kicker: "switch",
+        caption: "Alternância discreta",
+      },
+      labels: {
+        monthly: "Aceito receber a edição mensal",
+        early: "Quero acesso antecipado a rascunhos",
+        disabled: "Desabilitado",
+        uncheckedDisabled: "Desmarcado e desabilitado",
+        plans: [
+          "Mensal — R$ 29",
+          "Trimestral — R$ 79",
+          "Anual — R$ 279",
+        ],
+        emailNotif: "Notificações por e-mail",
+        quietMode: "Modo silencioso",
+      },
+    },
+
+    /* ------------- Badges ------------- */
+    badges: {
+      lead: "Componente · 09",
+      titleA: "Os ",
+      titleB: "badges",
+      metaLabel: "Pequeno",
+      meta: "Apenas o rótulo",
+      intro:
+        "Etiquetas monoespaçadas em caixa alta. Servem para classificar, nunca para decorar. Um [em]ponto[/em] à esquerda indica estado ativo.",
+      variants: {
+        title: "Variantes",
+        kicker: "status",
+        caption: "Uma família, vários tons",
+      },
+      dot: {
+        titleA: "Com ",
+        titleB: "ponto",
+        kicker: "live state",
+        caption: "Indicador de presença",
+      },
+      context: {
+        title: "Em contexto",
+        kicker: "inline",
+        caption: "Junto ao título de um artigo",
+      },
+      labels: {
+        default: "Padrão",
+        solid: "Sólido",
+        accent: "Em destaque",
+        ok: "Sucesso",
+        warn: "Atenção",
+        info: "Info",
+        published: "Publicado",
+        draft: "Rascunho",
+        edited: "Editado",
+        archived: "Arquivado",
+        new: "Novo",
+      },
+      contextTitleA: "A ",
+      contextTitleB: "manhã",
+      contextTitleC: " começa no título",
+      contextDate: "18 · abr",
+    },
+
+    /* ------------- Avatars ------------- */
+    avatars: {
+      lead: "Componente · 10",
+      titleA: "Os ",
+      titleB: "avatares",
+      metaLabel: "Identidade",
+      meta: "Retrato · presets · upload",
+      intro:
+        "Um [em]avatar[/em] é o retrato silencioso de quem escreve — iniciais, uma imagem pessoal ou um preset do ateliê. Diversas formas, um mesmo tom.",
+      variants: {
+        title: "Variantes",
+        kicker: "base state",
+        caption: "Três tons tipográficos",
+      },
+      sizes: {
+        title: "Tamanhos",
+        kicker: "scale",
+        caption: "Do glifo discreto ao retrato editorial",
+      },
+      image: {
+        title: "Com imagem",
+        kicker: "photographic",
+        caption: "Upload direto, com fallback para iniciais",
+      },
+      presets: {
+        title: "Presets do ateliê",
+        kicker: "pronto para usar",
+        caption: "Monogramas, formas e ornamentos",
+      },
+      picker: {
+        title: "Seletor completo",
+        kicker: "upload + crop + galeria",
+        caption: "Envie uma foto, enquadre, ou escolha um preset",
+        currentLabel: "Atual",
+        stateImage: "Imagem personalizada",
+        statePreset: "Preset do ateliê",
+        stateInitials: "Apenas iniciais",
+        remove: "Remover e voltar para iniciais",
+        uploadA: "Arraste uma ",
+        uploadB: "imagem",
+        uploadC: " ou clique para escolher",
+        uploadHint: "PNG, JPG, SVG · até alguns MB",
+        zoom: "Zoom",
+        cancel: "Cancelar",
+        apply: "Aplicar",
+        groups: {
+          monogram: "Monogramas",
+          geometric: "Geométricos",
+          ornament: "Ornamentos",
+        },
+      },
+      group: {
+        title: "Grupo de avatares",
+        kicker: "stack",
+        caption: "Até quatro visíveis; o excedente vira contador",
+      },
+    },
+
+    /* ------------- Alerts ------------- */
+    alerts: {
+      lead: "Componente · 11",
+      titleA: "Os ",
+      titleB: "alertas",
+      metaLabel: "Variantes",
+      meta: "4 tons",
+      intro:
+        "Mensagens estáticas em bloco, para o texto que precisa ser lido com atenção. Uma barra colorida à esquerda e um glifo sinalizam o [em]assunto[/em] sem gritar.",
+      info: {
+        title: "Informação",
+        kicker: "info",
+        caption: "Cor fria, leitura calma",
+        alertTitle: "Sobre esta edição",
+        alertText:
+          "O Atelier publica uma edição por trimestre. Você pode assinar pela sidebar para receber uma carta breve no dia do lançamento.",
+      },
+      ok: {
+        title: "Sucesso",
+        kicker: "ok",
+        caption: "Ação bem concluída",
+        alertTitle: "Rascunho publicado",
+        alertText:
+          "Seu artigo foi publicado na edição de abril. Obrigado por escrever com a gente.",
+      },
+      warn: {
+        title: "Atenção",
+        kicker: "warn",
+        caption: "Algo precisa da sua revisão",
+        alertTitle: "Três imagens sem legenda",
+        alertText:
+          "Antes de publicar, recomendamos adicionar legendas às imagens destacadas. O editor continuará funcionando normalmente.",
+      },
+      danger: {
+        title: "Perigo",
+        kicker: "danger",
+        caption: "Algo impediu a ação",
+        alertTitle: "Não foi possível salvar",
+        alertText:
+          "Perdemos a conexão com o servidor no meio do envio. Nenhuma alteração foi perdida — tente novamente quando a rede voltar.",
+      },
+    },
+
+    /* ------------- Cards ------------- */
+    cards: {
+      lead: "Componente · 12",
+      titleA: "Os ",
+      titleB: "cartões",
+      metaLabel: "Blocos",
+      meta: "Conteúdo tabular",
+      intro:
+        "Um cartão é um [em]parágrafo dentro de uma página[/em]: tem kicker, título, corpo e rodapé. Sempre retangular, sempre sobre papel.",
+      editorial: {
+        title: "Padrão editorial",
+        kicker: "kicker · title · body",
+        caption: "Três cartões em grade",
+      },
+      actions: {
+        titleA: "Com ",
+        titleB: "ações",
+        kicker: "actionable",
+        caption: "Cartão com CTA",
+      },
+      profile: {
+        title: "Perfil",
+        kicker: "avatar + meta",
+        caption: "Autor em destaque",
+      },
+      items: [
+        {
+          kicker: "Crônica · 04",
+          titleA: "Sobre o ",
+          titleB: "silêncio",
+          titleC: " das interfaces",
+          body:
+            "Há uma diferença entre quieto e vazio. Nem toda pausa pede ruído para ser preenchida — às vezes, o espaço [em]é[/em] o conteúdo.",
+          foot: "Por Clara A. · 5 min",
+        },
+        {
+          kicker: "Ensaio · 02",
+          titleA: "A serifa e o seu ",
+          titleB: "lugar",
+          titleC: "",
+          body:
+            "Fraunces é uma carta de amor aos tipos do século XIX, escrita com vocabulário de 2026. Um serif moderno que aceita voltas italianas.",
+          foot: "Por J. Mesquita · 8 min",
+        },
+        {
+          kicker: "Manual · 01",
+          titleA: "Cinco ",
+          titleB: "regras",
+          titleC: " para uma régua",
+          body:
+            "Uma medida coerente transforma bom trabalho em trabalho comparável. Começamos pelo 8pt — depois, negociamos.",
+          foot: "Por Atelier Team · 3 min",
+        },
+      ],
+      subscription: {
+        kicker: "Assinatura · anual",
+        titleA: "Atelier, ",
+        titleB: "todo trimestre",
+        body:
+          "Quatro edições impressas, o acervo digital completo e um convite para o encontro anual de leitores.",
+        price: "R$ 279 / ano",
+        cta: "Assinar",
+      },
+      author: {
+        role: "Editor-chefe",
+        nameA: "Joaquim ",
+        nameB: "Álvaro",
+        active: "Ativo",
+        count: "12 artigos",
+      },
+    },
+
+    /* ------------- Tabs ------------- */
+    tabs: {
+      lead: "Componente · 13",
+      titleA: "As ",
+      titleB: "abas",
+      metaLabel: "Navegação",
+      meta: "Tabs · Breadcrumbs",
+      intro:
+        "Abas para alternar visões; trilhas de pão para localizar. Em ambos, a [em]cor vermelha[/em] marca o presente — o resto é silêncio.",
+      tabs: {
+        title: "Abas",
+        kicker: ".ds-tabs",
+        caption: "Navegação lateral em uma página",
+        foundations: {
+          label: "Fundamentos",
+          body:
+            "Cores, tipografia e espaçamento. A espinha silenciosa sobre a qual tudo se apoia — o resto é orquestração.",
+        },
+        components: {
+          label: "Componentes",
+          body:
+            "Instrumentos refinados. Cada um tem uma única função clara e responde previsivelmente aos mesmos estímulos.",
+        },
+        patterns: {
+          label: "Padrões",
+          body:
+            "Como compor instrumentos em peças maiores — formulários, navegações, estados vazios. Receitas, não regras.",
+        },
+      },
+      crumbs: {
+        title: "Trilha de pão",
+        kicker: "breadcrumbs",
+        caption: "Localização em hierarquias",
+        aBase: ["Atelier", "Componentes", "Abas"],
+        bBase: ["Atelier", "Fundamentos", "Cores", "Acento"],
+      },
+    },
+
+    /* ------------- Tables ------------- */
+    tables: {
+      lead: "Componente · 14",
+      titleA: "As ",
+      titleB: "tabelas",
+      metaLabel: "Dados",
+      meta: "Denso mas respirável",
+      intro:
+        "Tabelas serifadas com metadados em mono. Sem zebrado — confiamos na [em]linha[/em] para separar os dados. O hover é a única surpresa.",
+      standardTitle: "Estrutura padrão",
+      standardKicker: ".ds-table",
+      standardCaption: "Lista de artigos",
+      headers: { n: "Nº", title: "Título", author: "Autor", state: "Estado", date: "Data" },
+      states: { published: "Publicado", draft: "Rascunho", review: "Revisão" },
+      readCta: "Ler →",
+      rows: [
+        { n: "001", title: "A manhã começa no título", author: "Clara A.",    stateKey: "published", date: "18 · abr" },
+        { n: "002", title: "Sobre o silêncio das interfaces", author: "J. Mesquita", stateKey: "draft", date: "14 · abr" },
+        { n: "003", title: "A serifa e o seu lugar", author: "Ana L.", stateKey: "review", date: "09 · abr" },
+        { n: "004", title: "Cinco regras para uma régua", author: "Atelier", stateKey: "published", date: "02 · abr" },
+      ],
+    },
+
+    /* ------------- Overlays ------------- */
+    overlays: {
+      lead: "Componente · 15",
+      titleA: "As ",
+      titleB: "sobreposições",
+      metaLabel: "Foco",
+      meta: "Modal · Tooltip",
+      intro:
+        "Interrompem a leitura com cerimônia. Um [em]modal[/em] pede atenção total; um [em]tooltip[/em] apenas sussurra contexto.",
+      modal: {
+        title: "Modal",
+        kicker: ".ds-modal",
+        caption: "Bloqueia o fundo e recebe o foco",
+        open: "Abrir modal",
+        titleA: "Descartar ",
+        titleB: "rascunho",
+        titleC: "?",
+        body:
+          "Seu rascunho será removido do Atelier e não poderá ser recuperado. Esta é uma ação definitiva — pausamos um instante para ter certeza de que é mesmo o que você quer.",
+      },
+      tooltip: {
+        title: "Tooltip",
+        kicker: ".ds-tt",
+        caption: "Contexto em hover / foco",
+        copy: "Copiar",
+        copyTip: "Copiar para a área de transferência",
+        download: "Baixar",
+        downloadTip: "Baixar como arquivo",
+        publish: "Publicar",
+        publishTip: "Esta ação é permanente",
+      },
+    },
+
+    /* ------------- Feedback ------------- */
+    feedback: {
+      lead: "Componente · 16",
+      titleA: "O ",
+      titleB: "retorno",
+      metaLabel: "Progresso · Toast",
+      meta: "Respostas discretas",
+      intro:
+        "Feedback é gentileza. Barras finas para tempo, mensagens breves que aparecem e [em]desaparecem[/em].",
+      progress: {
+        title: "Barra de progresso",
+        kicker: ".ds-progress",
+        caption: "Progresso determinado",
+        label: "Enviando arquivo",
+        finish: "Concluir",
+        reset: "Reiniciar",
+      },
+      toast: {
+        title: "Toast",
+        kicker: ".ds-toast",
+        caption: "Mensagem fugaz",
+        confirm: "Mostrar confirmação",
+        save: "Salvar rascunho",
+        simulate: "Simular erro",
+        copied: "Copiado para a área de transferência",
+        saved: "Rascunho salvo",
+        lost: "Conexão perdida",
+      },
+    },
+
+    /* ------------- Dropzone ------------- */
+    dropzone: {
+      lead: "Componente · 17",
+      titleA: "O ",
+      titleB: "dropzone",
+      metaLabel: "Arquivos",
+      meta: "Drag & drop",
+      intro:
+        "A origem deste design system foi um pequeno conversor de CSV. Aqui fica preservado o componente que lhe deu forma: um [em]dropzone[/em] tipográfico, editorial.",
+      empty: {
+        title: "Vazio",
+        kicker: "idle state",
+        caption: "Cursor convidativo, área tracejada",
+        dragA: "Arraste um ",
+        dragB: "arquivo",
+        dragC: " aqui",
+        orPick: "ou clique para escolher",
+      },
+      filled: {
+        title: "Com arquivo",
+        kicker: "filled state",
+        caption: "Cartão de arquivo selecionado",
+        size: "Tamanho",
+        type: "Tipo",
+        modified: "Modificado",
+        reset: "Remover e recomeçar",
+        defaultType: "texto/plano",
+        hint: "Escolha um arquivo na seção acima para visualizar este estado.",
+      },
+    },
+
+    /* ------------- Forms ------------- */
+    forms: {
+      lead: "Padrão · 18",
+      titleA: "Os ",
+      titleB: "formulários",
+      metaLabel: "Composição",
+      meta: "Campos + ações",
+      intro:
+        "Formulário é narrativa em etapas — cabeçalho, corpo e ações. Use [em]divisores[/em] para agrupar, não bordas internas.",
+      completeTitleA: "Formulário ",
+      completeTitleB: "completo",
+      completeKicker: "pattern",
+      completeCaption: "Assinatura do Atelier",
+      stepYour: "i · Seus dados",
+      name: "Nome",
+      namePh: "Clara",
+      lastName: "Sobrenome",
+      lastNamePh: "Almeida",
+      email: "E-mail",
+      emailHint: "Usaremos apenas para enviar a edição.",
+      emailPh: "clara@atelier.com",
+      preferences: "preferências",
+      plan: "Plano",
+      plans: { monthly: "Mensal", quarterly: "Trimestral", annual: "Anual" },
+      format: "Formato",
+      formats: ["Impresso + digital", "Apenas digital"],
+      reason: "Motivo (opcional)",
+      reasonHint: "Conta pra gente o que te trouxe?",
+      reasonPh: "Uma linha, um parágrafo…",
+      accept: "Concordo em receber uma carta breve a cada nova edição.",
+      cancel: "Cancelar",
+      subscribe: "Assinar",
+    },
+
+    /* ------------- Empty States ------------- */
+    emptyStates: {
+      lead: "Padrão · 19",
+      titleA: "Os ",
+      titleB: "vazios",
+      metaLabel: "Sem conteúdo",
+      meta: "Convites, não derrotas",
+      intro:
+        "Um estado vazio é [em]espaço em branco com intenção[/em]. Convida o leitor à ação seguinte, explica o que virá — nunca apenas diz “nada aqui”.",
+      first: {
+        title: "Primeira visita",
+        kicker: "onboarding",
+        caption: "Antes do primeiro conteúdo",
+        emptyTitleA: "Ainda sem ",
+        emptyTitleB: "artigos",
+        emptyTitleC: "",
+        emptyBody:
+          "Quando um autor publicar a primeira peça, ela aparecerá aqui — na edição em que foi lançada. Enquanto isso, explore os fundamentos.",
+        cta: "Convidar um autor",
+      },
+      search: {
+        title: "Busca sem resultado",
+        kicker: "search",
+        caption: "Termo não encontrado",
+        emptyTitleA: "Sem resultados para ",
+        emptyTitleB: "“serifa”",
+        emptyTitleC: "",
+        emptyBody:
+          "Tente uma variação do termo, remova filtros ou percorra os temas mais recentes pela capa.",
+        cta: "Voltar à capa",
+      },
+      offline: {
+        title: "Offline",
+        kicker: "network",
+        caption: "Sem conexão",
+        emptyTitleA: "Perdemos a ",
+        emptyTitleB: "conexão",
+        emptyTitleC: "",
+        emptyBody:
+          "Nada que você escreveu se perdeu. Quando a rede voltar, seguimos exatamente de onde paramos.",
+        cta: "Tentar novamente",
+      },
+    },
+
+    /* ------------- Sidebar (pattern) ------------- */
+    sidebar: {
+      lead: "Padrão · 20",
+      titleA: "A ",
+      titleB: "sidebar",
+      metaLabel: "Navegação",
+      meta: "Estrutura vertical",
+      intro:
+        "A [em]sidebar[/em] é o sumário do Atelier: traz o ritmo da leitura em colunas, com grupos hierárquicos e o próprio toque editorial. É a navegação primária quando há muitas páginas e o usuário precisa [em]folhear[/em] o conteúdo.",
+      anatomy: {
+        title: "Anatomia",
+        titleB: "partes",
+        kicker: "parts",
+        caption: "Cinco regiões empilhadas, cada uma com um papel tipográfico.",
+        parts: [
+          {
+            n: "01",
+            label: "Marca",
+            desc:
+              "Wordmark com ponto acentuado. Clica na capa. [em]Abre[/em] a pilha.",
+          },
+          {
+            n: "02",
+            label: "Grupos",
+            desc:
+              "Títulos em caixa-alta, versaletes, espaçamento de chumbo. Cortam o ritmo.",
+          },
+          {
+            n: "03",
+            label: "Itens",
+            desc:
+              "Número + label. O ativo ganha filete à esquerda — pequeno acento tipográfico.",
+          },
+          {
+            n: "04",
+            label: "Controles",
+            desc:
+              "Idioma, tema e modo de navegação. Mesmos componentes da navbar superior.",
+          },
+          {
+            n: "05",
+            label: "Rodapé",
+            desc:
+              "Assinatura discreta em monoespaçado. Versão + colofão.",
+          },
+        ],
+      },
+      states: {
+        title: "Estados",
+        kicker: "expanded · collapsed",
+        caption:
+          "Duas larguras: expandida (leitura) e colapsada (foco no conteúdo). O atalho [em]⌘B[/em] alterna.",
+        expanded: "Expandida",
+        collapsed: "Colapsada",
+        expandedDesc:
+          "Modo padrão. Tipografia completa visível — cada item com número e label.",
+        collapsedDesc:
+          "Modo foco. Só o toggle fica à mostra, flutuando no canto. Recupera o espaço para a leitura.",
+      },
+      specimen: {
+        title: "Espécime",
+        kicker: "live preview",
+        caption: "Miniatura fiel. Toca nos itens para ver o estado ativo.",
+      },
+      guidelines: {
+        title: "Quando usar",
+        kicker: "diretrizes",
+        items: [
+          {
+            n: "I",
+            titleA: "Muitas ",
+            titleB: "páginas",
+            body:
+              "Use a sidebar quando a navegação tem mais de [em]doze[/em] destinos. Ela respira verticalmente; a navbar não.",
+          },
+          {
+            n: "II",
+            titleA: "Leitura por ",
+            titleB: "capítulos",
+            body:
+              "Conteúdo editorial, documentação longa, design systems. O leitor volta ao sumário o tempo todo.",
+          },
+          {
+            n: "III",
+            titleA: "Evite em ",
+            titleB: "landings",
+            body:
+              "Em sites de uma página ou marketing, a navbar é mais econômica — menos cromo, mais conteúdo.",
+          },
+        ],
+      },
+    },
+
+    /* ------------- Navbar (pattern) ------------- */
+    navbar: {
+      lead: "Padrão · 21",
+      titleA: "A ",
+      titleB: "navbar",
+      metaLabel: "Navegação",
+      meta: "Estrutura horizontal",
+      intro:
+        "A [em]navbar[/em] é o cabeçalho editorial: uma faixa horizontal que revela a estrutura através de [em]menus de hover[/em]. Cada grupo de rotas vira um dropdown — o leitor vê o mapa sem precisar descer a página.",
+      anatomy: {
+        title: "Anatomia",
+        titleB: "partes",
+        kicker: "parts",
+        caption: "Três regiões horizontais, pesos tipográficos distintos.",
+        parts: [
+          {
+            n: "01",
+            label: "Marca",
+            desc:
+              "Wordmark com ponto acentuado. Volta para a capa. Ancora a esquerda.",
+          },
+          {
+            n: "02",
+            label: "Menus",
+            desc:
+              "Um trigger por grupo. Hover abre; foco mantém aberto para teclado.",
+          },
+          {
+            n: "03",
+            label: "Dropdown",
+            desc:
+              "Lista de itens com número + label. O item ativo fica em negrito discreto.",
+          },
+          {
+            n: "04",
+            label: "Controles",
+            desc:
+              "Idioma, tema e modo de navegação — ancoram a direita como um cluster.",
+          },
+        ],
+      },
+      dropdown: {
+        title: "Dropdowns",
+        kicker: "hover · focus-within",
+        caption:
+          "O painel aparece ao passar o mouse — e permanece aberto enquanto qualquer item interno tem foco, garantindo navegação por teclado.",
+        hoverNote: "Hover",
+        hoverDesc: "Trigger ou item recebe o cursor.",
+        focusNote: "Foco",
+        focusDesc: "Tab percorre os itens — [em]:focus-within[/em] trava o menu aberto.",
+      },
+      specimen: {
+        title: "Espécime",
+        kicker: "live preview",
+        caption: "Miniatura fiel. Passe o mouse em um menu para ver o dropdown.",
+      },
+      guidelines: {
+        title: "Quando usar",
+        kicker: "diretrizes",
+        items: [
+          {
+            n: "I",
+            titleA: "Poucas ",
+            titleB: "categorias",
+            body:
+              "Funciona bem com até [em]cinco[/em] grupos. Cada dropdown pode ter mais itens — o limite é a horizontal.",
+          },
+          {
+            n: "II",
+            titleA: "Landings e ",
+            titleB: "capas",
+            body:
+              "Em sites de marketing, blogs e portfolios, a navbar libera o espaço lateral e alinha melhor com a narrativa visual.",
+          },
+          {
+            n: "III",
+            titleA: "Evite em ",
+            titleB: "documentação densa",
+            body:
+              "Se o leitor precisa [em]voltar ao sumário[/em] o tempo todo, a sidebar é mais gentil — a navbar esconde a estrutura.",
+          },
+        ],
+      },
+    },
+
+    /* ------------- Code page ------------- */
+    code: {
+      lead: "Manual · para desenvolvedores",
+      titleA: "O ",
+      titleB: "código",
+      metaLabel: "Referência",
+      meta: "Tokens + API",
+      intro:
+        "Tudo que um desenvolvedor precisa para adotar o Atelier em outro projeto: [em]instalar fontes[/em], colar os tokens, importar os componentes. Cada bloco abaixo tem botão de copiar.",
+      start: {
+        title: "Começo",
+        kicker: "install",
+        desc:
+          "O Atelier é React puro, sem dependências além de [em]react[/em] e [em]react-dom[/em]. Três passos — e o visual editorial fica disponível no seu projeto.",
+        step1: "1 · criar o projeto",
+        step2: "2 · importar as fontes (no index.html)",
+        step3: "3 · aplicar os tokens (no index.css)",
+      },
+      tokens: {
+        titleA: "Os ",
+        titleB: "tokens",
+        kicker: "design tokens",
+        desc:
+          "Todas as variáveis CSS do Atelier. Cole este bloco dentro do seu [em]:root[/em] e todas as classes do DS funcionam. Sobrescreva em temas ou modos.",
+      },
+      api: {
+        titleA: "API dos ",
+        titleB: "componentes",
+        kicker: "primitives.jsx",
+        desc:
+          "Todas as primitives exportadas, com props, assinatura e snippet de uso. Clique em um título para abrir a página de exemplos.",
+        view: "Ver exemplos →",
+      },
+      conventions: {
+        title: "Convenções",
+        kicker: "code style",
+        items: [
+          {
+            n: "I",
+            titleA: "Classes começam em ",
+            titleB: "ds-",
+            body:
+              "Toda classe pública do design system tem o prefixo [em].ds-[/em] para não conflitar com o seu código de aplicação.",
+          },
+          {
+            n: "II",
+            titleA: "Nunca use ",
+            titleB: "border-radius",
+            body:
+              "Ângulos retos são o coração da linguagem editorial. Se um componente parecer rígido, ajuste o espaço, não o canto.",
+          },
+          {
+            n: "III",
+            titleA: "Itálico é ",
+            titleB: "ênfase",
+            titleC: ", não decoração",
+            body:
+              "Use itálico para marcar a palavra que carrega o sentido. Quando tudo é itálico, nada é.",
+          },
+        ],
+      },
+      divider: "componentes",
+    },
+  },
+};
+
+export default ptBR;

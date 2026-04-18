@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CSV → JSON · Converter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f4f1ea;
+    --bg-panel: #faf8f3;
+    --ink: #1a1a1a;
+    --ink-soft: #5a5754;
+    --ink-faint: #9a958d;
+    --rule: #1a1a1a;
+    --rule-soft: #d9d3c4;
+    --accent: #c8361d;
+    --accent-soft: #f1ddd5;
+    --ok: #2d6a3e;
+    --warn: #8a6d1a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Fraunces', Georgia, serif;
+    font-feature-settings: "ss01", "ss02";
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  body {
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(26,26,26,0.06) 1px, transparent 0);
+    background-size: 24px 24px;
+  }
+
+  .page {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 48px 40px 80px;
+  }
+
+  /* MASTHEAD */
+  header.masthead {
+    border-top: 3px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 18px 0 14px;
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  header.masthead .edition { display: flex; gap: 24px; }
+  header.masthead .edition span b { color: var(--ink); font-weight: 600; }
+
+  /* TITLE BLOCK */
+  .title-block {
+    padding: 48px 0 40px;
+    border-bottom: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 40px;
+    align-items: end;
+  }
+  .title-block h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(60px, 9vw, 128px);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    font-variation-settings: "opsz" 144;
+  }
+  .title-block h1 .arrow {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+    font-size: 0.85em;
+    padding: 0 0.05em;
+  }
+  .title-block h1 .json {
+    font-style: italic;
+    font-weight: 400;
+  }
+  .title-block .kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    text-align: right;
+    line-height: 1.8;
+    max-width: 220px;
+  }
+  .title-block .kicker b { color: var(--accent); font-weight: 600; }
+
+  /* LEAD */
+  .lead {
+    padding: 24px 0 40px;
+    border-bottom: 3px solid var(--rule);
+    font-size: 20px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 620px;
+    font-weight: 300;
+  }
+  .lead em { font-style: italic; color: var(--ink); }
+
+  /* MAIN GRID */
+  .workspace {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin-top: 32px;
+    border: 1px solid var(--rule);
+    background: var(--bg-panel);
+  }
+  .panel {
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    min-height: 520px;
+  }
+  .panel.left { border-right: 1px solid var(--rule); }
+
+  .panel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--rule-soft);
+    margin-bottom: 20px;
+  }
+  .panel-head .num {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 42px;
+    font-weight: 300;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .panel-head .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    text-align: right;
+  }
+  .panel-head .label b {
+    display: block;
+    color: var(--ink);
+    font-size: 14px;
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-style: italic;
+    letter-spacing: 0;
+    text-transform: none;
+    margin-top: 3px;
+  }
+
+  /* DROPZONE */
+  .dropzone {
+    flex: 1;
+    border: 1.5px dashed var(--rule-soft);
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 24px;
+    transition: all 0.25s ease;
+    cursor: pointer;
+    position: relative;
+  }
+  .dropzone:hover,
+  .dropzone.drag {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+  .dropzone.drag { transform: scale(0.995); }
+
+  .dropzone .icon {
+    font-family: 'Fraunces', serif;
+    font-size: 84px;
+    font-weight: 200;
+    font-style: italic;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 18px;
+    letter-spacing: -0.04em;
+  }
+  .dropzone .icon .dot { color: var(--accent); }
+  .dropzone .title {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+  .dropzone .title em { font-style: italic; color: var(--accent); }
+  .dropzone .sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+  }
+  .dropzone.has-file {
+    cursor: default;
+    align-items: flex-start;
+    justify-content: flex-start;
+    text-align: left;
+    padding: 24px;
+  }
+  .dropzone.has-file .icon { display: none; }
+
+  .file-card {
+    width: 100%;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    line-height: 1.7;
+  }
+  .file-card .fname {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 16px;
+    word-break: break-all;
+  }
+  .file-card dl {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 6px 16px;
+    padding: 14px 0;
+    border-top: 1px solid var(--rule-soft);
+    border-bottom: 1px solid var(--rule-soft);
+  }
+  .file-card dt {
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 10px;
+    padding-top: 2px;
+  }
+  .file-card dd { color: var(--ink); }
+  .file-card .reset {
+    margin-top: 16px;
+    background: none;
+    border: none;
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .file-card .reset:hover { opacity: 0.7; }
+
+  /* OPTIONS */
+  .options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 20px;
+    padding-top: 20px;
+    margin-top: 20px;
+    border-top: 1px solid var(--rule-soft);
+  }
+  .options label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .options select,
+  .options input[type="text"] {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    padding: 8px 10px;
+    border: 1px solid var(--rule-soft);
+    background: var(--bg);
+    color: var(--ink);
+    border-radius: 0;
+  }
+  .options select:focus,
+  .options input[type="text"]:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  .options .check {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+  }
+  .options .check input {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid var(--ink);
+    background: var(--bg);
+    cursor: pointer;
+    position: relative;
+  }
+  .options .check input:checked {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  .options .check input:checked::after {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 0px;
+    width: 4px;
+    height: 9px;
+    border: solid var(--bg);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  /* OUTPUT */
+  .output-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  .output-meta {
+    display: flex;
+    gap: 18px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    padding: 10px 14px;
+    border: 1px solid var(--rule-soft);
+    border-bottom: none;
+    background: var(--bg);
+  }
+  .output-meta span b { color: var(--ink); font-weight: 600; }
+  .output-meta .status.ok b { color: var(--ok); }
+  .output-meta .status.err b { color: var(--accent); }
+
+  .output {
+    flex: 1;
+    background: #1a1a1a;
+    color: #e8e3d6;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    line-height: 1.65;
+    padding: 20px 22px;
+    overflow: auto;
+    white-space: pre;
+    min-height: 280px;
+    max-height: 420px;
+    border: 1px solid var(--rule);
+  }
+  .output::-webkit-scrollbar { width: 10px; height: 10px; }
+  .output::-webkit-scrollbar-track { background: #2a2a2a; }
+  .output::-webkit-scrollbar-thumb { background: #555; }
+
+  /* JSON syntax highlight */
+  .j-key { color: #f5b78b; }
+  .j-str { color: #b8d9a8; }
+  .j-num { color: #e6c97a; }
+  .j-bool { color: #d68cc4; }
+  .j-null { color: #9a958d; font-style: italic; }
+  .j-punct { color: #8a8577; }
+
+  .output.empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6a6558;
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-style: italic;
+    font-weight: 300;
+    white-space: normal;
+    text-align: center;
+    padding: 60px 30px;
+  }
+  .output.error {
+    color: #ff9b8a;
+  }
+
+  /* ACTIONS */
+  .actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 18px;
+  }
+  .btn {
+    flex: 1;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 14px 18px;
+    border: 1px solid var(--rule);
+    background: var(--bg);
+    color: var(--ink);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font-weight: 500;
+  }
+  .btn:hover:not(:disabled) {
+    background: var(--ink);
+    color: var(--bg);
+  }
+  .btn.primary {
+    background: var(--ink);
+    color: var(--bg);
+  }
+  .btn.primary:hover:not(:disabled) {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  .btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  /* COLOPHON */
+  footer.colophon {
+    margin-top: 60px;
+    padding-top: 18px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  footer.colophon .figure { font-style: italic; font-family: 'Fraunces', serif; text-transform: none; letter-spacing: 0; font-size: 13px; color: var(--ink-soft); }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--ink);
+    color: var(--bg);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 14px 24px;
+    border: 1px solid var(--ink);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    z-index: 100;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  @media (max-width: 860px) {
+    .page { padding: 32px 20px 60px; }
+    .title-block { grid-template-columns: 1fr; gap: 20px; }
+    .title-block .kicker { text-align: left; max-width: none; }
+    .workspace { grid-template-columns: 1fr; }
+    .panel.left { border-right: none; border-bottom: 1px solid var(--rule); }
+    .panel { min-height: auto; }
+    .options { grid-template-columns: 1fr; }
+    header.masthead { flex-direction: column; gap: 8px; align-items: flex-start; }
+    header.masthead .edition { gap: 16px; flex-wrap: wrap; }
+  }
+
+  input[type="file"] { display: none; }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="masthead">
+    <div>Vol. I · The Converter</div>
+    <div class="edition">
+      <span>Est. <b>MMXXVI</b></span>
+      <span>Encoding · <b>UTF-8</b></span>
+      <span id="today">—</span>
+    </div>
+  </header>
+
+  <section class="title-block">
+    <h1>CSV <span class="arrow">→</span> <span class="json">json</span></h1>
+    <div class="kicker">
+      A quiet instrument<br>
+      for turning rows into<br>
+      <b>structured data.</b>
+    </div>
+  </section>
+
+  <p class="lead">
+    Drop a <em>comma-separated</em> file on the left. Tune the parser. Read the result as <em>valid JSON</em> on the right — then copy or download it. Everything happens in your browser; no files ever leave this page.
+  </p>
+
+  <div class="workspace">
+
+    <!-- LEFT PANEL: INPUT -->
+    <div class="panel left">
+      <div class="panel-head">
+        <div class="num">01</div>
+        <div class="label">The Source<b>Your CSV file</b></div>
+      </div>
+
+      <div class="dropzone" id="dropzone">
+        <div class="icon">{ <span class="dot">.</span> }</div>
+        <div class="title">Drop a file, or <em>browse</em></div>
+        <div class="sub">.csv · .tsv · .txt</div>
+      </div>
+      <input type="file" id="fileInput" accept=".csv,.tsv,.txt,text/csv,text/tab-separated-values,text/plain" />
+
+      <div class="options">
+        <label>
+          Delimiter
+          <select id="delimiter">
+            <option value="auto">Auto-detect</option>
+            <option value=",">Comma ( , )</option>
+            <option value=";">Semicolon ( ; )</option>
+            <option value="\t">Tab</option>
+            <option value="|">Pipe ( | )</option>
+          </select>
+        </label>
+        <label>
+          Output shape
+          <select id="shape">
+            <option value="array">Array of objects</option>
+            <option value="rows">Array of arrays</option>
+          </select>
+        </label>
+        <label class="check">
+          <input type="checkbox" id="hasHeader" checked />
+          <span>First row is a header</span>
+        </label>
+        <label class="check">
+          <input type="checkbox" id="inferTypes" checked />
+          <span>Infer numbers, booleans &amp; nulls</span>
+        </label>
+        <label class="check">
+          <input type="checkbox" id="trimValues" checked />
+          <span>Trim whitespace from values</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- RIGHT PANEL: OUTPUT -->
+    <div class="panel right">
+      <div class="panel-head">
+        <div class="num">02</div>
+        <div class="label">The Result<b>Converted JSON</b></div>
+      </div>
+
+      <div class="output-wrap">
+        <div class="output-meta">
+          <span>Rows · <b id="metaRows">—</b></span>
+          <span>Fields · <b id="metaFields">—</b></span>
+          <span>Size · <b id="metaSize">—</b></span>
+          <span class="status" id="metaStatus">Status · <b>Idle</b></span>
+        </div>
+        <pre class="output empty" id="output">Awaiting a file. The converted JSON will appear here.</pre>
+      </div>
+
+      <div class="actions">
+        <button class="btn" id="copyBtn" disabled>Copy to clipboard</button>
+        <button class="btn primary" id="downloadBtn" disabled>Download .json</button>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="colophon">
+    <div>Single-file · No build · No network</div>
+    <div class="figure">Fig. 01 — A small, well-mannered tool.</div>
+    <div>Runtime · Browser</div>
+  </footer>
+
+</div>
+
+<div class="toast" id="toast">Copied to clipboard</div>
+
+<script>
+(() => {
+  // ---------- STATE ----------
+  const state = {
+    file: null,
+    rawText: "",
+    jsonString: "",
+    jsonData: null,
+    error: null,
+  };
+
+  // ---------- ELEMENTS ----------
+  const el = {
+    dropzone: document.getElementById("dropzone"),
+    fileInput: document.getElementById("fileInput"),
+    output: document.getElementById("output"),
+    delimiter: document.getElementById("delimiter"),
+    shape: document.getElementById("shape"),
+    hasHeader: document.getElementById("hasHeader"),
+    inferTypes: document.getElementById("inferTypes"),
+    trimValues: document.getElementById("trimValues"),
+    copyBtn: document.getElementById("copyBtn"),
+    downloadBtn: document.getElementById("downloadBtn"),
+    metaRows: document.getElementById("metaRows"),
+    metaFields: document.getElementById("metaFields"),
+    metaSize: document.getElementById("metaSize"),
+    metaStatus: document.getElementById("metaStatus"),
+    toast: document.getElementById("toast"),
+    today: document.getElementById("today"),
+  };
+
+  // Set date in masthead
+  el.today.innerHTML = new Date().toLocaleDateString("en-US", {
+    month: "short", day: "2-digit", year: "numeric"
+  }).toUpperCase();
+
+  // ---------- CSV PARSER (RFC 4180-ish, handles quoted fields & escapes) ----------
+  function parseCSV(text, delimiter) {
+    const rows = [];
+    let field = "";
+    let row = [];
+    let i = 0;
+    let inQuotes = false;
+    const len = text.length;
+
+    while (i < len) {
+      const c = text[i];
+
+      if (inQuotes) {
+        if (c === '"') {
+          if (text[i + 1] === '"') { field += '"'; i += 2; continue; }
+          inQuotes = false; i++; continue;
+        }
+        field += c; i++; continue;
+      }
+
+      if (c === '"') { inQuotes = true; i++; continue; }
+      if (c === delimiter) { row.push(field); field = ""; i++; continue; }
+      if (c === "\r") {
+        if (text[i + 1] === "\n") i++;
+        row.push(field); rows.push(row);
+        field = ""; row = []; i++; continue;
+      }
+      if (c === "\n") {
+        row.push(field); rows.push(row);
+        field = ""; row = []; i++; continue;
+      }
+      field += c; i++;
+    }
+    // final field
+    if (field.length > 0 || row.length > 0) {
+      row.push(field);
+      rows.push(row);
+    }
+    // Drop trailing fully empty row (common from trailing newline)
+    if (rows.length && rows[rows.length - 1].length === 1 && rows[rows.length - 1][0] === "") {
+      rows.pop();
+    }
+    return rows;
+  }
+
+  function detectDelimiter(sample) {
+    const candidates = [",", ";", "\t", "|"];
+    const firstLine = sample.split(/\r?\n/).find(l => l.trim().length > 0) || "";
+    let best = ",";
+    let bestCount = -1;
+    for (const d of candidates) {
+      // rough count ignoring quoted regions
+      let count = 0, inQ = false;
+      for (const ch of firstLine) {
+        if (ch === '"') inQ = !inQ;
+        else if (ch === d && !inQ) count++;
+      }
+      if (count > bestCount) { bestCount = count; best = d; }
+    }
+    return best;
+  }
+
+  function coerceValue(v, infer, trim) {
+    if (trim) v = v.trim();
+    if (!infer) return v;
+    if (v === "") return "";
+    const lower = v.toLowerCase();
+    if (lower === "null") return null;
+    if (lower === "true") return true;
+    if (lower === "false") return false;
+    // number check: allow leading +/-, digits, optional decimal, optional exponent
+    if (/^[+-]?(\d+\.?\d*|\.\d+)([eE][+-]?\d+)?$/.test(v)) {
+      const n = Number(v);
+      if (!Number.isNaN(n) && Number.isFinite(n)) return n;
+    }
+    return v;
+  }
+
+  // ---------- CONVERT ----------
+  function convert() {
+    if (!state.rawText) {
+      resetOutput("Awaiting a file. The converted JSON will appear here.", "Idle");
+      return;
+    }
+
+    try {
+      let delim = el.delimiter.value;
+      if (delim === "auto") delim = detectDelimiter(state.rawText.slice(0, 4000));
+      if (delim === "\\t") delim = "\t";
+
+      const rows = parseCSV(state.rawText, delim);
+      if (!rows.length) throw new Error("File appears to be empty.");
+
+      const infer = el.inferTypes.checked;
+      const trim = el.trimValues.checked;
+      const useHeader = el.hasHeader.checked;
+      const shape = el.shape.value;
+
+      let data;
+      let fieldCount;
+      let rowCount;
+
+      if (shape === "array" && useHeader) {
+        const headers = rows[0].map(h => (trim ? h.trim() : h));
+        const body = rows.slice(1);
+        data = body.map(r => {
+          const obj = {};
+          headers.forEach((h, idx) => {
+            obj[h] = coerceValue(r[idx] ?? "", infer, trim);
+          });
+          return obj;
+        });
+        fieldCount = headers.length;
+        rowCount = data.length;
+      } else if (shape === "array" && !useHeader) {
+        // No header: generate column_1, column_2...
+        const maxCols = rows.reduce((m, r) => Math.max(m, r.length), 0);
+        const headers = Array.from({ length: maxCols }, (_, i) => `column_${i + 1}`);
+        data = rows.map(r => {
+          const obj = {};
+          headers.forEach((h, idx) => {
+            obj[h] = coerceValue(r[idx] ?? "", infer, trim);
+          });
+          return obj;
+        });
+        fieldCount = headers.length;
+        rowCount = data.length;
+      } else {
+        // array of arrays
+        const body = useHeader ? rows.slice(1) : rows;
+        data = body.map(r => r.map(v => coerceValue(v, infer, trim)));
+        fieldCount = useHeader ? rows[0].length : (rows[0]?.length ?? 0);
+        rowCount = data.length;
+      }
+
+      state.jsonData = data;
+      state.jsonString = JSON.stringify(data, null, 2);
+      state.error = null;
+
+      renderJSON(state.jsonString);
+      updateMeta(rowCount, fieldCount, state.jsonString.length, "ok");
+      el.copyBtn.disabled = false;
+      el.downloadBtn.disabled = false;
+    } catch (err) {
+      state.error = err.message;
+      state.jsonString = "";
+      state.jsonData = null;
+      el.output.className = "output error";
+      el.output.textContent = "// Conversion failed\n\n" + err.message;
+      updateMeta("—", "—", "—", "err");
+      el.copyBtn.disabled = true;
+      el.downloadBtn.disabled = true;
+    }
+  }
+
+  function resetOutput(msg, statusLabel) {
+    el.output.className = "output empty";
+    el.output.textContent = msg;
+    updateMeta("—", "—", "—", statusLabel === "Idle" ? "idle" : "ok");
+    el.copyBtn.disabled = true;
+    el.downloadBtn.disabled = true;
+  }
+
+  function updateMeta(rows, fields, size, status) {
+    el.metaRows.textContent = rows;
+    el.metaFields.textContent = fields;
+    el.metaSize.textContent = typeof size === "number" ? formatBytes(size) : size;
+    const statusEl = el.metaStatus;
+    statusEl.classList.remove("ok", "err");
+    if (status === "ok") {
+      statusEl.classList.add("ok");
+      statusEl.innerHTML = "Status · <b>Ready</b>";
+    } else if (status === "err") {
+      statusEl.classList.add("err");
+      statusEl.innerHTML = "Status · <b>Error</b>";
+    } else {
+      statusEl.innerHTML = "Status · <b>Idle</b>";
+    }
+  }
+
+  function formatBytes(n) {
+    if (n < 1024) return n + " B";
+    if (n < 1024 * 1024) return (n / 1024).toFixed(1) + " KB";
+    return (n / 1024 / 1024).toFixed(2) + " MB";
+  }
+
+  // ---------- SYNTAX HIGHLIGHT ----------
+  function renderJSON(jsonStr) {
+    el.output.className = "output";
+
+    // Truncate for render if extremely large to keep the page responsive
+    const LIMIT = 200000; // chars
+    let display = jsonStr;
+    let truncatedNote = "";
+    if (jsonStr.length > LIMIT) {
+      display = jsonStr.slice(0, LIMIT);
+      truncatedNote = `\n\n// … output truncated for preview (${formatBytes(jsonStr.length)} total). Use Download to get the full file.`;
+    }
+
+    const escaped = display
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+
+    const highlighted = escaped.replace(
+      /("(\\u[a-fA-F0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?)/g,
+      (match) => {
+        let cls = "j-num";
+        if (/^"/.test(match)) {
+          cls = /:$/.test(match) ? "j-key" : "j-str";
+        } else if (/true|false/.test(match)) {
+          cls = "j-bool";
+        } else if (/null/.test(match)) {
+          cls = "j-null";
+        }
+        return `<span class="${cls}">${match}</span>`;
+      }
+    );
+
+    el.output.innerHTML = highlighted + (truncatedNote ? `<span class="j-null">${truncatedNote}</span>` : "");
+  }
+
+  // ---------- FILE HANDLING ----------
+  function handleFile(file) {
+    if (!file) return;
+
+    const okTypes = /\.(csv|tsv|txt)$/i;
+    if (!okTypes.test(file.name)) {
+      // still try — but warn briefly
+      showToast("Unusual extension — trying anyway");
+    }
+
+    state.file = file;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      state.rawText = e.target.result;
+      renderFileCard(file);
+      convert();
+    };
+    reader.onerror = () => {
+      state.rawText = "";
+      el.output.className = "output error";
+      el.output.textContent = "// Could not read the file.";
+      updateMeta("—", "—", "—", "err");
+    };
+    reader.readAsText(file);
+  }
+
+  function renderFileCard(file) {
+    el.dropzone.classList.add("has-file");
+    el.dropzone.innerHTML = `
+      <div class="file-card">
+        <div class="fname">${escapeHTML(file.name)}</div>
+        <dl>
+          <dt>Size</dt><dd>${formatBytes(file.size)}</dd>
+          <dt>Type</dt><dd>${escapeHTML(file.type || "text/plain")}</dd>
+          <dt>Modified</dt><dd>${new Date(file.lastModified).toLocaleString("en-US")}</dd>
+        </dl>
+        <button class="reset" id="resetBtn">Remove and choose another</button>
+      </div>
+    `;
+    document.getElementById("resetBtn").addEventListener("click", (e) => {
+      e.stopPropagation();
+      resetAll();
+    });
+  }
+
+  function resetAll() {
+    state.file = null;
+    state.rawText = "";
+    state.jsonString = "";
+    state.jsonData = null;
+    el.fileInput.value = "";
+    el.dropzone.classList.remove("has-file");
+    el.dropzone.innerHTML = `
+      <div class="icon">{ <span class="dot">.</span> }</div>
+      <div class="title">Drop a file, or <em>browse</em></div>
+      <div class="sub">.csv · .tsv · .txt</div>
+    `;
+    resetOutput("Awaiting a file. The converted JSON will appear here.", "Idle");
+  }
+
+  function escapeHTML(s) {
+    return String(s)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+  }
+
+  // ---------- TOAST ----------
+  let toastTimer;
+  function showToast(msg) {
+    el.toast.textContent = msg;
+    el.toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => el.toast.classList.remove("show"), 1800);
+  }
+
+  // ---------- EVENTS ----------
+  el.dropzone.addEventListener("click", (e) => {
+    if (!el.dropzone.classList.contains("has-file")) el.fileInput.click();
+  });
+  el.fileInput.addEventListener("change", (e) => {
+    const f = e.target.files[0];
+    if (f) handleFile(f);
+  });
+
+  ["dragenter", "dragover"].forEach(ev => {
+    el.dropzone.addEventListener(ev, (e) => {
+      e.preventDefault(); e.stopPropagation();
+      el.dropzone.classList.add("drag");
+    });
+  });
+  ["dragleave", "drop"].forEach(ev => {
+    el.dropzone.addEventListener(ev, (e) => {
+      e.preventDefault(); e.stopPropagation();
+      el.dropzone.classList.remove("drag");
+    });
+  });
+  el.dropzone.addEventListener("drop", (e) => {
+    const f = e.dataTransfer.files[0];
+    if (f) handleFile(f);
+  });
+
+  // Prevent the browser from navigating away if a file is dropped outside
+  window.addEventListener("dragover", (e) => e.preventDefault());
+  window.addEventListener("drop", (e) => e.preventDefault());
+
+  [el.delimiter, el.shape, el.hasHeader, el.inferTypes, el.trimValues].forEach(input => {
+    input.addEventListener("change", convert);
+  });
+
+  el.copyBtn.addEventListener("click", async () => {
+    if (!state.jsonString) return;
+    try {
+      await navigator.clipboard.writeText(state.jsonString);
+      showToast("Copied to clipboard");
+    } catch {
+      // fallback
+      const ta = document.createElement("textarea");
+      ta.value = state.jsonString;
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand("copy"); showToast("Copied to clipboard"); }
+      catch { showToast("Copy failed"); }
+      document.body.removeChild(ta);
+    }
+  });
+
+  el.downloadBtn.addEventListener("click", () => {
+    if (!state.jsonString) return;
+    const baseName = (state.file?.name || "data").replace(/\.(csv|tsv|txt)$/i, "");
+    const blob = new Blob([state.jsonString], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${baseName}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 0);
+    showToast("Downloaded");
+  });
+
+})();
+</script>
+</body>
+</html>
