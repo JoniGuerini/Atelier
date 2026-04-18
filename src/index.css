@@ -3493,6 +3493,116 @@ input[type="file"] { display: none; }
 }
 
 /* ----------------------------------------------------------------
+   SettingsMenu — disparador único + popover com idioma/tema/nav.
+---------------------------------------------------------------- */
+.settings-menu {
+  position: relative;
+  display: inline-flex;
+}
+.settings-menu-trigger {
+  width: 32px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--rule);
+  color: var(--ink-soft);
+  cursor: pointer;
+  padding: 0;
+  transition: border-color var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease),
+    background var(--dur-fast) var(--ease);
+}
+.settings-menu-trigger:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.settings-menu.open .settings-menu-trigger {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+}
+
+.settings-menu-panel {
+  position: absolute;
+  z-index: 60;
+  background: var(--bg-panel);
+  border: 1px solid var(--ink);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 240px;
+  animation: settings-menu-in var(--dur-fast) var(--ease) both;
+}
+
+/* Posicionamento por modo */
+.settings-menu.placement-bottom-end .settings-menu-panel {
+  top: calc(100% + 8px);
+  right: 0;
+  transform-origin: top right;
+}
+.settings-menu.placement-top-start .settings-menu-panel {
+  bottom: calc(100% + 8px);
+  left: 0;
+  transform-origin: bottom left;
+}
+.settings-menu.placement-top-end .settings-menu-panel {
+  bottom: calc(100% + 8px);
+  right: 0;
+  transform-origin: bottom right;
+}
+
+@keyframes settings-menu-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.settings-menu-head {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--rule-soft);
+}
+.settings-menu-kicker {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.settings-menu-title {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  font-weight: 300;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+}
+
+.settings-menu-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.settings-menu-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.settings-menu-control {
+  display: inline-flex;
+}
+
+/* Wrapper opcional para o SettingsMenu na sidebar */
+.sidebar-settings {
+  padding: 0 var(--space-3) var(--space-3);
+}
+
+/* ----------------------------------------------------------------
    Chart — visualizações editoriais (#/charts).
 ---------------------------------------------------------------- */
 .ds-chart {

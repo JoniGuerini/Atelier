@@ -95,6 +95,11 @@ const ptBR = {
       sidebar: "Lateral",
       navbar: "Superior",
     },
+    settings: {
+      label: "Configurações",
+      kicker: "preferências",
+      title: "Configurações",
+    },
     navLabel: "Navegação principal",
   },
 

@@ -95,6 +95,11 @@ const en = {
       sidebar: "Side",
       navbar: "Top",
     },
+    settings: {
+      label: "Settings",
+      kicker: "preferences",
+      title: "Settings",
+    },
     navLabel: "Primary navigation",
   },
 

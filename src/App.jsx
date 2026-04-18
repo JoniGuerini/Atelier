@@ -7,9 +7,6 @@ import {
   SidebarGroup,
   SidebarGroupTitle,
   SidebarNavItem,
-  SidebarLocale,
-  SidebarTheme,
-  SidebarNavMode,
   SidebarFooter,
 } from "./components/Sidebar.jsx";
 import {
@@ -19,15 +16,14 @@ import {
   NavbarDropdown,
   NavbarDropdownItem,
   NavbarActions,
-  NavbarLocale,
 } from "./components/Navbar.jsx";
-import { ThemeToggle, NavModeToggle } from "./ds/primitives.jsx";
 import Footer from "./components/Footer.jsx";
 import { useT } from "./lib/i18n.jsx";
 import { useHashRoute } from "./lib/useHashRoute.js";
 import { ALL_ROUTE_IDS, ROUTES, TOOL_ROUTE_IDS } from "./lib/routes.js";
 import { SidebarToggle, BackToTop } from "./ds/primitives.jsx";
 import { PageNav } from "./ds/PageNav.jsx";
+import { SettingsMenu } from "./ds/SettingsMenu.jsx";
 
 import Overview from "./pages/Overview.jsx";
 import Principles from "./pages/Principles.jsx";
@@ -216,9 +212,11 @@ function AppNavbar({ current, navigate, navMode, setNavMode }) {
         })}
       </NavbarNav>
       <NavbarActions>
-        <NavbarLocale />
-        <ThemeToggle variant="compact" />
-        <NavModeToggle mode={navMode} onChange={setNavMode} />
+        <SettingsMenu
+          navMode={navMode}
+          onToggleNavMode={setNavMode}
+          placement="bottom-end"
+        />
       </NavbarActions>
     </Navbar>
   );
@@ -272,9 +270,13 @@ function AppSidebar({
         ))}
       </SidebarNav>
 
-      <SidebarLocale />
-      <SidebarTheme />
-      <SidebarNavMode mode={navMode} onChange={setNavMode} />
+      <div className="sidebar-settings">
+        <SettingsMenu
+          navMode={navMode}
+          onToggleNavMode={setNavMode}
+          placement="top-start"
+        />
+      </div>
       <SidebarFooter />
     </Sidebar>
   );
