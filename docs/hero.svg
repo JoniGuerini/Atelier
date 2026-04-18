@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" role="img" aria-labelledby="heroTitle heroDesc">
+  <title id="heroTitle">Atelier  A quiet manual for editorial interfaces</title>
+  <desc id="heroDesc">Editorial masthead for the Atelier design system.</desc>
+
+  <!-- paper -->
+  <rect width="1200" height="400" fill="#f4f1ea"/>
+
+  <!-- top rule -->
+  <line x1="64" y1="64" x2="1136" y2="64" stroke="#1a1a1a" stroke-width="0.75"/>
+
+  <!-- top metadata row -->
+  <g font-family="ui-monospace, 'JetBrains Mono', Menlo, Consolas, monospace" font-size="11" letter-spacing="2.4" fill="#5a5754">
+    <text x="64" y="46">N<tspan letter-spacing="0">O</tspan>. 01 · VOL. 2026</text>
+    <text x="1136" y="46" text-anchor="end">DESIGN SYSTEM · REACT · VITE</text>
+  </g>
+
+  <!-- small decorative marks -->
+  <g stroke="#1a1a1a" stroke-width="0.75">
+    <line x1="64"  y1="104" x2="104" y2="104"/>
+    <line x1="1096" y1="104" x2="1136" y2="104"/>
+  </g>
+
+  <!-- title -->
+  <text
+    x="600" y="228"
+    text-anchor="middle"
+    font-family="'Fraunces', Georgia, 'Times New Roman', serif"
+    font-size="148"
+    font-weight="300"
+    letter-spacing="-5"
+    fill="#1a1a1a"
+  >Atelier<tspan fill="#c8361d" font-style="italic" dx="-4">.</tspan></text>
+
+  <!-- subtitle -->
+  <text
+    x="600" y="274"
+    text-anchor="middle"
+    font-family="'Fraunces', Georgia, 'Times New Roman', serif"
+    font-size="20"
+    font-style="italic"
+    fill="#5a5754"
+  >A quiet manual for editorial interfaces.</text>
+
+  <!-- bottom rule -->
+  <line x1="64" y1="332" x2="1136" y2="332" stroke="#1a1a1a" stroke-width="0.75"/>
+
+  <!-- bottom metadata row -->
+  <g font-family="ui-monospace, 'JetBrains Mono', Menlo, Consolas, monospace" font-size="10" letter-spacing="3" fill="#5a5754">
+    <text x="64" y="360">TOKENS · PRIMITIVES · PATTERNS</text>
+    <text x="600" y="360" text-anchor="middle">PT-BR · EN</text>
+    <text x="1136" y="360" text-anchor="end">LIGHT · DARK</text>
+  </g>
+</svg>
