@@ -14,6 +14,7 @@ import {
 import { Card, CardKicker, CardTitle, CardBody, CardFooter } from "../ds/Card.jsx";
 import { Alert } from "../ds/Alert.jsx";
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from "../ds/Tabs.jsx";
+import { BarChart as DsBarChart } from "../ds/Chart.jsx";
 import { useT } from "../lib/i18n.jsx";
 import {
   ACCENT_PRESETS,
@@ -451,7 +452,12 @@ function StudioMural({ t }) {
 
       {/* —— 7. Mini gráfico de barras (wide) —— */}
       <Block kind="wide" kicker={t("pages.create.preview.chartKicker")} title={t("pages.create.preview.chartTitle")}>
-        <BarChart />
+        <DsBarChart
+          data={[42, 58, 35, 72, 89, 65, 94, 78]}
+          labels={["S", "T", "Q", "Q", "S", "S", "D", "S"]}
+          accentIndex={6}
+          height={180}
+        />
         <div style={{ display: "flex", justifyContent: "space-between", paddingTop: 12, borderTop: "1px solid var(--rule-soft)" }}>
           <SmallStat label={t("pages.create.preview.chartStat1Label")} value={t("pages.create.preview.chartStat1Value")} />
           <SmallStat label={t("pages.create.preview.chartStat2Label")} value={t("pages.create.preview.chartStat2Value")} />
@@ -597,49 +603,6 @@ function TxRow({ date, label, amount, positive }) {
         {amount}
       </span>
     </div>
-  );
-}
-
-/* Mini gráfico de barras desenhado em SVG, usando var(--accent) e
-   var(--ink-faint) — reage ao tema sem código JS extra. */
-function BarChart() {
-  const data = [42, 58, 35, 72, 89, 65, 94, 78];
-  const labels = ["S", "T", "Q", "Q", "S", "S", "D", "S"];
-  const max = Math.max(...data);
-  const W = 360;
-  const H = 140;
-  const pad = 12;
-  const barW = (W - pad * 2) / data.length - 6;
-  return (
-    <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" width="100%" height={140}>
-      {data.map((v, i) => {
-        const h = ((v / max) * (H - pad * 2 - 18));
-        const x = pad + i * (barW + 6);
-        const y = H - pad - 18 - h;
-        return (
-          <g key={i}>
-            <rect
-              x={x}
-              y={y}
-              width={barW}
-              height={h}
-              fill={i === data.length - 2 ? "var(--accent)" : "var(--ink-faint)"}
-            />
-            <text
-              x={x + barW / 2}
-              y={H - 4}
-              textAnchor="middle"
-              fontFamily="var(--font-mono)"
-              fontSize="9"
-              fill="var(--ink-faint)"
-              style={{ letterSpacing: "0.1em" }}
-            >
-              {labels[i]}
-            </text>
-          </g>
-        );
-      })}
-    </svg>
   );
 }
 

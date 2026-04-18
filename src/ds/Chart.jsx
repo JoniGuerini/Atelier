@@ -134,19 +134,22 @@ function arcPath(cx, cy, r, startDeg, endDeg, innerR = 0) {
 export function BarChart({
   data,
   labels,
-  height = 180,
+  height = 220,
   accentIndex,
   showValues = false,
   yTicks = 4,
   className = "",
 }) {
   const norm = normalizeData(data);
-  const W = 480;
+  // viewBox alongado (W >> H) e preserveAspectRatio padrão fazem o
+  // SVG manter proporção quando o container é largo, evitando o
+  // "achatamento" do desenho.
+  const W = 720;
   const H = height;
-  const padL = 32;
-  const padR = 8;
-  const padT = 12;
-  const padB = labels?.length ? 26 : 12;
+  const padL = 38;
+  const padR = 12;
+  const padT = 14;
+  const padB = labels?.length ? 32 : 14;
   const innerW = W - padL - padR;
   const innerH = H - padT - padB;
   const max = Math.max(...norm.map((d) => d.value), 1);
@@ -165,10 +168,8 @@ export function BarChart({
   return (
     <svg
       viewBox={`0 0 ${W} ${H}`}
-      preserveAspectRatio="none"
       className={`ds-chart-svg ${className}`}
-      width="100%"
-      height={H}
+      style={{ width: "100%", height: "auto" }}
       role="img"
     >
       {/* tick lines */}
@@ -187,11 +188,11 @@ export function BarChart({
       {ticks.map((t, i) => (
         <text
           key={`l${i}`}
-          x={padL - 6}
-          y={t.y + 3}
+          x={padL - 8}
+          y={t.y + 4}
           textAnchor="end"
           fontFamily="var(--font-mono)"
-          fontSize="9"
+          fontSize="11"
           fill="var(--ink-faint)"
         >
           {Math.round(t.v)}
@@ -215,10 +216,10 @@ export function BarChart({
             {showValues && (
               <text
                 x={x + barW / 2}
-                y={y - 4}
+                y={y - 6}
                 textAnchor="middle"
                 fontFamily="var(--font-mono)"
-                fontSize="9"
+                fontSize="11"
                 fill={isAccent ? "var(--accent)" : "var(--ink-soft)"}
               >
                 {pad(d.value)}
@@ -227,10 +228,10 @@ export function BarChart({
             {labels && labels[i] && (
               <text
                 x={x + barW / 2}
-                y={H - 8}
+                y={H - 10}
                 textAnchor="middle"
                 fontFamily="var(--font-mono)"
-                fontSize="9.5"
+                fontSize="11"
                 fill="var(--ink-faint)"
                 style={{ letterSpacing: "0.1em" }}
               >
@@ -263,7 +264,7 @@ function buildLinePath(values, padL, padT, innerW, innerH, max, min) {
 export function LineChart({
   data,
   labels,
-  height = 180,
+  height = 220,
   yTicks = 4,
   showDots = true,
   accentIndex,
@@ -271,12 +272,12 @@ export function LineChart({
 }) {
   const norm = normalizeData(data);
   const values = norm.map((d) => d.value);
-  const W = 480;
+  const W = 720;
   const H = height;
-  const padL = 32;
-  const padR = 8;
-  const padT = 12;
-  const padB = labels?.length ? 26 : 12;
+  const padL = 38;
+  const padR = 12;
+  const padT = 14;
+  const padB = labels?.length ? 32 : 14;
   const innerW = W - padL - padR;
   const innerH = H - padT - padB;
   const max = Math.max(...values, 1);
@@ -297,10 +298,8 @@ export function LineChart({
   return (
     <svg
       viewBox={`0 0 ${W} ${H}`}
-      preserveAspectRatio="none"
       className={`ds-chart-svg ${className}`}
-      width="100%"
-      height={H}
+      style={{ width: "100%", height: "auto" }}
       role="img"
     >
       {ticks.map((t, i) => (
@@ -317,11 +316,11 @@ export function LineChart({
       {ticks.map((t, i) => (
         <text
           key={`l${i}`}
-          x={padL - 6}
-          y={t.y + 3}
+          x={padL - 8}
+          y={t.y + 4}
           textAnchor="end"
           fontFamily="var(--font-mono)"
-          fontSize="9"
+          fontSize="11"
           fill="var(--ink-faint)"
         >
           {Math.round(t.v)}
@@ -331,7 +330,7 @@ export function LineChart({
         d={path}
         fill="none"
         stroke="var(--accent)"
-        strokeWidth="1.75"
+        strokeWidth="2"
         strokeLinejoin="round"
         strokeLinecap="round"
       />
@@ -345,10 +344,10 @@ export function LineChart({
               key={i}
               cx={x}
               cy={y}
-              r={isAccent ? 4 : 2.5}
+              r={isAccent ? 5 : 3}
               fill={isAccent ? "var(--accent)" : "var(--bg-panel)"}
               stroke="var(--accent)"
-              strokeWidth={isAccent ? 1.5 : 1.5}
+              strokeWidth="1.75"
             />
           );
         })}
@@ -357,10 +356,10 @@ export function LineChart({
           <text
             key={i}
             x={padL + i * stepX}
-            y={H - 8}
+            y={H - 10}
             textAnchor="middle"
             fontFamily="var(--font-mono)"
-            fontSize="9.5"
+            fontSize="11"
             fill="var(--ink-faint)"
             style={{ letterSpacing: "0.1em" }}
           >
@@ -378,18 +377,18 @@ export function LineChart({
 export function AreaChart({
   data,
   labels,
-  height = 180,
+  height = 220,
   yTicks = 4,
   className = "",
 }) {
   const norm = normalizeData(data);
   const values = norm.map((d) => d.value);
-  const W = 480;
+  const W = 720;
   const H = height;
-  const padL = 32;
-  const padR = 8;
-  const padT = 12;
-  const padB = labels?.length ? 26 : 12;
+  const padL = 38;
+  const padR = 12;
+  const padT = 14;
+  const padB = labels?.length ? 32 : 14;
   const innerW = W - padL - padR;
   const innerH = H - padT - padB;
   const max = Math.max(...values, 1);
@@ -413,10 +412,8 @@ export function AreaChart({
   return (
     <svg
       viewBox={`0 0 ${W} ${H}`}
-      preserveAspectRatio="none"
       className={`ds-chart-svg ${className}`}
-      width="100%"
-      height={H}
+      style={{ width: "100%", height: "auto" }}
       role="img"
     >
       <defs>
@@ -439,11 +436,11 @@ export function AreaChart({
       {ticks.map((t, i) => (
         <text
           key={`l${i}`}
-          x={padL - 6}
-          y={t.y + 3}
+          x={padL - 8}
+          y={t.y + 4}
           textAnchor="end"
           fontFamily="var(--font-mono)"
-          fontSize="9"
+          fontSize="11"
           fill="var(--ink-faint)"
         >
           {Math.round(t.v)}
@@ -454,7 +451,7 @@ export function AreaChart({
         d={linePath}
         fill="none"
         stroke="var(--accent)"
-        strokeWidth="1.75"
+        strokeWidth="2"
         strokeLinejoin="round"
         strokeLinecap="round"
       />
@@ -463,10 +460,10 @@ export function AreaChart({
           <text
             key={i}
             x={padL + i * stepX}
-            y={H - 8}
+            y={H - 10}
             textAnchor="middle"
             fontFamily="var(--font-mono)"
-            fontSize="9.5"
+            fontSize="11"
             fill="var(--ink-faint)"
             style={{ letterSpacing: "0.1em" }}
           >
