@@ -50,7 +50,11 @@ export const ROUTES = [
   },
   {
     groupKey: "studio",
-    items: [{ id: "create", n: "23" }],
+    // `tool: true` marca o item como ferramenta — fica fora da
+    // numeração editorial (00-22) e da paginação prev/next.
+    // O glifo "✦" no lugar do número reforça a identidade de "lugar
+    // à parte" do manual.
+    items: [{ id: "create", n: "✦", tool: true }],
   },
 ];
 
@@ -65,14 +69,25 @@ export const ROUTE_BY_ID = Object.fromEntries(
 );
 
 /* Flattened reading order (used for prev/next pagination at the foot of
-   each page). Each entry carries its slug, id, ordinal (`n`) and group. */
+   each page). Each entry carries its slug, id, ordinal (`n`) and group.
+   Items marked `tool: true` (eg. Create) are excluded — they are
+   self-contained tools, not chapters in the manual. */
 export const FLAT_ROUTES = ROUTES.flatMap((g) =>
-  g.items.map((i) => ({
-    id: i.id,
-    n: i.n,
-    slug: i.route || i.id,
-    groupKey: g.groupKey,
-  }))
+  g.items
+    .filter((i) => !i.tool)
+    .map((i) => ({
+      id: i.id,
+      n: i.n,
+      slug: i.route || i.id,
+      groupKey: g.groupKey,
+    }))
+);
+
+/** Slugs that should NOT render the global PageNav at the foot. */
+export const TOOL_ROUTE_IDS = new Set(
+  ROUTES.flatMap((g) =>
+    g.items.filter((i) => i.tool).map((i) => i.route || i.id)
+  )
 );
 
 export function findFlatIndex(slug) {

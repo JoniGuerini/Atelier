@@ -674,6 +674,16 @@ html::-webkit-scrollbar-thumb {
   width: 100%;
 }
 
+/* ----------------------------------------------------------------
+   Modo "ferramenta" — usado por páginas como #/create.
+   Quebra o max-width editorial para dar à ferramenta toda a
+   largura disponível e diminui o padding-top (sem PageHead).
+---------------------------------------------------------------- */
+.content--tool {
+  max-width: 100%;
+  padding: var(--space-4) var(--space-5) var(--space-5);
+}
+
 /* ================================================================
    PAGE HEADER
    ================================================================ */
@@ -2949,28 +2959,89 @@ input[type="file"] { display: none; }
 }
 
 /* ================================================================
-   Studio — playground de personalização (#/create).
-   Layout: painel sticky (esq) + trilho horizontal de blocos (dir).
+   Studio — ferramenta de personalização (#/create).
+
+   Diferente do resto do site: não há PageHead grande, não há
+   numeração editorial. É um app dentro do app — header minimal de
+   uma linha, painel sticky à esquerda, trilho horizontal à direita
+   ocupando toda a largura disponível.
 ================================================================ */
+
+/* Wrapper da página inteira — o `<main className="content--tool">`
+   já tira o max-width editorial; aqui mantemos display em coluna. */
+.studio-shell {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* ===== Header de ferramenta — uma linha, discreto ===== */
+.studio-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--rule-soft);
+}
+.studio-header-left {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  min-width: 0;
+}
+.studio-header-kicker {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding-right: var(--space-3);
+  border-right: 1px solid var(--rule-soft);
+}
+.studio-header-title {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 0;
+}
+.studio-header-title em {
+  font-style: italic;
+  color: var(--accent);
+}
+.studio-header-right {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+}
+.studio-header-hint {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* ===== Layout principal: painel + trilho ===== */
 .studio {
   display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: var(--space-5);
-  margin-top: var(--space-5);
+  grid-template-columns: 260px 1fr;
+  gap: var(--space-4);
   align-items: start;
-  /* permite o trilho vazar até a borda da viewport pra dar a sensação
-     de "infinito" — o fade da direita reforça o convite a rolar */
-  margin-right: calc(0px - var(--space-5));
+  /* O trilho recebe toda a largura disponível dentro do
+     .content--tool, que por sua vez já é full-width. */
 }
 
 /* ==================== Painel de controles ==================== */
 .studio-panel {
   position: sticky;
-  top: var(--space-5);
+  top: var(--space-3);
   display: flex;
   flex-direction: column;
   gap: 8px;
-  max-height: calc(100vh - var(--space-7));
+  max-height: calc(100vh - var(--space-5));
   overflow: auto;
   padding-right: 4px;
 }
@@ -3294,6 +3365,10 @@ input[type="file"] { display: none; }
   padding-right: var(--space-7);
   border: 1px solid var(--rule-soft);
   scroll-snap-type: x proximity;
+  /* O trilho usa a altura útil da viewport (descontando header da
+     ferramenta + paddings do main), garantindo que o usuário sempre
+     veja os blocos completos sem ter que rolar verticalmente. */
+  min-height: calc(100vh - 180px);
   /* tema customizado é injetado via inline-style aqui (themeToStyle):
      todos os componentes lá dentro usam var(--accent) etc., e
      reagem instantaneamente ao usuário mexer nos controles. */
@@ -3324,19 +3399,21 @@ input[type="file"] { display: none; }
 }
 
 .studio-block {
-  flex: 0 0 320px;
+  flex: 0 0 340px;
   scroll-snap-align: start;
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
-  padding: var(--space-4);
+  padding: var(--space-5);
   border: 1px solid var(--rule-soft);
   background: var(--bg-panel);
-  min-height: 380px;
+  /* A altura do bloco preenche o trilho. Os blocos têm "respiração" —
+     visualmente cada um é um card editorial que vive sozinho. */
+  align-self: stretch;
   transition: border-color var(--dur-fast) var(--ease);
 }
 .studio-block.wide {
-  flex: 0 0 440px;
+  flex: 0 0 460px;
 }
 .studio-block:hover {
   border-color: var(--ink-faint);
@@ -3386,16 +3463,13 @@ input[type="file"] { display: none; }
 }
 
 @media (max-width: 900px) {
-  .studio {
-    grid-template-columns: 1fr;
-    margin-right: 0;
-  }
-  .studio-panel {
-    position: static;
-    max-height: none;
-  }
+  .studio { grid-template-columns: 1fr; }
+  .studio-panel { position: static; max-height: none; }
+  .studio-rail { min-height: 480px; }
   .studio-block { flex-basis: 280px; }
   .studio-block.wide { flex-basis: 320px; }
+  .studio-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .studio-header-right { display: none; }
 }
 
 /* ----------------------------------------------------------------

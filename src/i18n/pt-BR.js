@@ -1296,13 +1296,10 @@ const ptBR = {
 
     /* ============================================================ */
     create: {
-      lead: "Studio · 23",
-      titleA: "O ",
-      titleB: "studio",
-      metaLabel: "Personalização",
-      meta: "Tema ao vivo",
-      intro:
-        "O [em]Studio[/em] é a sua oficina: tro­que cor, tipo­grafia e densidade e veja o efeito imediato em uma maqueta de página. Quando estiver feliz, copie os tokens e leve para o seu projeto.",
+      headerKicker: "Studio",
+      headerTitleA: "Construa seu",
+      headerTitleB: "tema",
+      headerHint: "Tudo escopado · suas mudanças não afetam o resto do site",
       controls: {
         preset: "Preset",
         custom: "Personalizado",

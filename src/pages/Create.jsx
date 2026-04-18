@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
 import {
-  PageHead,
   Button,
   Badge,
   Field,
@@ -93,19 +92,24 @@ export default function Create() {
   );
 
   return (
-    <>
-      <PageHead
-        lead={t("pages.create.lead")}
-        title={
-          <>
-            {tr("pages.create.titleA")}
-            <em>{t("pages.create.titleB")}</em>
-          </>
-        }
-        metaLabel={t("pages.create.metaLabel")}
-        meta={t("pages.create.meta")}
-        intro={tr("pages.create.intro")}
-      />
+    <div className="studio-shell">
+      {/* ===== Header de ferramenta — 1 linha, sem PageHead ===== */}
+      <header className="studio-header">
+        <div className="studio-header-left">
+          <span className="studio-header-kicker">
+            {t("pages.create.headerKicker")}
+          </span>
+          <h1 className="studio-header-title">
+            {t("pages.create.headerTitleA")}{" "}
+            <em>{t("pages.create.headerTitleB")}</em>
+          </h1>
+        </div>
+        <div className="studio-header-right">
+          <span className="studio-header-hint">
+            {t("pages.create.headerHint")}
+          </span>
+        </div>
+      </header>
 
       <div className="studio">
         {/* ========== Painel de controles ========== */}
@@ -562,7 +566,7 @@ export default function Create() {
           <div className="studio-rail-fade" aria-hidden="true" />
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

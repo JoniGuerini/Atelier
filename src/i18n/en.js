@@ -1234,13 +1234,10 @@ const en = {
 
     /* ============================================================ */
     create: {
-      lead: "Studio · 23",
-      titleA: "The ",
-      titleB: "studio",
-      metaLabel: "Customization",
-      meta: "Live theme",
-      intro:
-        "The [em]Studio[/em] is your workshop: swap colour, typography and density and watch a model page react in real time. When you are happy, copy the tokens and take them to your project.",
+      headerKicker: "Studio",
+      headerTitleA: "Build your",
+      headerTitleB: "theme",
+      headerHint: "Fully scoped · changes don't affect the rest of the site",
       controls: {
         preset: "Preset",
         custom: "Custom",

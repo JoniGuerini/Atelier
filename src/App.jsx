@@ -25,7 +25,7 @@ import { ThemeToggle, NavModeToggle } from "./ds/primitives.jsx";
 import Footer from "./components/Footer.jsx";
 import { useT } from "./lib/i18n.jsx";
 import { useHashRoute } from "./lib/useHashRoute.js";
-import { ALL_ROUTE_IDS, ROUTES } from "./lib/routes.js";
+import { ALL_ROUTE_IDS, ROUTES, TOOL_ROUTE_IDS } from "./lib/routes.js";
 import { SidebarToggle, BackToTop } from "./ds/primitives.jsx";
 import { PageNav } from "./ds/PageNav.jsx";
 
@@ -157,7 +157,7 @@ export default function App() {
           setNavMode={setNavMode}
         />
       )}
-      <main className="content">
+      <main className={`content ${TOOL_ROUTE_IDS.has(current) ? "content--tool" : ""}`}>
         {!isTopbar && collapsed && (
           <SidebarToggle
             collapsed={collapsed}
@@ -166,7 +166,9 @@ export default function App() {
           />
         )}
         <Page onNavigate={navigate} />
-        <PageNav current={current} onNavigate={navigate} />
+        {!TOOL_ROUTE_IDS.has(current) && (
+          <PageNav current={current} onNavigate={navigate} />
+        )}
       </main>
       <Footer onNavigate={navigate} />
       <BackToTop />
