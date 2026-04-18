@@ -268,6 +268,8 @@ const ptBR = {
       meta: "19 cores",
       intro:
         "Quatro famílias: [em]superfícies[/em] para apoiar o olho, [em]tinta[/em] para o conteúdo, [em]acento[/em] para pontuar, e [em]semânticas[/em] para estados. Nada mais.",
+      copyToken: "Copiar token {token}",
+      copyHex: "Copiar {hex}",
       sections: {
         theme: {
           num: "i",

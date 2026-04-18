@@ -1,6 +1,7 @@
 import { PageHead, Section, ThemeToggle } from "../ds/primitives.jsx";
 import { useT } from "../lib/i18n.jsx";
 import { useTheme } from "../lib/theme.jsx";
+import { useCopy } from "../lib/useCopy.js";
 
 /* Cada swatch lista os valores nominais do token em ambos os modos.
    O background do chip é pintado via var(--token), então ele muda
@@ -33,21 +34,62 @@ const SEMANTIC = [
   { key: "infoSoft",    token: "--info-soft",   light: "#d9e3ee", dark: "#172339" },
 ];
 
+function CopyableValue({ children, value, label }) {
+  const { copy, copied } = useCopy();
+  const { t } = useT();
+  const tip = copied ? t("common.copied") : label || t("common.copy");
+  // O texto "✓ COPIADO/COPIED" do feedback é entregue via CSS var,
+  // assim o ::after fica i18n-friendly sem depender do <html lang>.
+  const style = { "--copied-label": `"✓ ${t("common.copied").toUpperCase()}"` };
+  return (
+    <button
+      type="button"
+      className={`swatch-copy ${copied ? "copied" : ""}`}
+      style={style}
+      onClick={(e) => {
+        e.stopPropagation();
+        copy(value);
+      }}
+      aria-label={tip}
+      title={tip}
+    >
+      {children}
+    </button>
+  );
+}
+
 function Swatch({ name, token, light, dark, resolved }) {
+  const { t } = useT();
   const activeHex = (resolved === "dark" ? dark : light).toUpperCase();
   const inactiveHex = (resolved === "dark" ? light : dark).toUpperCase();
+  const tokenRef = `var(${token})`;
   return (
     <div className="swatch">
       <div
         className="swatch-chip with-ring"
-        style={{ background: `var(${token})` }}
+        style={{ background: tokenRef }}
       />
       <div className="swatch-body">
         <div className="swatch-name">{name}</div>
-        <div className="swatch-token">{token}</div>
+        <CopyableValue
+          value={tokenRef}
+          label={t("pages.colors.copyToken", { token })}
+        >
+          <span className="swatch-token">{token}</span>
+        </CopyableValue>
         <div className="swatch-hex">
-          <span className="swatch-hex-active">{activeHex}</span>
-          <span className="swatch-hex-alt">{inactiveHex}</span>
+          <CopyableValue
+            value={activeHex}
+            label={t("pages.colors.copyHex", { hex: activeHex })}
+          >
+            <span className="swatch-hex-active">{activeHex}</span>
+          </CopyableValue>
+          <CopyableValue
+            value={inactiveHex}
+            label={t("pages.colors.copyHex", { hex: inactiveHex })}
+          >
+            <span className="swatch-hex-alt">{inactiveHex}</span>
+          </CopyableValue>
         </div>
       </div>
     </div>

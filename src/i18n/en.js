@@ -259,6 +259,8 @@ const en = {
       meta: "19 colors",
       intro:
         "Four families: [em]surfaces[/em] to rest the eye, [em]ink[/em] for content, [em]accent[/em] to punctuate, and [em]semantic[/em] for states. Nothing more.",
+      copyToken: "Copy token {token}",
+      copyHex: "Copy {hex}",
       sections: {
         theme: {
           num: "i",
