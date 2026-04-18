@@ -2311,12 +2311,20 @@ input[type="file"] { display: none; }
   display: grid;
   gap: 2px;
 }
-/* 2 colunas para grupos grandes (Components/Patterns) */
+/* 2 colunas — grupos médios (Foundations, Patterns) */
 .nav-menu-panel.cols-2 {
   min-width: 560px;
 }
 .nav-menu-panel.cols-2 ul {
   grid-template-columns: 1fr 1fr;
+  column-gap: var(--space-3);
+}
+/* 3 colunas — grupos grandes (Components) */
+.nav-menu-panel.cols-3 {
+  min-width: 820px;
+}
+.nav-menu-panel.cols-3 ul {
+  grid-template-columns: 1fr 1fr 1fr;
   column-gap: var(--space-3);
 }
 
@@ -2393,11 +2401,22 @@ input[type="file"] { display: none; }
   color: var(--accent);
 }
 
+@media (max-width: 960px) {
+  /* 3 colunas vira 2 em telas médias */
+  .nav-menu-panel.cols-3 {
+    min-width: 560px;
+  }
+  .nav-menu-panel.cols-3 ul {
+    grid-template-columns: 1fr 1fr;
+  }
+}
 @media (max-width: 720px) {
-  .nav-menu-panel.cols-2 {
+  .nav-menu-panel.cols-2,
+  .nav-menu-panel.cols-3 {
     min-width: 280px;
   }
-  .nav-menu-panel.cols-2 ul {
+  .nav-menu-panel.cols-2 ul,
+  .nav-menu-panel.cols-3 ul {
     grid-template-columns: 1fr;
   }
 }

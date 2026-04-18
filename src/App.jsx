@@ -204,9 +204,12 @@ function AppNavbar({ current, navigate, navMode, setNavMode, openSearch }) {
           const anyActive = group.items.some(
             (it) => (it.route || it.id) === current
           );
-          // 2 colunas pra grupos com 5+ itens (Components/Patterns);
-          // 1 coluna pra Start/Foundations/Reference/Studio.
-          const cols = group.items.length >= 5 ? 2 : 1;
+          // Quantas colunas no painel? Escala com o tamanho do grupo:
+          //   < 5 itens  → 1 col (Start, Reference, Studio)
+          //   5-8 itens  → 2 cols (Foundations, Patterns)
+          //   9+ itens   → 3 cols (Components — 13 itens)
+          const n = group.items.length;
+          const cols = n >= 9 ? 3 : n >= 5 ? 2 : 1;
           return (
             <NavbarDropdown
               key={group.groupKey}
