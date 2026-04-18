@@ -840,7 +840,7 @@ h3.sub {
    EXAMPLE — preview + code
    ================================================================ */
 .example {
-  border: 1px solid var(--rule);
+  border: 1px solid var(--rule-soft);
   background: var(--bg-panel);
   margin-bottom: var(--space-5);
 }
@@ -1334,7 +1334,7 @@ h3.sub {
   display: flex;
   gap: var(--space-3);
   padding: var(--space-4) var(--space-5);
-  border: 1px solid var(--rule);
+  border: 1px solid var(--rule-soft);
   background: var(--bg-panel);
   border-left-width: 4px;
 }
@@ -1503,7 +1503,7 @@ h3.sub {
 
 /* ---------- Table ---------- */
 .ds-table-wrap {
-  border: 1px solid var(--rule);
+  border: 1px solid var(--rule-soft);
   background: var(--bg-panel);
   overflow-x: auto;
 }
@@ -1549,7 +1549,7 @@ h3.sub {
   padding: 18px 20px;
   overflow: auto;
   white-space: pre;
-  border: 1px solid var(--rule);
+  border: 1px solid var(--rule-soft);
 }
 .ds-tree {
   line-height: 1.55;
@@ -1727,7 +1727,7 @@ h3.sub {
 }
 .ds-modal {
   background: var(--bg-panel);
-  border: 1px solid var(--rule);
+  border: 1px solid var(--rule-soft);
   max-width: 520px;
   width: 100%;
   animation: slideUp var(--dur) var(--ease);
@@ -2516,7 +2516,7 @@ input[type="file"] { display: none; }
 .ds-sidebar-specimen {
   width: 240px;
   background: var(--bg-panel);
-  border: 1px solid var(--rule);
+  border: 1px solid var(--rule-soft);
   padding: var(--space-5) var(--space-4) var(--space-4);
   display: flex;
   flex-direction: column;
@@ -2635,7 +2635,7 @@ input[type="file"] { display: none; }
 .ds-navbar-specimen {
   width: 100%;
   background: var(--bg);
-  border: 1px solid var(--rule);
+  border: 1px solid var(--rule-soft);
 }
 .ds-navbar-specimen-inner {
   display: grid;
@@ -2691,7 +2691,7 @@ input[type="file"] { display: none; }
   transform: translateX(-50%) translateY(-4px);
   min-width: 200px;
   background: var(--bg-panel);
-  border: 1px solid var(--rule);
+  border: 1px solid var(--rule-soft);
   padding: var(--space-3);
   opacity: 0;
   pointer-events: none;
