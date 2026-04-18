@@ -70,9 +70,10 @@ export default function App() {
   });
 
   const [navMode, setNavMode] = useState(() => {
-    if (typeof window === "undefined") return "sidebar";
+    if (typeof window === "undefined") return "navbar";
     const v = window.localStorage.getItem(NAV_MODE_KEY);
-    return v === "navbar" ? "navbar" : "sidebar";
+    if (v === "sidebar") return "sidebar";
+    return "navbar";
   });
 
   useEffect(() => {

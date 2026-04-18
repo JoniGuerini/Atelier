@@ -11,7 +11,7 @@ export default function Sidebar({
   onNavigate,
   collapsed = false,
   onToggleSidebar,
-  navMode = "sidebar",
+  navMode = "navbar",
   onToggleNavMode,
 }) {
   const { t, locale, setLocale, locales } = useT();

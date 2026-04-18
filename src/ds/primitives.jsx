@@ -76,7 +76,7 @@ export function SidebarToggle({
    Segmented control entre "sidebar" (menu lateral) e "navbar" (barra
    superior com dropdowns). Persistência e reatividade ficam a cargo
    do pai — este componente é puramente controlado.
-     <NavModeToggle mode="sidebar" onChange={setMode} />
+     <NavModeToggle mode="navbar" onChange={setMode} />
 */
 function NavModeGlyph({ id }) {
   if (id === "sidebar") {
@@ -96,7 +96,7 @@ function NavModeGlyph({ id }) {
   );
 }
 
-export function NavModeToggle({ mode = "sidebar", onChange, className = "" }) {
+export function NavModeToggle({ mode = "navbar", onChange, className = "" }) {
   const { t } = useT();
   const modes = [
     { id: "sidebar", labelKey: "nav.mode.sidebar" },
