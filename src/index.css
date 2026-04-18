@@ -2281,11 +2281,11 @@ input[type="file"] { display: none; }
   position: absolute;
   top: calc(100% - 2px);
   left: 0;
-  min-width: 240px;
+  min-width: 280px;
   background: var(--bg-panel);
   border: 1px solid var(--rule-soft);
   box-shadow: 0 16px 40px -24px rgba(0, 0, 0, 0.2);
-  padding: 8px;
+  padding: var(--space-3);
   opacity: 0;
   visibility: hidden;
   transform: translateY(-4px);
@@ -2309,8 +2309,18 @@ input[type="file"] { display: none; }
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 1px;
+  gap: 2px;
 }
+/* 2 colunas para grupos grandes (Components/Patterns) */
+.nav-menu-panel.cols-2 {
+  min-width: 560px;
+}
+.nav-menu-panel.cols-2 ul {
+  grid-template-columns: 1fr 1fr;
+  column-gap: var(--space-3);
+}
+
+/* Item compacto (sem descrição) — formato antigo, n + label */
 .nav-menu-item {
   display: grid;
   grid-template-columns: 32px 1fr;
@@ -2330,14 +2340,41 @@ input[type="file"] { display: none; }
   letter-spacing: 0.12em;
   color: var(--ink-faint);
 }
+.nav-menu-item .text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
 .nav-menu-item .label {
   font-family: var(--font-serif);
   font-size: 15px;
+  letter-spacing: -0.005em;
+  color: var(--ink);
 }
+.nav-menu-item .desc {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  font-style: italic;
+  line-height: 1.4;
+  color: var(--ink-faint);
+}
+
+/* Item rico (com descrição) — sem coluna do número, ocupa tudo.
+   Layout fica mais aberto, igual ao shadcn. */
+.nav-menu-item.rich {
+  grid-template-columns: 1fr;
+  padding: 10px 14px;
+  align-items: flex-start;
+}
+
 .nav-menu-item:hover {
   background: var(--bg-sunken);
   color: var(--ink);
   border-left-color: var(--accent);
+}
+.nav-menu-item:hover .label {
+  color: var(--accent);
 }
 .nav-menu-item:focus-visible {
   outline: 2px solid var(--accent);
@@ -2347,6 +2384,18 @@ input[type="file"] { display: none; }
   color: var(--ink);
   border-left-color: var(--accent);
   background: var(--bg-sunken);
+}
+.nav-menu-item.is-current .label {
+  color: var(--accent);
+}
+
+@media (max-width: 720px) {
+  .nav-menu-panel.cols-2 {
+    min-width: 280px;
+  }
+  .nav-menu-panel.cols-2 ul {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Controles à direita: idioma + tema + modo de navegação */

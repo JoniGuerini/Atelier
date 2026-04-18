@@ -204,19 +204,30 @@ function AppNavbar({ current, navigate, navMode, setNavMode, openSearch }) {
           const anyActive = group.items.some(
             (it) => (it.route || it.id) === current
           );
+          // 2 colunas pra grupos com 5+ itens (Components/Patterns);
+          // 1 coluna pra Start/Foundations/Reference/Studio.
+          const cols = group.items.length >= 5 ? 2 : 1;
           return (
             <NavbarDropdown
               key={group.groupKey}
               label={t(`nav.groups.${group.groupKey}`)}
               active={anyActive}
+              cols={cols}
             >
               {group.items.map((it) => {
                 const slug = it.route || it.id;
+                // Tenta resolver descrição específica (se i18n
+                // declarou nav.descriptions.<id>); cai num fallback
+                // vazio para itens sem descrição.
+                const descKey = `nav.descriptions.${it.id}`;
+                const desc = t(descKey);
+                const description = desc !== descKey ? desc : null;
                 return (
                   <NavbarDropdownItem
                     key={it.id}
                     slug={slug}
                     n={it.n}
+                    description={description}
                     active={current === slug}
                   >
                     {t(`nav.items.${it.id}`)}

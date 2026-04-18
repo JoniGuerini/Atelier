@@ -72,42 +72,50 @@ export function NavbarNav({ ariaLabel = "Primary", children }) {
 }
 
 /* Dropdown — abre por hover (e por focus-within para teclado).
-   `active` é controlado pelo consumidor (ex: algum item filho é current). */
-export function NavbarDropdown({ label, active = false, children }) {
+   `active` é controlado pelo consumidor (ex: algum item filho é current).
+   Aceita `cols` para configurar quantas colunas o painel terá (default 1
+   pra grupos pequenos; 2 pra grupos com 6+ itens, ditando layout grid). */
+export function NavbarDropdown({ label, active = false, cols = 1, children }) {
   return (
     <li className={`nav-menu ${active ? "active" : ""}`}>
       <button type="button" className="nav-menu-trigger" aria-haspopup="true">
         <span>{label}</span>
         <span className="nav-menu-chev" aria-hidden="true">▾</span>
       </button>
-      <NavbarDropdownPanel>{children}</NavbarDropdownPanel>
+      <NavbarDropdownPanel cols={cols}>{children}</NavbarDropdownPanel>
     </li>
   );
 }
 
-export function NavbarDropdownPanel({ children }) {
+export function NavbarDropdownPanel({ cols = 1, children }) {
   return (
-    <div className="nav-menu-panel" role="menu">
+    <div className={`nav-menu-panel cols-${cols}`} role="menu">
       <ul>{children}</ul>
     </div>
   );
 }
 
+/* Item rico: aceita título (children) + `description` opcional. Quando
+   o consumidor passa descrição, o item ganha layout em duas linhas
+   estilo shadcn — título em serif + descrição em mono pequeno. Quando
+   não passa, mantém o formato compacto antigo (n + label). */
 export function NavbarDropdownItem({
   href,
   slug,
   active = false,
   n,
+  description,
   children,
 }) {
   const { onNavigate } = useNavbar();
   const url = href ?? (slug ? `#/${slug}` : "#");
+  const rich = !!description;
   return (
     <li role="none">
       <a
         role="menuitem"
         href={url}
-        className={`nav-menu-item ${active ? "is-current" : ""}`}
+        className={`nav-menu-item ${rich ? "rich" : ""} ${active ? "is-current" : ""}`}
         onClick={(e) => {
           if (e.metaKey || e.ctrlKey || e.shiftKey) return;
           if (slug) {
@@ -116,8 +124,11 @@ export function NavbarDropdownItem({
           }
         }}
       >
-        {n != null && <span className="n">{n}</span>}
-        <span className="label">{children}</span>
+        {!rich && n != null && <span className="n">{n}</span>}
+        <span className="text">
+          <span className="label">{children}</span>
+          {rich && <span className="desc">{description}</span>}
+        </span>
       </a>
     </li>
   );
