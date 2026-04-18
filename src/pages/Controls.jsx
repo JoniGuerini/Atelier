@@ -6,6 +6,7 @@ import {
   Radio,
   Switch,
   Example,
+  CompositionSection,
 } from "../ds/primitives.jsx";
 import { useT } from "../lib/i18n.jsx";
 
@@ -134,6 +135,17 @@ export default function Controls() {
           </div>
         </Example>
       </Section>
+
+      <CompositionSection
+        num="iv"
+        i18nPrefix="pages.controls.composition"
+        root="Controls"
+        nodes={[
+          { name: "Checkbox" },
+          { name: "Radio" },
+          { name: "Switch" },
+        ]}
+      />
     </>
   );
 }

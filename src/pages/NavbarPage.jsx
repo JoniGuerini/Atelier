@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { PageHead, Section, Example } from "../ds/primitives.jsx";
+import { PageHead, Section, Example, CompositionSection } from "../ds/primitives.jsx";
 import { useT } from "../lib/i18n.jsx";
 
 /* ================================================================
@@ -239,9 +239,36 @@ export default function NavbarPage() {
         </Example>
       </Section>
 
-      {/* iv · Quando usar */}
-      <Section
+      {/* iv · Composição */}
+      <CompositionSection
         num="iv"
+        i18nPrefix="pages.navbar.composition"
+        root="Navbar"
+        nodes={[
+          { name: "NavbarBrand" },
+          {
+            name: "NavbarNav",
+            children: [
+              {
+                name: "NavbarDropdown",
+                children: [{ name: "NavbarDropdownItem" }],
+              },
+            ],
+          },
+          {
+            name: "NavbarActions",
+            children: [
+              { name: "NavbarLocale" },
+              { name: "ThemeToggle" },
+              { name: "NavModeToggle" },
+            ],
+          },
+        ]}
+      />
+
+      {/* v · Quando usar */}
+      <Section
+        num="v"
         title={<>{t("pages.navbar.guidelines.title")}</>}
         kicker={t("pages.navbar.guidelines.kicker")}
       >

@@ -5,6 +5,7 @@ import {
   Button,
   Example,
   SidebarToggle,
+  CompositionSection,
 } from "../ds/primitives.jsx";
 import { useT } from "../lib/i18n.jsx";
 
@@ -272,6 +273,16 @@ export default function Buttons() {
           </div>
         </Example>
       </Section>
+
+      <CompositionSection
+        num="viii"
+        i18nPrefix="pages.buttons.composition"
+        root="Button"
+        nodes={[
+          { name: "SidebarToggle (variante)" },
+          { name: "BackToTop (variante)" },
+        ]}
+      />
     </>
   );
 }

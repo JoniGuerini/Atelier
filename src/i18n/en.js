@@ -1,5 +1,14 @@
 const en = {
   common: {
+    composition: {
+      title: "Composition",
+      titleB: "tree",
+      kicker: "structure",
+      caption:
+        "Use the following [em]composition[/em] to build a [em]{root}[/em] — each node is an exported subcomponent.",
+      captionAtomic:
+        "[em]{root}[/em] is an atomic component — no subcomponents; varies by props.",
+    },
     viewCode: "View code",
     hideCode: "Hide code",
     copy: "Copy",
@@ -904,6 +913,13 @@ const en = {
       accept: "I agree to receive a short note with each new edition.",
       cancel: "Cancel",
       subscribe: "Subscribe",
+      composition: {
+        title: "Composition",
+        titleB: "tree",
+        kicker: "structure",
+        caption:
+          "Use the following [em]composition[/em] to build a [em]Form[/em] — each node is an exported subcomponent.",
+      },
     },
 
     emptyStates: {
@@ -946,6 +962,13 @@ const en = {
         emptyBody:
           "Nothing you wrote was lost. When the network is back, we pick up exactly where we left off.",
         cta: "Try again",
+      },
+      composition: {
+        title: "Composition",
+        titleB: "tree",
+        kicker: "structure",
+        caption:
+          "Use the following [em]composition[/em] to build an [em]EmptyState[/em] — each node is an exported subcomponent.",
       },
     },
 
@@ -1011,6 +1034,13 @@ const en = {
         title: "Specimen",
         kicker: "live preview",
         caption: "Faithful miniature. Tap items to see the active state.",
+      },
+      composition: {
+        title: "Composition",
+        titleB: "tree",
+        kicker: "structure",
+        caption:
+          "Use the following [em]composition[/em] to build a [em]Sidebar[/em] layout — each node is a logical block, with its own typographic role.",
       },
       guidelines: {
         title: "When to use",
@@ -1095,6 +1125,13 @@ const en = {
         title: "Specimen",
         kicker: "live preview",
         caption: "Faithful miniature. Hover a menu to see the dropdown.",
+      },
+      composition: {
+        title: "Composition",
+        titleB: "tree",
+        kicker: "structure",
+        caption:
+          "Use the following [em]composition[/em] to build a [em]Navbar[/em] layout — each node is an exported subcomponent.",
       },
       guidelines: {
         title: "When to use",

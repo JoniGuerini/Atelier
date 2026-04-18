@@ -2,11 +2,19 @@ import { useState } from "react";
 import {
   PageHead,
   Section,
-  Modal,
   Tooltip,
   Button,
   Example,
+  CompositionSection,
 } from "../ds/primitives.jsx";
+import {
+  Dialog,
+  DialogHeader,
+  DialogTitle,
+  DialogClose,
+  DialogBody,
+  DialogFooter,
+} from "../ds/Dialog.jsx";
 import { useT } from "../lib/i18n.jsx";
 
 export default function Overlays() {
@@ -43,47 +51,41 @@ export default function Overlays() {
   ${t("pages.overlays.modal.open")}
 </Button>
 
-<Modal
-  open={open}
-  onClose={() => setOpen(false)}
-  title={<>${t("pages.overlays.modal.titleA")}<em>${t("pages.overlays.modal.titleB")}</em>${t("pages.overlays.modal.titleC")}</>}
-  foot={
-    <>
-      <Button variant="ghost" onClick={() => setOpen(false)}>${t("common.cancel")}</Button>
-      <Button variant="primary" onClick={() => setOpen(false)}>${t("common.discard")}</Button>
-    </>
-  }
->
-  ${t("pages.overlays.modal.body")}
-</Modal>`}
+<Dialog open={open} onClose={() => setOpen(false)}>
+  <DialogHeader>
+    <DialogTitle>${t("pages.overlays.modal.titleA")}<em>${t("pages.overlays.modal.titleB")}</em>${t("pages.overlays.modal.titleC")}</DialogTitle>
+    <DialogClose />
+  </DialogHeader>
+  <DialogBody>${t("pages.overlays.modal.body")}</DialogBody>
+  <DialogFooter>
+    <Button variant="ghost" onClick={() => setOpen(false)}>${t("common.cancel")}</Button>
+    <Button variant="primary" onClick={() => setOpen(false)}>${t("common.discard")}</Button>
+  </DialogFooter>
+</Dialog>`}
         >
           <Button variant="primary" onClick={() => setOpen(true)}>
             {t("pages.overlays.modal.open")}
           </Button>
         </Example>
-        <Modal
-          open={open}
-          onClose={() => setOpen(false)}
-          title={
-            <>
+        <Dialog open={open} onClose={() => setOpen(false)}>
+          <DialogHeader>
+            <DialogTitle>
               {t("pages.overlays.modal.titleA")}
               <em>{t("pages.overlays.modal.titleB")}</em>
               {t("pages.overlays.modal.titleC")}
-            </>
-          }
-          foot={
-            <>
-              <Button variant="ghost" onClick={() => setOpen(false)}>
-                {t("common.cancel")}
-              </Button>
-              <Button variant="primary" onClick={() => setOpen(false)}>
-                {t("common.discard")}
-              </Button>
-            </>
-          }
-        >
-          {t("pages.overlays.modal.body")}
-        </Modal>
+            </DialogTitle>
+            <DialogClose />
+          </DialogHeader>
+          <DialogBody>{t("pages.overlays.modal.body")}</DialogBody>
+          <DialogFooter>
+            <Button variant="ghost" onClick={() => setOpen(false)}>
+              {t("common.cancel")}
+            </Button>
+            <Button variant="primary" onClick={() => setOpen(false)}>
+              {t("common.discard")}
+            </Button>
+          </DialogFooter>
+        </Dialog>
       </Section>
 
       <Section
@@ -118,6 +120,20 @@ export default function Overlays() {
           </Tooltip>
         </Example>
       </Section>
+
+      <CompositionSection
+        num="iii"
+        i18nPrefix="pages.overlays.composition"
+        root="Dialog"
+        nodes={[
+          {
+            name: "DialogHeader",
+            children: [{ name: "DialogTitle" }, { name: "DialogClose" }],
+          },
+          { name: "DialogBody" },
+          { name: "DialogFooter" },
+        ]}
+      />
     </>
   );
 }

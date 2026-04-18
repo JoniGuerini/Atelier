@@ -324,20 +324,11 @@ export function ThemeToggle({ variant = "segmented", className = "" }) {
   );
 }
 
-/* ---------- Field wrapper + Input + Textarea + Select ---------- */
-export function Field({ label, hint, error, children }) {
-  return (
-    <label className="ds-field">
-      {label && <span className="ds-label">{label}</span>}
-      {children}
-      {error ? (
-        <span className="ds-hint error">{error}</span>
-      ) : hint ? (
-        <span className="ds-hint">{hint}</span>
-      ) : null}
-    </label>
-  );
-}
+/* ---------- Field ----------
+   Field foi extraído para src/ds/Field.jsx como família composable
+   (Field, FieldLabel, FieldHint, FieldError). Aqui mantemos apenas
+   os controles atômicos (Input/Textarea/Select). */
+export { Field, FieldLabel, FieldHint, FieldError } from "./Field.jsx";
 
 export function Input({ invalid, className = "", ...rest }) {
   return (
@@ -417,59 +408,32 @@ export function Badge({ variant = "default", dot, children }) {
 }
 
 /* ---------- Alert ---------- */
-const ALERT_MARK = {
-  info: "i",
-  ok: "✓",
-  warn: "!",
-  danger: "!",
-  default: "—",
-};
-export function Alert({ variant = "default", title, children }) {
-  return (
-    <div className={`ds-alert ${variant}`}>
-      <div className="alert-mark">{ALERT_MARK[variant] || "—"}</div>
-      <div className="alert-body">
-        {title && <div className="alert-title">{title}</div>}
-        <div className="alert-text">{children}</div>
-      </div>
-    </div>
-  );
-}
+// Alert foi extraído para src/ds/Alert.jsx como família composable.
+// Re-export de conveniência mantém imports antigos funcionando.
+export {
+  Alert,
+  AlertMark,
+  AlertContent,
+  AlertTitle,
+  AlertDescription,
+  AlertActions,
+} from "./Alert.jsx";
 
 /* ---------- Card ---------- */
-export function Card({ kicker, title, children, foot }) {
-  return (
-    <article className="ds-card">
-      {kicker && <div className="card-kicker">{kicker}</div>}
-      {title && <h3 className="card-title">{title}</h3>}
-      {children && <div className="card-body">{children}</div>}
-      {foot && <div className="card-foot">{foot}</div>}
-    </article>
-  );
-}
+// Card foi extraído para src/ds/Card.jsx como família composable.
+// Re-export de conveniência mantém imports antigos funcionando.
+export {
+  Card,
+  CardHeader,
+  CardKicker,
+  CardTitle,
+  CardBody,
+  CardFooter,
+} from "./Card.jsx";
 
-/* ---------- Tabs ---------- */
-export function Tabs({ value, onChange, items }) {
-  return (
-    <>
-      <div className="ds-tabs">
-        {items.map((it) => (
-          <button
-            key={it.value}
-            type="button"
-            className={`ds-tab ${value === it.value ? "active" : ""}`}
-            onClick={() => onChange?.(it.value)}
-          >
-            {it.label}
-          </button>
-        ))}
-      </div>
-      <div className="ds-tab-panel">
-        {items.find((i) => i.value === value)?.panel}
-      </div>
-    </>
-  );
-}
+// Tabs foi extraído para src/ds/Tabs.jsx como família composable.
+// Re-export de conveniência mantém imports antigos funcionando.
+export { Tabs, TabList, Tab, TabPanels, TabPanel } from "./Tabs.jsx";
 
 /* ---------- Breadcrumb ---------- */
 export function Breadcrumbs({ items }) {
@@ -505,43 +469,25 @@ export function Progress({ value = 0, label }) {
   );
 }
 
-/* ---------- Modal ---------- */
-export function Modal({ open, onClose, title, children, foot }) {
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (e) => e.key === "Escape" && onClose?.();
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [open, onClose]);
+// Modal/Dialog foram extraídos para src/ds/Dialog.jsx.
+// `Modal` permanece como alias retrocompatível (forma curta).
+export {
+  Dialog,
+  DialogHeader,
+  DialogTitle,
+  DialogClose,
+  DialogBody,
+  DialogFooter,
+  Modal,
+} from "./Dialog.jsx";
 
-  if (!open) return null;
-  return (
-    <div
-      className="ds-modal-backdrop"
-      onClick={(e) => e.target === e.currentTarget && onClose?.()}
-    >
-      <div className="ds-modal" role="dialog" aria-modal="true">
-        <div className="ds-modal-head">
-          <h3>{title}</h3>
-          <button
-            className="ds-modal-close"
-            onClick={onClose}
-            aria-label="Fechar"
-          >
-            ×
-          </button>
-        </div>
-        <div className="ds-modal-body">{children}</div>
-        {foot && <div className="ds-modal-foot">{foot}</div>}
-      </div>
-    </div>
-  );
-}
-
-/* ---------- Toast ---------- */
-export function Toast({ message, visible }) {
-  return <div className={`ds-toast ${visible ? "show" : ""}`}>{message}</div>;
-}
+// Toast foi extraído para src/ds/Toast.jsx como família composable.
+export {
+  Toast,
+  ToastTitle,
+  ToastDescription,
+  ToastActions,
+} from "./Toast.jsx";
 
 /* ---------- Tooltip ---------- */
 export function Tooltip({ tip, children }) {
@@ -735,6 +681,102 @@ export function Code({ children, lang = "jsx", copy = true }) {
         </div>
       )}
     </div>
+  );
+}
+
+/* ---------- Composition tree ----------
+   Renderiza uma árvore de subcomponentes (estilo "tree command")
+   usando box-drawing chars. Reaproveita o wrapper do Code para
+   ganhar fonte mono, padding e botão de copiar no canto.
+     <CompositionTree
+       root="Sidebar"
+       nodes={[
+         { name: "SidebarHead", children: [{ name: "Brand" }] },
+         { name: "SidebarFooter" },
+       ]}
+     />
+*/
+function buildTreeLines(nodes, prefix = "", out = []) {
+  nodes.forEach((node, i) => {
+    const isLast = i === nodes.length - 1;
+    const connector = isLast ? "└── " : "├── ";
+    out.push(prefix + connector + node.name);
+    if (node.children && node.children.length) {
+      const nextPrefix = prefix + (isLast ? "    " : "│   ");
+      buildTreeLines(node.children, nextPrefix, out);
+    }
+  });
+  return out;
+}
+
+export function CompositionTree({ root, nodes = [], copy = true }) {
+  const lines = [root, ...buildTreeLines(nodes)];
+  const text = lines.join("\n");
+  return (
+    <div className="code-wrap">
+      <pre className="ds-code ds-tree">{text}</pre>
+      {copy && (
+        <div className="code-toolbar">
+          <CopyButton text={text} />
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ---------- CompositionSection ----------
+   Helper que monta uma seção "Composição" inteira (Section + Example +
+   CompositionTree). Lê i18n específico de cada página quando existir
+   (ex: `pages.sidebar.composition.title`) e cai num fallback genérico
+   (`common.composition.title`) quando não houver — assim páginas novas
+   ganham a seção "Composição" sem precisar replicar i18n boilerplate.
+
+     <CompositionSection
+       num="iv"
+       i18nPrefix="pages.sidebar.composition"  // opcional
+       root="Sidebar"
+       nodes={[...]}
+     />
+*/
+export function CompositionSection({ num, i18nPrefix, root, nodes = [] }) {
+  const { t, tr } = useT();
+  // tenta a chave específica da página; cai no genérico de `common.composition`.
+  const tryT = (suffix) => {
+    if (i18nPrefix) {
+      const k = `${i18nPrefix}.${suffix}`;
+      const v = t(k);
+      if (v !== k) return v;
+    }
+    return t(`common.composition.${suffix}`);
+  };
+  const tryTr = (suffix, vars) => {
+    if (i18nPrefix) {
+      const k = `${i18nPrefix}.${suffix}`;
+      const v = tr(k, vars);
+      if (typeof v === "string" && v === k) {
+        // não encontrado: tenta o genérico
+      } else {
+        return v;
+      }
+    }
+    return tr(`common.composition.${suffix}`, vars);
+  };
+
+  const captionKey = nodes.length === 0 ? "captionAtomic" : "caption";
+  return (
+    <Section
+      num={num}
+      title={
+        <>
+          {tryT("title")} <em>{tryT("titleB")}</em>
+        </>
+      }
+      kicker={tryT("kicker")}
+    >
+      <Example caption={tryTr(captionKey, { root })} tech={root} stack>
+        <CompositionTree root={root} nodes={nodes} />
+      </Example>
+    </Section>
   );
 }
 

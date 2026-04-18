@@ -6,6 +6,7 @@ import {
   Toast,
   Button,
   Example,
+  CompositionSection,
 } from "../ds/primitives.jsx";
 import { useT } from "../lib/i18n.jsx";
 
@@ -131,6 +132,17 @@ function show(message) {
         </Example>
         <Toast message={toast.message} visible={toast.visible} />
       </Section>
+
+      <CompositionSection
+        num="iii"
+        i18nPrefix="pages.feedback.composition"
+        root="Toast"
+        nodes={[
+          { name: "ToastTitle" },
+          { name: "ToastDescription" },
+          { name: "ToastActions" },
+        ]}
+      />
     </>
   );
 }

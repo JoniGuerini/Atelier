@@ -7,6 +7,7 @@ import {
   Textarea,
   Select,
   Example,
+  CompositionSection,
 } from "../ds/primitives.jsx";
 import { useT } from "../lib/i18n.jsx";
 
@@ -167,6 +168,18 @@ ${formatOpts.map((o) => `    <option>${o}</option>`).join("\n")}
           </div>
         </Example>
       </Section>
+
+      <CompositionSection
+        num="iv"
+        i18nPrefix="pages.inputs.composition"
+        root="Field"
+        nodes={[
+          { name: "FieldLabel" },
+          { name: "Input · Textarea · Select" },
+          { name: "FieldHint" },
+          { name: "FieldError" },
+        ]}
+      />
     </>
   );
 }

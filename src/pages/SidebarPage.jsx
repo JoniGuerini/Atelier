@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { PageHead, Section, Example } from "../ds/primitives.jsx";
+import { PageHead, Section, Example, CompositionSection } from "../ds/primitives.jsx";
 import { useT } from "../lib/i18n.jsx";
 
 /* ================================================================
@@ -239,9 +239,38 @@ export default function SidebarPage() {
         </Example>
       </Section>
 
-      {/* iv · Quando usar */}
-      <Section
+      {/* iv · Composição */}
+      <CompositionSection
         num="iv"
+        i18nPrefix="pages.sidebar.composition"
+        root="Sidebar"
+        nodes={[
+          {
+            name: "SidebarHead",
+            children: [{ name: "SidebarBrand" }, { name: "SidebarToggle" }],
+          },
+          {
+            name: "SidebarNav",
+            children: [
+              {
+                name: "SidebarGroup",
+                children: [
+                  { name: "SidebarGroupTitle" },
+                  { name: "SidebarNavItem" },
+                ],
+              },
+            ],
+          },
+          { name: "SidebarLocale" },
+          { name: "SidebarTheme" },
+          { name: "SidebarNavMode" },
+          { name: "SidebarFooter" },
+        ]}
+      />
+
+      {/* v · Quando usar */}
+      <Section
+        num="v"
         title={<>{t("pages.sidebar.guidelines.title")}</>}
         kicker={t("pages.sidebar.guidelines.kicker")}
       >

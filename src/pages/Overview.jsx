@@ -1,4 +1,5 @@
-import { PageHead, Card, Button, Badge, Divider } from "../ds/primitives.jsx";
+import { PageHead, Button, Badge, Divider } from "../ds/primitives.jsx";
+import { Card, CardKicker, CardTitle, CardBody, CardFooter } from "../ds/Card.jsx";
 import { useT } from "../lib/i18n.jsx";
 
 export default function Overview({ onNavigate }) {
@@ -24,22 +25,18 @@ export default function Overview({ onNavigate }) {
 
       <div className="grid cols-3" style={{ marginBottom: "var(--space-7)" }}>
         {cards.map((c, i) => (
-          <Card
-            key={i}
-            kicker={c.kicker}
-            title={
-              <>
-                {c.titleA}
-                <em>{c.titleB}</em>
-              </>
-            }
-            foot={
+          <Card key={i}>
+            <CardKicker>{c.kicker}</CardKicker>
+            <CardTitle>
+              {c.titleA}
+              <em>{c.titleB}</em>
+            </CardTitle>
+            <CardBody>{c.body}</CardBody>
+            <CardFooter>
               <Button variant="link" onClick={() => onNavigate(c.to)}>
                 {c.cta} →
               </Button>
-            }
-          >
-            {c.body}
+            </CardFooter>
           </Card>
         ))}
       </div>

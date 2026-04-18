@@ -1,5 +1,14 @@
 const ptBR = {
   common: {
+    composition: {
+      title: "Composição",
+      titleB: "árvore",
+      kicker: "estrutura",
+      caption:
+        "Use a [em]composição[/em] a seguir para montar um [em]{root}[/em] — cada nó é um subcomponente exportado.",
+      captionAtomic:
+        "[em]{root}[/em] é um componente atômico — sem subcomponentes; varia por props.",
+    },
     viewCode: "Ver código",
     hideCode: "Ocultar código",
     copy: "Copiar",
@@ -962,6 +971,13 @@ const ptBR = {
       accept: "Concordo em receber uma carta breve a cada nova edição.",
       cancel: "Cancelar",
       subscribe: "Assinar",
+      composition: {
+        title: "Composição",
+        titleB: "árvore",
+        kicker: "estrutura",
+        caption:
+          "Use a [em]composição[/em] a seguir para montar um [em]Form[/em] — cada nó é um subcomponente exportado.",
+      },
     },
 
     /* ------------- Empty States ------------- */
@@ -1005,6 +1021,13 @@ const ptBR = {
         emptyBody:
           "Nada que você escreveu se perdeu. Quando a rede voltar, seguimos exatamente de onde paramos.",
         cta: "Tentar novamente",
+      },
+      composition: {
+        title: "Composição",
+        titleB: "árvore",
+        kicker: "estrutura",
+        caption:
+          "Use a [em]composição[/em] a seguir para montar um [em]EmptyState[/em] — cada nó é um subcomponente exportado.",
       },
     },
 
@@ -1071,6 +1094,13 @@ const ptBR = {
         title: "Espécime",
         kicker: "live preview",
         caption: "Miniatura fiel. Toca nos itens para ver o estado ativo.",
+      },
+      composition: {
+        title: "Composição",
+        titleB: "árvore",
+        kicker: "estrutura",
+        caption:
+          "Use a [em]composição[/em] a seguir para montar um layout com [em]Sidebar[/em] — cada nó é um bloco lógico, com seu próprio papel tipográfico.",
       },
       guidelines: {
         title: "Quando usar",
@@ -1156,6 +1186,13 @@ const ptBR = {
         title: "Espécime",
         kicker: "live preview",
         caption: "Miniatura fiel. Passe o mouse em um menu para ver o dropdown.",
+      },
+      composition: {
+        title: "Composição",
+        titleB: "árvore",
+        kicker: "estrutura",
+        caption:
+          "Use a [em]composição[/em] a seguir para montar um layout com [em]Navbar[/em] — cada nó é um subcomponente exportado.",
       },
       guidelines: {
         title: "Quando usar",

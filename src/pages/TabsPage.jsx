@@ -2,10 +2,11 @@ import { useState } from "react";
 import {
   PageHead,
   Section,
-  Tabs,
   Breadcrumbs,
   Example,
+  CompositionSection,
 } from "../ds/primitives.jsx";
+import { Tabs, TabList, Tab, TabPanels, TabPanel } from "../ds/Tabs.jsx";
 import { useT } from "../lib/i18n.jsx";
 
 export default function TabsPage() {
@@ -59,26 +60,36 @@ export default function TabsPage() {
           stack
           code={`const [tab, setTab] = useState("foundations");
 
-<Tabs
-  value={tab}
-  onChange={setTab}
-  items={[
-    { value: "foundations", label: "${tabsItems[0].label}", panel: <p>…</p> },
-    { value: "components",  label: "${tabsItems[1].label}", panel: <p>…</p> },
-    { value: "patterns",    label: "${tabsItems[2].label}", panel: <p>…</p> },
-  ]}
-/>`}
+<Tabs value={tab} onChange={setTab}>
+  <TabList>
+    <Tab value="foundations">${tabsItems[0].label}</Tab>
+    <Tab value="components">${tabsItems[1].label}</Tab>
+    <Tab value="patterns">${tabsItems[2].label}</Tab>
+  </TabList>
+  <TabPanels>
+    <TabPanel value="foundations"><p>…</p></TabPanel>
+    <TabPanel value="components"><p>…</p></TabPanel>
+    <TabPanel value="patterns"><p>…</p></TabPanel>
+  </TabPanels>
+</Tabs>`}
         >
           <div style={{ width: "100%" }}>
-            <Tabs
-              value={tab}
-              onChange={setTab}
-              items={tabsItems.map((it) => ({
-                value: it.value,
-                label: it.label,
-                panel: <p>{it.body}</p>,
-              }))}
-            />
+            <Tabs value={tab} onChange={setTab}>
+              <TabList>
+                {tabsItems.map((it) => (
+                  <Tab key={it.value} value={it.value}>
+                    {it.label}
+                  </Tab>
+                ))}
+              </TabList>
+              <TabPanels>
+                {tabsItems.map((it) => (
+                  <TabPanel key={it.value} value={it.value}>
+                    <p>{it.body}</p>
+                  </TabPanel>
+                ))}
+              </TabPanels>
+            </Tabs>
           </div>
         </Example>
       </Section>
@@ -101,6 +112,16 @@ export default function TabsPage() {
           <Breadcrumbs items={crumbsB} />
         </Example>
       </Section>
+
+      <CompositionSection
+        num="iii"
+        i18nPrefix="pages.tabs.composition"
+        root="Tabs"
+        nodes={[
+          { name: "TabList", children: [{ name: "Tab" }] },
+          { name: "TabPanels", children: [{ name: "TabPanel" }] },
+        ]}
+      />
     </>
   );
 }

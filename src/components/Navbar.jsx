@@ -1,119 +1,156 @@
-import { ROUTES, ROUTE_BY_ID } from "../lib/routes.js";
+import { createContext, useContext } from "react";
+import { ROUTE_BY_ID } from "../lib/routes.js";
 import { useT } from "../lib/i18n.jsx";
 import { ThemeToggle, NavModeToggle } from "../ds/primitives.jsx";
 
-/* Item com dropdown disparado por hover (+ focus-within para teclado).
-   O dropdown aparece ao passar o mouse sobre o trigger ou qualquer
-   item da lista. A acessibilidade via teclado funciona por
-   Tab/Shift+Tab — quando qualquer link interno ganha foco, o
-   :focus-within mantém o menu aberto. */
-function NavMenu({ group, current, onNavigate }) {
-  const { t } = useT();
-  const anyActive = group.items.some(
-    (it) => (it.route || it.id) === current
-  );
+/* ================================================================
+   Navbar — API composable (estilo shadcn)
+   ----------------------------------------------------------------
+   <Navbar>
+     <NavbarBrand onNavigate={...} />
+     <NavbarNav ariaLabel={...}>
+       <NavbarDropdown label="Foundations" active={...}>
+         <NavbarDropdownItem href="#/colors" active n="02">Colors</NavbarDropdownItem>
+       </NavbarDropdown>
+     </NavbarNav>
+     <NavbarActions>
+       <LocaleSwitch />
+       <ThemeToggle />
+       <NavModeToggle ... />
+     </NavbarActions>
+   </Navbar>
+   ================================================================ */
 
+const NavbarContext = createContext({ current: null, onNavigate: () => {} });
+
+function useNavbar() {
+  return useContext(NavbarContext);
+}
+
+export function Navbar({ current, onNavigate, children, className = "" }) {
+  const classes = ["site-navbar"];
+  if (className) classes.push(className);
   return (
-    <li className={`nav-menu ${anyActive ? "active" : ""}`}>
-      <button type="button" className="nav-menu-trigger" aria-haspopup="true">
-        <span>{t(`nav.groups.${group.groupKey}`)}</span>
-        <span className="nav-menu-chev" aria-hidden="true">
-          ▾
-        </span>
-      </button>
+    <NavbarContext.Provider value={{ current, onNavigate }}>
+      <header className={classes.join(" ")} role="banner">
+        <div className="site-navbar-inner">{children}</div>
+      </header>
+    </NavbarContext.Provider>
+  );
+}
 
-      <div className="nav-menu-panel" role="menu">
-        <ul>
-          {group.items.map((it) => {
-            const slug = it.route || it.id;
-            const isCurrent = current === slug;
-            return (
-              <li key={it.id} role="none">
-                <a
-                  role="menuitem"
-                  href={`#/${slug}`}
-                  className={`nav-menu-item ${isCurrent ? "is-current" : ""}`}
-                  onClick={(e) => {
-                    if (e.metaKey || e.ctrlKey || e.shiftKey) return;
-                    e.preventDefault();
-                    onNavigate(slug);
-                  }}
-                >
-                  <span className="n">{it.n}</span>
-                  <span className="label">{t(`nav.items.${it.id}`)}</span>
-                </a>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
+export function NavbarBrand({ target = "overview", children }) {
+  const { t } = useT();
+  const { onNavigate } = useNavbar();
+  return (
+    <a
+      href={`#/${target}`}
+      className="site-navbar-brand"
+      onClick={(e) => {
+        e.preventDefault();
+        onNavigate?.(target);
+      }}
+    >
+      <span className="wordmark">
+        {children ?? (
+          <>
+            {t("nav.brand.title")}
+            <em>.</em>
+          </>
+        )}
+      </span>
+    </a>
+  );
+}
+
+export function NavbarNav({ ariaLabel = "Primary", children }) {
+  return (
+    <nav className="site-navbar-nav" aria-label={ariaLabel}>
+      <ul>{children}</ul>
+    </nav>
+  );
+}
+
+/* Dropdown — abre por hover (e por focus-within para teclado).
+   `active` é controlado pelo consumidor (ex: algum item filho é current). */
+export function NavbarDropdown({ label, active = false, children }) {
+  return (
+    <li className={`nav-menu ${active ? "active" : ""}`}>
+      <button type="button" className="nav-menu-trigger" aria-haspopup="true">
+        <span>{label}</span>
+        <span className="nav-menu-chev" aria-hidden="true">▾</span>
+      </button>
+      <NavbarDropdownPanel>{children}</NavbarDropdownPanel>
     </li>
   );
 }
 
-export default function Navbar({ current, onNavigate, navMode, onToggleNavMode }) {
-  const { t, locale, setLocale, locales } = useT();
-
+export function NavbarDropdownPanel({ children }) {
   return (
-    <header className="site-navbar" role="banner">
-      <div className="site-navbar-inner">
-        <a
-          href="#/overview"
-          className="site-navbar-brand"
-          onClick={(e) => {
-            e.preventDefault();
-            onNavigate("overview");
-          }}
-        >
-          <span className="wordmark">
-            {t("nav.brand.title")}
-            <em>.</em>
-          </span>
-        </a>
-
-        <nav
-          className="site-navbar-nav"
-          aria-label={t("nav.navLabel") || "Primary"}
-        >
-          <ul>
-            {ROUTES.map((group) => (
-              <NavMenu
-                key={group.groupKey}
-                group={group}
-                current={current}
-                onNavigate={onNavigate}
-              />
-            ))}
-          </ul>
-        </nav>
-
-        <div className="site-navbar-actions">
-          <div
-            className="locale-switch"
-            role="group"
-            aria-label={t("nav.footer.language")}
-          >
-            {locales.map((l) => (
-              <button
-                key={l.id}
-                type="button"
-                className={`locale-btn ${locale === l.id ? "active" : ""}`}
-                onClick={() => setLocale(l.id)}
-                aria-pressed={locale === l.id}
-                title={l.label}
-              >
-                {l.short}
-              </button>
-            ))}
-          </div>
-
-          <ThemeToggle variant="compact" />
-
-          <NavModeToggle mode={navMode} onChange={onToggleNavMode} />
-        </div>
-      </div>
-    </header>
+    <div className="nav-menu-panel" role="menu">
+      <ul>{children}</ul>
+    </div>
   );
 }
 
-export { ROUTE_BY_ID };
+export function NavbarDropdownItem({
+  href,
+  slug,
+  active = false,
+  n,
+  children,
+}) {
+  const { onNavigate } = useNavbar();
+  const url = href ?? (slug ? `#/${slug}` : "#");
+  return (
+    <li role="none">
+      <a
+        role="menuitem"
+        href={url}
+        className={`nav-menu-item ${active ? "is-current" : ""}`}
+        onClick={(e) => {
+          if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+          if (slug) {
+            e.preventDefault();
+            onNavigate?.(slug);
+          }
+        }}
+      >
+        {n != null && <span className="n">{n}</span>}
+        <span className="label">{children}</span>
+      </a>
+    </li>
+  );
+}
+
+export function NavbarActions({ children }) {
+  return <div className="site-navbar-actions">{children}</div>;
+}
+
+/* LocaleSwitch — extraído para que NavbarActions fique self-contained */
+export function NavbarLocale() {
+  const { t, locale, setLocale, locales } = useT();
+  return (
+    <div
+      className="locale-switch"
+      role="group"
+      aria-label={t("nav.footer.language")}
+    >
+      {locales.map((l) => (
+        <button
+          key={l.id}
+          type="button"
+          className={`locale-btn ${locale === l.id ? "active" : ""}`}
+          onClick={() => setLocale(l.id)}
+          aria-pressed={locale === l.id}
+          title={l.label}
+        >
+          {l.short}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+// Re-exporta para que o consumidor possa usar dentro de NavbarActions sem outro import
+export { ThemeToggle, NavModeToggle, ROUTE_BY_ID };

@@ -5,6 +5,7 @@ import {
   Example,
   Avatar,
   AvatarGroup,
+  CompositionSection,
 } from "../ds/primitives.jsx";
 import { AvatarPicker } from "../ds/AvatarPicker.jsx";
 import { AVATAR_PRESETS } from "../ds/avatarPresets.jsx";
@@ -223,6 +224,23 @@ const [value, setValue] = useState({ kind: "initials", initials: "CA" });
           </AvatarGroup>
         </Example>
       </Section>
+
+      <CompositionSection
+        num="vii"
+        i18nPrefix="pages.avatars.composition"
+        root="Avatar"
+        nodes={[
+          { name: "AvatarGroup", children: [{ name: "Avatar" }] },
+          {
+            name: "AvatarPicker",
+            children: [
+              { name: "AvatarPicker.Trigger" },
+              { name: "AvatarPicker.Cropper" },
+              { name: "AvatarPicker.Gallery" },
+            ],
+          },
+        ]}
+      />
     </>
   );
 }

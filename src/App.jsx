@@ -1,9 +1,31 @@
 import { useCallback, useEffect, useState } from "react";
-import Sidebar from "./components/Sidebar.jsx";
-import Navbar from "./components/Navbar.jsx";
+import {
+  Sidebar,
+  SidebarHead,
+  SidebarBrand,
+  SidebarNav,
+  SidebarGroup,
+  SidebarGroupTitle,
+  SidebarNavItem,
+  SidebarLocale,
+  SidebarTheme,
+  SidebarNavMode,
+  SidebarFooter,
+} from "./components/Sidebar.jsx";
+import {
+  Navbar,
+  NavbarBrand,
+  NavbarNav,
+  NavbarDropdown,
+  NavbarDropdownItem,
+  NavbarActions,
+  NavbarLocale,
+} from "./components/Navbar.jsx";
+import { ThemeToggle, NavModeToggle } from "./ds/primitives.jsx";
 import Footer from "./components/Footer.jsx";
+import { useT } from "./lib/i18n.jsx";
 import { useHashRoute } from "./lib/useHashRoute.js";
-import { ALL_ROUTE_IDS } from "./lib/routes.js";
+import { ALL_ROUTE_IDS, ROUTES } from "./lib/routes.js";
 import { SidebarToggle, BackToTop } from "./ds/primitives.jsx";
 
 import Overview from "./pages/Overview.jsx";
@@ -116,20 +138,20 @@ export default function App() {
   return (
     <div className={shellClasses.join(" ")}>
       {isTopbar ? (
-        <Navbar
+        <AppNavbar
           current={current}
-          onNavigate={navigate}
+          navigate={navigate}
           navMode={navMode}
-          onToggleNavMode={setNavMode}
+          setNavMode={setNavMode}
         />
       ) : (
-        <Sidebar
+        <AppSidebar
           current={current}
-          onNavigate={navigate}
+          navigate={navigate}
           collapsed={collapsed}
-          onToggleSidebar={toggleSidebar}
+          toggleSidebar={toggleSidebar}
           navMode={navMode}
-          onToggleNavMode={setNavMode}
+          setNavMode={setNavMode}
         />
       )}
       <main className="content">
@@ -145,5 +167,107 @@ export default function App() {
       <Footer onNavigate={navigate} />
       <BackToTop />
     </div>
+  );
+}
+
+/* ----------------------------------------------------------------
+   AppNavbar — composição real da Navbar do Atelier.
+   Documenta, no próprio uso, a árvore exposta na página #/navbar.
+---------------------------------------------------------------- */
+function AppNavbar({ current, navigate, navMode, setNavMode }) {
+  const { t } = useT();
+  return (
+    <Navbar current={current} onNavigate={navigate}>
+      <NavbarBrand />
+      <NavbarNav ariaLabel={t("nav.navLabel") || "Primary"}>
+        {ROUTES.map((group) => {
+          const anyActive = group.items.some(
+            (it) => (it.route || it.id) === current
+          );
+          return (
+            <NavbarDropdown
+              key={group.groupKey}
+              label={t(`nav.groups.${group.groupKey}`)}
+              active={anyActive}
+            >
+              {group.items.map((it) => {
+                const slug = it.route || it.id;
+                return (
+                  <NavbarDropdownItem
+                    key={it.id}
+                    slug={slug}
+                    n={it.n}
+                    active={current === slug}
+                  >
+                    {t(`nav.items.${it.id}`)}
+                  </NavbarDropdownItem>
+                );
+              })}
+            </NavbarDropdown>
+          );
+        })}
+      </NavbarNav>
+      <NavbarActions>
+        <NavbarLocale />
+        <ThemeToggle variant="compact" />
+        <NavModeToggle mode={navMode} onChange={setNavMode} />
+      </NavbarActions>
+    </Navbar>
+  );
+}
+
+/* ----------------------------------------------------------------
+   AppSidebar — composição real da Sidebar do Atelier.
+   Documenta, no próprio uso, a árvore exposta na página #/sidebar.
+---------------------------------------------------------------- */
+function AppSidebar({
+  current,
+  navigate,
+  collapsed,
+  toggleSidebar,
+  navMode,
+  setNavMode,
+}) {
+  const { t } = useT();
+  return (
+    <Sidebar collapsed={collapsed}>
+      <SidebarHead>
+        <SidebarBrand onNavigate={navigate} />
+        <SidebarToggle
+          collapsed={collapsed}
+          onToggle={toggleSidebar}
+          className="sidebar-toggle-inline"
+          tabIndex={collapsed ? -1 : 0}
+        />
+      </SidebarHead>
+
+      <SidebarNav>
+        {ROUTES.map((group) => (
+          <SidebarGroup key={group.groupKey}>
+            <SidebarGroupTitle>
+              {t(`nav.groups.${group.groupKey}`)}
+            </SidebarGroupTitle>
+            {group.items.map((it) => {
+              const slug = it.route || it.id;
+              return (
+                <SidebarNavItem
+                  key={it.id}
+                  n={it.n}
+                  active={current === slug}
+                  onClick={() => navigate(slug)}
+                >
+                  {t(`nav.items.${it.id}`)}
+                </SidebarNavItem>
+              );
+            })}
+          </SidebarGroup>
+        ))}
+      </SidebarNav>
+
+      <SidebarLocale />
+      <SidebarTheme />
+      <SidebarNavMode mode={navMode} onChange={setNavMode} />
+      <SidebarFooter />
+    </Sidebar>
   );
 }

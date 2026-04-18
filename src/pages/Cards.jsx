@@ -1,12 +1,19 @@
 import {
   PageHead,
   Section,
-  Card,
   Button,
   Badge,
   Example,
   Avatar,
+  CompositionSection,
 } from "../ds/primitives.jsx";
+import {
+  Card,
+  CardKicker,
+  CardTitle,
+  CardBody,
+  CardFooter,
+} from "../ds/Card.jsx";
 import { useT } from "../lib/i18n.jsx";
 
 export default function Cards() {
@@ -39,39 +46,38 @@ export default function Cards() {
           caption={t("pages.cards.editorial.caption")}
           tech="grid.cols-3"
           stack
-          code={`<Card kicker="${items[0]?.kicker || ""}" title={<>${items[0]?.titleA || ""}<em>${items[0]?.titleB || ""}</em>${items[0]?.titleC || ""}</>}
-  foot={<>${items[0]?.foot || ""}</>}>
-  …
+          code={`<Card>
+  <CardKicker>${items[0]?.kicker || ""}</CardKicker>
+  <CardTitle>${items[0]?.titleA || ""}<em>${items[0]?.titleB || ""}</em>${items[0]?.titleC || ""}</CardTitle>
+  <CardBody>…</CardBody>
+  <CardFooter>${items[0]?.foot || ""}</CardFooter>
 </Card>`}
         >
           <div className="grid cols-3" style={{ width: "100%" }}>
             {items.map((c, i) => (
-              <Card
-                key={i}
-                kicker={c.kicker}
-                title={
-                  <>
-                    {c.titleA}
-                    <em>{c.titleB}</em>
-                    {c.titleC}
-                  </>
-                }
-                foot={<>{c.foot}</>}
-              >
-                {/* body may contain [em]...[/em] */}
-                {(() => {
-                  const body = c.body || "";
-                  const parts = body.split(/\[em\]|\[\/em\]/);
-                  return parts.map((p, j) =>
-                    j % 2 === 1 ? (
-                      <em key={j} style={{ fontStyle: "italic" }}>
-                        {p}
-                      </em>
-                    ) : (
-                      p
-                    )
-                  );
-                })()}
+              <Card key={i}>
+                <CardKicker>{c.kicker}</CardKicker>
+                <CardTitle>
+                  {c.titleA}
+                  <em>{c.titleB}</em>
+                  {c.titleC}
+                </CardTitle>
+                <CardBody>
+                  {(() => {
+                    const body = c.body || "";
+                    const parts = body.split(/\[em\]|\[\/em\]/);
+                    return parts.map((p, j) =>
+                      j % 2 === 1 ? (
+                        <em key={j} style={{ fontStyle: "italic" }}>
+                          {p}
+                        </em>
+                      ) : (
+                        p
+                      )
+                    );
+                  })()}
+                </CardBody>
+                <CardFooter>{c.foot}</CardFooter>
               </Card>
             ))}
           </div>
@@ -92,28 +98,27 @@ export default function Cards() {
           caption={t("pages.cards.actions.caption")}
           tech="foot + button"
           center
-          code={`<Card kicker="${sub.kicker || ""}"
-  title={<>${sub.titleA || ""}<em>${sub.titleB || ""}</em></>}
-  foot={
+          code={`<Card>
+  <CardKicker>${sub.kicker || ""}</CardKicker>
+  <CardTitle>${sub.titleA || ""}<em>${sub.titleB || ""}</em></CardTitle>
+  <CardBody>${sub.body || ""}</CardBody>
+  <CardFooter>
     <div style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
       <span>${sub.price || ""}</span>
       <Button variant="primary">${sub.cta || ""}</Button>
     </div>
-  }
->
-  ${sub.body || ""}
+  </CardFooter>
 </Card>`}
         >
           <div style={{ maxWidth: 380, width: "100%" }}>
-            <Card
-              kicker={sub.kicker}
-              title={
-                <>
-                  {sub.titleA}
-                  <em>{sub.titleB}</em>
-                </>
-              }
-              foot={
+            <Card>
+              <CardKicker>{sub.kicker}</CardKicker>
+              <CardTitle>
+                {sub.titleA}
+                <em>{sub.titleB}</em>
+              </CardTitle>
+              <CardBody>{sub.body}</CardBody>
+              <CardFooter>
                 <div
                   style={{
                     display: "flex",
@@ -125,9 +130,7 @@ export default function Cards() {
                   <span>{sub.price}</span>
                   <Button variant="primary">{sub.cta}</Button>
                 </div>
-              }
-            >
-              {sub.body}
+              </CardFooter>
             </Card>
           </div>
         </Example>
@@ -198,6 +201,18 @@ export default function Cards() {
           </div>
         </Example>
       </Section>
+
+      <CompositionSection
+        num="iv"
+        i18nPrefix="pages.cards.composition"
+        root="Card"
+        nodes={[
+          { name: "CardKicker" },
+          { name: "CardTitle" },
+          { name: "CardBody" },
+          { name: "CardFooter" },
+        ]}
+      />
     </>
   );
 }

@@ -1457,6 +1457,10 @@ h3.sub {
   white-space: pre;
   border: 1px solid var(--rule);
 }
+.ds-tree {
+  line-height: 1.55;
+  color: var(--code-ink);
+}
 .ds-code .k { color: #d68cc4; }
 .ds-code .s { color: #b8d9a8; }
 .ds-code .n { color: #e6c97a; }

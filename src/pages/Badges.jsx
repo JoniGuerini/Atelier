@@ -1,4 +1,10 @@
-import { PageHead, Section, Badge, Example } from "../ds/primitives.jsx";
+import {
+  PageHead,
+  Section,
+  Badge,
+  Example,
+  CompositionSection,
+} from "../ds/primitives.jsx";
 import { useT } from "../lib/i18n.jsx";
 
 export default function Badges() {
@@ -137,6 +143,13 @@ export default function Badges() {
           </div>
         </Example>
       </Section>
+
+      <CompositionSection
+        num="iv"
+        i18nPrefix="pages.badges.composition"
+        root="Badge"
+        nodes={[]}
+      />
     </>
   );
 }

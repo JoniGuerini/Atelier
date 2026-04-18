@@ -1,4 +1,10 @@
-import { PageHead, Section, Alert, Example } from "../ds/primitives.jsx";
+import {
+  PageHead,
+  Section,
+  Example,
+  CompositionSection,
+} from "../ds/primitives.jsx";
+import { Alert } from "../ds/Alert.jsx";
 import { useT } from "../lib/i18n.jsx";
 
 export default function Alerts() {
@@ -45,6 +51,23 @@ export default function Alerts() {
       {make("ok", "ii", "ok")}
       {make("warn", "iii", "warn")}
       {make("danger", "iv", "danger")}
+
+      <CompositionSection
+        num="v"
+        i18nPrefix="pages.alerts.composition"
+        root="Alert"
+        nodes={[
+          { name: "AlertMark" },
+          {
+            name: "AlertContent",
+            children: [
+              { name: "AlertTitle" },
+              { name: "AlertDescription" },
+              { name: "AlertActions" },
+            ],
+          },
+        ]}
+      />
     </>
   );
 }
