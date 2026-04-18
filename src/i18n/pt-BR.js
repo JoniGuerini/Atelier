@@ -100,23 +100,26 @@ const ptBR = {
       kicker: "preferências",
       title: "Configurações",
     },
-    search: {
-      title: "Buscar",
-      trigger: "Buscar",
-      placeholder: "Buscar páginas, componentes, cores...",
-      empty: "Nada encontrado para",
-      groups: {
-        pages: "Páginas",
-        components: "Componentes",
-        tokens: "Cores · Tokens",
-      },
-      foot: {
-        navigate: "navegar",
-        select: "abrir",
-        close: "fechar",
-      },
-    },
     navLabel: "Navegação principal",
+  },
+
+  /* ============================================================ */
+  /* Search Palette (⌘K) — global, fora de `nav` por isso */
+  search: {
+    title: "Buscar",
+    trigger: "Buscar",
+    placeholder: "Buscar páginas, componentes, cores...",
+    empty: "Nada encontrado para",
+    groups: {
+      pages: "Páginas",
+      components: "Componentes",
+      tokens: "Cores · Tokens",
+    },
+    foot: {
+      navigate: "navegar",
+      select: "abrir",
+      close: "fechar",
+    },
   },
 
   /* ============================================================ */

@@ -68,7 +68,32 @@
   --ink-faint: #9a958d;
   --ink-inverse: #e8e3d6;
 
-  /* Rules */
+  /* ============================================================
+     Rules — convenção editorial das réguas. PESO É SIGNIFICADO.
+     ------------------------------------------------------------
+     --rule        Linha forte (--ink). USE QUANDO a régua é uma
+                   AFFORDANCE ou um DIVISOR HIERÁRQUICO:
+                     • Cabeçalho de página (page-head divider)
+                     • Cabeçalho de modal/tabela/specimen
+                     • Linha de baixo das tabs (.ds-tabs)
+                     • Régua superior do PageNav
+                     • Botões/inputs default que precisam de
+                       affordance forte
+     --rule-soft   Linha suave (creme/antracito). USE QUANDO a
+                   régua só AGRUPA — borda de container, painel,
+                   card, popover, surface qualquer.
+                     • .ds-card, .example, .ds-alert, .ds-modal
+                     • .sidebar, .site-footer, .studio-block
+                     • .search-palette, .settings-menu-panel
+                     • Specimens (.ds-sidebar-specimen, .ds-navbar-specimen)
+     --rule-faint  Linha fantasma (rascunho). Pra grids internos
+                   de chart, linhas de fundo discretas.
+     ------------------------------------------------------------
+     ⚠ NÃO use `border: 1px solid var(--ink)` para containers —
+       isso cria moldura "bolted to the page". O bg-panel/bg
+       contrast já estabelece a borda visual; --rule-soft termina
+       o trabalho com discrição.
+     ============================================================ */
   --rule: #1a1a1a;
   --rule-soft: #d9d3c4;
   --rule-faint: #e6e0d0;
@@ -3665,7 +3690,7 @@ input[type="file"] { display: none; }
   max-width: 620px;
   max-height: calc(100vh - 160px);
   background: var(--bg-panel);
-  border: 1px solid var(--ink);
+  border: 1px solid var(--rule-soft);
   display: flex;
   flex-direction: column;
   animation: search-palette-in var(--dur) var(--ease) both;
@@ -3897,7 +3922,7 @@ input[type="file"] { display: none; }
   position: absolute;
   z-index: 60;
   background: var(--bg-panel);
-  border: 1px solid var(--ink);
+  border: 1px solid var(--rule-soft);
   padding: var(--space-4);
   display: flex;
   flex-direction: column;

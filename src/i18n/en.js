@@ -100,23 +100,26 @@ const en = {
       kicker: "preferences",
       title: "Settings",
     },
-    search: {
-      title: "Search",
-      trigger: "Search",
-      placeholder: "Search pages, components, colors...",
-      empty: "Nothing found for",
-      groups: {
-        pages: "Pages",
-        components: "Components",
-        tokens: "Colors · Tokens",
-      },
-      foot: {
-        navigate: "navigate",
-        select: "open",
-        close: "close",
-      },
-    },
     navLabel: "Primary navigation",
+  },
+
+  /* ============================================================ */
+  /* Search Palette (⌘K) — global, sits at root, not under `nav` */
+  search: {
+    title: "Search",
+    trigger: "Search",
+    placeholder: "Search pages, components, colors...",
+    empty: "Nothing found for",
+    groups: {
+      pages: "Pages",
+      components: "Components",
+      tokens: "Colors · Tokens",
+    },
+    foot: {
+      navigate: "navigate",
+      select: "open",
+      close: "close",
+    },
   },
 
   footer: {
