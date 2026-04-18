@@ -270,14 +270,18 @@ function AppSidebar({
         ))}
       </SidebarNav>
 
-      <div className="sidebar-settings">
+      <SidebarFooter>
+        <div className="sidebar-footer-text">
+          <b>{t("nav.footer.study")}</b>
+          <br />
+          {t("nav.footer.stack")}
+        </div>
         <SettingsMenu
           navMode={navMode}
           onToggleNavMode={setNavMode}
-          placement="top-start"
+          placement="top-end"
         />
-      </div>
-      <SidebarFooter />
+      </SidebarFooter>
     </Sidebar>
   );
 }
