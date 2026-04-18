@@ -93,10 +93,19 @@ function polarToCartesian(cx, cy, r, deg) {
 ================================================================ */
 
 function ChartFrame({ children, tooltip }) {
+  // Conteúdo do tooltip: uma linha mono uppercase no estilo do
+  // <Tooltip> atômico do Atelier — `LABEL · VALUE [· SUB]`. Esse
+  // separador "·" é o mesmo motivo tipográfico usado em todo o DS.
+  const text = tooltip
+    ? [tooltip.label, tooltip.value, tooltip.sub]
+        .filter(Boolean)
+        .join(" · ")
+    : null;
+
   return (
     <div className="ds-chart-frame">
       {children}
-      {tooltip && (
+      {text && (
         <div
           className="ds-chart-tooltip"
           style={{
@@ -105,11 +114,7 @@ function ChartFrame({ children, tooltip }) {
           }}
           role="tooltip"
         >
-          <span className="ds-chart-tooltip-label">{tooltip.label}</span>
-          <span className="ds-chart-tooltip-value">{tooltip.value}</span>
-          {tooltip.sub && (
-            <span className="ds-chart-tooltip-sub">{tooltip.sub}</span>
-          )}
+          {text}
         </div>
       )}
     </div>

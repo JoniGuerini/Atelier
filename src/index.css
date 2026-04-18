@@ -3535,66 +3535,28 @@ input[type="file"] { display: none; }
   width: 100%;
 }
 
-/* Tooltip — bloco mono, paleta inversa, fiel ao DNA editorial */
+/* Chart tooltip — segue exatamente o estilo do <Tooltip> atômico
+   do Atelier (.ds-tt::after): bloco mono uppercase, paleta inverse
+   (--ink → --bg), sem seta, sem múltiplas linhas. Mantém coerência
+   visual com o resto do DS. */
 .ds-chart-tooltip {
   position: absolute;
   pointer-events: none;
   z-index: 5;
-  background: var(--bg-inverse);
-  color: var(--ink-inverse);
-  border: 1px solid var(--ink);
-  padding: 7px 10px 8px;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  white-space: nowrap;
-  /* Centra horizontalmente e flutua acima do ponto */
-  transform: translate(-50%, calc(-100% - 10px));
-  animation: ds-chart-tooltip-in var(--dur-fast) var(--ease) both;
-  /* Evita ser cortado nas bordas extremas */
-  max-width: 220px;
-}
-.ds-chart-tooltip-label {
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-  /* No tema light o ink-faint do bloco inverso fica baixo demais —
-     usamos uma versão um pouco mais clara via filter ou direto */
-  opacity: 0.7;
-}
-.ds-chart-tooltip-value {
-  font-family: var(--font-serif);
-  font-size: 16px;
-  font-weight: 300;
-  letter-spacing: -0.005em;
-  color: var(--ink-inverse);
-  line-height: 1.1;
-}
-.ds-chart-tooltip-sub {
+  background: var(--ink);
+  color: var(--bg);
   font-family: var(--font-mono);
   font-size: 10px;
-  color: var(--ink-inverse);
-  opacity: 0.6;
-}
-
-/* Pequena seta apontando pra baixo (na ponta do bloco) */
-.ds-chart-tooltip::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  bottom: -5px;
-  width: 8px;
-  height: 8px;
-  background: var(--bg-inverse);
-  border-right: 1px solid var(--ink);
-  border-bottom: 1px solid var(--ink);
-  transform: translateX(-50%) rotate(45deg);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 6px 10px;
+  white-space: nowrap;
+  transform: translate(-50%, calc(-100% - 10px));
+  animation: ds-chart-tooltip-in var(--dur-fast) var(--ease) both;
 }
 
 @keyframes ds-chart-tooltip-in {
-  from { opacity: 0; transform: translate(-50%, calc(-100% - 4px)); }
+  from { opacity: 0; transform: translate(-50%, calc(-100% - 6px)); }
   to   { opacity: 1; transform: translate(-50%, calc(-100% - 10px)); }
 }
 
