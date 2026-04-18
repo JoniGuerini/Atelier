@@ -117,7 +117,7 @@ export default function Typography() {
       >
         <div
           style={{
-            border: "1px solid var(--rule)",
+            border: "1px solid var(--rule-soft)",
             background: "var(--bg-panel)",
             padding: "var(--space-6)",
           }}

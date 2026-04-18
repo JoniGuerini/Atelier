@@ -183,7 +183,7 @@ export default function Buttons() {
               gap: 12,
               padding: "16px 20px",
               background: "var(--bg)",
-              border: "1px solid var(--rule)",
+              border: "1px solid var(--rule-soft)",
             }}
           >
             <Button variant="ghost">{lb("cancel")}</Button>
@@ -217,7 +217,7 @@ export default function Buttons() {
               gap: 16,
               padding: "16px 20px",
               background: "var(--bg)",
-              border: "1px solid var(--rule)",
+              border: "1px solid var(--rule-soft)",
             }}
           >
             <SidebarToggle
@@ -261,7 +261,7 @@ export default function Buttons() {
             style={{
               padding: "16px 20px",
               background: "var(--bg)",
-              border: "1px solid var(--rule)",
+              border: "1px solid var(--rule-soft)",
               color: "var(--ink-faint)",
               fontFamily: "var(--font-mono)",
               fontSize: 10,

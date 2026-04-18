@@ -39,7 +39,7 @@ export default function Spacing() {
       >
         <div
           style={{
-            border: "1px solid var(--rule)",
+            border: "1px solid var(--rule-soft)",
             background: "var(--bg-panel)",
             padding: "var(--space-5) var(--space-6)",
           }}
@@ -62,7 +62,7 @@ export default function Spacing() {
         <p className="section-desc">{t("pages.spacing.gridDesc")}</p>
         <div
           style={{
-            border: "1px solid var(--rule)",
+            border: "1px solid var(--rule-soft)",
             background: "var(--bg-panel)",
             padding: "var(--space-5)",
             display: "grid",

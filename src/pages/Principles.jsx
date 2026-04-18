@@ -36,7 +36,7 @@ export default function Principles() {
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
             gap: 0,
-            border: "1px solid var(--rule)",
+            border: "1px solid var(--rule-soft)",
             background: "var(--bg-panel)",
           }}
         >

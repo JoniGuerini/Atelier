@@ -146,7 +146,7 @@ export default function Colors() {
             gap: 20,
             padding: "16px 20px",
             background: "var(--bg)",
-            border: "1px solid var(--rule)",
+            border: "1px solid var(--rule-soft)",
           }}
         >
           <ThemeToggle />

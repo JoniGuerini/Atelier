@@ -89,7 +89,7 @@ export default function Icons() {
         <p className="section-desc">{t("pages.icons.contextDesc")}</p>
         <div
           style={{
-            border: "1px solid var(--rule)",
+            border: "1px solid var(--rule-soft)",
             background: "var(--bg-panel)",
             padding: "var(--space-6)",
             fontFamily: "var(--font-serif)",

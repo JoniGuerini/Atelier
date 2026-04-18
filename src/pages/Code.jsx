@@ -376,7 +376,7 @@ export default function CodePage({ onNavigate }) {
           <div
             key={c.id}
             style={{
-              border: "1px solid var(--rule)",
+              border: "1px solid var(--rule-soft)",
               background: "var(--bg-panel)",
               marginBottom: "var(--space-5)",
             }}
