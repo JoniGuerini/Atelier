@@ -746,6 +746,294 @@ export function DonutChart(props) {
 }
 
 /* ================================================================
+   RadarChart — polígono em N eixos.
+   ================================================================ */
+
+const SERIES_COLORS = [
+  "var(--accent)",
+  "var(--ink)",
+  "var(--ink-soft)",
+  "var(--ink-faint)",
+];
+
+export function RadarChart({
+  axes,
+  series,            // [{ name, values: number[] }]
+  height = 280,
+  max,
+  className = "",
+}) {
+  const W = height;
+  const H = height;
+  const cx = W / 2;
+  const cy = H / 2;
+  const r = (Math.min(W, H) / 2) * 0.74;
+  const N = axes.length;
+  const allValues = series.flatMap((s) => s.values);
+  const M = max ?? Math.max(...allValues, 1);
+
+  const pointAt = (axisIdx, value) => {
+    const angle = (axisIdx / N) * 360 - 90;
+    const ratio = value / M;
+    return polarToCartesian(cx, cy, r * ratio, angle);
+  };
+
+  // Grid concêntrico
+  const grid = [0.25, 0.5, 0.75, 1];
+
+  // Pontos de cada eixo (no raio máximo) — para desenhar as linhas radiais
+  const axisEnds = axes.map((_, i) => {
+    const angle = (i / N) * 360 - 90;
+    return { ...polarToCartesian(cx, cy, r, angle), angle };
+  });
+
+  // Posição do label de cada eixo (um pouco fora)
+  const labelPos = axes.map((_, i) => {
+    const angle = (i / N) * 360 - 90;
+    return polarToCartesian(cx, cy, r * 1.16, angle);
+  });
+
+  const seriesData = series.map((s, i) => {
+    const points = s.values.map((v, axisIdx) => pointAt(axisIdx, v));
+    const path =
+      points.map((p, j) => `${j === 0 ? "M" : "L"} ${p.x} ${p.y}`).join(" ") +
+      " Z";
+    return {
+      name: s.name,
+      values: s.values,
+      points,
+      path,
+      color: SERIES_COLORS[i % SERIES_COLORS.length],
+    };
+  });
+
+  const [hover, setHover] = useState(null);
+  const tooltip = hover
+    ? {
+        xPct: (hover.x / W) * 100,
+        yPct: (hover.y / H) * 100,
+        label: axes[hover.axisIdx],
+        value: pad(hover.value),
+        sub: hover.seriesName,
+      }
+    : null;
+
+  return (
+    <ChartFrame tooltip={tooltip}>
+      <svg
+        viewBox={`0 0 ${W} ${H}`}
+        className={`ds-chart-svg ${className}`}
+        style={{ width: H, height: H }}
+        role="img"
+        onMouseLeave={() => setHover(null)}
+      >
+        {/* círculos concêntricos */}
+        {grid.map((ratio, i) => (
+          <circle
+            key={i}
+            cx={cx}
+            cy={cy}
+            r={r * ratio}
+            fill="none"
+            stroke="var(--rule-faint)"
+            strokeWidth="1"
+          />
+        ))}
+        {/* eixos radiais */}
+        {axisEnds.map((p, i) => (
+          <line
+            key={i}
+            x1={cx}
+            y1={cy}
+            x2={p.x}
+            y2={p.y}
+            stroke="var(--rule-faint)"
+            strokeWidth="1"
+          />
+        ))}
+        {/* polígonos */}
+        {seriesData.map((s, i) => (
+          <g key={i}>
+            <path
+              d={s.path}
+              fill={s.color}
+              fillOpacity="0.16"
+              stroke={s.color}
+              strokeWidth="1.75"
+              strokeLinejoin="round"
+            />
+            {s.points.map((p, j) => (
+              <circle
+                key={j}
+                cx={p.x}
+                cy={p.y}
+                r="3.5"
+                fill={s.color}
+                stroke="var(--bg-panel)"
+                strokeWidth="1.25"
+                style={{ cursor: "pointer" }}
+                onMouseEnter={() =>
+                  setHover({
+                    x: p.x,
+                    y: p.y,
+                    axisIdx: j,
+                    value: s.values[j],
+                    seriesName: s.name,
+                  })
+                }
+              />
+            ))}
+          </g>
+        ))}
+        {/* labels dos eixos */}
+        {labelPos.map((p, i) => (
+          <text
+            key={i}
+            x={p.x}
+            y={p.y + 3}
+            textAnchor="middle"
+            fontFamily="var(--font-mono)"
+            fontSize="10"
+            fill="var(--ink-soft)"
+            style={{ letterSpacing: "0.1em", textTransform: "uppercase" }}
+          >
+            {axes[i]}
+          </text>
+        ))}
+      </svg>
+    </ChartFrame>
+  );
+}
+
+/* ================================================================
+   RadialChart — barras circulares concêntricas (KPI dial).
+   ================================================================ */
+
+export function RadialChart({
+  data,                // [{ label, value, max }]
+  height = 280,
+  showCenter = true,
+  centerLabel,
+  className = "",
+}) {
+  const W = height;
+  const H = height;
+  const cx = W / 2;
+  const cy = H / 2;
+  const maxR = (Math.min(W, H) / 2) * 0.88;
+  const minR = maxR * 0.32;
+  const trackW = (maxR - minR) / data.length;
+  const stroke = trackW * 0.62;
+
+  const items = data.map((d, i) => {
+    const r = maxR - i * trackW - trackW / 2;
+    const max = d.max || 100;
+    const ratio = Math.min(1, d.value / max);
+    const circ = 2 * Math.PI * r;
+    const offset = circ * (1 - ratio);
+    return {
+      r,
+      circ,
+      offset,
+      stroke,
+      color: SERIES_COLORS[i % SERIES_COLORS.length],
+      label: d.label,
+      value: d.value,
+      max,
+      pct: Math.round(ratio * 100),
+    };
+  });
+
+  const [hover, setHover] = useState(null);
+  const tooltip = hover != null
+    ? {
+        xPct: 50,
+        yPct: ((cy - items[hover].r) / H) * 100,
+        label: items[hover].label,
+        value: pad(items[hover].value),
+        sub: `${items[hover].pct} %`,
+      }
+    : null;
+
+  return (
+    <ChartFrame tooltip={tooltip}>
+      <svg
+        viewBox={`0 0 ${W} ${H}`}
+        className={`ds-chart-svg ${className}`}
+        style={{ width: H, height: H }}
+        role="img"
+        onMouseLeave={() => setHover(null)}
+      >
+        {items.map((it, i) => (
+          <g
+            key={i}
+            transform={`rotate(-90 ${cx} ${cy})`}
+            onMouseEnter={() => setHover(i)}
+            style={{ cursor: "pointer" }}
+          >
+            {/* track */}
+            <circle
+              cx={cx}
+              cy={cy}
+              r={it.r}
+              fill="none"
+              stroke="var(--rule-faint)"
+              strokeWidth={it.stroke}
+            />
+            {/* progress */}
+            <circle
+              cx={cx}
+              cy={cy}
+              r={it.r}
+              fill="none"
+              stroke={it.color}
+              strokeWidth={it.stroke}
+              strokeDasharray={it.circ}
+              strokeDashoffset={it.offset}
+              strokeLinecap="butt"
+              opacity={hover != null && hover !== i ? 0.45 : 1}
+              style={{ transition: "opacity 120ms ease" }}
+            />
+          </g>
+        ))}
+        {showCenter && (
+          <>
+            <text
+              x={cx}
+              y={cy - 4}
+              textAnchor="middle"
+              fontFamily="var(--font-mono)"
+              fontSize="9"
+              fill="var(--ink-faint)"
+              pointerEvents="none"
+              style={{ letterSpacing: "0.2em", textTransform: "uppercase" }}
+            >
+              {centerLabel || "Total"}
+            </text>
+            <text
+              x={cx}
+              y={cy + 18}
+              textAnchor="middle"
+              fontFamily="var(--font-serif)"
+              fontSize={Math.round(H * 0.13)}
+              fontWeight="300"
+              fill="var(--ink)"
+              pointerEvents="none"
+            >
+              {Math.round(
+                data.reduce((s, d) => s + (d.value / (d.max || 100)) * 100, 0) /
+                  data.length
+              )}
+              %
+            </text>
+          </>
+        )}
+      </svg>
+    </ChartFrame>
+  );
+}
+
+/* ================================================================
    Sparkline — micro line, sem axes, ideal pra inline em métricas.
    ================================================================ */
 
