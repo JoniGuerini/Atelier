@@ -27,6 +27,7 @@ import { useT } from "./lib/i18n.jsx";
 import { useHashRoute } from "./lib/useHashRoute.js";
 import { ALL_ROUTE_IDS, ROUTES } from "./lib/routes.js";
 import { SidebarToggle, BackToTop } from "./ds/primitives.jsx";
+import { PageNav } from "./ds/PageNav.jsx";
 
 import Overview from "./pages/Overview.jsx";
 import Principles from "./pages/Principles.jsx";
@@ -163,6 +164,7 @@ export default function App() {
           />
         )}
         <Page onNavigate={navigate} />
+        <PageNav current={current} onNavigate={navigate} />
       </main>
       <Footer onNavigate={navigate} />
       <BackToTop />

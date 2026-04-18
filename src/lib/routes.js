@@ -59,3 +59,18 @@ export const ALL_ROUTE_IDS = ROUTES.flatMap((g) =>
 export const ROUTE_BY_ID = Object.fromEntries(
   ROUTES.flatMap((g) => g.items.map((i) => [i.id, i.route || i.id]))
 );
+
+/* Flattened reading order (used for prev/next pagination at the foot of
+   each page). Each entry carries its slug, id, ordinal (`n`) and group. */
+export const FLAT_ROUTES = ROUTES.flatMap((g) =>
+  g.items.map((i) => ({
+    id: i.id,
+    n: i.n,
+    slug: i.route || i.id,
+    groupKey: g.groupKey,
+  }))
+);
+
+export function findFlatIndex(slug) {
+  return FLAT_ROUTES.findIndex((r) => r.slug === slug);
+}

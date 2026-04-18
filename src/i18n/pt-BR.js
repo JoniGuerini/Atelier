@@ -9,6 +9,11 @@ const ptBR = {
       captionAtomic:
         "[em]{root}[/em] é um componente atômico — sem subcomponentes; varia por props.",
     },
+    pageNav: {
+      label: "Paginação",
+      previous: "Anterior",
+      next: "Próximo",
+    },
     viewCode: "Ver código",
     hideCode: "Ocultar código",
     copy: "Copiar",

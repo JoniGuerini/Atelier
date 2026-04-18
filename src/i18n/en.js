@@ -9,6 +9,11 @@ const en = {
       captionAtomic:
         "[em]{root}[/em] is an atomic component — no subcomponents; varies by props.",
     },
+    pageNav: {
+      label: "Pagination",
+      previous: "Previous",
+      next: "Next",
+    },
     viewCode: "View code",
     hideCode: "Hide code",
     copy: "Copy",
