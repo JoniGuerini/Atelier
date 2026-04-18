@@ -257,6 +257,7 @@ html::-webkit-scrollbar-thumb {
 .shell {
   display: grid;
   grid-template-columns: var(--sidebar-w) 1fr;
+  grid-template-rows: 1fr auto;
   min-height: 100vh;
   transition: grid-template-columns var(--dur) var(--ease);
 }
@@ -268,6 +269,22 @@ html::-webkit-scrollbar-thumb {
 .shell--topbar {
   grid-template-columns: 1fr;
   grid-template-rows: auto 1fr auto;
+}
+
+/* Sidebar ocupa as DUAS rows da coluna esquerda (mantém sticky até o
+   fim do scroll), enquanto main e footer compartilham a coluna 2 —
+   assim o footer nunca cai sob a sidebar. */
+.shell:not(.shell--topbar) > .sidebar {
+  grid-column: 1;
+  grid-row: 1 / -1;
+}
+.shell:not(.shell--topbar) > .content {
+  grid-column: 2;
+  grid-row: 1;
+}
+.shell:not(.shell--topbar) > .site-footer {
+  grid-column: 2;
+  grid-row: 2;
 }
 
 /* ---------- SIDEBAR ----------
