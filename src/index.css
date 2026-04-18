@@ -465,7 +465,10 @@ html::-webkit-scrollbar-thumb {
 .locale-btn:hover { color: var(--ink); }
 .locale-btn.active {
   background: var(--accent);
-  color: var(--bg);
+  /* Branco puro garante contraste alto sobre qualquer matiz de
+     acento — em dark mode, var(--bg) é antracito e o texto sumia
+     no fundo vermelho/indigo/etc. */
+  color: #fff;
 }
 
 /* ---------- Theme switch (mesma DNA visual do locale-switch) ---------- */
@@ -495,7 +498,7 @@ html::-webkit-scrollbar-thumb {
 .theme-btn:hover { color: var(--ink); }
 .theme-btn.active {
   background: var(--accent);
-  color: var(--bg);
+  color: #fff;
 }
 .theme-btn svg {
   display: block;
