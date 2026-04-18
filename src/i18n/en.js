@@ -55,6 +55,7 @@ const en = {
       components: "Components",
       patterns: "Patterns",
       reference: "Reference",
+      studio: "Studio",
     },
     items: {
       overview: "Overview",
@@ -80,6 +81,7 @@ const en = {
       sidebar: "Sidebar",
       navbar: "Navbar",
       code: "For devs · code",
+      create: "Create · customize",
     },
     footer: {
       study: "A quiet study",
@@ -1228,6 +1230,88 @@ const en = {
         ],
       },
       divider: "components",
+    },
+
+    /* ============================================================ */
+    create: {
+      lead: "Studio · 23",
+      titleA: "The ",
+      titleB: "studio",
+      metaLabel: "Customization",
+      meta: "Live theme",
+      intro:
+        "The [em]Studio[/em] is your workshop: swap colour, typography and density and watch a model page react in real time. When you are happy, copy the tokens and take them to your project.",
+      tabs: {
+        style: "Style",
+        presets: "Presets",
+        advanced: "Advanced",
+        export: "Export",
+      },
+      controls: {
+        theme: "Theme",
+        accent: "Accent",
+        base: "Base",
+        font: "Typography",
+        spacing: "Spacing",
+      },
+      advanced: {
+        warnTitle: "Off-canon",
+        warnBody:
+          "Atelier is born angular — [em]no border-radius[/em], no shadows. The controls below let you depart from the style, but they break an editorial principle. Use [em]sparingly[/em].",
+        radius: "Border-radius",
+      },
+      export: {
+        intro:
+          "Paste the block below into the [em]:root[/em] of your CSS to reproduce this combination in your project.",
+        copy: "Copy tokens",
+        copied: "Copied",
+        download: "Download .css",
+      },
+      actions: {
+        shuffle: "Shuffle",
+        reset: "Reset to default",
+      },
+      preview: {
+        typeKicker: "i · Typography",
+        typeTitle: "Editorial voice",
+        headlineA: "A quiet manual for",
+        headlineB: "editorial interfaces",
+        body:
+          "Typography before pixels. Hierarchy comes from the typeface, not from colour. Atelier is a narrative in columns — reading, not dashboard.",
+        cardsKicker: "ii · Cards",
+        cardsTitle: "Surfaces",
+        card1Kicker: "Chronicle · 04",
+        card1TitleA: "On",
+        card1TitleB: "type",
+        card1Body:
+          "A well-chosen typeface solves half of the design problems — it just needs the rest not to get in the way.",
+        card1Foot: "read →",
+        card2Kicker: "Issue · 21",
+        card2TitleA: "The act of",
+        card2TitleB: "reading",
+        card2Body:
+          "Every page is a breath. Margins matter as much as the content — silence between the words.",
+        card2Cta: "Subscribe",
+        controlsKicker: "iii · Controls",
+        controlsTitle: "Buttons and fields",
+        fieldLabel: "Address",
+        fieldHint: "Where we would like to find you.",
+        fieldPh: "street, number, city",
+        btnPrimary: "Publish",
+        btnDefault: "Save",
+        btnAccent: "Accent",
+        btnGhost: "Cancel",
+        badgeOk: "published",
+        badgeWarn: "draft",
+        badgeAccent: "new",
+        badgeDefault: "archived",
+        alertsKicker: "iv · Alerts",
+        alertsTitle: "Messages",
+        alertInfoTitle: "For your information",
+        alertInfoBody: "This is a model — every action is just a demo.",
+        alertOkTitle: "Theme saved",
+        alertOkBody: "Your choices stay in the browser between visits.",
+      },
     },
   },
 };

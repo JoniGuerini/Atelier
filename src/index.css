@@ -2949,6 +2949,319 @@ input[type="file"] { display: none; }
 }
 
 /* ----------------------------------------------------------------
+   Studio — playground de personalização (página #/create).
+---------------------------------------------------------------- */
+.studio {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: var(--space-5);
+  margin-top: var(--space-6);
+  align-items: start;
+}
+.studio-controls {
+  position: sticky;
+  top: var(--space-5);
+  border: 1px solid var(--rule-soft);
+  background: var(--bg-panel);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-height: calc(100vh - var(--space-7));
+  overflow: auto;
+}
+.studio-controls .ds-tab-panels {
+  margin-top: var(--space-3);
+}
+.studio-controls .ds-tab-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+.studio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.studio-group-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.studio-group-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.studio-group-hint {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-soft);
+}
+
+/* Segmented (theme, base, spacing) */
+.studio-segmented {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  border: 1px solid var(--rule-soft);
+}
+.studio-seg {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-right: 1px solid var(--rule-soft);
+  padding: 8px 10px;
+  font-family: var(--font-serif);
+  font-size: 13px;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease),
+              color var(--dur-fast) var(--ease);
+}
+.studio-seg:last-child { border-right: 0; }
+.studio-seg:hover { color: var(--ink); }
+.studio-seg.active {
+  background: var(--ink);
+  color: var(--ink-inverse);
+}
+
+/* Color swatches */
+.studio-swatches {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+}
+.studio-swatch {
+  appearance: none;
+  border: 1px solid var(--rule-soft);
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--dur-fast) var(--ease);
+}
+.studio-swatch:hover { transform: scale(1.05); }
+.studio-swatch .check {
+  color: #fff;
+  font-size: 14px;
+  opacity: 0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  transition: opacity var(--dur-fast) var(--ease);
+}
+.studio-swatch.active .check { opacity: 1; }
+.studio-swatch.active {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+/* Font list */
+.studio-font-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.studio-font {
+  appearance: none;
+  border: 1px solid var(--rule-soft);
+  background: transparent;
+  padding: 10px 12px;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  transition: border-color var(--dur-fast) var(--ease),
+              background var(--dur-fast) var(--ease);
+}
+.studio-font:hover { border-color: var(--ink-soft); }
+.studio-font.active {
+  border-color: var(--ink);
+  background: var(--bg-sunken);
+}
+.studio-font-name {
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--ink);
+}
+.studio-font-desc {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* Range (advanced) */
+.studio-range {
+  width: 100%;
+  appearance: none;
+  height: 2px;
+  background: var(--rule-soft);
+  outline: none;
+}
+.studio-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  background: var(--accent);
+  cursor: pointer;
+  border: 2px solid var(--bg);
+}
+.studio-range::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: var(--accent);
+  cursor: pointer;
+  border: 2px solid var(--bg);
+}
+
+/* Preset list */
+.studio-preset-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.studio-preset {
+  appearance: none;
+  background: transparent;
+  border: 1px solid var(--rule-soft);
+  padding: 12px 14px;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: border-color var(--dur-fast) var(--ease),
+              background var(--dur-fast) var(--ease);
+}
+.studio-preset:hover { border-color: var(--ink-soft); }
+.studio-preset.active {
+  border-color: var(--ink);
+  background: var(--bg-sunken);
+}
+.studio-preset-label {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  color: var(--ink);
+}
+.studio-preset-desc {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+/* Export tab */
+.studio-export-intro {
+  font-family: var(--font-serif);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  margin-bottom: var(--space-3);
+}
+.studio-export-code {
+  background: var(--code-bg);
+  color: var(--code-ink);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.55;
+  padding: 14px 16px;
+  margin: 0 0 var(--space-3);
+  overflow: auto;
+  white-space: pre;
+  max-height: 320px;
+}
+.studio-export-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Bottom actions (shuffle/reset) */
+.studio-actions {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--rule-soft);
+  padding-top: var(--space-3);
+}
+
+/* ===== Preview area ===== */
+.studio-preview {
+  border: 1px solid var(--rule-soft);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  min-height: 600px;
+  /* CSS vars são sobrescritas via inline style — tudo aqui dentro
+     herda o tema customizado. background e color são aplicados no
+     style também (themeToStyle), garantindo o contraste correto. */
+  transition: background var(--dur) var(--ease),
+              color var(--dur) var(--ease);
+}
+.studio-preview-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding-bottom: var(--space-5);
+  border-bottom: 1px solid var(--rule-soft);
+}
+.studio-preview-section:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+.studio-preview-head {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.studio-preview-head .kicker {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.studio-preview-head .title {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 0;
+}
+
+/* ===== Advanced — border-radius opcional =====
+   Aplica-se SOMENTE dentro de [data-studio-scope] e SOMENTE quando
+   o usuário move o slider (a var fica indefinida por padrão). */
+[data-studio-scope] .ds-card,
+[data-studio-scope] .ds-btn,
+[data-studio-scope] .ds-input,
+[data-studio-scope] .ds-textarea,
+[data-studio-scope] .ds-select,
+[data-studio-scope] .ds-badge,
+[data-studio-scope] .ds-alert,
+[data-studio-scope] .ds-modal,
+[data-studio-scope] .ds-avatar {
+  border-radius: var(--studio-radius, 0);
+}
+
+@media (max-width: 900px) {
+  .studio {
+    grid-template-columns: 1fr;
+  }
+  .studio-controls {
+    position: static;
+    max-height: none;
+  }
+}
+
+/* ----------------------------------------------------------------
    PageNav — paginação editorial entre páginas (prev / next).
 ---------------------------------------------------------------- */
 .page-nav {

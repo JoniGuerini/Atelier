@@ -48,6 +48,10 @@ export const ROUTES = [
     groupKey: "reference",
     items: [{ id: "code", n: "22" }],
   },
+  {
+    groupKey: "studio",
+    items: [{ id: "create", n: "23" }],
+  },
 ];
 
 /* All route ids (url slugs). Uses `route` override when it differs from `id`. */

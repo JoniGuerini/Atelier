@@ -55,6 +55,7 @@ const ptBR = {
       components: "Componentes",
       patterns: "Padrões",
       reference: "Referência",
+      studio: "Studio",
     },
     items: {
       overview: "Visão geral",
@@ -80,6 +81,7 @@ const ptBR = {
       sidebar: "Sidebar",
       navbar: "Navbar",
       code: "Para devs · código",
+      create: "Create · personalizar",
     },
     footer: {
       study: "Um estudo silencioso",
@@ -1290,6 +1292,88 @@ const ptBR = {
         ],
       },
       divider: "componentes",
+    },
+
+    /* ============================================================ */
+    create: {
+      lead: "Studio · 23",
+      titleA: "O ",
+      titleB: "studio",
+      metaLabel: "Personalização",
+      meta: "Tema ao vivo",
+      intro:
+        "O [em]Studio[/em] é a sua oficina: tro­que cor, tipo­grafia e densidade e veja o efeito imediato em uma maqueta de página. Quando estiver feliz, copie os tokens e leve para o seu projeto.",
+      tabs: {
+        style: "Style",
+        presets: "Presets",
+        advanced: "Advanced",
+        export: "Export",
+      },
+      controls: {
+        theme: "Tema",
+        accent: "Acento",
+        base: "Base",
+        font: "Tipografia",
+        spacing: "Espaçamento",
+      },
+      advanced: {
+        warnTitle: "Fora do cânone",
+        warnBody:
+          "O Atelier nasce angular — [em]sem border-radius[/em], sem sombras. Os controles abaixo permitem afastar do estilo, mas ferem um princípio editorial. Use com [em]parcimônia[/em].",
+        radius: "Border-radius",
+      },
+      export: {
+        intro:
+          "Cole o bloco abaixo no [em]:root[/em] do seu CSS para reproduzir esta combinação no seu projeto.",
+        copy: "Copiar tokens",
+        copied: "Copiado",
+        download: "Baixar .css",
+      },
+      actions: {
+        shuffle: "Embaralhar",
+        reset: "Restaurar padrão",
+      },
+      preview: {
+        typeKicker: "i · Tipografia",
+        typeTitle: "Voz editorial",
+        headlineA: "Um manual silencioso para",
+        headlineB: "interfaces editoriais",
+        body:
+          "Tipografia antes de pixels. Hierarquia vem da fonte, não da cor. Atelier é uma narrativa em colunas — leitura, não dashboard.",
+        cardsKicker: "ii · Cards",
+        cardsTitle: "Superfícies",
+        card1Kicker: "Crônica · 04",
+        card1TitleA: "Sobre",
+        card1TitleB: "tipos",
+        card1Body:
+          "Uma tipografia bem escolhida resolve metade dos problemas de design — só precisa que o resto não atrapalhe.",
+        card1Foot: "ler →",
+        card2Kicker: "Edição · 21",
+        card2TitleA: "O ato de",
+        card2TitleB: "ler",
+        card2Body:
+          "Toda página é uma respiração. As margens contam tanto quanto o conteúdo — silêncio entre as palavras.",
+        card2Cta: "Assinar",
+        controlsKicker: "iii · Controles",
+        controlsTitle: "Botões e campos",
+        fieldLabel: "Endereço",
+        fieldHint: "Onde gostaríamos de te encontrar.",
+        fieldPh: "rua, número, cidade",
+        btnPrimary: "Publicar",
+        btnDefault: "Salvar",
+        btnAccent: "Acento",
+        btnGhost: "Cancelar",
+        badgeOk: "publicado",
+        badgeWarn: "rascunho",
+        badgeAccent: "novo",
+        badgeDefault: "arquivado",
+        alertsKicker: "iv · Alertas",
+        alertsTitle: "Mensagens",
+        alertInfoTitle: "Para sua informação",
+        alertInfoBody: "Esta é uma maqueta — todas as ações são apenas demonstração.",
+        alertOkTitle: "Tema salvo",
+        alertOkBody: "Suas escolhas ficam guardadas no navegador entre visitas.",
+      },
     },
   },
 };

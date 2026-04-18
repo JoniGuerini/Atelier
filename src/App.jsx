@@ -52,6 +52,7 @@ import EmptyStates from "./pages/EmptyStates.jsx";
 import SidebarPage from "./pages/SidebarPage.jsx";
 import NavbarPage from "./pages/NavbarPage.jsx";
 import CodePage from "./pages/Code.jsx";
+import Create from "./pages/Create.jsx";
 
 const PAGES = {
   overview: Overview,
@@ -77,6 +78,7 @@ const PAGES = {
   sidebar: SidebarPage,
   navbar: NavbarPage,
   code: CodePage,
+  create: Create,
 };
 
 const SIDEBAR_KEY = "atelier.sidebarCollapsed";
