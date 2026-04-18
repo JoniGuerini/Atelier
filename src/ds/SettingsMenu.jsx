@@ -53,7 +53,9 @@ export function SettingsMenu({
         aria-label={t("nav.settings.label")}
         title={t("nav.settings.label")}
       >
-        <SettingsGlyph />
+        <span className="settings-menu-glyph" aria-hidden="true">
+          ⋯
+        </span>
       </button>
 
       {open && (
@@ -112,25 +114,3 @@ function Row({ label, children }) {
   );
 }
 
-function SettingsGlyph() {
-  return (
-    <svg
-      viewBox="0 0 16 16"
-      width="16"
-      height="16"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.4"
-      strokeLinecap="square"
-      aria-hidden="true"
-      focusable="false"
-    >
-      <line x1="2.5" y1="4" x2="13.5" y2="4" />
-      <line x1="2.5" y1="8" x2="13.5" y2="8" />
-      <line x1="2.5" y1="12" x2="13.5" y2="12" />
-      <rect x="9.5" y="2.5" width="3" height="3" fill="var(--bg)" />
-      <rect x="4.5" y="6.5" width="3" height="3" fill="var(--bg)" />
-      <rect x="9.5" y="10.5" width="3" height="3" fill="var(--bg)" />
-    </svg>
-  );
-}

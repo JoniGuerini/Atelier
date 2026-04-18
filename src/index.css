@@ -3514,6 +3514,21 @@ input[type="file"] { display: none; }
     color var(--dur-fast) var(--ease),
     background var(--dur-fast) var(--ease);
 }
+
+/* Glyph editorial — usa a mesma família tipográfica da página
+   Glyphs (Fraunces italic), mantendo a coerência da "biblioteca"
+   tipográfica oficial do Atelier. */
+.settings-menu-glyph {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  /* Pequeno ajuste óptico — o ellipsis se assenta um pouco abaixo
+     da linha base; trazemos pra cima para centrar com o quadrado. */
+  transform: translateY(-3px);
+}
 .settings-menu-trigger:hover {
   border-color: var(--accent);
   color: var(--accent);
