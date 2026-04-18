@@ -1373,7 +1373,7 @@ h3.sub {
 
 /* ---------- Card ---------- */
 .ds-card {
-  border: 1px solid var(--rule);
+  border: 1px solid var(--rule-soft);
   background: var(--bg-panel);
   padding: var(--space-5);
   display: flex;
