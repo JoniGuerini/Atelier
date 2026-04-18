@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useRef, useState } from "react";
 import { ROUTE_BY_ID } from "../lib/routes.js";
 import { useT } from "../lib/i18n.jsx";
 import { ThemeToggle, NavModeToggle } from "../ds/primitives.jsx";
@@ -27,14 +27,61 @@ function useNavbar() {
   return useContext(NavbarContext);
 }
 
+/* ---------- Menu state ----------
+   Controle de qual dropdown está aberto (compartilhado entre triggers
+   e painéis). Um pequeno timeout (120ms) ao sair com o mouse permite
+   atravessar o gap vertical/horizontal entre trigger e painel sem
+   fechar — o painel fica ancorado à nav inteira (não ao trigger),
+   então o usuário precisa de uma "ponte" temporal. */
+const MenuStateContext = createContext({
+  activeKey: null,
+  open: () => {},
+  scheduleClose: () => {},
+  cancelClose: () => {},
+});
+
+function useMenuState() {
+  return useContext(MenuStateContext);
+}
+
+function MenuStateProvider({ children }) {
+  const [activeKey, setActiveKey] = useState(null);
+  const timerRef = useRef(null);
+
+  const cancelClose = () => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+  };
+
+  const open = (key) => {
+    cancelClose();
+    setActiveKey(key);
+  };
+
+  const scheduleClose = () => {
+    cancelClose();
+    timerRef.current = setTimeout(() => setActiveKey(null), 120);
+  };
+
+  return (
+    <MenuStateContext.Provider value={{ activeKey, open, scheduleClose, cancelClose }}>
+      {children}
+    </MenuStateContext.Provider>
+  );
+}
+
 export function Navbar({ current, onNavigate, children, className = "" }) {
   const classes = ["site-navbar"];
   if (className) classes.push(className);
   return (
     <NavbarContext.Provider value={{ current, onNavigate }}>
-      <header className={classes.join(" ")} role="banner">
-        <div className="site-navbar-inner">{children}</div>
-      </header>
+      <MenuStateProvider>
+        <header className={classes.join(" ")} role="banner">
+          <div className="site-navbar-inner">{children}</div>
+        </header>
+      </MenuStateProvider>
     </NavbarContext.Provider>
   );
 }
@@ -71,25 +118,49 @@ export function NavbarNav({ ariaLabel = "Primary", children }) {
   );
 }
 
-/* Dropdown — abre por hover (e por focus-within para teclado).
-   `active` é controlado pelo consumidor (ex: algum item filho é current).
-   Aceita `cols` para configurar quantas colunas o painel terá (default 1
-   pra grupos pequenos; 2 pra grupos com 6+ itens, ditando layout grid). */
+/* Dropdown — controlado pelo MenuStateProvider.
+   `active` é só visual (algum item filho é current).
+   `cols` define o layout do painel (1 / 2 / 3). */
 export function NavbarDropdown({ label, active = false, cols = 1, children }) {
+  // Chave única para identificar este menu no estado compartilhado.
+  // Usamos a label como chave (estável o suficiente em runtime).
+  const keyRef = useRef(`menu-${Math.random().toString(36).slice(2, 9)}`);
+  const key = keyRef.current;
+  const { activeKey, open, scheduleClose } = useMenuState();
+  const isOpen = activeKey === key;
+
   return (
-    <li className={`nav-menu ${active ? "active" : ""}`}>
-      <button type="button" className="nav-menu-trigger" aria-haspopup="true">
+    <li
+      className={`nav-menu ${active ? "active" : ""} ${isOpen ? "open" : ""}`}
+      onMouseEnter={() => open(key)}
+      onMouseLeave={scheduleClose}
+    >
+      <button
+        type="button"
+        className="nav-menu-trigger"
+        aria-haspopup="true"
+        aria-expanded={isOpen}
+        onFocus={() => open(key)}
+      >
         <span>{label}</span>
         <span className="nav-menu-chev" aria-hidden="true">▾</span>
       </button>
-      <NavbarDropdownPanel cols={cols}>{children}</NavbarDropdownPanel>
+      <NavbarDropdownPanel cols={cols} isOpen={isOpen}>
+        {children}
+      </NavbarDropdownPanel>
     </li>
   );
 }
 
-export function NavbarDropdownPanel({ cols = 1, children }) {
+export function NavbarDropdownPanel({ cols = 1, isOpen = false, children }) {
+  const { open, scheduleClose, cancelClose } = useMenuState();
   return (
-    <div className={`nav-menu-panel cols-${cols}`} role="menu">
+    <div
+      className={`nav-menu-panel cols-${cols} ${isOpen ? "is-open" : ""}`}
+      role="menu"
+      onMouseEnter={cancelClose}
+      onMouseLeave={scheduleClose}
+    >
       <ul>{children}</ul>
     </div>
   );

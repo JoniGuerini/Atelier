@@ -2240,11 +2240,17 @@ input[type="file"] { display: none; }
   padding: 0;
   display: flex;
   gap: var(--space-1);
+  /* Âncora dos dropdowns: todos os painéis se posicionam a partir
+     do início da nav inteira (não do trigger individual), então
+     trocar o hover entre menus não causa "salto" horizontal. */
+  position: relative;
 }
 
 /* Trigger de cada menu (ex: "Início", "Fundamentos") */
 .nav-menu {
-  position: relative;
+  /* static (não-relative) faz com que .nav-menu-panel se posicione
+     em relação à <ul> acima. */
+  position: static;
 }
 .nav-menu-trigger {
   appearance: none;
@@ -2279,7 +2285,9 @@ input[type="file"] { display: none; }
 /* Painel do dropdown */
 .nav-menu-panel {
   position: absolute;
-  top: calc(100% - 2px);
+  top: calc(100% + 8px);
+  /* Ancorado à esquerda da <ul> da nav (não do trigger): todos os
+     dropdowns abrem na MESMA posição horizontal. */
   left: 0;
   min-width: 280px;
   background: var(--bg-panel);
@@ -2289,13 +2297,14 @@ input[type="file"] { display: none; }
   opacity: 0;
   visibility: hidden;
   transform: translateY(-4px);
+  pointer-events: none;
   transition: opacity var(--dur-fast) var(--ease),
     transform var(--dur-fast) var(--ease),
     visibility 0s linear var(--dur-fast);
   pointer-events: none;
 }
-.nav-menu:hover > .nav-menu-panel,
-.nav-menu:focus-within > .nav-menu-panel {
+/* Estado visível: controlado por JS (MenuStateProvider) via classe */
+.nav-menu-panel.is-open {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
@@ -2303,6 +2312,18 @@ input[type="file"] { display: none; }
     transform var(--dur-fast) var(--ease),
     visibility 0s;
   pointer-events: auto;
+}
+
+/* Ponte invisível entre trigger e painel — preenche o gap de 8px
+   pra que o mouse possa atravessar sem o painel fechar. Cobre a
+   largura do painel inteiro. */
+.nav-menu-panel.is-open::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 0;
+  right: 0;
+  height: 10px;
 }
 .nav-menu-panel ul {
   list-style: none;
