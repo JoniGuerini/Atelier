@@ -11,4 +11,4 @@ export const LOCALE_LIST = [
   { id: "en", label: "English", short: "EN" },
 ];
 
-export const DEFAULT_LOCALE = "pt-BR";
+export const DEFAULT_LOCALE = "en";

@@ -23,9 +23,8 @@ function readInitialLocale() {
   } catch {
     /* ignore */
   }
-  const nav = typeof navigator !== "undefined" ? navigator.language || "" : "";
-  if (nav.toLowerCase().startsWith("pt")) return "pt-BR";
-  if (nav.toLowerCase().startsWith("en")) return "en";
+  // Sem preferência salva → inglês por padrão (independente do navegador).
+  // Assim Atelier nasce internacional; pt-BR fica como escolha explícita.
   return DEFAULT_LOCALE;
 }
 
