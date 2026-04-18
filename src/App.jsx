@@ -44,6 +44,7 @@ import Alerts from "./pages/Alerts.jsx";
 import Cards from "./pages/Cards.jsx";
 import TabsPage from "./pages/TabsPage.jsx";
 import Tables from "./pages/Tables.jsx";
+import Charts from "./pages/Charts.jsx";
 import Overlays from "./pages/Overlays.jsx";
 import Feedback from "./pages/Feedback.jsx";
 import DropzonePage from "./pages/DropzonePage.jsx";
@@ -70,6 +71,7 @@ const PAGES = {
   cards: Cards,
   tabs: TabsPage,
   tables: Tables,
+  charts: Charts,
   overlays: Overlays,
   feedback: Feedback,
   dropzone: DropzonePage,

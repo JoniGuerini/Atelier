@@ -73,6 +73,7 @@ const en = {
       cards: "Cards",
       tabs: "Tabs",
       tables: "Tables",
+      charts: "Charts",
       overlays: "Overlays",
       feedback: "Feedback",
       dropzone: "Dropzone",
@@ -798,8 +799,70 @@ const en = {
       ],
     },
 
-    overlays: {
+    charts: {
       lead: "Component · 15",
+      titleA: "The ",
+      titleB: "charts",
+      metaLabel: "Visualization",
+      meta: "Quiet data",
+      intro:
+        "When numbers must be spoken, [em]speak them softly[/em]. Every Atelier chart is editorial — no heavy grids, no saturated areas. The accent is used [em]once[/em] to mark what matters; the rest fades into [em]faint ink[/em].",
+      bar: {
+        title: "Bars",
+        kicker: "BarChart",
+        caption: "Comparison between discrete categories — months, plans, chapters.",
+        exampleKicker: "Q3 · 2026",
+        exampleTitle: "Editions per month",
+        legend1: "Highlighted",
+        legend2: "Previous",
+      },
+      line: {
+        title: "Line",
+        kicker: "LineChart",
+        caption: "Continuous trajectory. Direction and pace — not absolute values.",
+        exampleKicker: "Subscribers",
+        exampleTitle: "Growth — 8 months",
+      },
+      area: {
+        title: "Area",
+        kicker: "AreaChart",
+        caption: "A line with volume beneath it — good for accumulations and trends.",
+        exampleKicker: "Engagement",
+        exampleTitle: "Reads — 8 months",
+      },
+      pie: {
+        title: "Pie",
+        kicker: "PieChart",
+        caption: "Share of the whole — always sums to a hundred.",
+        exampleKicker: "Distribution",
+        exampleTitle: "Visits by section",
+      },
+      donut: {
+        title: "Donut",
+        kicker: "DonutChart",
+        caption: "Same idea as the pie, with a central well for the total.",
+        exampleKicker: "Distribution",
+        exampleTitle: "Visits by section",
+      },
+      spark: {
+        title: "Sparkline",
+        kicker: "Sparkline",
+        caption: "A tiny chart beside a metric — direction without narrative.",
+        metric1Label: "Current edition",
+        metric2Label: "Subscribers",
+        metric3Label: "Next",
+      },
+      composition: {
+        title: "Composition",
+        titleB: "tree",
+        kicker: "structure",
+        caption:
+          "Use the following [em]composition[/em] to wrap any Atelier chart — each node is an exported subcomponent.",
+      },
+    },
+
+    overlays: {
+      lead: "Component · 16",
       titleA: "The ",
       titleB: "overlays",
       metaLabel: "Focus",
@@ -831,7 +894,7 @@ const en = {
     },
 
     feedback: {
-      lead: "Component · 16",
+      lead: "Component · 17",
       titleA: "The ",
       titleB: "return",
       metaLabel: "Progress · Toast",
@@ -860,7 +923,7 @@ const en = {
     },
 
     dropzone: {
-      lead: "Component · 17",
+      lead: "Component · 18",
       titleA: "The ",
       titleB: "dropzone",
       metaLabel: "Files",
@@ -890,7 +953,7 @@ const en = {
     },
 
     forms: {
-      lead: "Pattern · 18",
+      lead: "Pattern · 19",
       titleA: "The ",
       titleB: "forms",
       metaLabel: "Composition",
@@ -930,7 +993,7 @@ const en = {
     },
 
     emptyStates: {
-      lead: "Pattern · 19",
+      lead: "Pattern · 20",
       titleA: "The ",
       titleB: "emptiness",
       metaLabel: "No content",
@@ -980,7 +1043,7 @@ const en = {
     },
 
     sidebar: {
-      lead: "Pattern · 20",
+      lead: "Pattern · 21",
       titleA: "The ",
       titleB: "sidebar",
       metaLabel: "Navigation",
@@ -1079,7 +1142,7 @@ const en = {
     },
 
     navbar: {
-      lead: "Pattern · 21",
+      lead: "Pattern · 22",
       titleA: "The ",
       titleB: "navbar",
       metaLabel: "Navigation",

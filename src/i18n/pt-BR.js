@@ -73,6 +73,7 @@ const ptBR = {
       cards: "Cards",
       tabs: "Abas",
       tables: "Tabelas",
+      charts: "Gráficos",
       overlays: "Sobreposições",
       feedback: "Feedback",
       dropzone: "Dropzone",
@@ -852,9 +853,72 @@ const ptBR = {
       ],
     },
 
+    /* ------------- Charts ------------- */
+    charts: {
+      lead: "Componente · 15",
+      titleA: "Os ",
+      titleB: "gráficos",
+      metaLabel: "Visualização",
+      meta: "Dados em silêncio",
+      intro:
+        "Quando os números precisam ser ditos, [em]diga-os baixinho[/em]. Cada gráfico do Atelier é editorial — sem grids pesadas, sem áreas saturadas. O acento é usado [em]uma vez[/em] para marcar o que importa; o resto se apaga em [em]tinta fraca[/em].",
+      bar: {
+        title: "Barras",
+        kicker: "BarChart",
+        caption: "Comparação entre categorias discretas — meses, planos, capítulos.",
+        exampleKicker: "Q3 · 2026",
+        exampleTitle: "Edições por mês",
+        legend1: "Em destaque",
+        legend2: "Anteriores",
+      },
+      line: {
+        title: "Linha",
+        kicker: "LineChart",
+        caption: "Trajetória contínua. Direção e velocidade — não valores absolutos.",
+        exampleKicker: "Assinantes",
+        exampleTitle: "Crescimento — 8 meses",
+      },
+      area: {
+        title: "Área",
+        kicker: "AreaChart",
+        caption: "Linha com volume sob ela — bom para acumulados e tendências.",
+        exampleKicker: "Engajamento",
+        exampleTitle: "Leituras — 8 meses",
+      },
+      pie: {
+        title: "Pizza",
+        kicker: "PieChart",
+        caption: "Proporção do todo — sempre soma cem.",
+        exampleKicker: "Distribuição",
+        exampleTitle: "Acessos por seção",
+      },
+      donut: {
+        title: "Donut",
+        kicker: "DonutChart",
+        caption: "Mesma ideia da pizza, com espaço central para o total.",
+        exampleKicker: "Distribuição",
+        exampleTitle: "Acessos por seção",
+      },
+      spark: {
+        title: "Sparkline",
+        kicker: "Sparkline",
+        caption: "Gráfico minúsculo, ao lado de uma métrica — direção sem narrativa.",
+        metric1Label: "Edição corrente",
+        metric2Label: "Assinantes",
+        metric3Label: "Próxima",
+      },
+      composition: {
+        title: "Composição",
+        titleB: "árvore",
+        kicker: "estrutura",
+        caption:
+          "Use a [em]composição[/em] a seguir para envolver qualquer gráfico do Atelier — cada nó é um subcomponente exportado.",
+      },
+    },
+
     /* ------------- Overlays ------------- */
     overlays: {
-      lead: "Componente · 15",
+      lead: "Componente · 16",
       titleA: "As ",
       titleB: "sobreposições",
       metaLabel: "Foco",
@@ -887,7 +951,7 @@ const ptBR = {
 
     /* ------------- Feedback ------------- */
     feedback: {
-      lead: "Componente · 16",
+      lead: "Componente · 17",
       titleA: "O ",
       titleB: "retorno",
       metaLabel: "Progresso · Toast",
@@ -917,7 +981,7 @@ const ptBR = {
 
     /* ------------- Dropzone ------------- */
     dropzone: {
-      lead: "Componente · 17",
+      lead: "Componente · 18",
       titleA: "O ",
       titleB: "dropzone",
       metaLabel: "Arquivos",
@@ -948,7 +1012,7 @@ const ptBR = {
 
     /* ------------- Forms ------------- */
     forms: {
-      lead: "Padrão · 18",
+      lead: "Padrão · 19",
       titleA: "Os ",
       titleB: "formulários",
       metaLabel: "Composição",
@@ -989,7 +1053,7 @@ const ptBR = {
 
     /* ------------- Empty States ------------- */
     emptyStates: {
-      lead: "Padrão · 19",
+      lead: "Padrão · 20",
       titleA: "Os ",
       titleB: "vazios",
       metaLabel: "Sem conteúdo",
@@ -1040,7 +1104,7 @@ const ptBR = {
 
     /* ------------- Sidebar (pattern) ------------- */
     sidebar: {
-      lead: "Padrão · 20",
+      lead: "Padrão · 21",
       titleA: "A ",
       titleB: "sidebar",
       metaLabel: "Navegação",
@@ -1140,7 +1204,7 @@ const ptBR = {
 
     /* ------------- Navbar (pattern) ------------- */
     navbar: {
-      lead: "Padrão · 21",
+      lead: "Padrão · 22",
       titleA: "A ",
       titleB: "navbar",
       metaLabel: "Navegação",

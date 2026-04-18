@@ -1,0 +1,618 @@
+/* ================================================================
+   Chart — visualizações editoriais.
+   ----------------------------------------------------------------
+   Filosofia:
+     · SVG puro, zero dependências externas.
+     · Reage ao tema (var(--accent), var(--ink-faint), var(--ink)) —
+       funciona automaticamente dentro do Studio.
+     · Mínimo de cromo: sem grids cheias, sem hatching, sem áreas
+       opacas. Acento usado com parcimônia (apenas no item destacado).
+     · Composable. Wrappers `<Chart>` / `<ChartHeader>` / `<ChartLegend>`
+       são opcionais — cada chart funciona standalone também.
+
+   Exemplos:
+     <Chart>
+       <ChartHeader>
+         <ChartKicker>Q2 · 2026</ChartKicker>
+         <ChartTitle>Engajamento</ChartTitle>
+       </ChartHeader>
+       <BarChart data={[42, 58, 35, 72]} labels={["Jan","Fev","Mar","Abr"]} />
+       <ChartLegend>
+         <ChartLegendItem color="var(--accent)" label="Atual" />
+         <ChartLegendItem color="var(--ink-faint)" label="Anterior" />
+       </ChartLegend>
+     </Chart>
+   ================================================================ */
+
+/* ---------- Wrappers composable ---------- */
+
+export function Chart({ children, className = "" }) {
+  const cls = ["ds-chart"];
+  if (className) cls.push(className);
+  return <article className={cls.join(" ")}>{children}</article>;
+}
+
+export function ChartHeader({ children }) {
+  return <header className="ds-chart-head">{children}</header>;
+}
+
+export function ChartKicker({ children }) {
+  return <span className="ds-chart-kicker">{children}</span>;
+}
+
+export function ChartTitle({ children, as: Comp = "h3" }) {
+  return <Comp className="ds-chart-title">{children}</Comp>;
+}
+
+export function ChartLegend({ children }) {
+  return <div className="ds-chart-legend">{children}</div>;
+}
+
+export function ChartLegendItem({ color = "var(--accent)", shape = "square", label }) {
+  return (
+    <span className="ds-chart-legend-item">
+      <span
+        className={`ds-chart-legend-mark ${shape}`}
+        style={{ background: color }}
+        aria-hidden="true"
+      />
+      <span className="ds-chart-legend-label">{label}</span>
+    </span>
+  );
+}
+
+/* ================================================================
+   Helpers internos
+   ================================================================ */
+
+function normalizeData(data) {
+  // Aceita number[] ou { label, value }[]
+  return data.map((d, i) => {
+    if (typeof d === "number") return { label: undefined, value: d, index: i };
+    return { label: d.label, value: d.value, index: i };
+  });
+}
+
+function pad(n, p = 0) {
+  return Math.max(0, Number.isFinite(n) ? n : 0).toFixed(p);
+}
+
+function polarToCartesian(cx, cy, r, deg) {
+  const rad = ((deg - 90) * Math.PI) / 180;
+  return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
+}
+
+function arcPath(cx, cy, r, startDeg, endDeg, innerR = 0) {
+  // Trata ângulo total = 360 (1 fatia) com dois arcos para evitar zero-length
+  const sweep = endDeg - startDeg;
+  if (sweep >= 359.999) {
+    if (innerR > 0) {
+      return [
+        `M ${cx} ${cy - r}`,
+        `A ${r} ${r} 0 1 1 ${cx} ${cy + r}`,
+        `A ${r} ${r} 0 1 1 ${cx} ${cy - r}`,
+        `Z`,
+        `M ${cx} ${cy - innerR}`,
+        `A ${innerR} ${innerR} 0 1 0 ${cx} ${cy + innerR}`,
+        `A ${innerR} ${innerR} 0 1 0 ${cx} ${cy - innerR}`,
+        `Z`,
+      ].join(" ");
+    }
+    return [
+      `M ${cx} ${cy - r}`,
+      `A ${r} ${r} 0 1 1 ${cx} ${cy + r}`,
+      `A ${r} ${r} 0 1 1 ${cx} ${cy - r}`,
+      `Z`,
+    ].join(" ");
+  }
+  const start = polarToCartesian(cx, cy, r, endDeg);
+  const end = polarToCartesian(cx, cy, r, startDeg);
+  const largeArc = sweep <= 180 ? 0 : 1;
+  if (innerR > 0) {
+    const startInner = polarToCartesian(cx, cy, innerR, endDeg);
+    const endInner = polarToCartesian(cx, cy, innerR, startDeg);
+    return [
+      `M ${start.x} ${start.y}`,
+      `A ${r} ${r} 0 ${largeArc} 0 ${end.x} ${end.y}`,
+      `L ${endInner.x} ${endInner.y}`,
+      `A ${innerR} ${innerR} 0 ${largeArc} 1 ${startInner.x} ${startInner.y}`,
+      `Z`,
+    ].join(" ");
+  }
+  return [
+    `M ${cx} ${cy}`,
+    `L ${start.x} ${start.y}`,
+    `A ${r} ${r} 0 ${largeArc} 0 ${end.x} ${end.y}`,
+    `Z`,
+  ].join(" ");
+}
+
+/* ================================================================
+   BarChart — barras verticais.
+   ================================================================ */
+
+export function BarChart({
+  data,
+  labels,
+  height = 180,
+  accentIndex,
+  showValues = false,
+  yTicks = 4,
+  className = "",
+}) {
+  const norm = normalizeData(data);
+  const W = 480;
+  const H = height;
+  const padL = 32;
+  const padR = 8;
+  const padT = 12;
+  const padB = labels?.length ? 26 : 12;
+  const innerW = W - padL - padR;
+  const innerH = H - padT - padB;
+  const max = Math.max(...norm.map((d) => d.value), 1);
+  const barW = (innerW / norm.length) * 0.66;
+  const gap = (innerW / norm.length) * 0.34;
+
+  // Tick lines no eixo Y (sutis, var(--rule-faint))
+  const ticks = Array.from({ length: yTicks + 1 }, (_, i) => {
+    const v = (max / yTicks) * i;
+    const y = padT + innerH - (v / max) * innerH;
+    return { v, y };
+  });
+
+  const accent = accentIndex ?? norm.length - 1;
+
+  return (
+    <svg
+      viewBox={`0 0 ${W} ${H}`}
+      preserveAspectRatio="none"
+      className={`ds-chart-svg ${className}`}
+      width="100%"
+      height={H}
+      role="img"
+    >
+      {/* tick lines */}
+      {ticks.map((t, i) => (
+        <line
+          key={i}
+          x1={padL}
+          x2={W - padR}
+          y1={t.y}
+          y2={t.y}
+          stroke="var(--rule-faint)"
+          strokeWidth="1"
+        />
+      ))}
+      {/* tick labels (eixo Y) */}
+      {ticks.map((t, i) => (
+        <text
+          key={`l${i}`}
+          x={padL - 6}
+          y={t.y + 3}
+          textAnchor="end"
+          fontFamily="var(--font-mono)"
+          fontSize="9"
+          fill="var(--ink-faint)"
+        >
+          {Math.round(t.v)}
+        </text>
+      ))}
+      {/* bars */}
+      {norm.map((d, i) => {
+        const h = (d.value / max) * innerH;
+        const x = padL + i * (barW + gap) + gap / 2;
+        const y = padT + innerH - h;
+        const isAccent = i === accent;
+        return (
+          <g key={i}>
+            <rect
+              x={x}
+              y={y}
+              width={barW}
+              height={Math.max(h, 1)}
+              fill={isAccent ? "var(--accent)" : "var(--ink-faint)"}
+            />
+            {showValues && (
+              <text
+                x={x + barW / 2}
+                y={y - 4}
+                textAnchor="middle"
+                fontFamily="var(--font-mono)"
+                fontSize="9"
+                fill={isAccent ? "var(--accent)" : "var(--ink-soft)"}
+              >
+                {pad(d.value)}
+              </text>
+            )}
+            {labels && labels[i] && (
+              <text
+                x={x + barW / 2}
+                y={H - 8}
+                textAnchor="middle"
+                fontFamily="var(--font-mono)"
+                fontSize="9.5"
+                fill="var(--ink-faint)"
+                style={{ letterSpacing: "0.1em" }}
+              >
+                {labels[i]}
+              </text>
+            )}
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
+/* ================================================================
+   LineChart — linha simples.
+   ================================================================ */
+
+function buildLinePath(values, padL, padT, innerW, innerH, max, min) {
+  const range = max - min || 1;
+  const stepX = innerW / Math.max(1, values.length - 1);
+  return values
+    .map((v, i) => {
+      const x = padL + i * stepX;
+      const y = padT + innerH - ((v - min) / range) * innerH;
+      return `${i === 0 ? "M" : "L"} ${x} ${y}`;
+    })
+    .join(" ");
+}
+
+export function LineChart({
+  data,
+  labels,
+  height = 180,
+  yTicks = 4,
+  showDots = true,
+  accentIndex,
+  className = "",
+}) {
+  const norm = normalizeData(data);
+  const values = norm.map((d) => d.value);
+  const W = 480;
+  const H = height;
+  const padL = 32;
+  const padR = 8;
+  const padT = 12;
+  const padB = labels?.length ? 26 : 12;
+  const innerW = W - padL - padR;
+  const innerH = H - padT - padB;
+  const max = Math.max(...values, 1);
+  const min = Math.min(0, ...values);
+  const range = max - min || 1;
+  const stepX = innerW / Math.max(1, values.length - 1);
+
+  const path = buildLinePath(values, padL, padT, innerW, innerH, max, min);
+
+  const ticks = Array.from({ length: yTicks + 1 }, (_, i) => {
+    const v = min + (range / yTicks) * i;
+    const y = padT + innerH - ((v - min) / range) * innerH;
+    return { v, y };
+  });
+
+  const accent = accentIndex ?? values.length - 1;
+
+  return (
+    <svg
+      viewBox={`0 0 ${W} ${H}`}
+      preserveAspectRatio="none"
+      className={`ds-chart-svg ${className}`}
+      width="100%"
+      height={H}
+      role="img"
+    >
+      {ticks.map((t, i) => (
+        <line
+          key={i}
+          x1={padL}
+          x2={W - padR}
+          y1={t.y}
+          y2={t.y}
+          stroke="var(--rule-faint)"
+          strokeWidth="1"
+        />
+      ))}
+      {ticks.map((t, i) => (
+        <text
+          key={`l${i}`}
+          x={padL - 6}
+          y={t.y + 3}
+          textAnchor="end"
+          fontFamily="var(--font-mono)"
+          fontSize="9"
+          fill="var(--ink-faint)"
+        >
+          {Math.round(t.v)}
+        </text>
+      ))}
+      <path
+        d={path}
+        fill="none"
+        stroke="var(--accent)"
+        strokeWidth="1.75"
+        strokeLinejoin="round"
+        strokeLinecap="round"
+      />
+      {showDots &&
+        values.map((v, i) => {
+          const x = padL + i * stepX;
+          const y = padT + innerH - ((v - min) / range) * innerH;
+          const isAccent = i === accent;
+          return (
+            <circle
+              key={i}
+              cx={x}
+              cy={y}
+              r={isAccent ? 4 : 2.5}
+              fill={isAccent ? "var(--accent)" : "var(--bg-panel)"}
+              stroke="var(--accent)"
+              strokeWidth={isAccent ? 1.5 : 1.5}
+            />
+          );
+        })}
+      {labels &&
+        labels.map((l, i) => (
+          <text
+            key={i}
+            x={padL + i * stepX}
+            y={H - 8}
+            textAnchor="middle"
+            fontFamily="var(--font-mono)"
+            fontSize="9.5"
+            fill="var(--ink-faint)"
+            style={{ letterSpacing: "0.1em" }}
+          >
+            {l}
+          </text>
+        ))}
+    </svg>
+  );
+}
+
+/* ================================================================
+   AreaChart — linha + área preenchida abaixo.
+   ================================================================ */
+
+export function AreaChart({
+  data,
+  labels,
+  height = 180,
+  yTicks = 4,
+  className = "",
+}) {
+  const norm = normalizeData(data);
+  const values = norm.map((d) => d.value);
+  const W = 480;
+  const H = height;
+  const padL = 32;
+  const padR = 8;
+  const padT = 12;
+  const padB = labels?.length ? 26 : 12;
+  const innerW = W - padL - padR;
+  const innerH = H - padT - padB;
+  const max = Math.max(...values, 1);
+  const min = Math.min(0, ...values);
+  const range = max - min || 1;
+  const stepX = innerW / Math.max(1, values.length - 1);
+
+  const linePath = buildLinePath(values, padL, padT, innerW, innerH, max, min);
+  const areaPath = `${linePath} L ${padL + (values.length - 1) * stepX} ${
+    padT + innerH
+  } L ${padL} ${padT + innerH} Z`;
+
+  const gradId = `ds-area-grad-${Math.random().toString(36).slice(2, 8)}`;
+
+  const ticks = Array.from({ length: yTicks + 1 }, (_, i) => {
+    const v = min + (range / yTicks) * i;
+    const y = padT + innerH - ((v - min) / range) * innerH;
+    return { v, y };
+  });
+
+  return (
+    <svg
+      viewBox={`0 0 ${W} ${H}`}
+      preserveAspectRatio="none"
+      className={`ds-chart-svg ${className}`}
+      width="100%"
+      height={H}
+      role="img"
+    >
+      <defs>
+        <linearGradient id={gradId} x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.28" />
+          <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
+        </linearGradient>
+      </defs>
+      {ticks.map((t, i) => (
+        <line
+          key={i}
+          x1={padL}
+          x2={W - padR}
+          y1={t.y}
+          y2={t.y}
+          stroke="var(--rule-faint)"
+          strokeWidth="1"
+        />
+      ))}
+      {ticks.map((t, i) => (
+        <text
+          key={`l${i}`}
+          x={padL - 6}
+          y={t.y + 3}
+          textAnchor="end"
+          fontFamily="var(--font-mono)"
+          fontSize="9"
+          fill="var(--ink-faint)"
+        >
+          {Math.round(t.v)}
+        </text>
+      ))}
+      <path d={areaPath} fill={`url(#${gradId})`} />
+      <path
+        d={linePath}
+        fill="none"
+        stroke="var(--accent)"
+        strokeWidth="1.75"
+        strokeLinejoin="round"
+        strokeLinecap="round"
+      />
+      {labels &&
+        labels.map((l, i) => (
+          <text
+            key={i}
+            x={padL + i * stepX}
+            y={H - 8}
+            textAnchor="middle"
+            fontFamily="var(--font-mono)"
+            fontSize="9.5"
+            fill="var(--ink-faint)"
+            style={{ letterSpacing: "0.1em" }}
+          >
+            {l}
+          </text>
+        ))}
+    </svg>
+  );
+}
+
+/* ================================================================
+   PieChart e DonutChart
+   ================================================================ */
+
+const SLICE_TONES = [
+  "var(--accent)",
+  "var(--ink)",
+  "var(--ink-soft)",
+  "var(--ink-faint)",
+  "var(--accent-ink)",
+  "var(--accent-soft)",
+];
+
+function PieOrDonut({ data, height = 200, donut = false, className = "" }) {
+  const norm = normalizeData(data);
+  const total = norm.reduce((s, d) => s + d.value, 0) || 1;
+  const W = height; // square
+  const H = height;
+  const cx = W / 2;
+  const cy = H / 2;
+  const r = (Math.min(W, H) / 2) * 0.92;
+  const innerR = donut ? r * 0.56 : 0;
+
+  let startDeg = 0;
+  const slices = norm.map((d, i) => {
+    const sweep = (d.value / total) * 360;
+    const path = arcPath(cx, cy, r, startDeg, startDeg + sweep, innerR);
+    const slice = {
+      path,
+      color: SLICE_TONES[i % SLICE_TONES.length],
+      label: d.label,
+      value: d.value,
+      pct: (d.value / total) * 100,
+    };
+    startDeg += sweep;
+    return slice;
+  });
+
+  return (
+    <svg
+      viewBox={`0 0 ${W} ${H}`}
+      className={`ds-chart-svg ${className}`}
+      width={H}
+      height={H}
+      role="img"
+    >
+      {slices.map((s, i) => (
+        <path
+          key={i}
+          d={s.path}
+          fill={s.color}
+          stroke="var(--bg-panel)"
+          strokeWidth="1.5"
+        />
+      ))}
+      {donut && (
+        <text
+          x={cx}
+          y={cy + 4}
+          textAnchor="middle"
+          fontFamily="var(--font-serif)"
+          fontSize={Math.round(H * 0.12)}
+          fontWeight="300"
+          fill="var(--ink)"
+        >
+          {Math.round(total)}
+        </text>
+      )}
+    </svg>
+  );
+}
+
+export function PieChart(props) {
+  return <PieOrDonut {...props} donut={false} />;
+}
+
+export function DonutChart(props) {
+  return <PieOrDonut {...props} donut={true} />;
+}
+
+/* ================================================================
+   Sparkline — micro line, sem axes, ideal pra inline em métricas.
+   ================================================================ */
+
+export function Sparkline({
+  data,
+  width = 120,
+  height = 36,
+  filled = false,
+  className = "",
+}) {
+  const norm = normalizeData(data);
+  const values = norm.map((d) => d.value);
+  const W = width;
+  const H = height;
+  const padX = 2;
+  const padY = 4;
+  const innerW = W - padX * 2;
+  const innerH = H - padY * 2;
+  const max = Math.max(...values, 1);
+  const min = Math.min(0, ...values);
+  const range = max - min || 1;
+  const stepX = innerW / Math.max(1, values.length - 1);
+
+  const linePath = values
+    .map((v, i) => {
+      const x = padX + i * stepX;
+      const y = padY + innerH - ((v - min) / range) * innerH;
+      return `${i === 0 ? "M" : "L"} ${x} ${y}`;
+    })
+    .join(" ");
+
+  const areaPath = filled
+    ? `${linePath} L ${padX + (values.length - 1) * stepX} ${
+        padY + innerH
+      } L ${padX} ${padY + innerH} Z`
+    : null;
+
+  return (
+    <svg
+      viewBox={`0 0 ${W} ${H}`}
+      width={W}
+      height={H}
+      className={`ds-chart-svg ds-chart-spark ${className}`}
+      role="img"
+      aria-label="trend"
+    >
+      {areaPath && <path d={areaPath} fill="var(--accent-soft)" />}
+      <path
+        d={linePath}
+        fill="none"
+        stroke="var(--accent)"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}

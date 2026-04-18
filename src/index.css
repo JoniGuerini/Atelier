@@ -3493,6 +3493,117 @@ input[type="file"] { display: none; }
 }
 
 /* ----------------------------------------------------------------
+   Chart — visualizações editoriais (#/charts).
+---------------------------------------------------------------- */
+.ds-chart {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+}
+.ds-chart-head {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--rule-soft);
+}
+.ds-chart-kicker {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.ds-chart-title {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 300;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+  margin: 0;
+}
+
+.ds-chart-svg {
+  display: block;
+  font-family: var(--font-mono);
+}
+
+/* Legend */
+.ds-chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  padding-top: var(--space-2);
+}
+.ds-chart-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.ds-chart-legend-mark {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+}
+.ds-chart-legend-mark.dot { border-radius: 50%; }
+
+/* Pie/Donut layout — gráfico à esquerda, legend à direita */
+.ds-chart-pie-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-5);
+  align-items: center;
+}
+.ds-chart-pie-row .ds-chart-legend {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: 0;
+}
+
+/* Sparkline metric (combinação ao lado de número) */
+.ds-chart-spark-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+  width: 100%;
+}
+.ds-chart-spark-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: var(--space-3) 0;
+  border-top: 1px solid var(--rule-soft);
+}
+.ds-chart-spark-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.ds-chart-spark-value {
+  font-family: var(--font-serif);
+  font-size: 32px;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  line-height: 1;
+}
+.ds-chart-spark .ds-chart-spark { margin-top: 4px; }
+
+@media (max-width: 700px) {
+  .ds-chart-pie-row { grid-template-columns: 1fr; }
+  .ds-chart-spark-row { grid-template-columns: 1fr; }
+}
+
+/* ----------------------------------------------------------------
    PageNav — paginação editorial entre páginas (prev / next).
 ---------------------------------------------------------------- */
 .page-nav {
