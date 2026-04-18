@@ -3350,78 +3350,92 @@ input[type="file"] { display: none; }
   gap: 8px;
 }
 
-/* ==================== Trilho de blocos ==================== */
-.studio-rail-wrap {
+/* ==================== Mural (canvas 2D) ==================== */
+.studio-canvas-wrap {
   position: relative;
-  /* esticamos até onde o conteúdo da página termina */
   min-width: 0;
 }
-.studio-rail {
-  display: flex;
+/* CSS Grid com colunas FIXAS — o conteúdo determina a largura
+   total da grid; quando ela passa do contêiner, o overflow-x
+   habilita scroll horizontal. As linhas crescem livremente,
+   habilitando scroll vertical também. Modificadores .wide / .tall
+   / .big permitem cards de tamanhos variados, e auto-flow: dense
+   compacta os buracos automaticamente — efeito "mural editorial". */
+.studio-canvas {
+  display: grid;
+  grid-template-columns: repeat(4, 320px);
+  grid-auto-rows: 320px;
+  grid-auto-flow: dense;
   gap: var(--space-4);
-  overflow-x: auto;
-  overflow-y: hidden;
+  overflow: auto;
   padding: var(--space-5);
-  padding-right: var(--space-7);
   border: 1px solid var(--rule-soft);
-  scroll-snap-type: x proximity;
-  /* O trilho usa a altura útil da viewport (descontando header da
-     ferramenta + paddings do main), garantindo que o usuário sempre
-     veja os blocos completos sem ter que rolar verticalmente. */
-  min-height: calc(100vh - 180px);
-  /* tema customizado é injetado via inline-style aqui (themeToStyle):
-     todos os componentes lá dentro usam var(--accent) etc., e
-     reagem instantaneamente ao usuário mexer nos controles. */
+  /* Limita a altura do mural à viewport útil — assim o usuário
+     SEMPRE vê painel + mural na tela e o scroll fica DENTRO do
+     mural, não na página. */
+  height: calc(100vh - 180px);
+  min-height: 480px;
+  scroll-snap-type: both proximity;
+  scroll-padding: var(--space-5);
+  /* tema customizado injetado aqui via inline-style: tudo dentro
+     herda --accent, --bg, --font-serif, etc. */
   transition: background var(--dur) var(--ease),
               color var(--dur) var(--ease);
 }
-/* Scrollbar elegante para o trilho */
-.studio-rail::-webkit-scrollbar { height: 8px; }
-.studio-rail::-webkit-scrollbar-track { background: transparent; }
-.studio-rail::-webkit-scrollbar-thumb {
+
+/* Scrollbars elegantes (ambos eixos) */
+.studio-canvas::-webkit-scrollbar { width: 8px; height: 8px; }
+.studio-canvas::-webkit-scrollbar-track { background: transparent; }
+.studio-canvas::-webkit-scrollbar-thumb {
   background: var(--rule-soft);
-  border-radius: 0;
 }
-.studio-rail::-webkit-scrollbar-thumb:hover { background: var(--ink-faint); }
+.studio-canvas::-webkit-scrollbar-thumb:hover { background: var(--ink-faint); }
+.studio-canvas::-webkit-scrollbar-corner { background: transparent; }
 
-.studio-rail-fade {
+/* Fades (eixo X à direita, eixo Y embaixo) */
+.studio-canvas-fade {
   position: absolute;
-  top: 1px;
-  right: 1px;
-  bottom: 9px; /* deixa a scrollbar visível */
-  width: 60px;
   pointer-events: none;
-  background: linear-gradient(
-    to right,
-    transparent 0%,
-    var(--bg) 100%
-  );
+}
+.studio-canvas-fade-x {
+  top: 1px;
+  right: 9px;
+  bottom: 9px;
+  width: 60px;
+  background: linear-gradient(to right, transparent 0%, var(--bg) 100%);
+}
+.studio-canvas-fade-y {
+  left: 1px;
+  right: 9px;
+  bottom: 9px;
+  height: 50px;
+  background: linear-gradient(to bottom, transparent 0%, var(--bg) 100%);
 }
 
+/* Bloco — célula da grid */
 .studio-block {
-  flex: 0 0 340px;
   scroll-snap-align: start;
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
-  padding: var(--space-5);
+  padding: var(--space-4);
   border: 1px solid var(--rule-soft);
   background: var(--bg-panel);
-  /* A altura do bloco preenche o trilho. Os blocos têm "respiração" —
-     visualmente cada um é um card editorial que vive sozinho. */
-  align-self: stretch;
+  overflow: hidden;
   transition: border-color var(--dur-fast) var(--ease);
 }
-.studio-block.wide {
-  flex: 0 0 460px;
-}
-.studio-block:hover {
-  border-color: var(--ink-faint);
-}
+.studio-block:hover { border-color: var(--ink-faint); }
+
+/* Modificadores de tamanho */
+.studio-block--normal { /* 1 col x 1 row (default) */ }
+.studio-block--wide   { grid-column: span 2; }
+.studio-block--tall   { grid-row: span 2; }
+.studio-block--big    { grid-column: span 2; grid-row: span 2; }
+
 .studio-block-head {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
   padding-bottom: var(--space-3);
   border-bottom: 1px solid var(--rule-soft);
 }
@@ -3434,7 +3448,7 @@ input[type="file"] { display: none; }
 }
 .studio-block-title {
   font-family: var(--font-serif);
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 300;
   letter-spacing: -0.005em;
   color: var(--ink);
@@ -3444,11 +3458,15 @@ input[type="file"] { display: none; }
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
 }
+/* Scrollbar interna (quando o conteúdo é maior que o bloco) */
+.studio-block-body::-webkit-scrollbar { width: 4px; }
+.studio-block-body::-webkit-scrollbar-thumb { background: var(--rule-soft); }
 
-/* ===== Advanced — border-radius opcional =====
-   Aplica-se SOMENTE dentro de [data-studio-scope] e SOMENTE quando
-   o usuário move o slider (var fica indefinida por padrão). */
+/* ===== Advanced — border-radius opcional ===== */
 [data-studio-scope] .ds-card,
 [data-studio-scope] .ds-btn,
 [data-studio-scope] .ds-input,
@@ -3465,9 +3483,11 @@ input[type="file"] { display: none; }
 @media (max-width: 900px) {
   .studio { grid-template-columns: 1fr; }
   .studio-panel { position: static; max-height: none; }
-  .studio-rail { min-height: 480px; }
-  .studio-block { flex-basis: 280px; }
-  .studio-block.wide { flex-basis: 320px; }
+  .studio-canvas {
+    grid-template-columns: repeat(2, 280px);
+    grid-auto-rows: 280px;
+    height: 600px;
+  }
   .studio-header { flex-direction: column; align-items: flex-start; gap: 8px; }
   .studio-header-right { display: none; }
 }
