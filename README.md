@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/hero.svg" alt="Atelier — a quiet manual for editorial interfaces" width="100%" />
+  <img src="docs/hero.png" alt="Atelier — a quiet manual for editorial interfaces" width="100%" />
 </p>
 
 <p align="center">
