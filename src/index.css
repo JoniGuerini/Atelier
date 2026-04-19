@@ -6083,7 +6083,10 @@ input[type="file"] { display: none; }
   display: flex;
   width: 100%;
   height: 100%;
-  background: var(--bg-panel);
+  /* Cor do container = bg geral; cada panel interno usa --bg-panel.
+     Assim os handles aparecem como "tiras" sutis na cor do container
+     entre os panels — visual consistente sem precisar de borda. */
+  background: var(--bg);
   border: 1px solid var(--rule-soft);
   overflow: hidden;
 }
@@ -6102,7 +6105,11 @@ input[type="file"] { display: none; }
 
 /* Handle — área draggable de 6px com linha visual de 1px no centro.
    A área maior (6px) é o que captura pointer events; a linha fina
-   (via ::before) é só visual. Hover/focus pinta a linha em accent. */
+   (via ::before) é só visual. Hover/focus pinta a linha em accent.
+   Como o container do panels é --bg e os panels --bg-panel, o handle
+   (background transparent) deixa transparecer a cor --bg que cria
+   a "tira" visual entre os panels — separação sem precisar pintar
+   a linha de 1px (que ainda fica como reforço sutil em --rule-soft). */
 .ds-resizable-handle {
   flex-shrink: 0;
   position: relative;
@@ -6185,7 +6192,9 @@ input[type="file"] { display: none; }
   display: flex;
   width: 100%;
   height: 100%;
-  background: var(--bg-panel);
+  /* Mesmo princípio do .ds-resizable: container em --bg, panels
+     internos em --bg-panel, handles aparecem como tiras na cor de bg. */
+  background: var(--bg);
   border: 1px solid var(--rule-soft);
   overflow: hidden;
 }

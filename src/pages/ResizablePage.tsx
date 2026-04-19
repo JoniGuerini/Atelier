@@ -75,14 +75,14 @@ export default function ResizablePage() {
               ariaLabel={t("pages.resizable.basic.label")}
             >
               <ResizablePanel>
-                <FakePanel bg="var(--bg-panel)">
+                <FakePanel>
                   <strong>{t("pages.resizable.labels.left")}</strong>
                   <br />
                   {t("pages.resizable.basic.lorem")}
                 </FakePanel>
               </ResizablePanel>
               <ResizablePanel>
-                <FakePanel bg="var(--bg-sunken)">
+                <FakePanel>
                   <strong>{t("pages.resizable.labels.right")}</strong>
                   <br />
                   {t("pages.resizable.basic.lorem")}
@@ -116,14 +116,14 @@ export default function ResizablePage() {
               ariaLabel={t("pages.resizable.vertical.label")}
             >
               <ResizablePanel>
-                <FakePanel bg="var(--bg-panel)">
+                <FakePanel>
                   <strong>{t("pages.resizable.labels.top")}</strong>
                   <br />
                   {t("pages.resizable.basic.lorem")}
                 </FakePanel>
               </ResizablePanel>
               <ResizablePanel>
-                <FakePanel bg="var(--bg-sunken)">
+                <FakePanel>
                   <strong>{t("pages.resizable.labels.bottom")}</strong>
                   <br />
                   {t("pages.resizable.basic.lorem")}
@@ -157,19 +157,19 @@ export default function ResizablePage() {
               ariaLabel={t("pages.resizable.three.label")}
             >
               <ResizablePanel>
-                <FakePanel bg="var(--bg-panel)">
+                <FakePanel>
                   <strong>{t("pages.resizable.labels.sidebar")}</strong>
                 </FakePanel>
               </ResizablePanel>
               <ResizablePanel>
-                <FakePanel bg="var(--bg)">
+                <FakePanel>
                   <strong>{t("pages.resizable.labels.content")}</strong>
                   <br />
                   {t("pages.resizable.basic.lorem")}
                 </FakePanel>
               </ResizablePanel>
               <ResizablePanel>
-                <FakePanel bg="var(--bg-sunken)">
+                <FakePanel>
                   <strong>{t("pages.resizable.labels.inspector")}</strong>
                 </FakePanel>
               </ResizablePanel>
@@ -205,19 +205,19 @@ export default function ResizablePage() {
               ariaLabel={t("pages.resizable.junction.label")}
             >
               <ResizablePanel>
-                <FakePanel bg="var(--bg-panel)">
+                <FakePanel>
                   <strong>{t("pages.resizable.labels.one")}</strong>
                   <br />
                   {t("pages.resizable.junction.body")}
                 </FakePanel>
               </ResizablePanel>
               <ResizablePanel>
-                <FakePanel bg="var(--bg-sunken)">
+                <FakePanel>
                   <strong>{t("pages.resizable.labels.two")}</strong>
                 </FakePanel>
               </ResizablePanel>
               <ResizablePanel>
-                <FakePanel bg="var(--bg)">
+                <FakePanel>
                   <strong>{t("pages.resizable.labels.three")}</strong>
                 </FakePanel>
               </ResizablePanel>
@@ -254,7 +254,7 @@ export default function ResizablePage() {
               ariaLabel={t("pages.resizable.nested.label")}
             >
               <ResizablePanel>
-                <FakePanel bg="var(--bg-panel)">
+                <FakePanel>
                   <strong>{t("pages.resizable.labels.one")}</strong>
                 </FakePanel>
               </ResizablePanel>
@@ -265,12 +265,12 @@ export default function ResizablePage() {
                   ariaLabel={t("pages.resizable.nested.innerLabel")}
                 >
                   <ResizablePanel>
-                    <FakePanel bg="var(--bg-sunken)">
+                    <FakePanel>
                       <strong>{t("pages.resizable.labels.two")}</strong>
                     </FakePanel>
                   </ResizablePanel>
                   <ResizablePanel>
-                    <FakePanel bg="var(--bg)">
+                    <FakePanel>
                       <strong>{t("pages.resizable.labels.three")}</strong>
                     </FakePanel>
                   </ResizablePanel>
@@ -306,14 +306,14 @@ export default function ResizablePage() {
               ariaLabel={t("pages.resizable.persist.label")}
             >
               <ResizablePanel>
-                <FakePanel bg="var(--bg-panel)">
+                <FakePanel>
                   <strong>{t("pages.resizable.labels.left")}</strong>
                   <br />
                   {t("pages.resizable.persist.body")}
                 </FakePanel>
               </ResizablePanel>
               <ResizablePanel>
-                <FakePanel bg="var(--bg-sunken)">
+                <FakePanel>
                   <strong>{t("pages.resizable.labels.right")}</strong>
                   <br />
                   {t("pages.resizable.persist.body")}
