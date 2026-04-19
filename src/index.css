@@ -3709,50 +3709,43 @@ input[type="file"] { display: none; }
    SearchTrigger + SearchPalette — busca global ⌘K.
 ---------------------------------------------------------------- */
 
-/* === Trigger no header === */
+/* === Trigger no header ===
+   Sem borda, sem kbd visível — apenas o glifo + label. O atalho
+   ⌘K continua funcional via useSearchHotkey, e a tip do Esc/⌘K
+   aparece dentro do popover quando aberto. */
 .search-trigger {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 5px 10px 5px 8px;
+  padding: 4px 6px;
   background: transparent;
-  border: 1px solid var(--rule-soft);
+  border: none;
   color: var(--ink-soft);
   font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: border-color var(--dur-fast) var(--ease),
-    color var(--dur-fast) var(--ease);
+  transition: color var(--dur-fast) var(--ease);
 }
 .search-trigger:hover {
-  border-color: var(--accent);
   color: var(--accent);
 }
 .search-trigger-icon {
   font-family: var(--font-serif);
-  font-size: 16px;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 18px;
   line-height: 1;
   transform: translateY(-1px);
 }
 .search-trigger-label {
-  flex: 1;
   text-align: left;
-  min-width: 80px;
 }
+/* O kbd não é mais renderizado no header — só sobrevive se alguém
+   instanciar o trigger fora do header (caso raro). */
 .search-trigger-kbd {
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.1em;
-  color: var(--ink-faint);
-  border: 1px solid var(--rule-soft);
-  padding: 2px 5px;
-  line-height: 1;
-}
-.search-trigger:hover .search-trigger-kbd {
-  color: var(--accent);
-  border-color: var(--accent);
+  display: none;
 }
 /* Variante compacta (sidebar footer) — só ícone */
 .search-trigger.compact {
@@ -3760,15 +3753,9 @@ input[type="file"] { display: none; }
   height: 28px;
   padding: 0;
   justify-content: center;
-  border: none;
-}
-.search-trigger.compact .search-trigger-kbd {
-  display: none;
 }
 .search-trigger.compact .search-trigger-icon {
   font-size: 22px;
-  font-style: italic;
-  font-weight: 300;
   transform: translateY(-2px);
 }
 
