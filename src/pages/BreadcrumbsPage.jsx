@@ -14,7 +14,9 @@ import {
 import { useT } from "../lib/i18n.jsx";
 
 export default function BreadcrumbsPage() {
-  const { t, tr } = useT();
+  const { t, tr, raw } = useT();
+  const deepA = raw("pages.breadcrumbs.deep.a") || [];
+  const deepB = raw("pages.breadcrumbs.deep.b") || [];
 
   return (
     <>
@@ -68,9 +70,30 @@ export default function BreadcrumbsPage() {
         </Example>
       </Section>
 
-      {/* iii · Composable */}
+      {/* iii · Trilhas profundas */}
       <Section
         num="iii"
+        title={<>{t("pages.breadcrumbs.deep.title")}</>}
+        kicker={t("pages.breadcrumbs.deep.kicker")}
+      >
+        <Example
+          caption={t("pages.breadcrumbs.deep.caption")}
+          tech="3 a 4 níveis"
+          stack
+          code={`<Breadcrumbs items={${JSON.stringify(deepA)}} />
+
+<Breadcrumbs items={${JSON.stringify(deepB)}} />`}
+        >
+          <div style={{ display: "grid", gap: "var(--space-3)" }}>
+            <Breadcrumbs items={deepA} />
+            <Breadcrumbs items={deepB} />
+          </div>
+        </Example>
+      </Section>
+
+      {/* iv · Composable */}
+      <Section
+        num="iv"
         title={<>{t("pages.breadcrumbs.composable.title")}</>}
         kicker={t("pages.breadcrumbs.composable.kicker")}
       >
@@ -97,7 +120,7 @@ export default function BreadcrumbsPage() {
       </Section>
 
       <CompositionSection
-        num="iv"
+        num="v"
         i18nPrefix="pages.breadcrumbs.composition"
         root="BreadcrumbsRoot"
         nodes={[

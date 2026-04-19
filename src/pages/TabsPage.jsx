@@ -2,7 +2,6 @@ import { useState } from "react";
 import {
   PageHead,
   Section,
-  Breadcrumbs,
   Example,
   CompositionSection,
 } from "../ds/primitives.jsx";
@@ -10,7 +9,7 @@ import { Tabs, TabList, Tab, TabPanels, TabPanel } from "../ds/Tabs.jsx";
 import { useT } from "../lib/i18n.jsx";
 
 export default function TabsPage() {
-  const { t, tr, raw } = useT();
+  const { t, tr } = useT();
   const [tab, setTab] = useState("foundations");
 
   const tabsItems = [
@@ -30,9 +29,6 @@ export default function TabsPage() {
       body: t("pages.tabs.tabs.patterns.body"),
     },
   ];
-
-  const crumbsA = raw("pages.tabs.crumbs.aBase") || [];
-  const crumbsB = raw("pages.tabs.crumbs.bBase") || [];
 
   return (
     <>
@@ -94,27 +90,8 @@ export default function TabsPage() {
         </Example>
       </Section>
 
-      <Section
-        num="ii"
-        title={<>{t("pages.tabs.crumbs.title")}</>}
-        kicker={t("pages.tabs.crumbs.kicker")}
-      >
-        <Example
-          caption={t("pages.tabs.crumbs.caption")}
-          tech=".ds-crumbs"
-          stack
-          code={`<Breadcrumbs items={${JSON.stringify(crumbsA)}} />
-
-<Breadcrumbs items={${JSON.stringify(crumbsB)}} />`}
-        >
-          <Breadcrumbs items={crumbsA} />
-          <div style={{ height: 12 }} />
-          <Breadcrumbs items={crumbsB} />
-        </Example>
-      </Section>
-
       <CompositionSection
-        num="iii"
+        num="ii"
         i18nPrefix="pages.tabs.composition"
         root="Tabs"
         nodes={[

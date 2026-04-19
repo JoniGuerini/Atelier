@@ -896,13 +896,6 @@ const ptBR = {
             "Como compor instrumentos em peças maiores — formulários, navegações, estados vazios. Receitas, não regras.",
         },
       },
-      crumbs: {
-        title: "Trilha de pão",
-        kicker: "breadcrumbs",
-        caption: "Localização em hierarquias",
-        aBase: ["Atelier", "Componentes", "Abas"],
-        bBase: ["Atelier", "Fundamentos", "Cores", "Acento"],
-      },
     },
 
     /* ------------- Tables ------------- */
@@ -1172,6 +1165,13 @@ const ptBR = {
         title: "Separador customizado",
         kicker: "separator prop",
         caption: "Troque o glifo separador para combinar com a voz tipográfica do projeto.",
+      },
+      deep: {
+        title: "Trilhas profundas",
+        kicker: "3 a 4 níveis",
+        caption: "O conjunto inteiro do caminho — útil em sites de documentação ou catálogos.",
+        a: ["Atelier", "Componentes", "Abas"],
+        b: ["Atelier", "Fundamentos", "Cores", "Acento"],
       },
       composable: {
         title: "Composable",

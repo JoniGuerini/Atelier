@@ -843,13 +843,6 @@ const en = {
             "How to compose instruments into larger pieces — forms, navigations, empty states. Recipes, not rules.",
         },
       },
-      crumbs: {
-        title: "Breadcrumbs",
-        kicker: "breadcrumbs",
-        caption: "Location in hierarchies",
-        aBase: ["Atelier", "Components", "Tabs"],
-        bBase: ["Atelier", "Foundations", "Colors", "Accent"],
-      },
     },
 
     tables: {
@@ -1112,6 +1105,13 @@ const en = {
         title: "Custom separator",
         kicker: "separator prop",
         caption: "Swap the separator glyph to match the project's typographic voice.",
+      },
+      deep: {
+        title: "Deep trails",
+        kicker: "3 to 4 levels",
+        caption: "The whole path — useful in documentation sites or catalogues.",
+        a: ["Atelier", "Components", "Tabs"],
+        b: ["Atelier", "Foundations", "Colors", "Accent"],
       },
       composable: {
         title: "Composable",
