@@ -96,6 +96,8 @@ const en = {
       colorPicker: "Color Picker",
       markdown: "Markdown",
       shortcuts: "Shortcuts",
+      virtualList: "Virtual List",
+      dragDrop: "Drag & Drop",
       forms: "Forms",
       stepper: "Stepper",
       emptyStates: "Empty states",
@@ -143,6 +145,8 @@ const en = {
       colorPicker: "Visual HSV picker + hex/RGB inputs + optional presets. Pure-JS conversions.",
       markdown: "Editorial markdown rendering with own parser. Headings, lists, quotes, code, links.",
       shortcuts: "Global keyboard shortcuts system with useShortcut hook + help dialog via Shift+?.",
+      virtualList: "Renders only visible items — handle 10,000+ entries without freezing the browser.",
+      dragDrop: "Sortable + DragSource + DropZone — touch, mouse, pen and keyboard, zero deps.",
       forms: "Full composition: fields, dividers, actions.",
       stepper: "Multi-step progress indicator for long forms.",
       emptyStates: "Invitations, not defeats — space with intent.",
@@ -211,6 +215,10 @@ const en = {
       close: "Close",
       empty: "No shortcuts registered.",
       uncategorized: "General",
+    },
+    dnd: {
+      sortable: "Sortable list",
+      dropZone: "Drop area",
     },
   },
 
@@ -2181,8 +2189,103 @@ const en = {
       },
     },
 
+    /* ------------- VirtualList ------------- */
+    virtualList: {
+      lead: "Advanced · 37",
+      titleA: "The ",
+      titleB: "virtual list",
+      metaLabel: "Performance",
+      meta: "Windowing — 10,000+ items",
+      intro:
+        "Rendering 10,000 elements in the DOM freezes the browser. [em]VirtualList[/em] only paints the [em]visible[/em] items (plus a small overscan buffer) and updates as you scroll — the user notices nothing, but browser memory thanks you.",
+      large: {
+        title: "Huge list",
+        kicker: "fixed height",
+        desc:
+          "10,000 articles at a fixed 64px row. Scroll: only ~10-15 nodes exist in the DOM at any moment. Open DevTools to confirm.",
+        caption: "{n} items rendered — only ~10 actually in the DOM",
+      },
+      variable: {
+        title: "Variable height",
+        kicker: "itemHeight as function",
+        desc:
+          "When items don't share a uniform height, pass a [em]function[/em] (i) => height. VirtualList pre-computes cumulative offsets and uses binary search to find startIndex.",
+        caption: "500 items with 3 different sizes (sm/lg/xl)",
+      },
+      infinite: {
+        title: "Infinite scroll",
+        kicker: "onEndReached",
+        desc:
+          "Combine windowing with lazy loading. [em]onEndReached[/em] fires when the user is [em]endThreshold[/em] items from the bottom — perfect for cursor-less paginated APIs.",
+        caption: "{n} items — scroll to the bottom to load +25 more",
+        loaded: "{n} loaded",
+        reset: "Reset",
+      },
+      custom: {
+        title: "Custom render",
+        kicker: "generic renderItem",
+        desc:
+          "renderItem receives (item, index) and returns any JSX. VirtualList only handles positioning — you handle the row design.",
+        caption: "1,000 articles with numbering and author badge",
+      },
+      composition: {
+        title: "API",
+        titleB: "",
+        kicker: "props + behavior",
+        caption: "API summary:",
+      },
+    },
+
+    /* ------------- DragDrop ------------- */
+    dragDrop: {
+      lead: "Advanced · 38",
+      titleA: "The ",
+      titleB: "drag & drop",
+      metaLabel: "Interaction",
+      meta: "Sortable + DropZone + keyboard",
+      intro:
+        "Full [em]drag-and-drop[/em] kit, no dependencies. [em]<Sortable>[/em] reorders items inside a list; [em]<DragSource> + <DropZone>[/em] move between containers. Both support [em]touch[/em], [em]mouse[/em], [em]pen[/em] and [em]keyboard[/em].",
+      sortable: {
+        title: "Sortable vertical",
+        kicker: "reorder inline",
+        desc:
+          "Drag cards up or down. An [em]accent[/em] line indicates where the item will land. Release to reorder.",
+        caption: "Drag — or focus with Tab and use Space + arrows",
+      },
+      horizontal: {
+        title: "Sortable horizontal",
+        kicker: "orientation: horizontal",
+        desc:
+          "The same Sortable in horizontal layout — useful for reorderable tabs, chips or filters.",
+        caption: "Reorderable pills side by side",
+      },
+      cross: {
+        title: "Across containers",
+        kicker: "kanban-lite",
+        desc:
+          "[em]<DragSource>[/em] wraps the draggable item; [em]<DropZone>[/em] accepts the drop. The [em]accepts[/em] prop filters by type — a card only lands where it's accepted.",
+        caption: "Move cards between the three columns",
+        todo: "To do",
+        doing: "In progress",
+        done: "Done",
+      },
+      keyboard: {
+        title: "Keyboard",
+        kicker: "100% accessible",
+        desc:
+          "Tab to focus an item; [em]Space[/em] or [em]Enter[/em] to \"pick up\"; [em]↑ ↓[/em] to move (vertical) or [em]← →[/em] (horizontal); [em]Space[/em] to drop; [em]Esc[/em] to cancel.",
+        caption: "Try without a mouse — the active item gets a dashed accent outline",
+      },
+      composition: {
+        title: "API",
+        titleB: "",
+        kicker: "Provider + Source + Zone",
+        caption: "Four pieces of the kit:",
+      },
+    },
+
     forms: {
-      lead: "Pattern · 37",
+      lead: "Pattern · 39",
       titleA: "The ",
       titleB: "forms",
       metaLabel: "Composition",
@@ -2222,7 +2325,7 @@ const en = {
     },
 
     stepper: {
-      lead: "Pattern · 38",
+      lead: "Pattern · 40",
       titleA: "The ",
       titleB: "stepper",
       metaLabel: "Multi-step",
@@ -2266,7 +2369,7 @@ const en = {
     },
 
     emptyStates: {
-      lead: "Pattern · 39",
+      lead: "Pattern · 41",
       titleA: "The ",
       titleB: "emptiness",
       metaLabel: "No content",
@@ -2316,7 +2419,7 @@ const en = {
     },
 
     sidebar: {
-      lead: "Pattern · 40",
+      lead: "Pattern · 42",
       titleA: "The ",
       titleB: "sidebar",
       metaLabel: "Navigation",
@@ -2415,7 +2518,7 @@ const en = {
     },
 
     navbar: {
-      lead: "Pattern · 41",
+      lead: "Pattern · 43",
       titleA: "The ",
       titleB: "navbar",
       metaLabel: "Navigation",
@@ -2647,7 +2750,7 @@ const en = {
     },
 
     accessibility: {
-      lead: "Reference · 42",
+      lead: "Reference · 44",
       titleA: "On ",
       titleB: "accessibility",
       metaLabel: "Conformance",

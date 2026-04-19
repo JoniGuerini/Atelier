@@ -844,6 +844,80 @@ const { openHelp } = useShortcutsContext();
 <ShortcutCombo combo="cmd+shift+k" />  // ⌘ ⇧ K`,
   },
   {
+    id: "virtualList",
+    name: "VirtualList<T>",
+    route: "virtual-list",
+    imports: `import { VirtualList } from "./ds/VirtualList";`,
+    props: [
+      ["items", "T[] — qualquer tipo de item", "—"],
+      ["itemHeight", "number | (i: number) => number", "—"],
+      ["renderItem", "(item, index) => ReactNode", "—"],
+      ["height", "number | string — altura do container", "400"],
+      ["overscan", "number — items extras pra cima/baixo", "3"],
+      ["onEndReached", "() => void — chamado perto do fim", "—"],
+      ["endThreshold", "number — items do fim pra disparar", "5"],
+      ["getKey", "(item, i) => string | number", "i (index)"],
+    ],
+    code: `// Altura fixa
+<VirtualList
+  items={tenThousandRows}
+  itemHeight={64}
+  height={400}
+  renderItem={(row) => <Row data={row} />}
+/>
+
+// Altura variável (mais lento — só se precisar)
+<VirtualList
+  items={items}
+  itemHeight={(i) => (i % 3 === 0 ? 96 : 56)}
+  renderItem={(item) => <Card item={item} />}
+/>
+
+// Infinite scroll
+<VirtualList
+  items={items}
+  itemHeight={64}
+  onEndReached={loadMore}
+  endThreshold={5}
+  renderItem={(item) => <Row item={item} />}
+/>`,
+  },
+  {
+    id: "dragDrop",
+    name: "DragDrop kit (Sortable + DropZone)",
+    route: "drag-drop",
+    imports: `import {
+  Sortable,
+  DragDropProvider,
+  DragSource, DropZone, DragGhost,
+} from "./ds/DragDrop";`,
+    props: [
+      ["<Sortable items onChange>", "lista reordenável", "—"],
+      ["Sortable.orientation", "'vertical' | 'horizontal'", "'vertical'"],
+      ["Sortable.dragThreshold", "px que o cursor anda antes de drag", "4"],
+      ["<DragDropProvider>", "envolve áreas com DragSource/DropZone", "—"],
+      ["<DragSource data type?>", "marca um elemento como arrastável", "—"],
+      ["<DropZone onDrop accepts?>", "recebe drops; filtra por type", "—"],
+      ["keyboard (Sortable)", "Tab + Space pra pegar, ↑↓ pra mover, Esc cancela", "—"],
+    ],
+    code: `// Sortable simples
+<Sortable items={list} onChange={setList} getKey={(c) => c.id}>
+  {(card) => <Card>{card.title}</Card>}
+</Sortable>
+
+// Cross-container (kanban)
+<DragDropProvider>
+  <DropZone onDrop={(c) => moveTo("doing", c)} accepts="card">
+    {doing.map((c) => (
+      <DragSource key={c.id} data={c} type="card">
+        <Card>{c.title}</Card>
+      </DragSource>
+    ))}
+  </DropZone>
+  <DragGhost />  {/* preview seguindo o cursor — opcional */}
+</DragDropProvider>`,
+  },
+  {
     id: "contextMenu",
     name: "ContextMenu family",
     route: "context-menu",

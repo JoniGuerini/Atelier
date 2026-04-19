@@ -96,6 +96,8 @@ const ptBR = {
       colorPicker: "Color Picker",
       markdown: "Markdown",
       shortcuts: "Atalhos",
+      virtualList: "Virtual List",
+      dragDrop: "Drag & Drop",
       forms: "Formulários",
       stepper: "Stepper",
       emptyStates: "Estados vazios",
@@ -143,6 +145,8 @@ const ptBR = {
       colorPicker: "Picker visual HSV + inputs hex/RGB + presets opcionais. Conversões em JS puro.",
       markdown: "Render de markdown editorial com parser próprio. Headings, listas, quotes, code, links.",
       shortcuts: "Sistema global de atalhos com hook useShortcut + dialog de help acessível via Shift+?.",
+      virtualList: "Renderiza só items visíveis — listas com 10.000+ entradas sem travar o navegador.",
+      dragDrop: "Sortable + DragSource + DropZone — touch, mouse, pen e teclado, tudo sem dependências.",
       forms: "Composição completa: campos, divisores e ações.",
       stepper: "Indicador de progresso multi-etapa para forms longos.",
       emptyStates: "Convites, não derrotas — espaço com intenção.",
@@ -211,6 +215,10 @@ const ptBR = {
       close: "Fechar",
       empty: "Nenhum atalho registrado.",
       uncategorized: "Geral",
+    },
+    dnd: {
+      sortable: "Lista reordenável",
+      dropZone: "Área para soltar",
     },
   },
 
@@ -2242,9 +2250,104 @@ const ptBR = {
       },
     },
 
+    /* ------------- VirtualList ------------- */
+    virtualList: {
+      lead: "Avançado · 37",
+      titleA: "A ",
+      titleB: "lista virtualizada",
+      metaLabel: "Performance",
+      meta: "Windowing — 10.000+ items",
+      intro:
+        "Renderizar 10.000 elementos no DOM trava o navegador. A [em]VirtualList[/em] desenha apenas os items [em]visíveis[/em] (mais um buffer pra cima e pra baixo) e atualiza conforme o scroll — o usuário não percebe diferença, mas a memória do navegador agradece.",
+      large: {
+        title: "Lista enorme",
+        kicker: "altura fixa",
+        desc:
+          "10.000 artigos com altura fixa de 64px. Faça scroll: só 10-15 nós existem no DOM em qualquer momento. Use o atalho [em]Ctrl+End[/em] no DevTools pra confirmar.",
+        caption: "{n} items renderizados — só ~10 estão no DOM",
+      },
+      variable: {
+        title: "Altura variável",
+        kicker: "itemHeight como função",
+        desc:
+          "Quando os items não têm altura uniforme, passe uma [em]função[/em] (i) => height. A VirtualList pre-computa offsets cumulativos e usa busca binária pra achar o startIndex.",
+        caption: "500 items com 3 alturas diferentes (sm/lg/xl)",
+      },
+      infinite: {
+        title: "Scroll infinito",
+        kicker: "onEndReached",
+        desc:
+          "Combine windowing com lazy loading. [em]onEndReached[/em] dispara quando faltam [em]endThreshold[/em] items pro fim — perfeito pra paginar APIs sem cursor visível.",
+        caption: "{n} items — chegue no fim pra carregar +25",
+        loaded: "{n} carregados",
+        reset: "Resetar",
+      },
+      custom: {
+        title: "Render customizado",
+        kicker: "renderItem genérico",
+        desc:
+          "renderItem recebe (item, index) e retorna qualquer JSX. A VirtualList só cuida do positioning — você cuida do design da linha.",
+        caption: "1.000 artigos com numeração e badge de autor",
+      },
+      composition: {
+        title: "API",
+        titleB: "",
+        kicker: "props + comportamento",
+        caption: "Resumo da API:",
+      },
+    },
+
+    /* ------------- DragDrop ------------- */
+    dragDrop: {
+      lead: "Avançado · 38",
+      titleA: "O ",
+      titleB: "drag & drop",
+      metaLabel: "Interação",
+      meta: "Sortable + DropZone + teclado",
+      intro:
+        "Kit completo de [em]drag-and-drop[/em] sem dependências. [em]<Sortable>[/em] reordena items dentro de uma lista; [em]<DragSource> + <DropZone>[/em] move entre containers. Ambos suportam [em]touch[/em], [em]mouse[/em], [em]pen[/em] e [em]teclado[/em].",
+      sortable: {
+        title: "Sortable vertical",
+        kicker: "reordenar inline",
+        desc:
+          "Arraste cards pra cima ou pra baixo. Uma linha [em]accent[/em] indica onde o item será solto. Solte pra reordenar.",
+        caption: "Arraste — ou foque com Tab e use Espaço + setas",
+      },
+      horizontal: {
+        title: "Sortable horizontal",
+        kicker: "orientation: horizontal",
+        desc:
+          "A mesma Sortable em layout horizontal — útil pra abas, chips ou filtros reordenáveis.",
+        caption: "Pills reordenáveis lado a lado",
+      },
+      cross: {
+        title: "Entre containers",
+        kicker: "kanban-lite",
+        desc:
+          "[em]<DragSource>[/em] embrulha o item arrastável; [em]<DropZone>[/em] aceita o drop. A prop [em]accepts[/em] filtra por tipo — um card só cai onde é aceito.",
+        caption: "Mova cards entre as três colunas",
+        todo: "A fazer",
+        doing: "Em progresso",
+        done: "Concluído",
+      },
+      keyboard: {
+        title: "Teclado",
+        kicker: "100% acessível",
+        desc:
+          "Tab pra focar um item; [em]Espaço[/em] ou [em]Enter[/em] pra \"pegar\"; [em]↑ ↓[/em] pra mover (vertical) ou [em]← →[/em] (horizontal); [em]Espaço[/em] pra soltar; [em]Esc[/em] pra cancelar.",
+        caption: "Tente sem mouse — o item ativo fica com outline tracejado accent",
+      },
+      composition: {
+        title: "API",
+        titleB: "",
+        kicker: "Provider + Source + Zone",
+        caption: "Quatro peças do kit:",
+      },
+    },
+
     /* ------------- Forms ------------- */
     forms: {
-      lead: "Padrão · 37",
+      lead: "Padrão · 39",
       titleA: "Os ",
       titleB: "formulários",
       metaLabel: "Composição",
@@ -2285,7 +2388,7 @@ const ptBR = {
 
     /* ------------- Stepper ------------- */
     stepper: {
-      lead: "Padrão · 38",
+      lead: "Padrão · 40",
       titleA: "O ",
       titleB: "stepper",
       metaLabel: "Multi-etapa",
@@ -2330,7 +2433,7 @@ const ptBR = {
 
     /* ------------- Empty States ------------- */
     emptyStates: {
-      lead: "Padrão · 39",
+      lead: "Padrão · 41",
       titleA: "Os ",
       titleB: "vazios",
       metaLabel: "Sem conteúdo",
@@ -2381,7 +2484,7 @@ const ptBR = {
 
     /* ------------- Sidebar (pattern) ------------- */
     sidebar: {
-      lead: "Padrão · 40",
+      lead: "Padrão · 42",
       titleA: "A ",
       titleB: "sidebar",
       metaLabel: "Navegação",
@@ -2481,7 +2584,7 @@ const ptBR = {
 
     /* ------------- Navbar (pattern) ------------- */
     navbar: {
-      lead: "Padrão · 41",
+      lead: "Padrão · 43",
       titleA: "A ",
       titleB: "navbar",
       metaLabel: "Navegação",
@@ -2715,7 +2818,7 @@ const ptBR = {
 
     /* ------------- Accessibility ------------- */
     accessibility: {
-      lead: "Referência · 42",
+      lead: "Referência · 44",
       titleA: "A ",
       titleB: "acessibilidade",
       metaLabel: "Conformidade",

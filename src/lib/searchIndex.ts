@@ -69,6 +69,8 @@ const COMPONENTS = [
   { id: "color-picker", label: "ColorPicker", route: "color-picker", keywords: ["cor", "color", "hex", "rgb", "hsv", "picker"] },
   { id: "markdown",    label: "MarkdownViewer", route: "markdown",  keywords: ["markdown", "md", "render", "viewer", "texto"] },
   { id: "shortcuts",   label: "Shortcuts",   route: "shortcuts",   keywords: ["keyboard", "atalhos", "teclado", "hotkey", "kbd"] },
+  { id: "virtual-list", label: "VirtualList", route: "virtual-list", keywords: ["virtual", "windowing", "performance", "lista", "scroll", "10000"] },
+  { id: "drag-drop",   label: "Drag & Drop", route: "drag-drop",   keywords: ["drag", "drop", "sortable", "reorder", "kanban", "arrastar"] },
   { id: "a11y",          label: "Accessibility", route: "accessibility", keywords: ["a11y", "acessibilidade", "wcag", "aria", "atalhos", "keyboard", "skip link"] },
   { id: "skip-link",     label: "Skip link",     route: "accessibility", keywords: ["skip", "pular", "teclado"] },
   { id: "keyboard-map",  label: "Keyboard map",  route: "accessibility", keywords: ["atalhos", "teclado", "shortcut"] },

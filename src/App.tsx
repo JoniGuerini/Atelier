@@ -76,6 +76,8 @@ import ResizablePage from "./pages/ResizablePage.tsx";
 import ColorPickerPage from "./pages/ColorPickerPage.tsx";
 import MarkdownPage from "./pages/MarkdownPage.tsx";
 import ShortcutsPage from "./pages/ShortcutsPage.tsx";
+import VirtualListPage from "./pages/VirtualListPage.tsx";
+import DragDropPage from "./pages/DragDropPage.tsx";
 import { Toaster } from "./ds/Toaster.tsx";
 import { ShortcutsProvider } from "./ds/Shortcuts.tsx";
 
@@ -125,6 +127,8 @@ const PAGES = {
   "color-picker": ColorPickerPage,
   markdown: MarkdownPage,
   shortcuts: ShortcutsPage,
+  "virtual-list": VirtualListPage,
+  "drag-drop": DragDropPage,
 };
 
 const SIDEBAR_KEY = "atelier.sidebarCollapsed";

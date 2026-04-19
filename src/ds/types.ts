@@ -526,6 +526,47 @@ export interface Shortcut {
   disabled?: boolean;
 }
 
+/* ----------------- VirtualList ----------------- */
+export type VirtualListItemHeight = number | ((index: number) => number);
+export interface VirtualListProps<T> {
+  items: T[];
+  itemHeight: VirtualListItemHeight;
+  renderItem: (item: T, index: number) => ReactNode;
+  height?: number | string;
+  overscan?: number;
+  onEndReached?: () => void;
+  endThreshold?: number;
+  getKey?: (item: T, index: number) => string | number;
+  className?: string;
+  ariaLabel?: string;
+}
+
+/* ----------------- DragDrop ----------------- */
+export interface SortableProps<T> {
+  items: T[];
+  onChange: (next: T[]) => void;
+  children: (item: T, index: number) => ReactNode;
+  getKey?: (item: T, index: number) => string | number;
+  orientation?: "vertical" | "horizontal";
+  dragThreshold?: number;
+  className?: string;
+  ariaLabel?: string;
+}
+export interface DragSourceProps {
+  data: any;
+  type?: string;
+  dragThreshold?: number;
+  children?: ReactNode;
+  className?: string;
+}
+export interface DropZoneProps {
+  onDrop: (data: any, type?: string) => void;
+  accepts?: string | string[];
+  children?: ReactNode;
+  className?: string;
+  ariaLabel?: string;
+}
+
 /* ----------------- Calendar / DatePicker ----------------- */
 export type CalendarMode = "single" | "range" | "multiple";
 export type CalendarRange = [Date | null, Date | null];
