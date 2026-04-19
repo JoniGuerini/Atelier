@@ -48,15 +48,24 @@ export interface ResizablePanelProps {
   className?: string;
   /** ID único — usado pra storage. Se não passar, gera um. */
   id?: string;
+  /** Style — usado internamente pelo ResizablePanels via cloneElement
+      para aplicar o width/height. Consumidor pode passar style extra
+      (será mesclado). */
+  style?: CSSProperties;
 }
 
 export function ResizablePanel({
   children,
   className = "",
+  style,
 }: ResizablePanelProps) {
   const cls = ["ds-resizable-panel"];
   if (className) cls.push(className);
-  return <div className={cls.join(" ")}>{children}</div>;
+  return (
+    <div className={cls.join(" ")} style={style}>
+      {children}
+    </div>
+  );
 }
 
 export interface ResizablePanelsProps {

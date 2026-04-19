@@ -6100,55 +6100,80 @@ input[type="file"] { display: none; }
   min-height: 0;
 }
 
+/* Handle — área draggable de 6px com linha visual de 1px no centro.
+   A área maior (6px) é o que captura pointer events; a linha fina
+   (via ::before) é só visual. Hover/focus pinta a linha em accent. */
 .ds-resizable-handle {
   flex-shrink: 0;
-  background: var(--rule-soft);
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: transparent;
+  outline: none;
   transition: background var(--dur-fast) var(--ease);
-  cursor: col-resize;
 }
 .ds-resizable.orientation-horizontal .ds-resizable-handle {
-  width: 1px;
+  width: 6px;
   cursor: col-resize;
 }
 .ds-resizable.orientation-vertical .ds-resizable-handle {
-  height: 1px;
+  height: 6px;
   cursor: row-resize;
 }
-.ds-resizable-handle:hover,
-.ds-resizable-handle:focus-visible {
-  background: var(--accent);
-  outline: none;
-}
-/* Grip — pequeno indicador no centro do handle, aparece no hover */
-.ds-resizable-handle-grip {
-  position: absolute;
-  background: var(--accent);
-  opacity: 0;
-  transition: opacity var(--dur-fast) var(--ease);
-}
-.ds-resizable.orientation-horizontal .ds-resizable-handle-grip {
-  width: 3px;
-  height: 32px;
-  left: -1px;
-}
-.ds-resizable.orientation-vertical .ds-resizable-handle-grip {
-  width: 32px;
-  height: 3px;
-  top: -1px;
-}
-.ds-resizable-handle:hover .ds-resizable-handle-grip,
-.ds-resizable-handle:focus-visible .ds-resizable-handle-grip {
-  opacity: 1;
-}
-/* Hit area maior pra facilitar agarrar (sem alterar visual) */
+/* Linha visual de 1px no meio do handle */
 .ds-resizable-handle::before {
   content: "";
   position: absolute;
-  inset: -4px;
+  background: var(--rule-soft);
+  transition: background var(--dur-fast) var(--ease);
+}
+.ds-resizable.orientation-horizontal .ds-resizable-handle::before {
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  transform: translateX(-50%);
+}
+.ds-resizable.orientation-vertical .ds-resizable-handle::before {
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  transform: translateY(-50%);
+}
+.ds-resizable-handle:hover::before,
+.ds-resizable-handle:focus-visible::before {
+  background: var(--accent);
+}
+.ds-resizable.orientation-horizontal .ds-resizable-handle:hover::before,
+.ds-resizable.orientation-horizontal .ds-resizable-handle:focus-visible::before {
+  width: 2px;
+}
+.ds-resizable.orientation-vertical .ds-resizable-handle:hover::before,
+.ds-resizable.orientation-vertical .ds-resizable-handle:focus-visible::before {
+  height: 2px;
+}
+/* Grip — barra mais larga em accent, aparece no hover/focus */
+.ds-resizable-handle-grip {
+  position: relative;
+  background: var(--accent);
+  opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease);
+  z-index: 1;
+}
+.ds-resizable.orientation-horizontal .ds-resizable-handle-grip {
+  width: 4px;
+  height: 32px;
+}
+.ds-resizable.orientation-vertical .ds-resizable-handle-grip {
+  width: 32px;
+  height: 4px;
+}
+.ds-resizable-handle:hover .ds-resizable-handle-grip,
+.ds-resizable-handle:focus-visible .ds-resizable-handle-grip,
+.ds-resizable-handle:active .ds-resizable-handle-grip {
+  opacity: 1;
 }
 
 /* ----------------------------------------------------------------
