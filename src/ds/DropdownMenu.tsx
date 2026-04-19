@@ -1,14 +1,11 @@
 import {
-  cloneElement,
   createContext,
-  isValidElement,
   useCallback,
   useContext,
   useEffect,
   useRef,
   useState,
   type KeyboardEvent,
-  type ReactElement,
   type ReactNode,
 } from "react";
 import {
@@ -96,16 +93,14 @@ export function DropdownMenu({
 }
 
 export interface DropdownMenuTriggerProps {
-  children: ReactElement;
+  children: ReactNode;
 }
 
 export function DropdownMenuTrigger({ children }: DropdownMenuTriggerProps) {
-  if (!isValidElement(children)) return <>{children}</>;
-  // Trocar aria-haspopup pra "menu" (semântica mais precisa)
-  const cloned = cloneElement(children, {
-    "aria-haspopup": "menu",
-  } as any);
-  return <PopoverTrigger>{cloned}</PopoverTrigger>;
+  // Apenas delega pro PopoverTrigger — que faz o wrapping em span
+  // transparente. A semântica aria="menu" do trigger pode ser
+  // colocada no Button real pelo consumidor se necessário.
+  return <PopoverTrigger>{children}</PopoverTrigger>;
 }
 
 /* ----------------------------------------------------------------

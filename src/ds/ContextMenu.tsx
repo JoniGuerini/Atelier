@@ -1,15 +1,11 @@
 import {
-  cloneElement,
   createContext,
-  isValidElement,
   useCallback,
   useContext,
   useEffect,
   useRef,
   useState,
   type KeyboardEvent,
-  type MouseEvent,
-  type ReactElement,
   type ReactNode,
 } from "react";
 
@@ -103,43 +99,44 @@ export function ContextMenu({ children }: ContextMenuProps) {
 }
 
 /* ----------------------------------------------------------------
-   Trigger — clona o filho e injeta onContextMenu.
-   Aceita também tecla Menu / Shift+F10 pra abrir no centro.
+   Trigger — wrapper transparente (display: contents) que captura
+   o onContextMenu (right-click) e teclas Shift+F10 / Menu.
+   Funciona com qualquer ReactNode, sem exigir forwardRef no filho.
 ---------------------------------------------------------------- */
 export interface ContextMenuTriggerProps {
-  children: ReactElement;
+  children: ReactNode;
 }
 
 export function ContextMenuTrigger({ children }: ContextMenuTriggerProps) {
   const { setOpen, setCoords } = useCtxMenu("ContextMenuTrigger");
 
-  if (!isValidElement(children)) return <>{children}</>;
-  const childProps = (children.props || {}) as any;
-
-  return cloneElement(children, {
-    onContextMenu: (e: MouseEvent) => {
-      childProps.onContextMenu?.(e);
-      if (e.defaultPrevented) return;
-      e.preventDefault();
-      setCoords({ x: e.clientX, y: e.clientY });
-      setOpen(true);
-    },
-    onKeyDown: (e: KeyboardEvent) => {
-      childProps.onKeyDown?.(e);
-      if (e.defaultPrevented) return;
-      // ContextMenu key (geralmente "ContextMenu") OU Shift+F10 abrem
-      // no centro do elemento — convenção do Windows / acessibilidade
-      if (e.key === "ContextMenu" || (e.shiftKey && e.key === "F10")) {
+  return (
+    <span
+      style={{ display: "contents" }}
+      onContextMenu={(e) => {
+        if (e.defaultPrevented) return;
         e.preventDefault();
-        const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
-        setCoords({
-          x: rect.left + rect.width / 2,
-          y: rect.top + rect.height / 2,
-        });
+        setCoords({ x: e.clientX, y: e.clientY });
         setOpen(true);
-      }
-    },
-  } as any);
+      }}
+      onKeyDown={(e) => {
+        if (e.defaultPrevented) return;
+        // tecla ContextMenu ou Shift+F10 → abre no centro do filho
+        if (e.key === "ContextMenu" || (e.shiftKey && e.key === "F10")) {
+          e.preventDefault();
+          const target = e.currentTarget.firstElementChild as HTMLElement | null;
+          const rect = (target ?? e.currentTarget).getBoundingClientRect();
+          setCoords({
+            x: rect.left + rect.width / 2,
+            y: rect.top + rect.height / 2,
+          });
+          setOpen(true);
+        }
+      }}
+    >
+      {children}
+    </span>
+  );
 }
 
 /* ----------------------------------------------------------------

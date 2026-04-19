@@ -1,7 +1,5 @@
 import {
-  cloneElement,
   createContext,
-  isValidElement,
   useCallback,
   useContext,
   useEffect,
@@ -9,7 +7,6 @@ import {
   useLayoutEffect,
   useRef,
   useState,
-  type ReactElement,
   type ReactNode,
 } from "react";
 
@@ -122,12 +119,19 @@ export function Popover({
 }
 
 /* ----------------------------------------------------------------
-   PopoverTrigger — clona o filho e injeta os handlers.
-   Aceita qualquer elemento focável (Button, a, etc.).
+   PopoverTrigger — envolve o filho num wrapper transparente
+   (display: contents) que captura o ref e o onClick. Funciona com
+   QUALQUER ReactNode (Button do DS, <button> nativo, <a>, <div>),
+   sem exigir que o componente filho use forwardRef.
+
+   O wrapper "desaparece" do layout (display: contents), então
+   visualmente é como se o filho estivesse no lugar — mas temos
+   um nó DOM real para fazer getBoundingClientRect e attachar
+   handlers.
 ---------------------------------------------------------------- */
 export interface PopoverTriggerProps {
-  children: ReactElement;
-  /** Se true, o trigger não dispara abertura (útil em controlado). */
+  children: ReactNode;
+  /** Reservado para futura compat com Slot pattern do shadcn. */
   asChild?: boolean;
 }
 
@@ -136,28 +140,28 @@ export function PopoverTrigger({ children }: PopoverTriggerProps) {
     "PopoverTrigger",
   );
 
-  if (!isValidElement(children)) {
-    return <>{children}</>;
-  }
-
-  const childProps = (children.props || {}) as any;
-
-  return cloneElement(children, {
-    ref: (node: HTMLElement | null) => {
-      triggerRef.current = node;
-      // Forward ref se o filho tinha
-      const orig = (children as any).ref;
-      if (typeof orig === "function") orig(node);
-      else if (orig && typeof orig === "object") orig.current = node;
-    },
-    onClick: (e: React.MouseEvent) => {
-      childProps.onClick?.(e);
-      if (!e.defaultPrevented) setOpen(!open);
-    },
-    "aria-haspopup": childProps["aria-haspopup"] ?? "dialog",
-    "aria-expanded": open,
-    "aria-controls": open ? contentId : undefined,
-  } as any);
+  return (
+    <span
+      ref={(node: HTMLSpanElement | null) => {
+        // Pegamos o PRIMEIRO filho real do wrapper (que é o button/a/etc)
+        // pra ancorar o popover. Se não houver children DOM, usamos o
+        // próprio span (que tem rect 0x0 — fallback inerte).
+        triggerRef.current = (node?.firstElementChild as HTMLElement) ?? node;
+      }}
+      style={{ display: "contents" }}
+      onClick={(e) => {
+        if (!e.defaultPrevented) setOpen(!open);
+      }}
+      // Atributos a11y vão num wrapper invisível — nem ideal nem
+      // catastrófico. O child real geralmente já tem aria semantics
+      // próprias; estes só são usados por screen readers como dica.
+      aria-haspopup="dialog"
+      aria-expanded={open}
+      aria-controls={open ? contentId : undefined}
+    >
+      {children}
+    </span>
+  );
 }
 
 /* ----------------------------------------------------------------
