@@ -233,9 +233,14 @@ const API = [
     props: [
       ["value", "string (controlled)", "—"],
       ["onChange", "(value) => void", "—"],
+      ["variant", "'underline' | 'enclosed' | 'pills' | 'segmented' | 'minimal'", "'underline'"],
+      ["orientation", "'horizontal' | 'vertical'", "'horizontal'"],
+      ["Tab glyph", "ReactNode (símbolo opcional antes do label)", "—"],
+      ["Tab count", "number | string (badge depois do label)", "—"],
     ],
     code: `const [tab, setTab] = useState("a");
 
+{/* Default — underline */}
 <Tabs value={tab} onChange={setTab}>
   <TabList>
     <Tab value="a">Foundations</Tab>
@@ -245,7 +250,19 @@ const API = [
     <TabPanel value="a"><p>...</p></TabPanel>
     <TabPanel value="b"><p>...</p></TabPanel>
   </TabPanels>
-</Tabs>`,
+</Tabs>
+
+{/* Other variants */}
+<Tabs variant="enclosed"  value={tab} onChange={setTab}>…</Tabs>
+<Tabs variant="pills"     value={tab} onChange={setTab}>…</Tabs>
+<Tabs variant="segmented" value={tab} onChange={setTab}>…</Tabs>
+<Tabs variant="minimal"   value={tab} onChange={setTab}>…</Tabs>
+
+{/* Vertical orientation (works with any variant) */}
+<Tabs orientation="vertical" value={tab} onChange={setTab}>…</Tabs>
+
+{/* Tab with glyph + count */}
+<Tab value="a" glyph="§" count={4}>Foundations</Tab>`,
   },
   {
     id: "tables",

@@ -885,13 +885,10 @@ const ptBR = {
       titleA: "As ",
       titleB: "abas",
       metaLabel: "Navegação",
-      meta: "Tabs · Breadcrumbs",
+      meta: "5 variantes · 2 orientações",
       intro:
-        "Abas para alternar visões; trilhas de pão para localizar. Em ambos, a [em]cor vermelha[/em] marca o presente — o resto é silêncio.",
+        "Abas para alternar visões dentro de uma única página. A cor [em]vermelha[/em] marca o presente — o resto é silêncio. Cinco variantes para diferentes níveis de [em]ênfase visual[/em].",
       tabs: {
-        title: "Abas",
-        kicker: ".ds-tabs",
-        caption: "Navegação lateral em uma página",
         foundations: {
           label: "Fundamentos",
           body:
@@ -906,6 +903,57 @@ const ptBR = {
           label: "Padrões",
           body:
             "Como compor instrumentos em peças maiores — formulários, navegações, estados vazios. Receitas, não regras.",
+        },
+      },
+      variants: {
+        underline: {
+          title: "Sublinhado",
+          kicker: "default · canon",
+          desc:
+            "A variante padrão e mais discreta. Linha [em]accent[/em] embaixo do ativo, divisor sutil. Usada nas docs do Atelier inteiro.",
+          caption: "Tabs sublinhadas — fiel ao DNA editorial",
+        },
+        enclosed: {
+          title: "Envolvidas",
+          kicker: "enclosed",
+          desc:
+            "Abas com bordas conectadas ao painel embaixo. Visual de [em]pastas/cadernos[/em] físicos — mais corpóreo, ideal para áreas de configuração.",
+          caption: "Tabs envolvidas — para contextos densos",
+        },
+        pills: {
+          title: "Pílulas",
+          kicker: "pills",
+          desc:
+            "Tab ativo com fundo accent + texto inverso. [em]Ângulos retos[/em] (sem radius) preservam o canon. Ideal para alternar entre poucos modos com forte ênfase.",
+          caption: "Pílulas — ênfase máxima no ativo",
+        },
+        segmented: {
+          title: "Segmentadas",
+          kicker: "segmented",
+          desc:
+            "Todos os tabs em uma [em]caixa única[/em], divididos por linhas internas. Mesma linguagem do ThemeToggle e NavModeToggle. Para 2-4 opções de mesma importância.",
+          caption: "Segmented control — visual de toggle",
+        },
+        minimal: {
+          title: "Mínimas",
+          kicker: "minimal",
+          desc:
+            "Só texto. O ativo se distingue pela [em]cor accent[/em] e peso ligeiramente mais firme. Para listas longas onde os indicadores visuais distrairiam.",
+          caption: "Mínimas — silêncio absoluto",
+        },
+        vertical: {
+          title: "Orientação vertical",
+          kicker: "orientation=\"vertical\"",
+          desc:
+            "TabList vira coluna na esquerda; o painel ocupa a direita. Funciona com [em]qualquer variante[/em] — útil em painéis de configuração e sub-páginas.",
+          caption: "Tabs verticais — sidebar interna",
+        },
+        extras: {
+          title: "Glifos e contadores",
+          kicker: "glyph + count",
+          desc:
+            "Cada Tab aceita opcionalmente um [em]glyph[/em] (símbolo serifado antes do label) e um [em]count[/em] (badge mono depois). Use com parcimônia.",
+          caption: "Tabs com glifo e contador",
         },
       },
     },

@@ -832,13 +832,10 @@ const en = {
       titleA: "The ",
       titleB: "tabs",
       metaLabel: "Navigation",
-      meta: "Tabs · Breadcrumbs",
+      meta: "5 variants · 2 orientations",
       intro:
-        "Tabs to switch views; breadcrumbs to locate. In both, the [em]red color[/em] marks the present — the rest is silence.",
+        "Tabs to switch views inside a single page. The [em]red color[/em] marks the present — the rest is silence. Five variants for different levels of [em]visual emphasis[/em].",
       tabs: {
-        title: "Tabs",
-        kicker: ".ds-tabs",
-        caption: "Lateral navigation on a page",
         foundations: {
           label: "Foundations",
           body:
@@ -853,6 +850,57 @@ const en = {
           label: "Patterns",
           body:
             "How to compose instruments into larger pieces — forms, navigations, empty states. Recipes, not rules.",
+        },
+      },
+      variants: {
+        underline: {
+          title: "Underline",
+          kicker: "default · canon",
+          desc:
+            "The default and most discreet variant. [em]Accent[/em] line under the active tab, subtle divider. Used across the entire Atelier docs.",
+          caption: "Underline tabs — true to the editorial DNA",
+        },
+        enclosed: {
+          title: "Enclosed",
+          kicker: "enclosed",
+          desc:
+            "Tabs with borders connected to the panel below. Visual of [em]folders/binders[/em] — more corporeal, ideal for settings areas.",
+          caption: "Enclosed tabs — for dense contexts",
+        },
+        pills: {
+          title: "Pills",
+          kicker: "pills",
+          desc:
+            "Active tab with accent background + inverse text. [em]Right angles[/em] (no radius) preserve the canon. Best for switching between a few modes with strong emphasis.",
+          caption: "Pills — maximum emphasis on the active tab",
+        },
+        segmented: {
+          title: "Segmented",
+          kicker: "segmented",
+          desc:
+            "All tabs in a [em]single box[/em], split by inner lines. Same language as ThemeToggle and NavModeToggle. For 2-4 options of equal importance.",
+          caption: "Segmented control — toggle visual",
+        },
+        minimal: {
+          title: "Minimal",
+          kicker: "minimal",
+          desc:
+            "Text only. The active tab is set apart by [em]accent color[/em] and slightly firmer weight. For long lists where visual indicators would distract.",
+          caption: "Minimal — absolute silence",
+        },
+        vertical: {
+          title: "Vertical orientation",
+          kicker: "orientation=\"vertical\"",
+          desc:
+            "TabList becomes a left column; the panel takes the right. Works with [em]any variant[/em] — useful in settings panels and sub-pages.",
+          caption: "Vertical tabs — internal sidebar",
+        },
+        extras: {
+          title: "Glyphs and counts",
+          kicker: "glyph + count",
+          desc:
+            "Each Tab optionally accepts a [em]glyph[/em] (serif symbol before the label) and a [em]count[/em] (mono badge after). Use sparingly.",
+          caption: "Tabs with glyph and count",
         },
       },
     },

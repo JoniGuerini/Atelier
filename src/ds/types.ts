@@ -117,15 +117,26 @@ export interface CardProps {
 }
 
 /* ----------------- Tabs ----------------- */
+export type TabsVariant =
+  | "underline"
+  | "enclosed"
+  | "pills"
+  | "segmented"
+  | "minimal";
+export type TabsOrientation = "horizontal" | "vertical";
 export interface TabsProps {
   value: string;
   onChange: (value: string) => void;
   children?: ReactNode;
   className?: string;
+  variant?: TabsVariant;
+  orientation?: TabsOrientation;
 }
 export interface TabProps {
   value: string;
   children?: ReactNode;
+  glyph?: ReactNode;
+  count?: number | string;
 }
 export interface TabPanelProps {
   value: string;
