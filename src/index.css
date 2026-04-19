@@ -6202,11 +6202,17 @@ input[type="file"] { display: none; }
   border: 1px solid var(--rule-soft);
   overflow: hidden;
 }
+/* Cada um dos 3 wrappers ganha borda explícita pra delimitar visualmente
+   as 3 áreas. As bordas se sobrepõem com a do container (.ds-junction)
+   e nos handles — mas como são todas 1px na mesma cor, o resultado é
+   uma linha contínua. Em dark mode o contraste --bg/--bg-panel sozinho
+   não dá conta; a borda resolve. */
 .ds-junction-left {
   overflow: auto;
   min-width: 0;
   min-height: 0;
   flex-shrink: 0;
+  border: 1px solid var(--rule-soft);
 }
 .ds-junction-right {
   flex: 1;
@@ -6220,12 +6226,14 @@ input[type="file"] { display: none; }
   min-width: 0;
   min-height: 0;
   flex-shrink: 0;
+  border: 1px solid var(--rule-soft);
 }
 .ds-junction-bottom {
   flex: 1;
   overflow: auto;
   min-width: 0;
   min-height: 0;
+  border: 1px solid var(--rule-soft);
 }
 
 /* Linha de divisão (handle horizontal) DENTRO da coluna direita —
