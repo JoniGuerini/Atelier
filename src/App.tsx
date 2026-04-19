@@ -68,6 +68,8 @@ import DrawerPage from "./pages/DrawerPage.tsx";
 import ToasterPage from "./pages/ToasterPage.tsx";
 import ComboboxPage from "./pages/ComboboxPage.tsx";
 import RangeSliderPage from "./pages/RangeSliderPage.tsx";
+import CalendarPage from "./pages/CalendarPage.tsx";
+import DatePickerPage from "./pages/DatePickerPage.tsx";
 import { Toaster } from "./ds/Toaster.tsx";
 
 const PAGES = {
@@ -108,6 +110,8 @@ const PAGES = {
   toaster: ToasterPage,
   combobox: ComboboxPage,
   slider: RangeSliderPage,
+  calendar: CalendarPage,
+  "date-picker": DatePickerPage,
 };
 
 const SIDEBAR_KEY = "atelier.sidebarCollapsed";

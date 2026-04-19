@@ -569,6 +569,77 @@ import type { SliderValue, SliderOrientation } from "./ds/types";`,
 <RangeSlider orientation="vertical" size={200} … />`,
   },
   {
+    id: "calendar",
+    name: "Calendar",
+    route: "calendar",
+    imports: `import { Calendar, type CalendarRange } from "./ds/Calendar";
+import { addDays, today, type DateFormat } from "./ds/calendarUtils";`,
+    props: [
+      ["mode", "'single' | 'range' | 'multiple'", "'single'"],
+      ["value", "Date | null (single) | [start, end] (range) | Date[] (multi)", "—"],
+      ["onChange", "(value) => void", "—"],
+      ["minDate / maxDate", "Date — limites navegáveis", "—"],
+      ["disabledDays", "(date: Date) => boolean — predicado custom", "—"],
+      ["weekStartsOn", "0 (domingo) | 1 (segunda)", "0"],
+      ["showTodayButton", "boolean", "true"],
+      ["defaultMonth", "Date — mês inicial visível", "today"],
+    ],
+    code: `// Single
+const [date, setDate] = useState<Date | null>(today());
+<Calendar value={date} onChange={setDate} />
+
+// Range
+const [range, setRange] = useState<CalendarRange>([null, null]);
+<Calendar mode="range" value={range} onChange={setRange} />
+
+// Multiple
+const [dates, setDates] = useState<Date[]>([]);
+<Calendar mode="multiple" value={dates} onChange={setDates} />
+
+// Bounded + custom disabled
+<Calendar
+  value={date}
+  onChange={setDate}
+  minDate={today()}
+  maxDate={addDays(today(), 60)}
+  disabledDays={(d) => d.getDay() === 0 || d.getDay() === 6}
+/>`,
+  },
+  {
+    id: "datePicker",
+    name: "DatePicker · DateRangePicker",
+    route: "date-picker",
+    imports: `import { DatePicker, DateRangePicker } from "./ds/DatePicker";
+import { formatDate, parseDate, type DateFormat } from "./ds/calendarUtils";`,
+    props: [
+      ["value", "Date | null (DatePicker) | CalendarRange (DateRangePicker)", "—"],
+      ["onChange", "(value) => void", "—"],
+      ["format", "'DD/MM/YYYY' | 'MM/DD/YYYY' | 'YYYY-MM-DD'", "'DD/MM/YYYY'"],
+      ["minDate / maxDate / disabledDays / weekStartsOn", "como Calendar", "—"],
+      ["placement", "PopoverPlacement", "'bottom-start'"],
+      ["placeholder / disabled / id / ariaLabel", "input attrs", "—"],
+    ],
+    code: `// Single date com input mascarado
+const [date, setDate] = useState<Date | null>(null);
+<DatePicker value={date} onChange={setDate} />
+
+// Formato ISO
+<DatePicker value={date} onChange={setDate} format="YYYY-MM-DD" />
+
+// Range — 2 calendars side-by-side
+const [range, setRange] = useState<CalendarRange>([null, null]);
+<DateRangePicker value={range} onChange={setRange} />
+
+// Bounded
+<DatePicker
+  value={date}
+  onChange={setDate}
+  minDate={today()}
+  maxDate={addDays(today(), 60)}
+  disabledDays={(d) => d.getDay() === 0 || d.getDay() === 6}
+/>`,
+  },
+  {
     id: "contextMenu",
     name: "ContextMenu family",
     route: "context-menu",

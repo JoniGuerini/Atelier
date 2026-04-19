@@ -454,6 +454,34 @@ export interface ContextMenuItemProps {
   disabled?: boolean;
 }
 
+/* ----------------- Calendar / DatePicker ----------------- */
+export type CalendarMode = "single" | "range" | "multiple";
+export type CalendarRange = [Date | null, Date | null];
+export type DateFormat = "DD/MM/YYYY" | "MM/DD/YYYY" | "YYYY-MM-DD";
+export interface CalendarCommonProps {
+  defaultMonth?: Date;
+  minDate?: Date;
+  maxDate?: Date;
+  disabledDays?: (date: Date) => boolean;
+  weekStartsOn?: 0 | 1;
+  showTodayButton?: boolean;
+  className?: string;
+  ariaLabel?: string;
+}
+export interface DatePickerCommonProps {
+  placeholder?: string;
+  disabled?: boolean;
+  minDate?: Date;
+  maxDate?: Date;
+  disabledDays?: (date: Date) => boolean;
+  weekStartsOn?: 0 | 1;
+  format?: DateFormat;
+  width?: number | string;
+  id?: string;
+  className?: string;
+  ariaLabel?: string;
+}
+
 /* ----------------- Combobox ----------------- */
 export type ComboboxOption = {
   value: string;

@@ -88,6 +88,8 @@ const ptBR = {
       toaster: "Toaster",
       combobox: "Combobox",
       slider: "Range Slider",
+      calendar: "Calendar",
+      datePicker: "Date Picker",
       forms: "Formulários",
       stepper: "Stepper",
       emptyStates: "Estados vazios",
@@ -127,6 +129,8 @@ const ptBR = {
       toaster: "Sistema de notificações com queue, auto-dismiss e cinco variantes semânticas.",
       combobox: "Select com input de busca em tempo real, multi-select, grupos e teclado completo.",
       slider: "Slider numérico com 1 ou 2 handles, marks, vertical e suporte total a teclado.",
+      calendar: "View de mês com seleção single, range ou multiple — lógica de datas em JS puro.",
+      datePicker: "Input mascarado + Calendar em popover; inclui DateRangePicker com 2 meses.",
       forms: "Composição completa: campos, divisores e ações.",
       stepper: "Indicador de progresso multi-etapa para forms longos.",
       emptyStates: "Convites, não derrotas — espaço com intenção.",
@@ -170,6 +174,14 @@ const ptBR = {
     },
     breadcrumbs: {
       label: "Trilha de navegação",
+    },
+    calendar: {
+      prev: "Mês anterior",
+      next: "Próximo mês",
+      today: "Hoje",
+      openPicker: "Abrir calendário",
+      rangeStart: "Início do intervalo",
+      rangeEnd: "Fim do intervalo",
     },
   },
 
@@ -1751,9 +1763,127 @@ const ptBR = {
       },
     },
 
+    /* ------------- Calendar ------------- */
+    calendar: {
+      lead: "Avançado · 29",
+      titleA: "O ",
+      titleB: "calendar",
+      metaLabel: "Datas",
+      meta: "Single · range · multiple · keyboard",
+      intro:
+        "View de mês inteiro com [em]seleção configurável[/em] (single, range ou multiple). Lógica de datas escrita em JS puro — [em]sem date-fns[/em], sem timezones, sem libs externas. Suporta min/max date, [em]disabledDays[/em] (predicado custom), e navegação completa por teclado.",
+      single: {
+        title: "Single — uma data",
+        kicker: "default",
+        desc:
+          "Modo padrão. Click ou Enter selecionam a data; click numa data já selecionada deseleciona ela.",
+        caption: "Calendar single",
+        label: "Calendário (single)",
+      },
+      range: {
+        title: "Range — intervalo",
+        kicker: "mode=range",
+        desc:
+          "Primeiro click define o início; segundo, o fim. Entre os dois clicks, o hover desenha o [em]preview[/em] do intervalo. Após o segundo click, o range fica definido até o user iniciar um novo.",
+        caption: "Calendar range",
+        label: "Calendário (range)",
+      },
+      multiple: {
+        title: "Multiple — várias datas",
+        kicker: "mode=multiple",
+        desc:
+          "Cada click adiciona ou remove uma data. Útil para [em]agendas[/em], dias com eventos, datas comemorativas etc.",
+        caption: "Calendar multiple — {n} datas selecionadas",
+        label: "Calendário (multiple)",
+      },
+      minmax: {
+        title: "Min / max date",
+        kicker: "navegação limitada",
+        desc:
+          "Limita o range navegável. Datas fora do intervalo aparecem [em]riscadas[/em] e não respondem a click. Aqui: hoje até daqui 30 dias.",
+        caption: "Calendar com janela de 30 dias",
+        label: "Calendário com min/max",
+      },
+      disabled: {
+        title: "Dias desabilitados (custom)",
+        kicker: "disabledDays",
+        desc:
+          "Função [em](date) => boolean[/em] permite qualquer regra. Aqui, sábados e domingos ficam bloqueados.",
+        caption: "Sem fins de semana",
+        label: "Calendário sem fins de semana",
+      },
+      composition: {
+        title: "API",
+        titleB: "",
+        kicker: "uma única tag",
+        caption:
+          "Calendar é uma [em]única tag[/em]. Mode é configurado por prop; sem subcomponentes.",
+      },
+    },
+
+    /* ------------- DatePicker ------------- */
+    datePicker: {
+      lead: "Avançado · 30",
+      titleA: "O ",
+      titleB: "date picker",
+      metaLabel: "Date input",
+      meta: "Input mascarado + Calendar em popover",
+      intro:
+        "[em]Input com máscara automática[/em] (DD/MM/AAAA) combinado com um Calendar dentro de Popover. O usuário pode digitar manualmente OU clicar pra abrir o calendar visual. Inclui [em]DateRangePicker[/em] com dois meses lado a lado.",
+      basic: {
+        title: "Single — uso básico",
+        kicker: "DatePicker",
+        desc:
+          "Digite DDMMAAAA — as barras aparecem sozinhas. Tab/Enter confirma; Esc cancela. Click no ícone abre o Calendar pra navegar visualmente.",
+        caption: "Date picker padrão",
+        field: "Data de nascimento",
+      },
+      format: {
+        title: "Formato customizado",
+        kicker: "format prop",
+        desc:
+          "Suporta [em]DD/MM/AAAA[/em] (default), [em]MM/DD/AAAA[/em] (en-US) e [em]AAAA-MM-DD[/em] (ISO). A máscara, parse e display ajustam-se automaticamente.",
+        caption: "Formato ISO",
+        field: "Data ISO",
+      },
+      bounded: {
+        title: "Min/max + dias bloqueados",
+        kicker: "minDate · maxDate · disabledDays",
+        desc:
+          "As mesmas restrições do Calendar aplicam-se ao DatePicker — incluindo validação no [em]parse manual[/em]. Aqui, próximos 60 dias úteis (sem fins de semana).",
+        caption: "Janela de 60 dias úteis",
+        field: "Agendar reunião",
+        hint: "Próximos 60 dias, sem fins de semana.",
+      },
+      range: {
+        title: "Range picker",
+        kicker: "DateRangePicker",
+        desc:
+          "Input duplo (start → end) com [em]dois calendars side-by-side[/em] no popover. Navegação independente entre os dois meses; quando se completa o range, o popover fecha automaticamente.",
+        caption: "Date range picker vazio",
+        field: "Período",
+      },
+      booked: {
+        title: "Range pré-preenchido",
+        kicker: "estado inicial",
+        desc:
+          "Range com valor inicial preenchido. O popover abre já posicionado nas datas atuais, e o user pode arrastar para um novo intervalo.",
+        caption: "Reserva de hospedagem",
+        field: "Datas da estadia",
+        hint: "Valor inicial: hoje + 4 dias.",
+      },
+      composition: {
+        title: "API",
+        titleB: "",
+        kicker: "DatePicker · DateRangePicker",
+        caption:
+          "Dois componentes irmãos. [em]DatePicker[/em] aceita uma data única; [em]DateRangePicker[/em] aceita um par [start, end].",
+      },
+    },
+
     /* ------------- Forms ------------- */
     forms: {
-      lead: "Padrão · 29",
+      lead: "Padrão · 31",
       titleA: "Os ",
       titleB: "formulários",
       metaLabel: "Composição",
@@ -1794,7 +1924,7 @@ const ptBR = {
 
     /* ------------- Stepper ------------- */
     stepper: {
-      lead: "Padrão · 30",
+      lead: "Padrão · 32",
       titleA: "O ",
       titleB: "stepper",
       metaLabel: "Multi-etapa",
@@ -1839,7 +1969,7 @@ const ptBR = {
 
     /* ------------- Empty States ------------- */
     emptyStates: {
-      lead: "Padrão · 31",
+      lead: "Padrão · 33",
       titleA: "Os ",
       titleB: "vazios",
       metaLabel: "Sem conteúdo",
@@ -1890,7 +2020,7 @@ const ptBR = {
 
     /* ------------- Sidebar (pattern) ------------- */
     sidebar: {
-      lead: "Padrão · 32",
+      lead: "Padrão · 34",
       titleA: "A ",
       titleB: "sidebar",
       metaLabel: "Navegação",
@@ -1990,7 +2120,7 @@ const ptBR = {
 
     /* ------------- Navbar (pattern) ------------- */
     navbar: {
-      lead: "Padrão · 33",
+      lead: "Padrão · 35",
       titleA: "A ",
       titleB: "navbar",
       metaLabel: "Navegação",
@@ -2224,7 +2354,7 @@ const ptBR = {
 
     /* ------------- Accessibility ------------- */
     accessibility: {
-      lead: "Referência · 34",
+      lead: "Referência · 36",
       titleA: "A ",
       titleB: "acessibilidade",
       metaLabel: "Conformidade",

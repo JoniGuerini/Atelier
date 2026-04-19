@@ -61,6 +61,8 @@ const COMPONENTS = [
   { id: "toaster",     label: "Toaster",     route: "toaster",     keywords: ["toast", "notification", "notificação", "queue", "snackbar"] },
   { id: "combobox",    label: "Combobox",    route: "combobox",    keywords: ["autocomplete", "select", "search", "busca", "tags"] },
   { id: "slider",      label: "RangeSlider", route: "slider",      keywords: ["slider", "range", "intervalo", "deslizar", "knob"] },
+  { id: "calendar",    label: "Calendar",    route: "calendar",    keywords: ["data", "date", "mês", "month", "agenda"] },
+  { id: "datePicker",  label: "DatePicker",  route: "date-picker", keywords: ["data", "date input", "range", "intervalo", "calendário"] },
   { id: "a11y",          label: "Accessibility", route: "accessibility", keywords: ["a11y", "acessibilidade", "wcag", "aria", "atalhos", "keyboard", "skip link"] },
   { id: "skip-link",     label: "Skip link",     route: "accessibility", keywords: ["skip", "pular", "teclado"] },
   { id: "keyboard-map",  label: "Keyboard map",  route: "accessibility", keywords: ["atalhos", "teclado", "shortcut"] },
