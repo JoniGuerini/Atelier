@@ -198,6 +198,7 @@ const ptBR = {
     resizable: {
       label: "Painéis redimensionáveis",
       handle: "Divisor",
+      junction: "Junção (move 2 dimensões)",
     },
   },
 
@@ -2056,11 +2057,21 @@ const ptBR = {
         caption: "Sidebar 20% · Conteúdo 60% · Inspector 20%",
         label: "Layout de três colunas",
       },
+      junction: {
+        title: "Junction handle — 3 áreas com handle de cruz",
+        kicker: "ResizableJunction",
+        desc:
+          "[em]Layout L-shape[/em] com [em]três handles[/em]: um vertical externo (One vs direita), um horizontal interno (Two vs Three), e um [em]junction handle[/em] (a cruz no centro) que move [em]os dois eixos simultaneamente[/em]. Padrão usado em editores como Blender/AutoCAD. Drag o quadradinho do meio em qualquer direção pra redimensionar 3 painéis ao mesmo tempo.",
+        caption: "L-shape com junction handle no centro — arraste a cruz",
+        label: "Layout L com junction",
+        body:
+          "Tente arrastar a cruz no centro — ela move os 3 painéis em ambas as dimensões.",
+      },
       nested: {
-        title: "Aninhamento — layout em L",
+        title: "Aninhamento simples (sem junction)",
         kicker: "ResizablePanels dentro de ResizablePanel",
         desc:
-          "Para layouts mais complexos (coluna esquerda inteira + coluna direita dividida em cima/baixo, padrão de [em]editores[/em]), basta [em]aninhar[/em] um ResizablePanels dentro de um ResizablePanel. Cada nível tem seu próprio handle independente. Suporta qualquer profundidade.",
+          "Caso prefira [em]handles independentes[/em] (sem junction handle), basta [em]aninhar[/em] um ResizablePanels dentro de um ResizablePanel. Cada nível tem seu próprio handle separado. Suporta qualquer profundidade.",
         caption: "Layout em L — One ocupa a esquerda, Two/Three dividem a direita",
         label: "Layout em L",
         innerLabel: "Coluna direita (Two/Three)",

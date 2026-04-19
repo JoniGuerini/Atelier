@@ -8,6 +8,7 @@ import {
   ResizablePanels,
   ResizablePanel,
 } from "../ds/ResizablePanels.tsx";
+import { ResizableJunction } from "../ds/ResizableJunction.tsx";
 import { useT } from "../lib/i18n.tsx";
 
 function FakePanel({
@@ -177,9 +178,57 @@ export default function ResizablePage() {
         </Example>
       </Section>
 
-      {/* iv · Aninhamento */}
+      {/* iv · Junction handle (3 áreas com handle de junção) */}
       <Section
         num="iv"
+        title={<>{t("pages.resizable.junction.title")}</>}
+        kicker={t("pages.resizable.junction.kicker")}
+      >
+        <p className="section-desc">{tr("pages.resizable.junction.desc")}</p>
+        <Example
+          caption={t("pages.resizable.junction.caption")}
+          tech="junction handle"
+          stack
+          code={`<ResizableJunction
+  defaultHorizontal={50}
+  defaultVertical={50}
+>
+  <ResizablePanel>One</ResizablePanel>      {/* coluna esquerda */}
+  <ResizablePanel>Two</ResizablePanel>      {/* topo direita */}
+  <ResizablePanel>Three</ResizablePanel>    {/* base direita */}
+</ResizableJunction>`}
+        >
+          <div style={{ height: 360, width: "100%" }}>
+            <ResizableJunction
+              defaultHorizontal={50}
+              defaultVertical={50}
+              ariaLabel={t("pages.resizable.junction.label")}
+            >
+              <ResizablePanel>
+                <FakePanel bg="var(--bg-panel)">
+                  <strong>{t("pages.resizable.labels.one")}</strong>
+                  <br />
+                  {t("pages.resizable.junction.body")}
+                </FakePanel>
+              </ResizablePanel>
+              <ResizablePanel>
+                <FakePanel bg="var(--bg-sunken)">
+                  <strong>{t("pages.resizable.labels.two")}</strong>
+                </FakePanel>
+              </ResizablePanel>
+              <ResizablePanel>
+                <FakePanel bg="var(--bg)">
+                  <strong>{t("pages.resizable.labels.three")}</strong>
+                </FakePanel>
+              </ResizablePanel>
+            </ResizableJunction>
+          </div>
+        </Example>
+      </Section>
+
+      {/* v · Aninhamento simples (sem junction) */}
+      <Section
+        num="v"
         title={<>{t("pages.resizable.nested.title")}</>}
         kicker={t("pages.resizable.nested.kicker")}
       >
@@ -210,8 +259,6 @@ export default function ResizablePage() {
                 </FakePanel>
               </ResizablePanel>
               <ResizablePanel>
-                {/* Aninhamento: dentro do painel direito vive um
-                    ResizablePanels vertical com Two (topo) + Three (base). */}
                 <ResizablePanels
                   orientation="vertical"
                   defaultSizes={[50, 50]}
@@ -234,9 +281,9 @@ export default function ResizablePage() {
         </Example>
       </Section>
 
-      {/* v · Persistência */}
+      {/* vi · Persistência */}
       <Section
-        num="v"
+        num="vi"
         title={<>{t("pages.resizable.persist.title")}</>}
         kicker={t("pages.resizable.persist.kicker")}
       >
@@ -278,9 +325,9 @@ export default function ResizablePage() {
       </Section>
 
       <CompositionSection
-        num="vi"
+        num="vii"
         i18nPrefix="pages.resizable.composition"
-        root="ResizablePanels"
+        root="ResizablePanels · ResizableJunction"
         nodes={[{ name: "ResizablePanel" }]}
       />
     </>

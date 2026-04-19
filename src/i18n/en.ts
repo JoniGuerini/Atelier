@@ -198,6 +198,7 @@ const en = {
     resizable: {
       label: "Resizable panels",
       handle: "Handle",
+      junction: "Junction (moves 2 dimensions)",
     },
   },
 
@@ -1995,11 +1996,21 @@ const en = {
         caption: "Sidebar 20% · Content 60% · Inspector 20%",
         label: "Three-column layout",
       },
+      junction: {
+        title: "Junction handle — 3 areas with crosshair handle",
+        kicker: "ResizableJunction",
+        desc:
+          "[em]L-shape layout[/em] with [em]three handles[/em]: an outer vertical (One vs right), an inner horizontal (Two vs Three), and a [em]junction handle[/em] (the crosshair in the middle) that moves [em]both axes simultaneously[/em]. Pattern used in editors like Blender/AutoCAD. Drag the small square in the center in any direction to resize 3 panels at once.",
+        caption: "L-shape with junction handle in the middle — drag the crosshair",
+        label: "L layout with junction",
+        body:
+          "Try dragging the crosshair in the center — it moves all 3 panels in both dimensions.",
+      },
       nested: {
-        title: "Nesting — L-shaped layout",
+        title: "Simple nesting (no junction)",
         kicker: "ResizablePanels inside ResizablePanel",
         desc:
-          "For more complex layouts (full left column + right column split top/bottom, the [em]classic editor pattern[/em]), just [em]nest[/em] a ResizablePanels inside a ResizablePanel. Each level has its own independent handle. Supports any depth.",
+          "If you prefer [em]independent handles[/em] (no junction handle), just [em]nest[/em] a ResizablePanels inside a ResizablePanel. Each level has its own separate handle. Supports any depth.",
         caption: "L-shape — One on the left, Two/Three split the right",
         label: "L-shaped layout",
         innerLabel: "Right column (Two/Three)",

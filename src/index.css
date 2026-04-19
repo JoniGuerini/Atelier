@@ -6176,6 +6176,129 @@ input[type="file"] { display: none; }
   opacity: 1;
 }
 
+/* ================================================================
+   ResizableJunction — layout L-shape (3 painéis) com junction
+   handle no centro que move 2 dimensões simultâneas.
+================================================================ */
+.ds-junction {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background: var(--bg-panel);
+  border: 1px solid var(--rule-soft);
+  overflow: hidden;
+}
+.ds-junction-left {
+  overflow: auto;
+  min-width: 0;
+  min-height: 0;
+  flex-shrink: 0;
+}
+.ds-junction-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+.ds-junction-top {
+  overflow: auto;
+  min-width: 0;
+  min-height: 0;
+  flex-shrink: 0;
+}
+.ds-junction-bottom {
+  flex: 1;
+  overflow: auto;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* Linha de divisão (handle horizontal) DENTRO da coluna direita —
+   muda cursor para row-resize. */
+.ds-junction-row-handle {
+  cursor: row-resize !important;
+}
+.ds-junction-row-handle::before {
+  top: 50% !important;
+  bottom: auto !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: auto !important;
+  height: 1px !important;
+  transform: none !important;
+}
+.ds-junction-row-handle:hover::before,
+.ds-junction-row-handle:focus-visible::before {
+  height: 2px !important;
+  width: auto !important;
+}
+.ds-junction-row-handle .ds-resizable-handle-grip {
+  width: 32px;
+  height: 4px;
+}
+
+/* JUNCTION HANDLE — quadrado pequeno na encruzilhada das 3 áreas.
+   Drag em ambos eixos. Visual: pequena cruz "+" centralizada. */
+.ds-junction-handle {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  z-index: 10;
+  cursor: move;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-panel);
+  border: 1px solid var(--rule-soft);
+  outline: none;
+  transition: background var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease);
+}
+.ds-junction-handle:hover,
+.ds-junction-handle:focus-visible {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.ds-junction-grip {
+  width: 8px;
+  height: 8px;
+  position: relative;
+}
+/* Cruz "+" desenhada com pseudo-elementos */
+.ds-junction-grip::before,
+.ds-junction-grip::after {
+  content: "";
+  position: absolute;
+  background: var(--ink-faint);
+  transition: background var(--dur-fast) var(--ease);
+}
+.ds-junction-grip::before {
+  /* horizontal */
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  transform: translateY(-0.5px);
+}
+.ds-junction-grip::after {
+  /* vertical */
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  transform: translateX(-0.5px);
+}
+.ds-junction-handle:hover .ds-junction-grip::before,
+.ds-junction-handle:hover .ds-junction-grip::after,
+.ds-junction-handle:focus-visible .ds-junction-grip::before,
+.ds-junction-handle:focus-visible .ds-junction-grip::after,
+.ds-junction-handle:active .ds-junction-grip::before,
+.ds-junction-handle:active .ds-junction-grip::after {
+  background: var(--bg-panel);
+}
+
 /* ----------------------------------------------------------------
    Code page (#/code) — API cards + ADR cards.
 ---------------------------------------------------------------- */
