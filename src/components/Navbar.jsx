@@ -111,8 +111,17 @@ export function NavbarBrand({ target = "overview", children }) {
 }
 
 export function NavbarNav({ ariaLabel = "Primary", children }) {
+  // Os handlers vivem na <nav> inteira (não em cada <li>): sair de
+  // um trigger e atravessar o gap de 4px entre triggers não fecha
+  // mais o painel — só sair da nav inteira fecha.
+  const { cancelClose, scheduleClose } = useMenuState();
   return (
-    <nav className="site-navbar-nav" aria-label={ariaLabel}>
+    <nav
+      className="site-navbar-nav"
+      aria-label={ariaLabel}
+      onMouseEnter={cancelClose}
+      onMouseLeave={scheduleClose}
+    >
       <ul>{children}</ul>
     </nav>
   );
@@ -123,17 +132,18 @@ export function NavbarNav({ ariaLabel = "Primary", children }) {
    `cols` define o layout do painel (1 / 2 / 3). */
 export function NavbarDropdown({ label, active = false, cols = 1, children }) {
   // Chave única para identificar este menu no estado compartilhado.
-  // Usamos a label como chave (estável o suficiente em runtime).
   const keyRef = useRef(`menu-${Math.random().toString(36).slice(2, 9)}`);
   const key = keyRef.current;
-  const { activeKey, open, scheduleClose } = useMenuState();
+  const { activeKey, open } = useMenuState();
   const isOpen = activeKey === key;
 
+  // Note: onMouseLeave NÃO vive aqui — ele vive na <NavbarNav>
+  // inteira, então atravessar o gap entre triggers não fecha o
+  // painel. Só onMouseEnter pra atualizar qual menu está ativo.
   return (
     <li
       className={`nav-menu ${active ? "active" : ""} ${isOpen ? "open" : ""}`}
       onMouseEnter={() => open(key)}
-      onMouseLeave={scheduleClose}
     >
       <button
         type="button"
