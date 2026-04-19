@@ -77,7 +77,11 @@ const en = {
       overlays: "Overlays",
       feedback: "Feedback",
       dropzone: "Dropzone",
+      pagination: "Pagination",
+      breadcrumbs: "Breadcrumbs",
+      skeleton: "Skeleton",
       forms: "Forms",
+      stepper: "Stepper",
       emptyStates: "Empty states",
       sidebar: "Sidebar",
       navbar: "Navbar",
@@ -104,7 +108,11 @@ const en = {
       overlays: "Dialogs and tooltips on top of content.",
       feedback: "Toast and progress — discreet signals.",
       dropzone: "File upload with metadata preview.",
+      pagination: "Paginate lists and tables — prev/next + pages.",
+      breadcrumbs: "A trail showing where the reader is in the site.",
+      skeleton: "Editorial placeholders for loading states.",
       forms: "Full composition: fields, dividers, actions.",
+      stepper: "Multi-step progress indicator for long forms.",
       emptyStates: "Invitations, not defeats — space with intent.",
       sidebar: "Vertical table-of-contents for many-paged sites.",
       navbar: "Horizontal header with hover dropdowns.",
@@ -128,6 +136,19 @@ const en = {
       title: "Settings",
     },
     navLabel: "Primary navigation",
+  },
+
+  /* ============================================================ */
+  /* Labels used internally by DS components (aria-label, etc.) */
+  ds: {
+    pagination: {
+      label: "Pagination",
+      previous: "Previous",
+      next: "Next",
+    },
+    breadcrumbs: {
+      label: "Breadcrumb trail",
+    },
   },
 
   /* ============================================================ */
@@ -1030,8 +1051,122 @@ const en = {
       },
     },
 
+    pagination: {
+      lead: "Component · 19",
+      titleA: "The ",
+      titleB: "pagination",
+      metaLabel: "Long list",
+      meta: "Paginate lists and tables",
+      intro:
+        "Different from [em]PageNav[/em] (which guides the reader between manual chapters), [em]Pagination[/em] lives [em]inside a page[/em] — it slices long lists and tables into comfortable chunks.",
+      default: {
+        title: "Default",
+        kicker: "default",
+        caption: "Prev/next, visible numbers and ellipses to abbreviate when there are many pages.",
+      },
+      labeled: {
+        title: "With labels",
+        kicker: "showLabels",
+        caption: "Shows \"Previous · Next\" as text alongside the arrows — useful in dense interfaces.",
+      },
+      edges: {
+        title: "At the edges",
+        kicker: "first · last",
+        caption: "Behaviour on the first and last page — one of the buttons becomes disabled.",
+      },
+      compact: {
+        title: "Compact",
+        kicker: "siblings=0",
+        caption: "No siblings — saves space in narrow bars.",
+      },
+      composable: {
+        title: "Composable",
+        kicker: "subcomponents",
+        caption:
+          "For special cases (custom labels, different icons), build it by hand with [em]PaginationItem[/em] and friends.",
+      },
+      composition: {
+        title: "Composition",
+        titleB: "tree",
+        kicker: "structure",
+        caption:
+          "Use the [em]composition[/em] below to build pagination by hand.",
+      },
+    },
+
+    breadcrumbs: {
+      lead: "Component · 20",
+      titleA: "The ",
+      titleB: "breadcrumbs",
+      metaLabel: "Location",
+      meta: "Navigation trail",
+      intro:
+        "A discreet trail of [em]where the reader is[/em] in the site map — shows the hierarchical path, separated by a glyph. Used in apps with more than two levels.",
+      short: {
+        title: "Short form",
+        kicker: "items prop",
+        caption: "Pass an array of strings; the last item becomes current automatically.",
+      },
+      separator: {
+        title: "Custom separator",
+        kicker: "separator prop",
+        caption: "Swap the separator glyph to match the project's typographic voice.",
+      },
+      composable: {
+        title: "Composable",
+        kicker: "subcomponents",
+        caption:
+          "For links with custom onClick or a different Current, use the [em]subcomponents[/em] directly.",
+      },
+      composition: {
+        title: "Composition",
+        titleB: "tree",
+        kicker: "structure",
+        caption:
+          "Use the [em]composition[/em] below to build a navigation trail by hand.",
+      },
+    },
+
+    skeleton: {
+      lead: "Component · 21",
+      titleA: "The ",
+      titleB: "skeletons",
+      metaLabel: "Wait",
+      meta: "Loading placeholders",
+      intro:
+        "While content loads, the skeleton pulses discreetly — [em]editorial patience[/em], not the rush of aggressive shimmer found in generic libraries. The reader knows something is on its way.",
+      shapes: {
+        title: "Shapes",
+        kicker: "rect · circle",
+        caption: "The basic blocks: rectangle (text, image) and circle (avatar).",
+      },
+      text: {
+        title: "Text",
+        kicker: "lines",
+        caption: "Multiple lines — the last one is shorter, mimicking the end of a paragraph.",
+      },
+      card: {
+        title: "Composed card",
+        kicker: "card",
+        caption: "Common composition: avatar + title + body lines. For lists and feeds.",
+      },
+      static: {
+        title: "No pulse",
+        kicker: "pulse=false",
+        caption:
+          "For when the wait is [em]very short[/em] — the pulse would be more noisy than absent.",
+      },
+      composition: {
+        title: "Composition",
+        titleB: "tree",
+        kicker: "structure",
+        caption:
+          "Use the [em]subcomponents[/em] below according to the shape of the loading content.",
+      },
+    },
+
     forms: {
-      lead: "Pattern · 19",
+      lead: "Pattern · 22",
       titleA: "The ",
       titleB: "forms",
       metaLabel: "Composition",
@@ -1070,8 +1205,52 @@ const en = {
       },
     },
 
+    stepper: {
+      lead: "Pattern · 23",
+      titleA: "The ",
+      titleB: "stepper",
+      metaLabel: "Multi-step",
+      meta: "Progress in chapters",
+      intro:
+        "When the form asks for [em]multiple steps[/em], the reader deserves to know which act they're in. The stepper is an editorial mark — number, label, description — on a line (horizontal) or in a column (vertical).",
+      horizontal: {
+        title: "Horizontal",
+        kicker: "default",
+        caption: "Ideal for 3-5 steps that fit on a line — onboarding, checkout, subscription.",
+      },
+      vertical: {
+        title: "Vertical",
+        kicker: "orientation=vertical",
+        caption:
+          "For longer flows or when each step needs an extended description.",
+      },
+      interactive: {
+        title: "Interactive",
+        kicker: "state-driven",
+        caption:
+          "Move forward and back with the buttons — the stepper reflects the state in real time.",
+      },
+      back: "Back",
+      next: "Next",
+      s1Label: "Account",
+      s1Desc: "Your basic data",
+      s2Label: "Plan",
+      s2Desc: "Frequency and format",
+      s3Label: "Confirm",
+      s3Desc: "Review and send",
+      s4Label: "Done",
+      s4Desc: "Your order was received",
+      composition: {
+        title: "Composition",
+        titleB: "tree",
+        kicker: "structure",
+        caption:
+          "Each [em]Step[/em] is a child of [em]Stepper[/em] — the state (completed, active, pending) is resolved automatically by position.",
+      },
+    },
+
     emptyStates: {
-      lead: "Pattern · 20",
+      lead: "Pattern · 24",
       titleA: "The ",
       titleB: "emptiness",
       metaLabel: "No content",
@@ -1121,7 +1300,7 @@ const en = {
     },
 
     sidebar: {
-      lead: "Pattern · 21",
+      lead: "Pattern · 25",
       titleA: "The ",
       titleB: "sidebar",
       metaLabel: "Navigation",
@@ -1220,7 +1399,7 @@ const en = {
     },
 
     navbar: {
-      lead: "Pattern · 22",
+      lead: "Pattern · 26",
       titleA: "The ",
       titleB: "navbar",
       metaLabel: "Navigation",

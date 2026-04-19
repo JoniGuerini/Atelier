@@ -436,22 +436,16 @@ export {
 export { Tabs, TabList, Tab, TabPanels, TabPanel } from "./Tabs.jsx";
 
 /* ---------- Breadcrumb ---------- */
-export function Breadcrumbs({ items }) {
-  return (
-    <nav className="ds-crumbs" aria-label="breadcrumb">
-      {items.map((it, i) => (
-        <span key={i} style={{ display: "contents" }}>
-          <span
-            className={`crumb ${i === items.length - 1 ? "current" : ""}`}
-          >
-            {it}
-          </span>
-          {i < items.length - 1 && <span className="sep">→</span>}
-        </span>
-      ))}
-    </nav>
-  );
-}
+// Breadcrumbs foi extraído para src/ds/Breadcrumbs.jsx como família
+// composable (BreadcrumbsRoot, Breadcrumb, BreadcrumbCurrent, etc.).
+// O atalho com `items` permanece compatível.
+export {
+  Breadcrumbs,
+  BreadcrumbsRoot,
+  Breadcrumb,
+  BreadcrumbCurrent,
+  BreadcrumbSeparator,
+} from "./Breadcrumbs.jsx";
 
 /* ---------- Progress ---------- */
 export function Progress({ value = 0, label }) {

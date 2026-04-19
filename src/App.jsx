@@ -46,6 +46,10 @@ import Cards from "./pages/Cards.jsx";
 import TabsPage from "./pages/TabsPage.jsx";
 import Tables from "./pages/Tables.jsx";
 import Charts from "./pages/Charts.jsx";
+import PaginationPage from "./pages/Pagination.jsx";
+import BreadcrumbsPage from "./pages/BreadcrumbsPage.jsx";
+import SkeletonPage from "./pages/SkeletonPage.jsx";
+import StepperPage from "./pages/StepperPage.jsx";
 import Overlays from "./pages/Overlays.jsx";
 import Feedback from "./pages/Feedback.jsx";
 import DropzonePage from "./pages/DropzonePage.jsx";
@@ -73,6 +77,10 @@ const PAGES = {
   tabs: TabsPage,
   tables: Tables,
   charts: Charts,
+  pagination: PaginationPage,
+  breadcrumbs: BreadcrumbsPage,
+  skeleton: SkeletonPage,
+  stepper: StepperPage,
   overlays: Overlays,
   feedback: Feedback,
   dropzone: DropzonePage,

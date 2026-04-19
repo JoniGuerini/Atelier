@@ -49,6 +49,11 @@ const COMPONENTS = [
   { id: "empty",    label: "EmptyState",  route: "empty-states",  keywords: ["vazio", "estado"] },
   { id: "sidebar",  label: "Sidebar",     route: "sidebar",       keywords: ["menu", "lateral"] },
   { id: "navbar",   label: "Navbar",      route: "navbar",        keywords: ["menu", "topo"] },
+  { id: "pagination",  label: "Pagination",  route: "pagination",  keywords: ["paginação", "paginar", "next", "prev"] },
+  { id: "breadcrumbs", label: "Breadcrumbs", route: "breadcrumbs", keywords: ["trilha", "navegação"] },
+  { id: "skeleton",    label: "Skeleton",    route: "skeleton",    keywords: ["loading", "placeholder", "carregar"] },
+  { id: "stepper",     label: "Stepper",     route: "stepper",     keywords: ["wizard", "passos", "etapas", "multi-step"] },
+  { id: "step",        label: "Step",        route: "stepper",     keywords: ["passo", "etapa"] },
 ];
 
 /* ---------- TOKENS DE COR ----------

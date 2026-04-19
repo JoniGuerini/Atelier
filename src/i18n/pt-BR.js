@@ -77,7 +77,11 @@ const ptBR = {
       overlays: "Sobreposições",
       feedback: "Feedback",
       dropzone: "Dropzone",
+      pagination: "Paginação",
+      breadcrumbs: "Breadcrumbs",
+      skeleton: "Skeleton",
       forms: "Formulários",
+      stepper: "Stepper",
       emptyStates: "Estados vazios",
       sidebar: "Sidebar",
       navbar: "Navbar",
@@ -104,7 +108,11 @@ const ptBR = {
       overlays: "Diálogos e tooltips sobre o conteúdo.",
       feedback: "Toast e progress — sinais discretos.",
       dropzone: "Upload de arquivo com preview de metadados.",
+      pagination: "Paginar listas e tabelas — anterior/próximo + páginas.",
+      breadcrumbs: "Trilha de onde o leitor está no mapa do site.",
+      skeleton: "Placeholders editoriais para estados de loading.",
       forms: "Composição completa: campos, divisores e ações.",
+      stepper: "Indicador de progresso multi-etapa para forms longos.",
       emptyStates: "Convites, não derrotas — espaço com intenção.",
       sidebar: "Sumário vertical para sites com muitas páginas.",
       navbar: "Cabeçalho horizontal com dropdowns por hover.",
@@ -128,6 +136,19 @@ const ptBR = {
       title: "Configurações",
     },
     navLabel: "Navegação principal",
+  },
+
+  /* ============================================================ */
+  /* Labels usados internamente por componentes do DS (aria-label, etc.) */
+  ds: {
+    pagination: {
+      label: "Paginação",
+      previous: "Anterior",
+      next: "Próximo",
+    },
+    breadcrumbs: {
+      label: "Trilha de navegação",
+    },
   },
 
   /* ============================================================ */
@@ -1088,9 +1109,126 @@ const ptBR = {
       },
     },
 
+    /* ------------- Pagination ------------- */
+    pagination: {
+      lead: "Componente · 19",
+      titleA: "A ",
+      titleB: "paginação",
+      metaLabel: "Lista longa",
+      meta: "Paginar listas e tabelas",
+      intro:
+        "Diferente do [em]PageNav[/em] (que conduz o leitor entre capítulos do manual), a [em]Paginação[/em] vive [em]dentro de uma página[/em] — divide listas e tabelas longas em pedaços confortáveis.",
+      default: {
+        title: "Padrão",
+        kicker: "default",
+        caption: "Anterior/próximo, números visíveis e ellipses pra abreviar quando há muitas páginas.",
+      },
+      labeled: {
+        title: "Com rótulos",
+        kicker: "showLabels",
+        caption: "Mostra \"Anterior · Próximo\" como texto, além das setas — útil em interfaces densas.",
+      },
+      edges: {
+        title: "Nas pontas",
+        kicker: "first · last",
+        caption: "Comportamento na primeira página e na última — um dos botões fica desabilitado.",
+      },
+      compact: {
+        title: "Compacta",
+        kicker: "siblings=0",
+        caption: "Sem vizinhos — economiza espaço em barras estreitas.",
+      },
+      composable: {
+        title: "Composável",
+        kicker: "subcomponentes",
+        caption:
+          "Para casos especiais (rotulagem custom, ícones diferentes), monte mão a mão com [em]PaginationItem[/em] e amigos.",
+      },
+      composition: {
+        title: "Composição",
+        titleB: "árvore",
+        kicker: "estrutura",
+        caption:
+          "Use a [em]composição[/em] a seguir para montar uma paginação manualmente.",
+      },
+    },
+
+    /* ------------- Breadcrumbs ------------- */
+    breadcrumbs: {
+      lead: "Componente · 20",
+      titleA: "Os ",
+      titleB: "breadcrumbs",
+      metaLabel: "Localização",
+      meta: "Trilha de navegação",
+      intro:
+        "Uma trilha discreta de [em]onde o leitor está[/em] no mapa do site — mostra o caminho hierárquico, separado por um glifo. Usado em apps com mais de dois níveis.",
+      short: {
+        title: "Forma curta",
+        kicker: "items prop",
+        caption: "Passe um array de strings; o último item vira o atual automaticamente.",
+      },
+      separator: {
+        title: "Separador customizado",
+        kicker: "separator prop",
+        caption: "Troque o glifo separador para combinar com a voz tipográfica do projeto.",
+      },
+      composable: {
+        title: "Composable",
+        kicker: "subcomponentes",
+        caption:
+          "Para links com onClick custom ou um Current diferente, use os [em]subcomponentes[/em] diretamente.",
+      },
+      composition: {
+        title: "Composição",
+        titleB: "árvore",
+        kicker: "estrutura",
+        caption:
+          "Use a [em]composição[/em] a seguir para montar uma trilha de navegação manualmente.",
+      },
+    },
+
+    /* ------------- Skeleton ------------- */
+    skeleton: {
+      lead: "Componente · 21",
+      titleA: "Os ",
+      titleB: "skeletons",
+      metaLabel: "Espera",
+      meta: "Placeholders de loading",
+      intro:
+        "Enquanto o conteúdo carrega, o esqueleto pulsa com discrição — [em]paciência editorial[/em], não a pressa do shimmer agressivo das libs genéricas. O leitor sabe que algo está chegando.",
+      shapes: {
+        title: "Formas",
+        kicker: "rect · circle",
+        caption: "Os blocos básicos: retângulo (texto, imagem) e círculo (avatar).",
+      },
+      text: {
+        title: "Texto",
+        kicker: "lines",
+        caption: "Múltiplas linhas — a última fica mais curta, mimetizando fim de parágrafo.",
+      },
+      card: {
+        title: "Card composto",
+        kicker: "card",
+        caption: "Composição comum: avatar + título + linhas de corpo. Pra listas e feeds.",
+      },
+      static: {
+        title: "Sem pulso",
+        kicker: "pulse=false",
+        caption:
+          "Para quando o tempo de espera for [em]curtíssimo[/em] — o pulso seria mais ruidoso que ausente.",
+      },
+      composition: {
+        title: "Composição",
+        titleB: "árvore",
+        kicker: "estrutura",
+        caption:
+          "Use os [em]subcomponentes[/em] a seguir conforme a forma do conteúdo que carrega.",
+      },
+    },
+
     /* ------------- Forms ------------- */
     forms: {
-      lead: "Padrão · 19",
+      lead: "Padrão · 22",
       titleA: "Os ",
       titleB: "formulários",
       metaLabel: "Composição",
@@ -1129,9 +1267,54 @@ const ptBR = {
       },
     },
 
+    /* ------------- Stepper ------------- */
+    stepper: {
+      lead: "Padrão · 23",
+      titleA: "O ",
+      titleB: "stepper",
+      metaLabel: "Multi-etapa",
+      meta: "Progresso em capítulos",
+      intro:
+        "Quando o formulário pede [em]várias etapas[/em], o leitor merece saber em que ato está. O stepper é uma marcação editorial — número, título, descrição — em uma linha (horizontal) ou em coluna (vertical).",
+      horizontal: {
+        title: "Horizontal",
+        kicker: "default",
+        caption: "Ideal para 3-5 etapas que cabem numa linha — onboarding, checkout, assinatura.",
+      },
+      vertical: {
+        title: "Vertical",
+        kicker: "orientation=vertical",
+        caption:
+          "Para fluxos mais longos ou onde cada etapa precisa de descrição estendida.",
+      },
+      interactive: {
+        title: "Interativo",
+        kicker: "state-driven",
+        caption:
+          "Avance e volte com os botões — o stepper reflete o estado em tempo real.",
+      },
+      back: "Voltar",
+      next: "Avançar",
+      s1Label: "Conta",
+      s1Desc: "Seus dados básicos",
+      s2Label: "Plano",
+      s2Desc: "Frequência e formato",
+      s3Label: "Confirmar",
+      s3Desc: "Revisar e enviar",
+      s4Label: "Concluído",
+      s4Desc: "Seu pedido foi recebido",
+      composition: {
+        title: "Composição",
+        titleB: "árvore",
+        kicker: "estrutura",
+        caption:
+          "Cada [em]Step[/em] é um filho do [em]Stepper[/em] — o estado (completed, active, pending) é resolvido automaticamente pela posição.",
+      },
+    },
+
     /* ------------- Empty States ------------- */
     emptyStates: {
-      lead: "Padrão · 20",
+      lead: "Padrão · 24",
       titleA: "Os ",
       titleB: "vazios",
       metaLabel: "Sem conteúdo",
@@ -1182,7 +1365,7 @@ const ptBR = {
 
     /* ------------- Sidebar (pattern) ------------- */
     sidebar: {
-      lead: "Padrão · 21",
+      lead: "Padrão · 25",
       titleA: "A ",
       titleB: "sidebar",
       metaLabel: "Navegação",
@@ -1282,7 +1465,7 @@ const ptBR = {
 
     /* ------------- Navbar (pattern) ------------- */
     navbar: {
-      lead: "Padrão · 22",
+      lead: "Padrão · 26",
       titleA: "A ",
       titleB: "navbar",
       metaLabel: "Navegação",
