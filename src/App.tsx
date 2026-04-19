@@ -73,7 +73,11 @@ import DatePickerPage from "./pages/DatePickerPage.tsx";
 import CarouselPage from "./pages/CarouselPage.tsx";
 import TreeViewPage from "./pages/TreeViewPage.tsx";
 import ResizablePage from "./pages/ResizablePage.tsx";
+import ColorPickerPage from "./pages/ColorPickerPage.tsx";
+import MarkdownPage from "./pages/MarkdownPage.tsx";
+import ShortcutsPage from "./pages/ShortcutsPage.tsx";
 import { Toaster } from "./ds/Toaster.tsx";
+import { ShortcutsProvider } from "./ds/Shortcuts.tsx";
 
 const PAGES = {
   overview: Overview,
@@ -118,6 +122,9 @@ const PAGES = {
   carousel: CarouselPage,
   tree: TreeViewPage,
   resizable: ResizablePage,
+  "color-picker": ColorPickerPage,
+  markdown: MarkdownPage,
+  shortcuts: ShortcutsPage,
 };
 
 const SIDEBAR_KEY = "atelier.sidebarCollapsed";
@@ -204,6 +211,7 @@ export default function App() {
 
   return (
     <Toaster position="bottom-right">
+      <ShortcutsProvider>
       <div className={shellClasses.join(" ")}>
         {/* Skip link — visualmente escondido até receber foco por teclado.
             Pula direto pro conteúdo principal, evitando re-tabular toda
@@ -258,6 +266,7 @@ export default function App() {
         onNavigate={navigate}
       />
     </div>
+      </ShortcutsProvider>
     </Toaster>
   );
 }

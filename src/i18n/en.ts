@@ -93,6 +93,9 @@ const en = {
       carousel: "Carousel",
       tree: "Tree View",
       resizable: "Resizable Panels",
+      colorPicker: "Color Picker",
+      markdown: "Markdown",
+      shortcuts: "Shortcuts",
       forms: "Forms",
       stepper: "Stepper",
       emptyStates: "Empty states",
@@ -137,6 +140,9 @@ const en = {
       carousel: "Slides with touch swipe, prev/next, dots, optional auto-play and loop.",
       tree: "Hierarchical tree with expand/collapse, single or multi selection, full keyboard nav.",
       resizable: "Panels with draggable handles — horizontal/vertical, optional localStorage persist.",
+      colorPicker: "Visual HSV picker + hex/RGB inputs + optional presets. Pure-JS conversions.",
+      markdown: "Editorial markdown rendering with own parser. Headings, lists, quotes, code, links.",
+      shortcuts: "Global keyboard shortcuts system with useShortcut hook + help dialog via Shift+?.",
       forms: "Full composition: fields, dividers, actions.",
       stepper: "Multi-step progress indicator for long forms.",
       emptyStates: "Invitations, not defeats — space with intent.",
@@ -199,6 +205,12 @@ const en = {
       label: "Resizable panels",
       handle: "Handle",
       junction: "Junction (moves 2 dimensions)",
+    },
+    shortcuts: {
+      title: "Keyboard shortcuts",
+      close: "Close",
+      empty: "No shortcuts registered.",
+      uncategorized: "General",
     },
   },
 
@@ -2024,8 +2036,153 @@ const en = {
       },
     },
 
+    /* ------------- ColorPicker ------------- */
+    colorPicker: {
+      lead: "Advanced · 34",
+      titleA: "The ",
+      titleB: "color picker",
+      metaLabel: "Color",
+      meta: "HSV plane + hex/RGB + presets",
+      intro:
+        "Visual color picker in [em]HSV space[/em] (saturation × brightness on a plane + hue in a vertical slider). Synchronized hex and decimal RGB inputs. Optional preset swatches. Conversions (hex/RGB/HSL/HSV) in [em]pure JS[/em], no libs.",
+      basic: {
+        title: "Basic",
+        kicker: "default",
+        desc:
+          "SV plane + hue slider + hex/R/G/B inputs. Drag anywhere on the plane to move the cursor; the swatch on the right shows the current color. Fully controlled.",
+        caption: "Current color: {hex}",
+        label: "Basic picker",
+      },
+      presets: {
+        title: "With presets",
+        kicker: "presets array",
+        desc:
+          "Pass an array of [em]hex[/em] strings and they render as swatches below. Click to pick; the active swatch gets an accent border.",
+        caption: "Current color: {hex}",
+        label: "Picker with presets",
+      },
+      alpha: {
+        title: "With alpha (transparency)",
+        kicker: "alpha=true",
+        desc:
+          "Adds an [em]alpha[/em] slider (0-100%) below the hue. The emitted hex includes the alpha channel (#rrggbbaa) when ≠ 1.",
+        caption: "Color with alpha: {hex}",
+        label: "Picker with alpha",
+      },
+      compact: {
+        title: "Compact size",
+        kicker: "size prop",
+        desc:
+          "Adjust the SV plane [em]size[/em] (default 240px). Useful in narrow panels or popovers.",
+        caption: "160px plane — ideal for side panels",
+        primary: "Primary color",
+        secondary: "Secondary color",
+      },
+      composition: {
+        title: "API",
+        titleB: "",
+        kicker: "single tag",
+        caption:
+          "ColorPicker is a [em]single tag[/em]. Configured via props; no subcomponents.",
+      },
+    },
+
+    /* ------------- Markdown ------------- */
+    markdown: {
+      lead: "Advanced · 35",
+      titleA: "The ",
+      titleB: "markdown viewer",
+      metaLabel: "Text",
+      meta: "Own parser · basic GFM",
+      intro:
+        "[em]Markdown[/em] rendering in pure React. ~150-line parser written from scratch — covers headings, paragraphs, lists (ordered/unordered), bold/italic, inline code, code blocks, blockquote, links, images, hr. Fully Atelier typography (Fraunces serif body, JetBrains mono for code).",
+      basic: {
+        title: "Basic render",
+        kicker: "string in, JSX out",
+        desc:
+          "Pass the markdown string as [em]children[/em]. The component parses and renders with Atelier's editorial typography.",
+        caption: "Markdown rendered as React",
+      },
+      live: {
+        title: "Editor + live preview",
+        kicker: "classic use case",
+        desc:
+          "Combines a [em]Textarea[/em] (compact mono for the code) with [em]MarkdownViewer[/em] (serif render). Reactive without debounce or perf issues — the parser is light.",
+        caption: "Edit on the left, see on the right",
+        editor: "Editor (markdown)",
+        preview: "Preview (rendered)",
+      },
+      support: {
+        title: "Parser support",
+        kicker: "basic GFM",
+        desc:
+          "[em]Supported:[/em] # ## ### #### ##### ###### · paragraphs · **bold** · *italic* · `code` · ```code blocks``` · [links](url) · ![images](url) · - lists · 1. ordered · > blockquote · --- hr. [em]Not supported:[/em] tables · footnotes · inline HTML · task lists. For those, consider a future adapter (Phase 5.3 with marked/remark).",
+      },
+      composition: {
+        title: "API",
+        titleB: "",
+        kicker: "single tag",
+        caption: "MarkdownViewer takes the string as children. No subcomponents.",
+      },
+    },
+
+    /* ------------- Shortcuts ------------- */
+    shortcuts: {
+      lead: "Advanced · 36",
+      titleA: "The ",
+      titleB: "shortcuts",
+      metaLabel: "Keyboard",
+      meta: "Hook + Provider + help dialog",
+      intro:
+        "[em]Global[/em] keyboard shortcuts system. Mount [em]<ShortcutsProvider>[/em] once at the root, and use [em]useShortcut(combo, handler)[/em] anywhere to register. Help panel (with the list of all registered shortcuts) opens automatically with [em]Shift+?[/em].",
+      groups: {
+        editor: "Editor",
+        demo: "Demo",
+      },
+      demo: {
+        save: "Save",
+        publish: "Publish",
+        undo: "Undo",
+        increment: "Increment counter",
+        decrement: "Decrement counter",
+        savedTitle: "Saved.",
+        savedBody: "Your changes have been recorded.",
+        published: "Article published!",
+      },
+      setup: {
+        title: "Setup",
+        kicker: "once at root",
+        desc:
+          "ShortcutsProvider wraps the tree. useShortcut registers shortcuts with auto-cleanup on unmount. [em]Shift+?[/em] is built-in to open the help.",
+        caption: "Try Shift+? right now",
+        try: "Press [em]{key}[/em] anywhere to open the help panel.",
+        btn: "Or click here to open",
+      },
+      active: {
+        title: "Active shortcuts on this page",
+        kicker: "live demo",
+        desc:
+          "5 shortcuts were registered when you entered this page. Try them — they fire toasts or change the counter below.",
+        caption: "Current counter: {n}",
+        counter: "Counter",
+      },
+      combo: {
+        title: "ShortcutCombo — visual render",
+        kicker: "standalone component",
+        desc:
+          "Renders a combo (string like [em]\"cmd+k\"[/em]) as separated [em]<kbd>[/em] elements, with pretty symbols for modifiers (⌘ ⇧ ⌥ ↑ ↓ ↵).",
+        caption: "Combos as they appear in the help dialog",
+      },
+      composition: {
+        title: "API",
+        titleB: "",
+        kicker: "Provider + hook",
+        caption: "3 pieces of the system:",
+      },
+    },
+
     forms: {
-      lead: "Pattern · 34",
+      lead: "Pattern · 37",
       titleA: "The ",
       titleB: "forms",
       metaLabel: "Composition",
@@ -2065,7 +2222,7 @@ const en = {
     },
 
     stepper: {
-      lead: "Pattern · 35",
+      lead: "Pattern · 38",
       titleA: "The ",
       titleB: "stepper",
       metaLabel: "Multi-step",
@@ -2109,7 +2266,7 @@ const en = {
     },
 
     emptyStates: {
-      lead: "Pattern · 36",
+      lead: "Pattern · 39",
       titleA: "The ",
       titleB: "emptiness",
       metaLabel: "No content",
@@ -2159,7 +2316,7 @@ const en = {
     },
 
     sidebar: {
-      lead: "Pattern · 37",
+      lead: "Pattern · 40",
       titleA: "The ",
       titleB: "sidebar",
       metaLabel: "Navigation",
@@ -2258,7 +2415,7 @@ const en = {
     },
 
     navbar: {
-      lead: "Pattern · 38",
+      lead: "Pattern · 41",
       titleA: "The ",
       titleB: "navbar",
       metaLabel: "Navigation",
@@ -2490,7 +2647,7 @@ const en = {
     },
 
     accessibility: {
-      lead: "Reference · 39",
+      lead: "Reference · 42",
       titleA: "On ",
       titleB: "accessibility",
       metaLabel: "Conformance",

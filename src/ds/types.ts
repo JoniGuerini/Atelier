@@ -494,6 +494,38 @@ export interface ResizablePanelsProps {
   ariaLabel?: string;
 }
 
+/* ----------------- ColorPicker ----------------- */
+export interface RGB { r: number; g: number; b: number; a?: number }
+export interface HSL { h: number; s: number; l: number; a?: number }
+export interface HSV { h: number; s: number; v: number; a?: number }
+export interface ColorPickerProps {
+  value?: string;
+  onChange?: (hex: string) => void;
+  alpha?: boolean;
+  presets?: string[];
+  size?: number;
+  className?: string;
+  ariaLabel?: string;
+}
+
+/* ----------------- MarkdownViewer ----------------- */
+export interface MarkdownViewerProps {
+  children?: string;
+  maxWidth?: number | string;
+  className?: string;
+}
+
+/* ----------------- Shortcuts ----------------- */
+export interface Shortcut {
+  combo: string;
+  handler: (e: KeyboardEvent) => void;
+  label?: string;
+  group?: string;
+  ignoreInInputs?: boolean;
+  allowRepeat?: boolean;
+  disabled?: boolean;
+}
+
 /* ----------------- Calendar / DatePicker ----------------- */
 export type CalendarMode = "single" | "range" | "multiple";
 export type CalendarRange = [Date | null, Date | null];

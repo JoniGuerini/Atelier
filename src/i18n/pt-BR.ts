@@ -93,6 +93,9 @@ const ptBR = {
       carousel: "Carousel",
       tree: "Tree View",
       resizable: "Resizable Panels",
+      colorPicker: "Color Picker",
+      markdown: "Markdown",
+      shortcuts: "Atalhos",
       forms: "Formulários",
       stepper: "Stepper",
       emptyStates: "Estados vazios",
@@ -137,6 +140,9 @@ const ptBR = {
       carousel: "Slides com swipe touch, prev/next, dots indicadores, auto-play e loop opcionais.",
       tree: "Árvore hierárquica com expand/collapse, seleção single ou multi, e teclado completo.",
       resizable: "Painéis com handles draggable — horizontal/vertical, persistência opcional em localStorage.",
+      colorPicker: "Picker visual HSV + inputs hex/RGB + presets opcionais. Conversões em JS puro.",
+      markdown: "Render de markdown editorial com parser próprio. Headings, listas, quotes, code, links.",
+      shortcuts: "Sistema global de atalhos com hook useShortcut + dialog de help acessível via Shift+?.",
       forms: "Composição completa: campos, divisores e ações.",
       stepper: "Indicador de progresso multi-etapa para forms longos.",
       emptyStates: "Convites, não derrotas — espaço com intenção.",
@@ -199,6 +205,12 @@ const ptBR = {
       label: "Painéis redimensionáveis",
       handle: "Divisor",
       junction: "Junção (move 2 dimensões)",
+    },
+    shortcuts: {
+      title: "Atalhos de teclado",
+      close: "Fechar",
+      empty: "Nenhum atalho registrado.",
+      uncategorized: "Geral",
     },
   },
 
@@ -2085,9 +2097,154 @@ const ptBR = {
       },
     },
 
+    /* ------------- ColorPicker ------------- */
+    colorPicker: {
+      lead: "Avançado · 34",
+      titleA: "O ",
+      titleB: "color picker",
+      metaLabel: "Cor",
+      meta: "HSV plane + hex/RGB + presets",
+      intro:
+        "Picker visual de cor em [em]espaço HSV[/em] (saturação × brilho num plano + matiz em slider vertical). Inputs sincronizados em hex e RGB decimal. Presets opcionais como swatches. Conversões (hex/RGB/HSL/HSV) em [em]JS puro[/em], sem libs.",
+      basic: {
+        title: "Básico",
+        kicker: "default",
+        desc:
+          "Plane SV + hue slider + inputs hex/R/G/B. Drag em qualquer ponto do plane move o cursor; o swatch à direita mostra a cor atual. Tudo controlado.",
+        caption: "Cor atual: {hex}",
+        label: "Picker básico",
+      },
+      presets: {
+        title: "Com presets",
+        kicker: "presets array",
+        desc:
+          "Passe um array de [em]hex[/em] e ele renderiza como swatches abaixo. Click pro pega a cor; o swatch ativo ganha borda accent.",
+        caption: "Cor atual: {hex}",
+        label: "Picker com presets",
+      },
+      alpha: {
+        title: "Com alpha (transparência)",
+        kicker: "alpha=true",
+        desc:
+          "Adiciona um slider [em]alpha[/em] (0-100%) abaixo do hue. O hex emitido inclui o canal alpha (#rrggbbaa) quando ≠ 1.",
+        caption: "Cor com alpha: {hex}",
+        label: "Picker com alpha",
+      },
+      compact: {
+        title: "Tamanho compacto",
+        kicker: "size prop",
+        desc:
+          "Ajuste o [em]size[/em] do plane SV (default 240px). Útil em painéis estreitos ou popovers.",
+        caption: "Plane de 160px — ideal pra painéis laterais",
+        primary: "Cor primária",
+        secondary: "Cor secundária",
+      },
+      composition: {
+        title: "API",
+        titleB: "",
+        kicker: "uma única tag",
+        caption:
+          "ColorPicker é uma [em]única tag[/em]. Configurado por props; sem subcomponentes.",
+      },
+    },
+
+    /* ------------- Markdown ------------- */
+    markdown: {
+      lead: "Avançado · 35",
+      titleA: "O ",
+      titleB: "markdown viewer",
+      metaLabel: "Texto",
+      meta: "Parser próprio · GFM básico",
+      intro:
+        "Render de [em]markdown[/em] em React puro. Parser de ~150 linhas escrito do zero — cobre headings, parágrafos, listas (ordenadas/não), bold/italic, inline code, code blocks, blockquote, links, imagens, hr. Tipografia toda do Atelier (serifa Fraunces no corpo, mono nos códigos).",
+      basic: {
+        title: "Render básico",
+        kicker: "string in, JSX out",
+        desc:
+          "Passe a string markdown como [em]children[/em]. O componente parseia e renderiza com a tipografia editorial do Atelier.",
+        caption: "Markdown renderizado em React",
+      },
+      live: {
+        title: "Editor + preview ao vivo",
+        kicker: "use case clássico",
+        desc:
+          "Combina um [em]Textarea[/em] (mono compacto pro código) com o [em]MarkdownViewer[/em] (render serif). Reagentes sem debounce nem performance issues — parser é leve.",
+        caption: "Edite à esquerda, veja à direita",
+        editor: "Editor (markdown)",
+        preview: "Preview (renderizado)",
+      },
+      support: {
+        title: "Suporte do parser",
+        kicker: "GFM básico",
+        desc:
+          "[em]Suportado:[/em] # ## ### #### ##### ###### · parágrafos · **bold** · *italic* · `code` · ```code blocks``` · [links](url) · ![imagens](url) · - listas · 1. ordenadas · > blockquote · --- hr. [em]Não suportado:[/em] tabelas · footnotes · HTML inline · task lists. Pra esses casos, considere uma adapter futura (Phase 5.3 com marked/remark).",
+      },
+      composition: {
+        title: "API",
+        titleB: "",
+        kicker: "uma única tag",
+        caption: "MarkdownViewer recebe a string como children. Sem subcomponentes.",
+      },
+    },
+
+    /* ------------- Shortcuts ------------- */
+    shortcuts: {
+      lead: "Avançado · 36",
+      titleA: "Os ",
+      titleB: "atalhos",
+      metaLabel: "Teclado",
+      meta: "Hook + Provider + dialog de help",
+      intro:
+        "Sistema [em]global[/em] de atalhos de teclado. Monte [em]<ShortcutsProvider>[/em] uma vez no root, e use o hook [em]useShortcut(combo, handler)[/em] em qualquer lugar pra registrar. Painel de help (com lista de todos os atalhos registrados) abre automaticamente com [em]Shift+?[/em].",
+      groups: {
+        editor: "Editor",
+        demo: "Demo",
+      },
+      demo: {
+        save: "Salvar",
+        publish: "Publicar",
+        undo: "Desfazer",
+        increment: "Incrementar contador",
+        decrement: "Decrementar contador",
+        savedTitle: "Salvo.",
+        savedBody: "Suas alterações foram registradas.",
+        published: "Artigo publicado!",
+      },
+      setup: {
+        title: "Setup",
+        kicker: "uma vez no root",
+        desc:
+          "ShortcutsProvider envolve a árvore. useShortcut registra atalhos com auto-cleanup ao desmontar. [em]Shift+?[/em] já vem builtin pra abrir o help.",
+        caption: "Tente Shift+? agora",
+        try: "Pressione [em]{key}[/em] em qualquer lugar pra abrir o painel de help.",
+        btn: "Ou clique aqui pra abrir",
+      },
+      active: {
+        title: "Atalhos ativos nessa página",
+        kicker: "live demo",
+        desc:
+          "5 atalhos foram registrados quando você entrou nessa página. Tente — eles disparam toasts ou alteram o contador abaixo.",
+        caption: "Contador atual: {n}",
+        counter: "Contador",
+      },
+      combo: {
+        title: "ShortcutCombo — render visual",
+        kicker: "componente standalone",
+        desc:
+          "Renderiza um combo (string como [em]\"cmd+k\"[/em]) como [em]<kbd>[/em] separados, com símbolos bonitos pra modificadores (⌘ ⇧ ⌥ ↑ ↓ ↵).",
+        caption: "Os combos como aparecem no help dialog",
+      },
+      composition: {
+        title: "API",
+        titleB: "",
+        kicker: "Provider + hook",
+        caption: "3 peças do sistema:",
+      },
+    },
+
     /* ------------- Forms ------------- */
     forms: {
-      lead: "Padrão · 34",
+      lead: "Padrão · 37",
       titleA: "Os ",
       titleB: "formulários",
       metaLabel: "Composição",
@@ -2128,7 +2285,7 @@ const ptBR = {
 
     /* ------------- Stepper ------------- */
     stepper: {
-      lead: "Padrão · 35",
+      lead: "Padrão · 38",
       titleA: "O ",
       titleB: "stepper",
       metaLabel: "Multi-etapa",
@@ -2173,7 +2330,7 @@ const ptBR = {
 
     /* ------------- Empty States ------------- */
     emptyStates: {
-      lead: "Padrão · 36",
+      lead: "Padrão · 39",
       titleA: "Os ",
       titleB: "vazios",
       metaLabel: "Sem conteúdo",
@@ -2224,7 +2381,7 @@ const ptBR = {
 
     /* ------------- Sidebar (pattern) ------------- */
     sidebar: {
-      lead: "Padrão · 37",
+      lead: "Padrão · 40",
       titleA: "A ",
       titleB: "sidebar",
       metaLabel: "Navegação",
@@ -2324,7 +2481,7 @@ const ptBR = {
 
     /* ------------- Navbar (pattern) ------------- */
     navbar: {
-      lead: "Padrão · 38",
+      lead: "Padrão · 41",
       titleA: "A ",
       titleB: "navbar",
       metaLabel: "Navegação",
@@ -2558,7 +2715,7 @@ const ptBR = {
 
     /* ------------- Accessibility ------------- */
     accessibility: {
-      lead: "Referência · 39",
+      lead: "Referência · 42",
       titleA: "A ",
       titleB: "acessibilidade",
       metaLabel: "Conformidade",

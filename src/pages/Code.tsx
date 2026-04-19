@@ -746,6 +746,104 @@ const [range, setRange] = useState<CalendarRange>([null, null]);
 <ResizablePanels storageKey="my.split">…</ResizablePanels>`,
   },
   {
+    id: "colorPicker",
+    name: "ColorPicker",
+    route: "color-picker",
+    imports: `import { ColorPicker } from "./ds/ColorPicker";
+import { hexToRgb, rgbToHex, hexToHsl, hslToHex } from "./ds/colorUtils";`,
+    props: [
+      ["value", "string (#rrggbb ou #rrggbbaa)", "—"],
+      ["onChange", "(hex: string) => void", "—"],
+      ["alpha", "boolean — slider de transparência", "false"],
+      ["presets", "string[] — array de hex pra renderizar como swatches", "—"],
+      ["size", "number — width/height do plane SV", "240"],
+    ],
+    code: `// Single picker
+const [color, setColor] = useState("#c8361d");
+<ColorPicker value={color} onChange={setColor} />
+
+// Com presets
+<ColorPicker
+  value={color}
+  onChange={setColor}
+  presets={["#ff3b30", "#34c759", "#007aff"]}
+/>
+
+// Com alpha (#rrggbbaa)
+<ColorPicker value={color} onChange={setColor} alpha />
+
+// Compacto pra painéis estreitos
+<ColorPicker value={color} onChange={setColor} size={160} />
+
+// Conversões podem ser usadas standalone
+const rgb = hexToRgb("#c8361d");      // { r: 200, g: 54, b: 29 }
+const hex = rgbToHex({ r: 0, g: 122, b: 255 });`,
+  },
+  {
+    id: "markdown",
+    name: "MarkdownViewer",
+    route: "markdown",
+    imports: `import { MarkdownViewer } from "./ds/MarkdownViewer";`,
+    props: [
+      ["children", "string — conteúdo markdown", "—"],
+      ["maxWidth", "number | string — limita largura do conteúdo", "'65ch'"],
+    ],
+    code: `<MarkdownViewer>{\`# Hello
+
+A **markdown** viewer with [zero deps](https://example).
+
+- Item 1
+- Item 2
+
+\\\`\\\`\\\`tsx
+const x = 42;
+\\\`\\\`\\\`
+\`}</MarkdownViewer>
+
+// Com largura customizada
+<MarkdownViewer maxWidth={800}>{md}</MarkdownViewer>`,
+  },
+  {
+    id: "shortcuts",
+    name: "Shortcuts (system)",
+    route: "shortcuts",
+    imports: `import {
+  ShortcutsProvider,
+  useShortcut,
+  useShortcutsContext,
+  ShortcutCombo,
+} from "./ds/Shortcuts";`,
+    props: [
+      ["useShortcut(combo, handler, opts?)", "registra um atalho com auto-cleanup", "—"],
+      ["combo string", "ex: 'cmd+k', 'shift+?', 'alt+arrowup'", "—"],
+      ["opts.label / .group", "metadados pro help dialog", "—"],
+      ["opts.ignoreInInputs", "boolean (não dispara em input/textarea)", "true"],
+      ["opts.allowRepeat", "boolean (auto-fire ao segurar tecla)", "false"],
+      ["opts.disabled", "boolean", "false"],
+      ["useShortcutsContext()", "{ openHelp, closeHelp, register, list }", "—"],
+      ["<ShortcutCombo combo='cmd+k' />", "render visual com <kbd>", "—"],
+    ],
+    code: `// 1) Setup no root
+<ShortcutsProvider>
+  <App />
+</ShortcutsProvider>
+
+// 2) Registra atalho em qualquer componente
+useShortcut("cmd+s", () => save(), {
+  label: "Salvar",
+  group: "Editor",
+});
+
+// 3) Built-in: Shift+? abre o help dialog automaticamente
+
+// Programaticamente
+const { openHelp } = useShortcutsContext();
+<Button onClick={openHelp}>Atalhos</Button>
+
+// Render visual de um combo
+<ShortcutCombo combo="cmd+shift+k" />  // ⌘ ⇧ K`,
+  },
+  {
     id: "contextMenu",
     name: "ContextMenu family",
     route: "context-menu",
