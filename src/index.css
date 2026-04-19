@@ -2380,10 +2380,10 @@ input[type="file"] { display: none; }
   padding: 10px 12px;
   text-decoration: none;
   color: var(--ink-soft);
-  border-left: 2px solid transparent;
+  /* Sem barra lateral nem fundo no estado padrão. Hover e current
+     usam só tipografia (cor do número/label) — fiel ao DNA editorial. */
   transition: background var(--dur-fast) var(--ease),
-    color var(--dur-fast) var(--ease),
-    border-color var(--dur-fast) var(--ease);
+    color var(--dur-fast) var(--ease);
 }
 .nav-menu-item .n {
   font-family: var(--font-mono);
@@ -2423,25 +2423,32 @@ input[type="file"] { display: none; }
   padding-top: 4px;
 }
 
+/* Hover — discreto: o número ganha vida (vai pra ink-soft) e o
+   fundo recebe um leve toque de --rule-faint, quase imperceptível,
+   só pra orientar o cursor. Sem barra, sem accent gritando. */
 .nav-menu-item:hover {
-  background: var(--bg-sunken);
-  color: var(--ink);
-  border-left-color: var(--accent);
+  background: var(--rule-faint);
 }
-.nav-menu-item:hover .label {
+.nav-menu-item:hover .n {
+  color: var(--ink-soft);
+}
+
+/* Current — afirmação editorial: só o número fica em accent (como
+   uma marca de margem em livro), label em ink. Nada de fundo
+   sólido, nada de barra. */
+.nav-menu-item.is-current {
+  background: transparent;
+}
+.nav-menu-item.is-current .label {
+  color: var(--ink);
+}
+.nav-menu-item.is-current .n {
   color: var(--accent);
 }
+
 .nav-menu-item:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: -2px;
-}
-.nav-menu-item.is-current {
-  color: var(--ink);
-  border-left-color: var(--accent);
-  background: var(--bg-sunken);
-}
-.nav-menu-item.is-current .label {
-  color: var(--accent);
 }
 
 @media (max-width: 960px) {
