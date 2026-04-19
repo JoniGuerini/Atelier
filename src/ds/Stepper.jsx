@@ -69,12 +69,15 @@ export function Step({ n, label, description }) {
     <>
       <span className="ds-step-marker">
         <span className="ds-step-n">{n}</span>
-        <span className="ds-step-line" aria-hidden="true" />
       </span>
       <span className="ds-step-text">
         <span className="ds-step-label">{label}</span>
         {description && <span className="ds-step-desc">{description}</span>}
       </span>
+      {/* Linha conectora — sai do número e termina no próximo step.
+         Posicionada como child direto do .ds-step (li) que tem
+         position: relative. CSS cuida do recorte na orientação. */}
+      <span className="ds-step-line" aria-hidden="true" />
     </>
   );
 }

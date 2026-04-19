@@ -4500,6 +4500,8 @@ input[type="file"] { display: none; }
   gap: 12px;
   flex: 1;
   min-width: 0;
+  /* Âncora pra .ds-step-line, que é child direto do <li>. */
+  position: relative;
 }
 .ds-stepper.orientation-vertical .ds-step {
   flex: 0 0 auto;
@@ -4509,7 +4511,6 @@ input[type="file"] { display: none; }
   flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
-  position: relative;
 }
 .ds-step-n {
   display: inline-flex;
@@ -4526,30 +4527,39 @@ input[type="file"] { display: none; }
   transition: color var(--dur) var(--ease),
     border-color var(--dur) var(--ease),
     background var(--dur) var(--ease);
+  /* Acima da linha, pra "tampar" o início */
+  position: relative;
   z-index: 1;
 }
 
-/* Linha que conecta steps consecutivos */
+/* Linha conectora entre steps consecutivos.
+   Ancorada no .ds-step (que é flex: 1 no horizontal e auto no
+   vertical). NÃO usa -100vw/-100vh — fica dentro dos limites do
+   próprio step pra não vazar pra outros elementos da página. */
 .ds-step-line {
   position: absolute;
   background: var(--rule-soft);
   transition: background var(--dur) var(--ease);
+  z-index: 0;
 }
 .ds-stepper.orientation-horizontal .ds-step-line {
-  top: 50%;
+  /* Linha horizontal: meio do número (top 14px) até a borda
+     direita do <li>. O próximo <li> começa logo após, com seu
+     próprio número, formando uma trilha contínua. */
+  top: 14px;
   left: 28px;
-  right: -100vw;
+  right: 0;
   height: 1px;
-  transform: translateY(-50%);
 }
 .ds-stepper.orientation-vertical .ds-step-line {
+  /* Linha vertical: do fim do número (top 28px) até o fim do
+     <li> + o gap (var(--space-4) = 16px) pra alcançar o próximo. */
   top: 28px;
-  left: 50%;
-  bottom: -100vh;
+  left: 13px;
+  bottom: calc(-1 * var(--space-4));
   width: 1px;
-  transform: translateX(-50%);
 }
-/* Última linha não rende */
+/* Última linha não rende — não há próximo pra conectar */
 .ds-stepper > .ds-step:last-child .ds-step-line {
   display: none;
 }
@@ -4603,13 +4613,13 @@ input[type="file"] { display: none; }
     gap: var(--space-3);
   }
   .ds-stepper.orientation-horizontal .ds-step-line {
+    /* Em mobile a horizontal vira vertical: ajusta os limites */
     top: 28px;
-    left: 14px;
+    left: 13px;
     right: auto;
-    bottom: -100vh;
+    bottom: calc(-1 * var(--space-3));
     width: 1px;
     height: auto;
-    transform: none;
   }
 }
 
