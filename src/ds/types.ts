@@ -462,6 +462,12 @@ export type ComboboxOption = {
   glyph?: ReactNode;
   disabled?: boolean;
 };
+export interface ComboboxCreatableExtras {
+  /** Aceita valores novos digitados pelo usuário. */
+  creatable?: boolean;
+  /** Função pra construir o label da creation row. */
+  createLabel?: (query: string) => ReactNode;
+}
 
 /* ----------------- RangeSlider ----------------- */
 export type SliderValue = number | [number, number];

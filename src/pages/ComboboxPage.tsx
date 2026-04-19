@@ -141,9 +141,55 @@ export default function ComboboxPage() {
         </Example>
       </Section>
 
-      {/* iii · Grupos */}
+      {/* ii.b · Creatable */}
       <Section
         num="iii"
+        title={<>{t("pages.combobox.creatable.title")}</>}
+        kicker={t("pages.combobox.creatable.kicker")}
+      >
+        <p className="section-desc">
+          {tr("pages.combobox.creatable.desc")}
+        </p>
+        <Example
+          caption={t("pages.combobox.creatable.caption")}
+          tech="creatable"
+          stack
+          code={`<Combobox
+  multi
+  creatable
+  options={tags}
+  value={selected}
+  onChange={setSelected}
+  createLabel={(q) => <>Criar <em>"{q}"</em></>}
+/>`}
+        >
+          <div style={{ width: "100%", maxWidth: 480 }}>
+            <Field
+              label={t("pages.combobox.creatable.field")}
+              hint={t("pages.combobox.creatable.hint")}
+            >
+              <Combobox
+                multi
+                creatable
+                options={TAGS}
+                value={tagsSel}
+                onChange={setTagsSel}
+                placeholder={t("pages.combobox.creatable.placeholder")}
+                emptyMessage={t("pages.combobox.basic.empty")}
+                createLabel={(q) => (
+                  <>
+                    {t("pages.combobox.creatable.create")} <em>"{q}"</em>
+                  </>
+                )}
+              />
+            </Field>
+          </div>
+        </Example>
+      </Section>
+
+      {/* iv · Grupos */}
+      <Section
+        num="iv"
         title={<>{t("pages.combobox.groups.title")}</>}
         kicker={t("pages.combobox.groups.kicker")}
       >
@@ -173,9 +219,9 @@ export default function ComboboxPage() {
         </Example>
       </Section>
 
-      {/* iv · Disabled state + custom render */}
+      {/* v · Disabled state + custom render */}
       <Section
-        num="iv"
+        num="v"
         title={<>{t("pages.combobox.states.title")}</>}
         kicker={t("pages.combobox.states.kicker")}
       >
@@ -213,9 +259,9 @@ export default function ComboboxPage() {
         </Example>
       </Section>
 
-      {/* v · Disabled total */}
+      {/* vi · Disabled total */}
       <Section
-        num="v"
+        num="vi"
         title={<>{t("pages.combobox.disabled.title")}</>}
         kicker={t("pages.combobox.disabled.kicker")}
       >
@@ -241,7 +287,7 @@ export default function ComboboxPage() {
       </Section>
 
       <CompositionSection
-        num="vi"
+        num="vii"
         i18nPrefix="pages.combobox.composition"
         root="Combobox"
         nodes={[]}

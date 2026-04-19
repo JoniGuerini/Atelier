@@ -5486,6 +5486,21 @@ input[type="file"] { display: none; }
   flex-shrink: 0;
 }
 
+/* Creation row — destacada do resto, glifo "+" em accent. */
+.ds-combo-opt.creation {
+  border-bottom: 1px solid var(--rule-soft);
+}
+.ds-combo-opt.creation .ds-combo-opt-glyph {
+  font-style: normal;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+}
+.ds-combo-opt.creation em {
+  color: var(--accent);
+  font-style: italic;
+}
+
 /* ================================================================
    RangeSlider — single ou dual handle.
    ----------------------------------------------------------------

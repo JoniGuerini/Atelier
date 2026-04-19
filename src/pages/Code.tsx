@@ -483,6 +483,8 @@ toast({
       ["value", "string | null (single) | string[] (multi)", "—"],
       ["onChange", "(value) => void", "—"],
       ["multi", "boolean", "false"],
+      ["creatable", "boolean — aceita valores novos digitados", "false"],
+      ["createLabel", "(query) => ReactNode — label da creation row", "—"],
       ["placeholder", "string", "—"],
       ["disabled", "boolean", "false"],
       ["getOptionValue / getOptionLabel / renderOption", "customização avançada", "defaults"],
@@ -504,6 +506,16 @@ toast({
   options={tags}
   value={selected}
   onChange={setSelected}
+/>
+
+// Creatable — aceita valores novos digitados pelo usuário
+<Combobox
+  multi
+  creatable
+  options={tags}
+  value={selected}
+  onChange={setSelected}
+  createLabel={(q) => <>Criar <em>"{q}"</em></>}
 />
 
 // Com grupos (separadores no painel)

@@ -71,6 +71,14 @@ export interface ComboboxPropsCommon<T = ComboboxOption> {
   id?: string;
   /** Classe CSS extra. */
   className?: string;
+  /** Permite criar valores novos digitados pelo usuário. Quando o
+      query não bate exatamente com nenhuma opção, o painel mostra
+      uma "creation row" no topo. Enter ou click cria. Em multi,
+      adiciona à lista; em single, vira o valor único. */
+  creatable?: boolean;
+  /** Função opcional pra construir o label da creation row.
+      Default: t("ds.combobox.create") + " ‘query’" */
+  createLabel?: (query: string) => ReactNode;
 }
 
 export interface ComboboxSingleProps<T = ComboboxOption>
@@ -134,6 +142,8 @@ export function Combobox<T extends ComboboxOption = ComboboxOption>(
     width = "100%",
     id,
     className = "",
+    creatable = false,
+    createLabel,
   } = props;
 
   const isMulti = props.multi === true;
@@ -159,6 +169,37 @@ export function Combobox<T extends ComboboxOption = ComboboxOption>(
     const q = normalize(query);
     return options.filter((o) => normalize(getOptionLabel(o)).includes(q));
   }, [options, query, getOptionLabel]);
+
+  // creatable: detectar se podemos oferecer criação
+  // Mostra a creation row quando:
+  //   1. creatable está ligado
+  //   2. query tem conteúdo (depois de trim)
+  //   3. nenhum option existente bate exatamente (case-insensitive)
+  //   4. em multi: o valor ainda não está nos selecionados
+  const trimmedQuery = query.trim();
+  const canCreate = useMemo(() => {
+    if (!creatable || !trimmedQuery) return false;
+    const qNorm = normalize(trimmedQuery);
+    const exact = options.find(
+      (o) => normalize(getOptionLabel(o)) === qNorm,
+    );
+    if (exact) return false;
+    if (isMulti) {
+      const curr = (value as string[]) ?? [];
+      if (curr.some((v) => normalize(v) === qNorm)) return false;
+    } else {
+      if (typeof value === "string" && normalize(value) === qNorm) return false;
+    }
+    return true;
+  }, [creatable, trimmedQuery, options, getOptionLabel, isMulti, value]);
+
+  // Total de itens "selecionáveis" no painel (criação conta como item 0)
+  const totalItems = filtered.length + (canCreate ? 1 : 0);
+  // Index real do item ativo:
+  //   - se canCreate, índice 0 = creation row, 1+ = filtered[i-1]
+  //   - se !canCreate, índice i = filtered[i]
+  const creationIndex = canCreate ? 0 : -1;
+  const filteredOffset = canCreate ? 1 : 0;
 
   // Reset active quando filtra
   useEffect(() => {
@@ -230,13 +271,33 @@ export function Combobox<T extends ComboboxOption = ComboboxOption>(
     inputRef.current?.focus();
   };
 
+  /** Cria um novo valor (livre, não vindo do array `options`).
+      Em multi, adiciona à lista; em single, vira o valor único. */
+  const createNew = () => {
+    const v = trimmedQuery;
+    if (!v) return;
+    if (isMulti) {
+      const curr = (value as string[]) ?? [];
+      if (!curr.includes(v)) {
+        (props as ComboboxMultiProps<T>).onChange?.([...curr, v]);
+      }
+      setQuery("");
+      inputRef.current?.focus();
+    } else {
+      (props as ComboboxSingleProps<T>).onChange?.(v);
+      setQuery("");
+      setOpen(false);
+      inputRef.current?.blur();
+    }
+  };
+
   /* ---------- keyboard ---------- */
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (disabled) return;
     if (e.key === "ArrowDown") {
       e.preventDefault();
       if (!open) setOpen(true);
-      setActiveIndex((i) => Math.min(filtered.length - 1, i + 1));
+      setActiveIndex((i) => Math.min(totalItems - 1, i + 1));
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
       if (!open) setOpen(true);
@@ -246,13 +307,17 @@ export function Combobox<T extends ComboboxOption = ComboboxOption>(
       setActiveIndex(0);
     } else if (e.key === "End" && open) {
       e.preventDefault();
-      setActiveIndex(filtered.length - 1);
+      setActiveIndex(totalItems - 1);
     } else if (e.key === "Enter") {
-      if (open && filtered[activeIndex]) {
+      if (open) {
         e.preventDefault();
-        const opt = filtered[activeIndex];
-        if (!opt.disabled) selectOne(opt);
-      } else if (!open) {
+        if (canCreate && activeIndex === creationIndex) {
+          createNew();
+        } else {
+          const opt = filtered[activeIndex - filteredOffset];
+          if (opt && !opt.disabled) selectOne(opt);
+        }
+      } else {
         e.preventDefault();
         setOpen(true);
       }
@@ -276,11 +341,22 @@ export function Combobox<T extends ComboboxOption = ComboboxOption>(
   };
 
   /* ---------- render ---------- */
+  // Em creatable, o value pode conter strings que não estão em options
+  // (criadas livremente). Pra esses casos, materializamos um option
+  // sintético usando o próprio valor como label.
+  const resolveValue = (v: string): T => {
+    const found = byValue.get(v);
+    if (found) return found;
+    return { value: v, label: v } as unknown as T;
+  };
+
   const selectedSingle = !isMulti
-    ? value && byValue.get(value as string)
+    ? value
+      ? resolveValue(value as string)
+      : null
     : null;
   const selectedMulti = isMulti
-    ? ((value as string[]) ?? []).map((v) => byValue.get(v)).filter(Boolean) as T[]
+    ? ((value as string[]) ?? []).map(resolveValue)
     : [];
 
   const hasValue = isMulti
@@ -377,7 +453,7 @@ export function Combobox<T extends ComboboxOption = ComboboxOption>(
 
       {open && !disabled && (
         <div className="ds-combo-panel">
-          {filtered.length === 0 ? (
+          {filtered.length === 0 && !canCreate ? (
             <div className="ds-combo-empty">
               {emptyMessage ?? "No results"}
               {query && (
@@ -392,6 +468,43 @@ export function Combobox<T extends ComboboxOption = ComboboxOption>(
               className="ds-combo-list"
               aria-multiselectable={isMulti || undefined}
             >
+              {/* Creation row — primeiro item quando `creatable` está
+                  ativo e o query não bate com nenhuma opção existente. */}
+              {canCreate && (
+                <li role="presentation">
+                  <ul role="presentation">
+                    <li
+                      id={`${listboxId}-${creationIndex}`}
+                      role="option"
+                      aria-selected={false}
+                      className={`ds-combo-opt creation ${
+                        activeIndex === creationIndex ? "active" : ""
+                      }`}
+                      onMouseEnter={() => setActiveIndex(creationIndex)}
+                      onMouseDown={(e) => {
+                        e.preventDefault();
+                        createNew();
+                      }}
+                    >
+                      <span
+                        className="ds-combo-opt-glyph"
+                        aria-hidden="true"
+                      >
+                        +
+                      </span>
+                      <span className="ds-combo-opt-label">
+                        {createLabel ? (
+                          createLabel(trimmedQuery)
+                        ) : (
+                          <>
+                            Criar <em>"{trimmedQuery}"</em>
+                          </>
+                        )}
+                      </span>
+                    </li>
+                  </ul>
+                </li>
+              )}
               {(() => {
                 /* Agrupa por `group` se houver. */
                 const groups: { group: string | null; items: T[] }[] = [];
@@ -405,7 +518,7 @@ export function Combobox<T extends ComboboxOption = ComboboxOption>(
                   seen.get(g)!.push(o);
                 });
 
-                let cursor = 0;
+                let cursor = filteredOffset;
                 return groups.map((g, gi) => (
                   <li key={`g-${gi}`} role="presentation">
                     {g.group && (

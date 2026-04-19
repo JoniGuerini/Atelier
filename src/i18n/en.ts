@@ -1586,6 +1586,17 @@ const en = {
         hint: "You can pick several. Backspace removes the last.",
         placeholder: "Add tag…",
       },
+      creatable: {
+        title: "Creatable — accept new values",
+        kicker: "creatable=true",
+        desc:
+          "By default Combobox is a [em]select[/em] — it only lets you pick from the array. With [em]creatable[/em], a [em]Create \"…\"[/em] row appears at the top of the panel whenever what you typed doesn't match any existing option. Enter or click creates the free value — in multi it becomes a chip, in single it becomes the value.",
+        caption: "Tags with free creation — type and Enter",
+        field: "Article tags",
+        hint: "Pick from suggestions or type a new tag and press Enter.",
+        placeholder: "Existing tag or new one…",
+        create: "Create",
+      },
       groups: {
         title: "Groups",
         kicker: "option.group",

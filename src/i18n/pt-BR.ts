@@ -1647,6 +1647,17 @@ const ptBR = {
         hint: "Você pode escolher várias. Backspace remove a última.",
         placeholder: "Adicionar tag…",
       },
+      creatable: {
+        title: "Creatable — aceita valores novos",
+        kicker: "creatable=true",
+        desc:
+          "Combobox padrão é um [em]select[/em] — só permite escolher do array. Com [em]creatable[/em], aparece uma linha [em]Criar \"…\"[/em] no topo do painel sempre que o que você digitou não bate com nenhuma opção existente. Enter ou click cria o item livre — em multi vira chip, em single vira o valor.",
+        caption: "Tags com criação livre — digite e Enter",
+        field: "Tags do artigo",
+        hint: "Escolha das sugestões ou digite uma tag nova e tecle Enter.",
+        placeholder: "Tag existente ou nova…",
+        create: "Criar",
+      },
       groups: {
         title: "Grupos",
         kicker: "option.group",
