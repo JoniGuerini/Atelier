@@ -98,6 +98,7 @@ const SIDEBAR_KEY = "atelier.sidebarCollapsed";
 const NAV_MODE_KEY = "atelier.navMode";
 
 export default function App() {
+  const { t } = useT();
   const [route, navigate] = useHashRoute();
   const current = ALL_ROUTE_IDS.includes(route) ? route : "overview";
   const Page = PAGES[current] || Overview;
