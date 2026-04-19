@@ -2,7 +2,6 @@ import {
   Children,
   isValidElement,
   useCallback,
-  useEffect,
   useRef,
   useState,
   type CSSProperties,
@@ -14,28 +13,29 @@ import { useT } from "../lib/i18n.tsx";
 import { ResizablePanel } from "./ResizablePanels.tsx";
 
 /* ================================================================
-   ResizableJunction — layout em L-shape (3 painéis) com handle
-   de JUNÇÃO no centro que redimensiona os 3 ao mesmo tempo.
+   ResizableJunction — layout L-shape (3 painéis) com junction
+   handle no centro que redimensiona em 2 dimensões simultâneas.
    ----------------------------------------------------------------
-   Diferente do ResizablePanels normal (aninhado), aqui o usuário
-   pode agarrar o ponto onde os 3 painéis se encontram e arrastar
-   em DUAS dimensões simultâneas — um movimento diagonal redimensiona
-   tanto o split horizontal (One vs direita) quanto o vertical
-   (Two vs Three) numa única ação.
+   Reescrito do zero usando CSS Grid em vez de flex aninhado.
+   A grade tem 3 colunas × 3 linhas:
 
-   Uso:
-     <ResizableJunction defaultHorizontal={50} defaultVertical={50}>
-       <ResizablePanel>One</ResizablePanel>      // coluna esquerda
-       <ResizablePanel>Two</ResizablePanel>      // direita topo
-       <ResizablePanel>Three</ResizablePanel>    // direita base
-     </ResizableJunction>
+     col 1 (var --h%)  col 2 (1px)    col 3 (rest)
+     ----------------  -------------  -------------
+     |              |  |           |  |   Two    | row 1 (var --v%)
+     |    One       |  |  vert     |  |----------|
+     |              |  |  handle   |  |  horiz   | row 2 (1px)
+     |              |  |           |  |  handle  |
+     |              |  |           |  |----------|
+     |              |  |           |  |  Three   | row 3 (rest)
 
-   Handles disponíveis:
-     1. Handle vertical (entre One e a coluna direita) — só horizontal
-     2. Handle horizontal (entre Two e Three, só na col direita) — só vertical
-     3. Junction handle (no centro do "+") — DIAGONAL, move ambos
+   One ocupa col 1, span de todas as 3 rows (grid-row: 1 / -1).
+   Vertical handle ocupa col 2, span de todas as rows.
+   Horizontal handle ocupa col 3, row 2 apenas.
+   Junction handle (cruz) é absoluto, posicionado no centro do "+".
 
-   Persistência opcional via storageKey.
+   Cada painel tem cor própria + bordas sutis pra delimitar
+   visualmente. Os handles são linhas sólidas de 1px (a célula
+   inteira é a área draggable de 6px cobrindo essa linha).
 ================================================================ */
 
 export interface ResizableJunctionProps {
@@ -57,6 +57,13 @@ export interface ResizableJunctionProps {
   ariaLabel?: string;
 }
 
+/* O handle visual é 1px, mas a área draggable é 6px (3px pra cada lado).
+   Como a grid usa 1px como track, a área "extra" é simulada com padding
+   no próprio handle via box-sizing/border. Mas mais simples: o track
+   é 6px, e dentro dele uma linha de 1px representa visualmente a borda.
+   Vamos com: track 1px (linha pura) + hit area expandida via ::before. */
+const HANDLE_TRACK = 6; // px — largura do track na grid (área de drag)
+
 export function ResizableJunction({
   children,
   defaultHorizontal = 50,
@@ -73,7 +80,7 @@ export function ResizableJunction({
   const panels = Children.toArray(children).filter(isValidElement).slice(0, 3);
   const [one, two, three] = [panels[0], panels[1], panels[2]];
 
-  // State inicial: storage > defaults
+  /* --- state --- */
   const computeInitial = (): { h: number; v: number } => {
     if (storageKey && typeof window !== "undefined") {
       try {
@@ -117,6 +124,7 @@ export function ResizableJunction({
     [isControlled, onChange, storageKey],
   );
 
+  /* --- pointer drag --- */
   const containerRef = useRef<HTMLDivElement | null>(null);
   const dragRef = useRef<{
     type: "h" | "v" | "junction";
@@ -133,7 +141,6 @@ export function ResizableJunction({
     v: Math.max(minSize, Math.min(100 - minSize, v)),
   });
 
-  /* --- pointer handlers --- */
   const onDown = (
     e: ReactPointerEvent<HTMLDivElement>,
     type: "h" | "v" | "junction",
@@ -196,30 +203,37 @@ export function ResizableJunction({
     }
   };
 
-  // Re-render quando container cresce/encolhe pra recalcular rect no próximo drag
-  useEffect(() => {
-    /* sem-op: só pra reagir a resize do window */
-  }, []);
-
-  const cls = ["ds-junction"];
+  /* --- render ---
+     Grid 3×3:
+       cols: ${h}% | HANDLE_TRACK px | rest
+       rows: ${v}% | HANDLE_TRACK px | rest
+     - One (col 1, span all rows)
+     - Vertical handle (col 2, span all rows)
+     - Two (col 3, row 1)
+     - Horizontal handle (col 3, row 2)
+     - Three (col 3, row 3)
+     - Junction handle (absolute overlay, centro do "+")
+  */
+  const cls = ["ds-junction-grid"];
   if (className) cls.push(className);
 
-  /* O container é position:relative pro JUNCTION handle (absoluto)
-     ficar posicionado em coordenadas baseadas no container inteiro.
-     Os 3 painéis + 2 handles internos usam flex (column dentro de row). */
+  const gridStyle: CSSProperties = {
+    gridTemplateColumns: `${h}% ${HANDLE_TRACK}px 1fr`,
+    gridTemplateRows: `${v}% ${HANDLE_TRACK}px 1fr`,
+  };
+
   return (
     <div
       ref={containerRef}
       className={cls.join(" ")}
       role="group"
       aria-label={ariaLabel ?? t("ds.resizable.label")}
+      style={gridStyle}
     >
-      {/* Coluna esquerda — One */}
-      <div className="ds-junction-left" style={{ width: `${h}%` }}>
-        {one}
-      </div>
+      {/* Cell: One (col 1, all rows) */}
+      <div className="ds-junction-grid-cell cell-one">{one}</div>
 
-      {/* Handle vertical (entre One e a coluna direita) */}
+      {/* Vertical handle (col 2, all rows) */}
       <div
         role="separator"
         aria-orientation="vertical"
@@ -228,55 +242,48 @@ export function ResizableJunction({
         aria-valuenow={h}
         aria-label={t("ds.resizable.handle")}
         tabIndex={0}
-        className="ds-resizable-handle"
+        className="ds-junction-grid-handle handle-v"
         onPointerDown={(e) => onDown(e, "h")}
         onPointerMove={onMove}
         onPointerUp={onUp}
         onPointerCancel={onUp}
         onKeyDown={(e) => onKey(e, "h")}
-      >
-        <span className="ds-resizable-handle-grip" aria-hidden="true" />
-      </div>
+      />
 
-      {/* Coluna direita — Two (topo) + Three (base), em column-flex */}
-      <div className="ds-junction-right">
-        <div className="ds-junction-top" style={{ height: `${v}%` }}>
-          {two}
-        </div>
+      {/* Cell: Two (col 3, row 1) */}
+      <div className="ds-junction-grid-cell cell-two">{two}</div>
 
-        {/* Handle horizontal interno (entre Two e Three) */}
-        <div
-          role="separator"
-          aria-orientation="horizontal"
-          aria-valuemin={minSize}
-          aria-valuemax={100 - minSize}
-          aria-valuenow={v}
-          aria-label={t("ds.resizable.handle")}
-          tabIndex={0}
-          className="ds-resizable-handle ds-junction-row-handle"
-          onPointerDown={(e) => onDown(e, "v")}
-          onPointerMove={onMove}
-          onPointerUp={onUp}
-          onPointerCancel={onUp}
-          onKeyDown={(e) => onKey(e, "v")}
-        >
-          <span className="ds-resizable-handle-grip" aria-hidden="true" />
-        </div>
+      {/* Horizontal handle (col 3, row 2) */}
+      <div
+        role="separator"
+        aria-orientation="horizontal"
+        aria-valuemin={minSize}
+        aria-valuemax={100 - minSize}
+        aria-valuenow={v}
+        aria-label={t("ds.resizable.handle")}
+        tabIndex={0}
+        className="ds-junction-grid-handle handle-h"
+        onPointerDown={(e) => onDown(e, "v")}
+        onPointerMove={onMove}
+        onPointerUp={onUp}
+        onPointerCancel={onUp}
+        onKeyDown={(e) => onKey(e, "v")}
+      />
 
-        <div className="ds-junction-bottom">{three}</div>
-      </div>
+      {/* Cell: Three (col 3, row 3) */}
+      <div className="ds-junction-grid-cell cell-three">{three}</div>
 
-      {/* JUNCTION HANDLE — no centro do "+" das 3 áreas. Drag em
-          ambos eixos move horizontal E vertical simultaneamente.
-          Position fixed-relative ao container (.ds-junction). */}
+      {/* Junction handle — absolute overlay no centro do "+".
+          Posicionado em (h%, v%) — exatamente onde os 2 handles
+          se cruzam. Usa coordenadas relativas ao container. */}
       <div
         role="separator"
         aria-label={t("ds.resizable.junction")}
         tabIndex={0}
-        className="ds-junction-handle"
+        className="ds-junction-grid-cross"
         style={{
-          left: `calc(${h}% - 8px)`,
-          top: `calc(${v}% - 8px)`,
+          left: `calc(${h}% - 8px + ${HANDLE_TRACK / 2}px)`,
+          top: `calc(${v}% - 8px + ${HANDLE_TRACK / 2}px)`,
         }}
         onPointerDown={(e) => onDown(e, "junction")}
         onPointerMove={onMove}
@@ -284,11 +291,10 @@ export function ResizableJunction({
         onPointerCancel={onUp}
         onKeyDown={(e) => onKey(e, "junction")}
       >
-        <span className="ds-junction-grip" aria-hidden="true" />
+        <span className="ds-junction-grid-cross-grip" aria-hidden="true" />
       </div>
     </div>
   );
 }
 
-/* Re-export pra conveniência (consumidor importa tudo daqui). */
 export { ResizablePanel };
