@@ -474,6 +474,89 @@ toast({
 });`,
   },
   {
+    id: "combobox",
+    name: "Combobox",
+    route: "combobox",
+    imports: `import { Combobox, type ComboboxOption } from "./ds/Combobox";`,
+    props: [
+      ["options", "ComboboxOption[] (value, label, group?, glyph?, disabled?)", "—"],
+      ["value", "string | null (single) | string[] (multi)", "—"],
+      ["onChange", "(value) => void", "—"],
+      ["multi", "boolean", "false"],
+      ["placeholder", "string", "—"],
+      ["disabled", "boolean", "false"],
+      ["getOptionValue / getOptionLabel / renderOption", "customização avançada", "defaults"],
+    ],
+    code: `// Single
+<Combobox
+  options={[
+    { value: "br", label: "Brazil" },
+    { value: "us", label: "United States" },
+  ]}
+  value={value}
+  onChange={setValue}
+  placeholder="Pick a country"
+/>
+
+// Multi com chips
+<Combobox
+  multi
+  options={tags}
+  value={selected}
+  onChange={setSelected}
+/>
+
+// Com grupos (separadores no painel)
+const langs = [
+  { value: "ts", label: "TypeScript", group: "Typed" },
+  { value: "py", label: "Python", group: "Dynamic" },
+];
+
+// Com glifos serifados
+const tags = [
+  { value: "design", label: "Design", glyph: "§" },
+  { value: "code",   label: "Code",   glyph: "¶" },
+];`,
+  },
+  {
+    id: "slider",
+    name: "RangeSlider",
+    route: "slider",
+    imports: `import { RangeSlider } from "./ds/RangeSlider";
+import type { SliderValue, SliderOrientation } from "./ds/types";`,
+    props: [
+      ["value", "number (single) | [number, number] (dual)", "—"],
+      ["onChange", "(value) => void", "—"],
+      ["min / max / step", "number", "0 / 100 / 1"],
+      ["marks", "number[] (ticks visuais com label)", "—"],
+      ["showValue", "'always' | 'active' | 'never'", "'active'"],
+      ["formatValue", "(n) => string", "String"],
+      ["orientation", "'horizontal' | 'vertical'", "'horizontal'"],
+      ["size", "number | string (length da dimensão principal)", "—"],
+      ["disabled", "boolean", "false"],
+    ],
+    code: `// Single
+<RangeSlider min={0} max={100} value={vol} onChange={setVol} />
+
+// Dual (range)
+<RangeSlider
+  min={0} max={1000} step={50}
+  value={[200, 800]}
+  onChange={setBudget}
+  formatValue={(v) => \`\\$\${v}\`}
+/>
+
+// Com marks
+<RangeSlider
+  min={1900} max={2025}
+  value={year} onChange={setYear}
+  marks={[1900, 1950, 2000, 2025]}
+/>
+
+// Vertical
+<RangeSlider orientation="vertical" size={200} … />`,
+  },
+  {
     id: "contextMenu",
     name: "ContextMenu family",
     route: "context-menu",

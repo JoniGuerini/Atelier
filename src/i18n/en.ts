@@ -86,6 +86,8 @@ const en = {
       contextMenu: "Context Menu",
       drawer: "Drawer",
       toaster: "Toaster",
+      combobox: "Combobox",
+      slider: "Range Slider",
       forms: "Forms",
       stepper: "Stepper",
       emptyStates: "Empty states",
@@ -123,6 +125,8 @@ const en = {
       contextMenu: "Menu triggered by right-click — opens at cursor coordinates.",
       drawer: "Side modal that slides from one of four edges — sheets, settings panels.",
       toaster: "Notification system with queue, auto-dismiss and five semantic variants.",
+      combobox: "Select with real-time search input, multi-select, groups and full keyboard support.",
+      slider: "Numeric slider with 1 or 2 handles, marks, vertical, and full keyboard support.",
       forms: "Full composition: fields, dividers, actions.",
       stepper: "Multi-step progress indicator for long forms.",
       emptyStates: "Invitations, not defeats — space with intent.",
@@ -1553,8 +1557,140 @@ const en = {
       },
     },
 
+    /* ------------- Combobox ------------- */
+    combobox: {
+      lead: "Advanced · 27",
+      titleA: "The ",
+      titleB: "combobox",
+      metaLabel: "Searchable select",
+      meta: "Single + multi · groups · keyboard",
+      intro:
+        "Select with [em]real-time search[/em]. Case- and accent-insensitive filtering, full keyboard navigation, single or multi mode with chips, optional grouping. Replaces native [em]<select>[/em] when there are more than half a dozen options or the UX needs to breathe.",
+      basic: {
+        title: "Single — basic usage",
+        kicker: "single select",
+        desc:
+          "Type to filter, [em]↑↓[/em] navigates, [em]Enter[/em] selects, [em]Esc[/em] closes. The × button clears the current selection.",
+        caption: "Pick a country",
+        field: "Country",
+        placeholder: "Type to search…",
+        empty: "No results",
+      },
+      multi: {
+        title: "Multi — many selections",
+        kicker: "multi=true",
+        desc:
+          "Each selected item becomes a [em]chip[/em] inside the input. [em]Backspace[/em] with empty input removes the last chip. The panel stays open between selections.",
+        caption: "Article tags",
+        field: "Tags",
+        hint: "You can pick several. Backspace removes the last.",
+        placeholder: "Add tag…",
+      },
+      groups: {
+        title: "Groups",
+        kicker: "option.group",
+        desc:
+          "When an option has a [em]group[/em], Combobox renders a [em]label[/em] separating groups in the panel. Group order follows order of appearance.",
+        caption: "Languages grouped by paradigm",
+        field: "Favorite language",
+        placeholder: "Pick a language…",
+      },
+      states: {
+        title: "Disabled options",
+        kicker: "option.disabled",
+        desc:
+          "Individual items can be marked as [em]disabled[/em] — visible in the panel but not selectable.",
+        caption: "Frameworks (some unavailable)",
+        field: "Framework",
+        hint: "Vue and Angular are unavailable in this version.",
+        placeholder: "Pick a framework…",
+      },
+      disabled: {
+        title: "Fully disabled",
+        kicker: "disabled",
+        desc:
+          "The whole Combobox becomes inert — won't open, can't focus, displays the current value in dimmed style.",
+        caption: "Disabled state (read-only visual)",
+        field: "Language (locked)",
+      },
+      composition: {
+        title: "API",
+        titleB: "",
+        kicker: "single tag",
+        caption:
+          "Combobox is a [em]single tag[/em] — no subcomponents. All customization is via props (options, value, onChange, multi, getOptionValue, getOptionLabel, renderOption, etc.).",
+      },
+    },
+
+    /* ------------- RangeSlider ------------- */
+    slider: {
+      lead: "Advanced · 28",
+      titleA: "The ",
+      titleB: "range slider",
+      metaLabel: "Numeric",
+      meta: "1 or 2 handles · marks · vertical",
+      intro:
+        "Numeric slider for [em]continuous values[/em] or [em]ranges[/em]. Click/drag anywhere on the track moves the nearest handle, [em]←→[/em] adjusts by step (Shift by step×10), [em]Home/End[/em] jump to ends. No external libs — manual drag with PointerEvents.",
+      single: {
+        title: "Single — one value",
+        kicker: "value: number",
+        desc:
+          "The most common case. Drag, click on the track or use keyboard. The label floats above the handle only on hover/focus — silence when not in use.",
+        caption: "Volume: {value}%",
+        field: "Volume",
+      },
+      dual: {
+        title: "Dual — range",
+        kicker: "value: [number, number]",
+        desc:
+          "Two handles. Combobox auto-detects when you pass an array. Values are [em]sorted[/em] in onChange — always [min, max].",
+        caption: "Budget: ${min} – ${max}",
+        field: "Price range",
+        hint: "Drag either handle. Step of $50.",
+      },
+      marks: {
+        title: "Marks (ticks)",
+        kicker: "marks: number[]",
+        desc:
+          "Small marks on the track + labels below. They don't act as [em]snap points[/em] — just visual reference. For snap, set the [em]step[/em].",
+        caption: "Year: {value}",
+        field: "Year",
+      },
+      always: {
+        title: "Label always visible",
+        kicker: 'showValue="always"',
+        desc:
+          "Default shows the label only on hover/focus. When the value is [em]the main info[/em] (e.g. password strength, brightness), use [em]showValue=\"always\"[/em].",
+        caption: "Strength: {value}",
+        field: "Password strength",
+      },
+      vertical: {
+        title: "Vertical",
+        kicker: 'orientation="vertical"',
+        desc:
+          "↑ increases, ↓ decreases — natural for equalizers, brightness, and any axis where [em]more is up[/em].",
+        caption: "Brightness: {value}",
+        field: "Brightness",
+      },
+      disabled: {
+        title: "Disabled",
+        kicker: "disabled",
+        desc:
+          "Track and fill go dim, the handle stops responding to events.",
+        caption: "Slider in disabled state",
+        field: "Setting unavailable",
+      },
+      composition: {
+        title: "API",
+        titleB: "",
+        kicker: "single tag",
+        caption:
+          "Like Combobox, RangeSlider is a [em]single tag[/em]. Behavior controlled via props — no subcomponents.",
+      },
+    },
+
     forms: {
-      lead: "Pattern · 27",
+      lead: "Pattern · 29",
       titleA: "The ",
       titleB: "forms",
       metaLabel: "Composition",
@@ -1594,7 +1730,7 @@ const en = {
     },
 
     stepper: {
-      lead: "Pattern · 28",
+      lead: "Pattern · 30",
       titleA: "The ",
       titleB: "stepper",
       metaLabel: "Multi-step",
@@ -1638,7 +1774,7 @@ const en = {
     },
 
     emptyStates: {
-      lead: "Pattern · 29",
+      lead: "Pattern · 31",
       titleA: "The ",
       titleB: "emptiness",
       metaLabel: "No content",
@@ -1688,7 +1824,7 @@ const en = {
     },
 
     sidebar: {
-      lead: "Pattern · 30",
+      lead: "Pattern · 32",
       titleA: "The ",
       titleB: "sidebar",
       metaLabel: "Navigation",
@@ -1787,7 +1923,7 @@ const en = {
     },
 
     navbar: {
-      lead: "Pattern · 31",
+      lead: "Pattern · 33",
       titleA: "The ",
       titleB: "navbar",
       metaLabel: "Navigation",
@@ -2019,7 +2155,7 @@ const en = {
     },
 
     accessibility: {
-      lead: "Reference · 32",
+      lead: "Reference · 34",
       titleA: "On ",
       titleB: "accessibility",
       metaLabel: "Conformance",

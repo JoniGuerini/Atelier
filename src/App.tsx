@@ -66,6 +66,8 @@ import DropdownMenuPage from "./pages/DropdownMenuPage.tsx";
 import ContextMenuPage from "./pages/ContextMenuPage.tsx";
 import DrawerPage from "./pages/DrawerPage.tsx";
 import ToasterPage from "./pages/ToasterPage.tsx";
+import ComboboxPage from "./pages/ComboboxPage.tsx";
+import RangeSliderPage from "./pages/RangeSliderPage.tsx";
 import { Toaster } from "./ds/Toaster.tsx";
 
 const PAGES = {
@@ -104,6 +106,8 @@ const PAGES = {
   "context-menu": ContextMenuPage,
   drawer: DrawerPage,
   toaster: ToasterPage,
+  combobox: ComboboxPage,
+  slider: RangeSliderPage,
 };
 
 const SIDEBAR_KEY = "atelier.sidebarCollapsed";

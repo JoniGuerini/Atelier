@@ -59,6 +59,8 @@ const COMPONENTS = [
   { id: "ctxmenu",     label: "ContextMenu", route: "context-menu", keywords: ["menu", "right-click", "clique direito", "contextual"] },
   { id: "drawer",      label: "Drawer",      route: "drawer",      keywords: ["sheet", "lateral", "side panel", "modal"] },
   { id: "toaster",     label: "Toaster",     route: "toaster",     keywords: ["toast", "notification", "notificação", "queue", "snackbar"] },
+  { id: "combobox",    label: "Combobox",    route: "combobox",    keywords: ["autocomplete", "select", "search", "busca", "tags"] },
+  { id: "slider",      label: "RangeSlider", route: "slider",      keywords: ["slider", "range", "intervalo", "deslizar", "knob"] },
   { id: "a11y",          label: "Accessibility", route: "accessibility", keywords: ["a11y", "acessibilidade", "wcag", "aria", "atalhos", "keyboard", "skip link"] },
   { id: "skip-link",     label: "Skip link",     route: "accessibility", keywords: ["skip", "pular", "teclado"] },
   { id: "keyboard-map",  label: "Keyboard map",  route: "accessibility", keywords: ["atalhos", "teclado", "shortcut"] },

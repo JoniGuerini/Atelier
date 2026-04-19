@@ -454,6 +454,19 @@ export interface ContextMenuItemProps {
   disabled?: boolean;
 }
 
+/* ----------------- Combobox ----------------- */
+export type ComboboxOption = {
+  value: string;
+  label: string;
+  group?: string;
+  glyph?: ReactNode;
+  disabled?: boolean;
+};
+
+/* ----------------- RangeSlider ----------------- */
+export type SliderValue = number | [number, number];
+export type SliderOrientation = "horizontal" | "vertical";
+
 /* ----------------- Drawer ----------------- */
 export type DrawerSide = "top" | "right" | "bottom" | "left";
 export interface DrawerProps {

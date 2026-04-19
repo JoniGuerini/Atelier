@@ -86,6 +86,8 @@ const ptBR = {
       contextMenu: "Context Menu",
       drawer: "Drawer",
       toaster: "Toaster",
+      combobox: "Combobox",
+      slider: "Range Slider",
       forms: "Formulários",
       stepper: "Stepper",
       emptyStates: "Estados vazios",
@@ -123,6 +125,8 @@ const ptBR = {
       contextMenu: "Menu disparado pelo clique direito — abre nas coordenadas do cursor.",
       drawer: "Modal lateral que desliza de um dos quatro lados — sheets, painéis de configuração.",
       toaster: "Sistema de notificações com queue, auto-dismiss e cinco variantes semânticas.",
+      combobox: "Select com input de busca em tempo real, multi-select, grupos e teclado completo.",
+      slider: "Slider numérico com 1 ou 2 handles, marks, vertical e suporte total a teclado.",
       forms: "Composição completa: campos, divisores e ações.",
       stepper: "Indicador de progresso multi-etapa para forms longos.",
       emptyStates: "Convites, não derrotas — espaço com intenção.",
@@ -1614,9 +1618,141 @@ const ptBR = {
       },
     },
 
+    /* ------------- Combobox ------------- */
+    combobox: {
+      lead: "Avançado · 27",
+      titleA: "O ",
+      titleB: "combobox",
+      metaLabel: "Select com busca",
+      meta: "Single + multi · grupos · teclado",
+      intro:
+        "Select com [em]input de busca em tempo real[/em]. Filtragem insensível a caso e acentos, navegação completa por teclado, modo single ou multi com chips, agrupamento opcional. Substitui [em]<select>[/em] nativo quando há mais de meia dúzia de opções ou quando a UX precisa respirar.",
+      basic: {
+        title: "Single — uso básico",
+        kicker: "single select",
+        desc:
+          "Digite pra filtrar, [em]↑↓[/em] navega, [em]Enter[/em] seleciona, [em]Esc[/em] fecha. Botão × limpa a seleção atual.",
+        caption: "Selecione um país",
+        field: "País",
+        placeholder: "Digite para buscar…",
+        empty: "Nenhum resultado",
+      },
+      multi: {
+        title: "Multi — várias seleções",
+        kicker: "multi=true",
+        desc:
+          "Cada item selecionado vira um [em]chip[/em] dentro do input. [em]Backspace[/em] com input vazio remove o último chip. O painel não fecha entre seleções.",
+        caption: "Tags do artigo",
+        field: "Tags",
+        hint: "Você pode escolher várias. Backspace remove a última.",
+        placeholder: "Adicionar tag…",
+      },
+      groups: {
+        title: "Grupos",
+        kicker: "option.group",
+        desc:
+          "Quando uma opção tem [em]group[/em], o Combobox renderiza um [em]label[/em] separando os grupos no painel. A ordem dos grupos segue a ordem de aparição.",
+        caption: "Linguagens agrupadas por paradigma",
+        field: "Linguagem favorita",
+        placeholder: "Escolha uma linguagem…",
+      },
+      states: {
+        title: "Opções desabilitadas",
+        kicker: "option.disabled",
+        desc:
+          "Items individuais podem ser marcados como [em]disabled[/em] — ficam visíveis no painel mas não selecionáveis.",
+        caption: "Frameworks (alguns indisponíveis)",
+        field: "Framework",
+        hint: "Vue e Angular estão indisponíveis nesta versão.",
+        placeholder: "Escolha um framework…",
+      },
+      disabled: {
+        title: "Disabled total",
+        kicker: "disabled",
+        desc:
+          "O Combobox inteiro fica inerte — não abre, não recebe foco, mostra a seleção atual em estilo apagado.",
+        caption: "Estado disabled (somente leitura visual)",
+        field: "Linguagem (bloqueada)",
+      },
+      composition: {
+        title: "API",
+        titleB: "",
+        kicker: "uma única tag",
+        caption:
+          "O Combobox é uma [em]única tag[/em] — sem subcomponentes. Toda a customização vai por props (options, value, onChange, multi, getOptionValue, getOptionLabel, renderOption, etc.).",
+      },
+    },
+
+    /* ------------- RangeSlider ------------- */
+    slider: {
+      lead: "Avançado · 28",
+      titleA: "O ",
+      titleB: "range slider",
+      metaLabel: "Numérico",
+      meta: "1 ou 2 handles · marks · vertical",
+      intro:
+        "Slider numérico para [em]valores contínuos[/em] ou [em]intervalos[/em]. Click/drag em qualquer ponto move o handle mais próximo, [em]←→[/em] ajusta por step (Shift por step×10), [em]Home/End[/em] vão pro extremo. Sem libs externas — drag manual com PointerEvents.",
+      single: {
+        title: "Single — um valor",
+        kicker: "value: number",
+        desc:
+          "O caso mais comum. Drag, click no track ou teclado. O label flutua acima do handle apenas durante o hover/foco — silêncio quando não está em uso.",
+        caption: "Volume: {value}%",
+        field: "Volume",
+      },
+      dual: {
+        title: "Dual — intervalo",
+        kicker: "value: [number, number]",
+        desc:
+          "Dois handles. O Combobox detecta automaticamente quando você passa um array. Os valores são [em]ordenados[/em] no onChange — sempre [min, max].",
+        caption: "Orçamento: ${min} – ${max}",
+        field: "Faixa de preço",
+        hint: "Mova qualquer um dos dois handles. Step de $50.",
+      },
+      marks: {
+        title: "Marks (ticks)",
+        kicker: "marks: number[]",
+        desc:
+          "Pequenas marcas no track + labels embaixo. Não funcionam como [em]snap pontos[/em] — apenas referência visual. Pra snap, ajuste o [em]step[/em].",
+        caption: "Ano: {value}",
+        field: "Ano",
+      },
+      always: {
+        title: "Label sempre visível",
+        kicker: 'showValue="always"',
+        desc:
+          "O default mostra o label só no hover/foco. Quando o valor é [em]a informação principal[/em] (ex: força de senha, brilho), use [em]showValue=\"always\"[/em].",
+        caption: "Força: {value}",
+        field: "Força da senha",
+      },
+      vertical: {
+        title: "Vertical",
+        kicker: 'orientation="vertical"',
+        desc:
+          "↑ aumenta, ↓ diminui — natural pra equalizadores, brilho, e qualquer eixo onde [em]mais é em cima[/em].",
+        caption: "Brilho: {value}",
+        field: "Brilho",
+      },
+      disabled: {
+        title: "Disabled",
+        kicker: "disabled",
+        desc:
+          "Track e fill ficam apagados, handle não responde a eventos.",
+        caption: "Slider em estado bloqueado",
+        field: "Configuração indisponível",
+      },
+      composition: {
+        title: "API",
+        titleB: "",
+        kicker: "uma única tag",
+        caption:
+          "Como o Combobox, o RangeSlider é uma [em]única tag[/em]. Comportamento controlado por props — sem subcomponentes.",
+      },
+    },
+
     /* ------------- Forms ------------- */
     forms: {
-      lead: "Padrão · 27",
+      lead: "Padrão · 29",
       titleA: "Os ",
       titleB: "formulários",
       metaLabel: "Composição",
@@ -1657,7 +1793,7 @@ const ptBR = {
 
     /* ------------- Stepper ------------- */
     stepper: {
-      lead: "Padrão · 28",
+      lead: "Padrão · 30",
       titleA: "O ",
       titleB: "stepper",
       metaLabel: "Multi-etapa",
@@ -1702,7 +1838,7 @@ const ptBR = {
 
     /* ------------- Empty States ------------- */
     emptyStates: {
-      lead: "Padrão · 29",
+      lead: "Padrão · 31",
       titleA: "Os ",
       titleB: "vazios",
       metaLabel: "Sem conteúdo",
@@ -1753,7 +1889,7 @@ const ptBR = {
 
     /* ------------- Sidebar (pattern) ------------- */
     sidebar: {
-      lead: "Padrão · 30",
+      lead: "Padrão · 32",
       titleA: "A ",
       titleB: "sidebar",
       metaLabel: "Navegação",
@@ -1853,7 +1989,7 @@ const ptBR = {
 
     /* ------------- Navbar (pattern) ------------- */
     navbar: {
-      lead: "Padrão · 31",
+      lead: "Padrão · 33",
       titleA: "A ",
       titleB: "navbar",
       metaLabel: "Navegação",
@@ -2087,7 +2223,7 @@ const ptBR = {
 
     /* ------------- Accessibility ------------- */
     accessibility: {
-      lead: "Referência · 32",
+      lead: "Referência · 34",
       titleA: "A ",
       titleB: "acessibilidade",
       metaLabel: "Conformidade",

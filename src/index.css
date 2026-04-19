@@ -5274,6 +5274,352 @@ input[type="file"] { display: none; }
   }
 }
 
+/* ================================================================
+   Combobox — Select com busca em tempo real.
+   ----------------------------------------------------------------
+   Visual segue a família dos Inputs (.ds-input) — mesmo height,
+   mesma borda, mesmo focus ring. Quando aberto, ganha um painel
+   abaixo com a lista filtrável.
+================================================================ */
+.ds-combo {
+  position: relative;
+  font-family: var(--font-serif);
+}
+.ds-combo-input-wrap {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  min-height: 38px;
+  padding: 4px 8px 4px 12px;
+  background: var(--bg);
+  border: 1px solid var(--rule-soft);
+  cursor: text;
+  transition: border-color var(--dur-fast) var(--ease);
+}
+.ds-combo.open .ds-combo-input-wrap,
+.ds-combo-input-wrap:focus-within {
+  border-color: var(--accent);
+  outline: 1px solid var(--accent);
+  outline-offset: -2px;
+}
+.ds-combo.disabled .ds-combo-input-wrap {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.ds-combo-input {
+  flex: 1;
+  min-width: 60px;
+  padding: 6px 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  font: inherit;
+  font-size: 14px;
+  color: var(--ink);
+}
+.ds-combo-input::placeholder {
+  color: var(--ink-faint);
+  font-style: italic;
+}
+.ds-combo-clear,
+.ds-combo-chev {
+  appearance: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif);
+  font-size: 14px;
+  color: var(--ink-faint);
+  flex-shrink: 0;
+  transition: color var(--dur-fast) var(--ease);
+}
+.ds-combo-clear:hover {
+  color: var(--ink);
+}
+.ds-combo-chev {
+  font-size: 10px;
+  cursor: default;
+  pointer-events: none;
+}
+.ds-combo.open .ds-combo-chev {
+  color: var(--accent);
+  transform: rotate(180deg);
+}
+
+/* Chips (multi) */
+.ds-combo-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.ds-combo-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 4px 2px 8px;
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+.ds-combo-chip button {
+  appearance: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-serif);
+  font-size: 14px;
+  line-height: 1;
+  color: inherit;
+  padding: 0 4px;
+  opacity: 0.7;
+  transition: opacity var(--dur-fast) var(--ease);
+}
+.ds-combo-chip button:hover {
+  opacity: 1;
+}
+
+/* Painel */
+.ds-combo-panel {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: var(--bg-panel);
+  border: 1px solid var(--rule);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12),
+    0 2px 6px rgba(0, 0, 0, 0.06);
+  max-height: 280px;
+  overflow-y: auto;
+  z-index: 100;
+  animation: ds-combo-in var(--dur-fast) var(--ease);
+}
+[data-theme="dark"] .ds-combo-panel {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5),
+    0 2px 6px rgba(0, 0, 0, 0.3);
+}
+@keyframes ds-combo-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.ds-combo-empty {
+  padding: var(--space-4);
+  font-family: var(--font-serif);
+  font-size: 13px;
+  font-style: italic;
+  color: var(--ink-faint);
+  text-align: center;
+}
+.ds-combo-empty-q {
+  color: var(--ink-soft);
+  font-style: normal;
+}
+.ds-combo-list {
+  list-style: none;
+  margin: 0;
+  padding: 4px 0;
+}
+.ds-combo-list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.ds-combo-group-label {
+  padding: 8px 12px 4px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.ds-combo-opt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  font-family: var(--font-serif);
+  font-size: 14px;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease);
+}
+.ds-combo-opt.active {
+  background: var(--bg-sunken);
+}
+.ds-combo-opt.selected {
+  color: var(--accent);
+}
+.ds-combo-opt.selected.active {
+  background: var(--accent-soft);
+}
+.ds-combo-opt.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.ds-combo-opt-glyph {
+  font-style: italic;
+  color: var(--accent);
+  width: 16px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.ds-combo-opt-label {
+  flex: 1;
+}
+.ds-combo-opt-mark {
+  color: var(--accent);
+  font-family: var(--font-serif);
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+/* ================================================================
+   RangeSlider — single ou dual handle.
+   ----------------------------------------------------------------
+   Track fino, fill em accent, handle quadrado (sem radius)
+   com sombra discreta. Marks como pequenos tics no track.
+================================================================ */
+.ds-slider {
+  position: relative;
+  padding: 12px 0 28px;
+}
+.ds-slider.orientation-vertical {
+  padding: 0 28px 0 12px;
+  display: inline-block;
+  width: auto;
+}
+.ds-slider.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.ds-slider-track {
+  position: relative;
+  height: 4px;
+  background: var(--rule-soft);
+  cursor: pointer;
+  touch-action: none;
+}
+.ds-slider.orientation-vertical .ds-slider-track {
+  width: 4px;
+  height: 100%;
+}
+
+.ds-slider-fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: var(--accent);
+  pointer-events: none;
+}
+.ds-slider.orientation-vertical .ds-slider-fill {
+  left: 0;
+  right: 0;
+  top: auto;
+  bottom: 0;
+}
+
+.ds-slider-mark {
+  position: absolute;
+  top: -3px;
+  width: 1px;
+  height: 10px;
+  background: var(--ink-faint);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+.ds-slider.orientation-vertical .ds-slider-mark {
+  left: -3px;
+  top: auto;
+  width: 10px;
+  height: 1px;
+  transform: translateY(50%);
+}
+
+.ds-slider-handle {
+  position: absolute;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  background: var(--bg);
+  border: 1.5px solid var(--accent);
+  cursor: grab;
+  transform: translate(-50%, -50%);
+  transition: transform var(--dur-fast) var(--ease),
+    box-shadow var(--dur-fast) var(--ease);
+}
+.ds-slider.orientation-vertical .ds-slider-handle {
+  left: 50%;
+  top: auto;
+  transform: translate(-50%, 50%);
+}
+.ds-slider-handle:hover,
+.ds-slider-handle:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+.ds-slider-handle:active {
+  cursor: grabbing;
+}
+
+.ds-slider-value {
+  position: absolute;
+  top: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  background: var(--bg-panel);
+  border: 1px solid var(--accent);
+  padding: 2px 6px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-fast) var(--ease);
+}
+.ds-slider-handle:hover .ds-slider-value,
+.ds-slider-handle:focus-visible .ds-slider-value,
+.ds-slider-handle:active .ds-slider-value,
+.ds-slider-value.always {
+  opacity: 1;
+}
+.ds-slider.orientation-vertical .ds-slider-value {
+  top: 50%;
+  left: 24px;
+  transform: translateY(-50%);
+}
+
+.ds-slider-marks-labels {
+  position: relative;
+  height: 16px;
+  margin-top: 4px;
+}
+.ds-slider-mark-label {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
 /* ----------------------------------------------------------------
    Code page (#/code) — API cards + ADR cards.
 ---------------------------------------------------------------- */
