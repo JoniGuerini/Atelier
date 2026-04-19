@@ -136,7 +136,7 @@ export default function DragDropPage() {
                   display: "inline-block",
                   padding: "var(--space-2) var(--space-4)",
                   border: "1px solid var(--rule)",
-                  background: "var(--surface)",
+                  background: "var(--bg-panel)",
                   fontFamily: "var(--font-serif)",
                   fontSize: 14,
                 }}
@@ -174,8 +174,8 @@ export default function DragDropPage() {
               display: "grid",
               gridTemplateColumns: "1fr 1fr 1fr",
               gap: "1px",
-              background: "var(--rule-soft)",
-              border: "1px solid var(--rule-soft)",
+              background: "var(--rule)",
+              border: "1px solid var(--rule)",
             }}
           >
             <KanbanColumn
@@ -227,7 +227,7 @@ export default function DragDropPage() {
                 style={{
                   padding: "var(--space-3) var(--space-4)",
                   border: "1px solid var(--rule-soft)",
-                  background: "var(--surface)",
+                  background: "var(--bg-panel)",
                   fontFamily: "var(--font-mono)",
                   fontSize: 13,
                 }}
@@ -281,7 +281,7 @@ function CardRow({ card }: { card: Card }) {
     <div
       style={{
         padding: "var(--space-3) var(--space-4)",
-        background: "var(--surface)",
+        background: "var(--bg-panel)",
         border: "1px solid var(--rule-soft)",
         display: "flex",
         justifyContent: "space-between",
@@ -310,7 +310,7 @@ function KanbanColumn({
       style={{
         display: "flex",
         flexDirection: "column",
-        background: "color-mix(in srgb, var(--ink) 3%, transparent)",
+        background: "var(--bg-sunken)",
         minHeight: 240,
       }}
     >
