@@ -1965,6 +1965,9 @@ const en = {
         sidebar: "Sidebar",
         content: "Content",
         inspector: "Inspector",
+        one: "One",
+        two: "Two",
+        three: "Three",
       },
       basic: {
         title: "Horizontal — 2 panels",
@@ -1991,6 +1994,15 @@ const en = {
           "As many panels as you want — just pass more [em]<ResizablePanel>[/em] as children. Each pair gets a handle between them.",
         caption: "Sidebar 20% · Content 60% · Inspector 20%",
         label: "Three-column layout",
+      },
+      nested: {
+        title: "Nesting — L-shaped layout",
+        kicker: "ResizablePanels inside ResizablePanel",
+        desc:
+          "For more complex layouts (full left column + right column split top/bottom, the [em]classic editor pattern[/em]), just [em]nest[/em] a ResizablePanels inside a ResizablePanel. Each level has its own independent handle. Supports any depth.",
+        caption: "L-shape — One on the left, Two/Three split the right",
+        label: "L-shaped layout",
+        innerLabel: "Right column (Two/Three)",
       },
       persist: {
         title: "localStorage persistence",

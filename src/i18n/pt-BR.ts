@@ -2026,6 +2026,9 @@ const ptBR = {
         sidebar: "Sidebar",
         content: "Conteúdo",
         inspector: "Inspector",
+        one: "Um",
+        two: "Dois",
+        three: "Três",
       },
       basic: {
         title: "Horizontal — 2 painéis",
@@ -2052,6 +2055,15 @@ const ptBR = {
           "Quantos painéis quiser — basta passar mais [em]<ResizablePanel>[/em] como filhos. Cada par ganha um handle entre eles.",
         caption: "Sidebar 20% · Conteúdo 60% · Inspector 20%",
         label: "Layout de três colunas",
+      },
+      nested: {
+        title: "Aninhamento — layout em L",
+        kicker: "ResizablePanels dentro de ResizablePanel",
+        desc:
+          "Para layouts mais complexos (coluna esquerda inteira + coluna direita dividida em cima/baixo, padrão de [em]editores[/em]), basta [em]aninhar[/em] um ResizablePanels dentro de um ResizablePanel. Cada nível tem seu próprio handle independente. Suporta qualquer profundidade.",
+        caption: "Layout em L — One ocupa a esquerda, Two/Three dividem a direita",
+        label: "Layout em L",
+        innerLabel: "Coluna direita (Two/Three)",
       },
       persist: {
         title: "Persistência em localStorage",
