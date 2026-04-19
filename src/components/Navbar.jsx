@@ -209,9 +209,11 @@ export function NavbarDropdownItem({
   active = false,
   n,
   description,
+  isNew = false,
   children,
 }) {
   const { onNavigate } = useNavbar();
+  const { t } = useT();
   const url = href ?? (slug ? `#/${slug}` : "#");
   const rich = !!description;
   return (
@@ -230,7 +232,14 @@ export function NavbarDropdownItem({
       >
         {n != null && <span className="n">{n}</span>}
         <span className="text">
-          <span className="label">{children}</span>
+          <span className="label">
+            {children}
+            {isNew && (
+              <span className="nav-menu-new-badge" aria-label={t("nav.newBadge")}>
+                {t("nav.newBadge")}
+              </span>
+            )}
+          </span>
           {rich && <span className="desc">{description}</span>}
         </span>
       </a>

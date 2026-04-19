@@ -135,6 +135,7 @@ const ptBR = {
       kicker: "preferências",
       title: "Configurações",
     },
+    newBadge: "Novo",
     navLabel: "Navegação principal",
   },
 

@@ -242,6 +242,7 @@ function AppNavbar({ current, navigate, navMode, setNavMode, openSearch }) {
                     n={it.n}
                     description={description}
                     active={current === slug}
+                    isNew={it.isNew}
                   >
                     {t(`nav.items.${it.id}`)}
                   </NavbarDropdownItem>

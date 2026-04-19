@@ -135,6 +135,7 @@ const en = {
       kicker: "preferences",
       title: "Settings",
     },
+    newBadge: "New",
     navLabel: "Primary navigation",
   },
 
