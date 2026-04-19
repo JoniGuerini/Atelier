@@ -2224,14 +2224,22 @@ input[type="file"] { display: none; }
   margin-inline: auto;
   padding: var(--space-3) var(--space-7);
   display: grid;
-  /* 4 colunas: brand | nav (centralizado) | search | actions(settings).
-     Search ganha sua própria coluna pra sair do cluster do canto
-     direito — fica com respiro de --space-5 (24px) entre ele e o
-     cluster de actions, e mais um respiro do mesmo tamanho entre
-     ele e o nav (centralizado no 1fr). */
-  grid-template-columns: auto 1fr auto auto;
+  /* 5 colunas: brand | nav (1fr) | search | spacer (1fr) | settings.
+     O segundo 1fr empurra o settings pro canto direito enquanto
+     o search descansa no meio do espaço entre o nav e o settings.
+     Resultado: search visualmente equidistante das duas pontas. */
+  grid-template-columns: auto 1fr auto 1fr auto;
   align-items: center;
   gap: var(--space-5);
+}
+/* Spacer fantasma entre search e settings — só pra ocupar a coluna
+   1fr do meio. Renderizado via CSS pra não poluir o JSX. */
+.site-navbar-inner > .search-trigger {
+  /* search vive na coluna 3; o spacer da coluna 4 fica vazio
+     (não tem child correspondente). Settings se ancora na 5. */
+}
+.site-navbar-inner > .site-navbar-actions {
+  grid-column: 5;
 }
 .site-navbar-brand {
   text-decoration: none;
@@ -2471,9 +2479,9 @@ input[type="file"] { display: none; }
 /* Responsivo da navbar */
 @media (max-width: 1080px) {
   .site-navbar-nav { display: none; }
-  /* Brand | espaço | search | settings — sem o nav central */
-  .site-navbar-inner { grid-template-columns: auto 1fr auto auto; }
-  .site-navbar-actions { justify-self: end; }
+  /* Sem o nav central: brand | spacer | search | spacer | settings */
+  .site-navbar-inner { grid-template-columns: auto 1fr auto 1fr auto; }
+  .site-navbar-actions { justify-self: end; grid-column: 5; }
 }
 @media (max-width: 560px) {
   .site-navbar-inner { padding: var(--space-3) var(--space-5); }
