@@ -174,8 +174,8 @@ export default function DragDropPage() {
               display: "grid",
               gridTemplateColumns: "1fr 1fr 1fr",
               gap: "1px",
-              background: "var(--rule)",
-              border: "1px solid var(--rule)",
+              background: "var(--rule-soft)",
+              border: "1px solid var(--rule-soft)",
             }}
           >
             <KanbanColumn
