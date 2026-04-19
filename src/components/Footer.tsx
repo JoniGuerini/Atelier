@@ -1,9 +1,19 @@
+import type { ReactNode } from "react";
 import { ROUTE_BY_ID } from "../lib/routes.ts";
 import { useT } from "../lib/i18n.tsx";
 
+interface NavLinkProps {
+  to: string;
+  children?: ReactNode;
+  onNavigate?: (route: string) => void;
+}
+interface FooterProps {
+  onNavigate?: (route: string) => void;
+}
+
 /* Âncora interna de navegação: usa o hash router mas preserva
    href válido para acessibilidade / "abrir em nova aba". */
-function NavLink({ to, children, onNavigate }: any) {
+function NavLink({ to, children, onNavigate }: NavLinkProps) {
   const slug = ROUTE_BY_ID[to] || to;
   return (
     <a
@@ -41,7 +51,7 @@ function LinkedInGlyph() {
   );
 }
 
-export default function Footer({ onNavigate }: any) {
+export default function Footer({ onNavigate }: FooterProps) {
   const { t, raw } = useT();
   const year = new Date().getFullYear();
 
@@ -74,13 +84,13 @@ export default function Footer({ onNavigate }: any) {
         </div>
 
         <nav className="site-footer-cols" aria-label={t("footer.navLabel")}>
-          {columns.map((col) => (
+          {columns.map((col: any) => (
             <div key={col.key} className="site-footer-col">
               <div className="site-footer-heading">
                 {t(`footer.groups.${col.key}`)}
               </div>
               <ul>
-                {col.items.map((id) => {
+                {col.items.map((id: any) => {
                   const labelKey = `footer.links.${id.replace(/-/g, "_")}`;
                   return (
                     <li key={id}>

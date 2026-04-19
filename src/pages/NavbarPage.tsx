@@ -54,8 +54,8 @@ function NavbarSpecimen({
 
         <nav className="ds-navbar-specimen-nav">
           <ul>
-            {groups.map((g) => {
-              const anyActive = g.items.some((it) => it.id === activeItem);
+            {groups.map((g: any) => {
+              const anyActive = g.items.some((it: any) => it.id === activeItem);
               const isOpen = forceOpen === g.key;
               return (
                 <li
@@ -76,7 +76,7 @@ function NavbarSpecimen({
                   </button>
                   <div className="ds-nav-menu-panel" role="menu">
                     <ul>
-                      {g.items.map((it) => (
+                      {g.items.map((it: any) => (
                         <li key={it.id}>
                           <button
                             type="button"
@@ -172,7 +172,7 @@ export default function NavbarPage() {
               </div>
             </div>
             <dl className="ds-anatomy-list">
-              {parts.map((p, i) => (
+              {parts.map((p: any, i: any) => (
                 <div className="ds-anatomy-row" key={p.n}>
                   <dt>
                     <span className="n">{p.n}</span>
@@ -273,7 +273,7 @@ export default function NavbarPage() {
         kicker={t("pages.navbar.guidelines.kicker")}
       >
         <div className="ds-guidelines-grid">
-          {guidelines.map((g, i) => (
+          {guidelines.map((g: any, i: any) => (
             <article className="ds-guideline-card" key={g.n}>
               <div className="num">{g.n}</div>
               <h3>

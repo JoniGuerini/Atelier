@@ -1,5 +1,28 @@
-import { useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 import { useT } from "../lib/i18n.tsx";
+import type { PaginationProps } from "./types.ts";
+
+interface PaginationRangeArgs {
+  current: number;
+  total: number;
+  siblings?: number;
+  boundaries?: number;
+}
+interface PaginationRootProps {
+  children?: ReactNode;
+  ariaLabel?: string;
+  className?: string;
+}
+interface PaginationItemProps {
+  n: number;
+  active?: boolean;
+  onClick?: () => void;
+}
+interface PaginationArrowProps {
+  onClick?: () => void;
+  disabled?: boolean;
+  showLabel?: boolean;
+}
 
 /* ================================================================
    Pagination — paginação editorial para listas e tabelas longas.
@@ -37,7 +60,12 @@ import { useT } from "../lib/i18n.tsx";
 /* ---------- Helper: range de páginas mostradas ----------
    Inspirado em Material UI / Mantine: gera array com números e
    "ellipsis" (string "...") nas posições corretas. */
-export function getPaginationRange({ current, total, siblings = 1, boundaries = 1 }: any) {
+export function getPaginationRange({
+  current,
+  total,
+  siblings = 1,
+  boundaries = 1,
+}: PaginationRangeArgs): (number | "...")[] {
   const totalNumbers = boundaries * 2 + siblings * 2 + 3; // primeiras + últimas + atual + 2 ellipses
   if (totalNumbers >= total) {
     return Array.from({ length: total }, (_, i) => i + 1);
@@ -55,7 +83,7 @@ export function getPaginationRange({ current, total, siblings = 1, boundaries = 
     Math.max(current + siblings, boundaries + siblings * 2 + 2),
     endPages.length > 0 ? endPages[0] - 2 : total - 1
   );
-  const result = [];
+  const result: (number | "...")[] = [];
   result.push(...startPages);
   if (siblingsStart > boundaries + 2) result.push("...");
   else if (boundaries + 1 < total - boundaries) result.push(boundaries + 1);
@@ -77,7 +105,7 @@ export function Pagination({
   boundaries = 1,
   showLabels = false,
   className = "",
-}: any) {
+}: PaginationProps) {
   const range = useMemo(
     () => getPaginationRange({ current, total, siblings, boundaries }),
     [current, total, siblings, boundaries]
@@ -95,7 +123,7 @@ export function Pagination({
         onClick={goPrev}
         showLabel={showLabels}
       />
-      {range.map((p, i) =>
+      {range.map((p: any, i: any) =>
         p === "..." ? (
           <PaginationEllipsis key={`e-${i}`} />
         ) : (
@@ -120,7 +148,7 @@ export function Pagination({
    Composable subcomponents — controle total
    ================================================================ */
 
-export function PaginationRoot({ children, ariaLabel, className = "" }: any) {
+export function PaginationRoot({ children, ariaLabel, className = "" }: PaginationRootProps) {
   const { t } = useT();
   return (
     <nav
@@ -132,7 +160,7 @@ export function PaginationRoot({ children, ariaLabel, className = "" }: any) {
   );
 }
 
-export function PaginationItem({ n, active = false, onClick }: any) {
+export function PaginationItem({ n, active = false, onClick }: PaginationItemProps) {
   return (
     <li>
       <button
@@ -156,7 +184,7 @@ export function PaginationEllipsis() {
   );
 }
 
-export function PaginationPrev({ onClick, disabled = false, showLabel = false }: any) {
+export function PaginationPrev({ onClick, disabled = false, showLabel = false }: PaginationArrowProps) {
   const { t } = useT();
   return (
     <li>
@@ -174,7 +202,7 @@ export function PaginationPrev({ onClick, disabled = false, showLabel = false }:
   );
 }
 
-export function PaginationNext({ onClick, disabled = false, showLabel = false }: any) {
+export function PaginationNext({ onClick, disabled = false, showLabel = false }: PaginationArrowProps) {
   const { t } = useT();
   return (
     <li>

@@ -13,7 +13,7 @@ const SURFACES = [
 
 /* ---------- i · Monogramas ----------
    Letras em Fraunces itálico sobre fundos alternados. */
-function Monogram({ letter, bg = "var(--bg-panel)", ink = "var(--ink)" }: any) {
+function Monogram({ letter, bg = "var(--bg-panel)", ink = "var(--ink)" }: { letter: string; bg?: string; ink?: string }) {
   return (
     <svg viewBox="0 0 64 64" width="100%" height="100%" aria-hidden="true">
       <rect width="64" height="64" fill={bg} />
@@ -78,7 +78,7 @@ function GeoMoon() {
 }
 
 /* ---------- iii · Ornamentos tipográficos ---------- */
-function Ornament({ glyph, bg = "var(--bg-panel)", ink = "var(--accent)" }: any) {
+function Ornament({ glyph, bg = "var(--bg-panel)", ink = "var(--accent)" }: { glyph: string; bg?: string; ink?: string }) {
   return (
     <svg viewBox="0 0 64 64" width="100%" height="100%" aria-hidden="true">
       <rect width="64" height="64" fill={bg} />
@@ -119,8 +119,8 @@ export const AVATAR_PRESETS = [
 ];
 
 /* Agrupa presets por categoria (útil para galeria com seções). */
-export function groupAvatarPresets(presets = AVATAR_PRESETS) {
-  const groups = { monogram: [], geometric: [], ornament: [] };
+export function groupAvatarPresets(presets: any[] = AVATAR_PRESETS) {
+  const groups: Record<string, any[]> = { monogram: [], geometric: [], ornament: [] };
   for (const p of presets) {
     if (groups[p.kind]) groups[p.kind].push(p);
   }

@@ -141,7 +141,7 @@ export default function Avatars() {
               width: "100%",
             }}
           >
-            {AVATAR_PRESETS.map((p) => (
+            {AVATAR_PRESETS.map((p: any) => (
               <div
                 key={p.id}
                 style={{

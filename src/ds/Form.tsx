@@ -1,4 +1,20 @@
+import type { CSSProperties, FormEvent, FormHTMLAttributes, ReactNode } from "react";
 import { Field, Divider } from "./primitives.tsx";
+import type {
+  FormRowProps,
+  FormFieldProps,
+  FormActionsProps,
+} from "./types.ts";
+
+interface FormProps extends Omit<FormHTMLAttributes<HTMLFormElement>, "onSubmit"> {
+  onSubmit?: (e: FormEvent<HTMLFormElement>) => void;
+  maxWidth?: number | string;
+  style?: CSSProperties;
+  children?: ReactNode;
+}
+interface SlotProps {
+  children?: ReactNode;
+}
 
 /* ================================================================
    Form — API composable.
@@ -17,7 +33,7 @@ import { Field, Divider } from "./primitives.tsx";
      </Form>
    ================================================================ */
 
-export function Form({ onSubmit, children, maxWidth = 560, style, ...rest }: any) {
+export function Form({ onSubmit, children, maxWidth = 560, style, ...rest }: FormProps) {
   return (
     <form
       onSubmit={onSubmit}
@@ -35,7 +51,7 @@ export function Form({ onSubmit, children, maxWidth = 560, style, ...rest }: any
   );
 }
 
-export function FormStep({ children }: any) {
+export function FormStep({ children }: SlotProps) {
   return (
     <div
       style={{
@@ -51,7 +67,11 @@ export function FormStep({ children }: any) {
   );
 }
 
-export function FormRow({ cols = 2, gap = "var(--space-4)", children }: any) {
+export function FormRow({
+  cols = 2,
+  gap = "var(--space-4)",
+  children,
+}: FormRowProps & { gap?: string | number }) {
   const tpl = typeof cols === "number" ? `repeat(${cols}, 1fr)` : cols;
   return (
     <div style={{ display: "grid", gridTemplateColumns: tpl, gap }}>
@@ -60,7 +80,7 @@ export function FormRow({ cols = 2, gap = "var(--space-4)", children }: any) {
   );
 }
 
-export function FormField({ label, hint, error, children }: any) {
+export function FormField({ label, hint, error, children }: FormFieldProps) {
   return (
     <Field label={label} hint={hint} error={error}>
       {children}
@@ -68,11 +88,11 @@ export function FormField({ label, hint, error, children }: any) {
   );
 }
 
-export function FormDivider({ children }: any) {
+export function FormDivider({ children }: SlotProps) {
   return <Divider>{children}</Divider>;
 }
 
-export function FormActions({ children, align = "end" }: any) {
+export function FormActions({ children, align = "end" }: FormActionsProps) {
   const justify = align === "start" ? "flex-start" : align === "between" ? "space-between" : "flex-end";
   return (
     <div

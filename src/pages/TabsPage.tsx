@@ -72,14 +72,14 @@ export default function TabsPage() {
           <div style={{ width: "100%" }}>
             <Tabs value={tab} onChange={setTab}>
               <TabList>
-                {tabsItems.map((it) => (
+                {tabsItems.map((it: any) => (
                   <Tab key={it.value} value={it.value}>
                     {it.label}
                   </Tab>
                 ))}
               </TabList>
               <TabPanels>
-                {tabsItems.map((it) => (
+                {tabsItems.map((it: any) => (
                   <TabPanel key={it.value} value={it.value}>
                     <p>{it.body}</p>
                   </TabPanel>

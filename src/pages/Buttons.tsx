@@ -11,7 +11,7 @@ import { useT } from "../lib/i18n.tsx";
 
 export default function Buttons() {
   const { t, tr } = useT();
-  const lb = (k) => t(`pages.buttons.labels.${k}`);
+  const lb = (k: any) => t(`pages.buttons.labels.${k}`);
   const [demoCollapsed, setDemoCollapsed] = useState(false);
 
   return (

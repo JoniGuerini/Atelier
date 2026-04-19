@@ -1,4 +1,25 @@
-import { createContext, useContext, useEffect } from "react";
+import { createContext, useContext, useEffect, type ElementType, type ReactNode } from "react";
+import type { DialogProps, ModalProps } from "./types.ts";
+
+interface DialogContextValue {
+  onClose: () => void;
+}
+interface DialogHeaderProps {
+  children?: ReactNode;
+}
+interface DialogTitleProps {
+  children?: ReactNode;
+  as?: ElementType;
+}
+interface DialogCloseProps {
+  label?: string;
+}
+interface DialogSlotProps {
+  children?: ReactNode;
+}
+interface DialogPropsExt extends DialogProps {
+  ariaLabel?: string;
+}
 
 /* ================================================================
    Dialog — API composable.
@@ -19,16 +40,16 @@ import { createContext, useContext, useEffect } from "react";
    props title/foot/children).
    ================================================================ */
 
-const DialogContext = createContext({ onClose: () => {} });
+const DialogContext = createContext<DialogContextValue>({ onClose: () => {} });
 
 function useDialog() {
   return useContext(DialogContext);
 }
 
-export function Dialog({ open, onClose, children, ariaLabel }: any) {
+export function Dialog({ open, onClose, children, ariaLabel }: DialogPropsExt) {
   useEffect(() => {
     if (!open) return;
-    const onKey = (e) => e.key === "Escape" && onClose?.();
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose?.();
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [open, onClose]);
@@ -36,7 +57,7 @@ export function Dialog({ open, onClose, children, ariaLabel }: any) {
   if (!open) return null;
 
   return (
-    <DialogContext.Provider value={{ onClose }}>
+    <DialogContext.Provider value={{ onClose: onClose || (() => {}) }}>
       <div
         className="ds-modal-backdrop"
         onClick={(e) => e.target === e.currentTarget && onClose?.()}
@@ -54,15 +75,15 @@ export function Dialog({ open, onClose, children, ariaLabel }: any) {
   );
 }
 
-export function DialogHeader({ children }: any) {
+export function DialogHeader({ children }: DialogHeaderProps) {
   return <div className="ds-modal-head">{children}</div>;
 }
 
-export function DialogTitle({ children, as: Comp = "h3" }: any) {
+export function DialogTitle({ children, as: Comp = "h3" }: DialogTitleProps) {
   return <Comp>{children}</Comp>;
 }
 
-export function DialogClose({ label = "Fechar" }: any) {
+export function DialogClose({ label = "Fechar" }: DialogCloseProps) {
   const { onClose } = useDialog();
   return (
     <button
@@ -76,18 +97,18 @@ export function DialogClose({ label = "Fechar" }: any) {
   );
 }
 
-export function DialogBody({ children }: any) {
+export function DialogBody({ children }: DialogSlotProps) {
   return <div className="ds-modal-body">{children}</div>;
 }
 
-export function DialogFooter({ children }: any) {
+export function DialogFooter({ children }: DialogSlotProps) {
   return <div className="ds-modal-foot">{children}</div>;
 }
 
 /* ---------- Modal — alias retrocompatível ----------
    API curta com props (title, foot, children). Renderiza usando
    os subcomponentes internamente. */
-export function Modal({ open, onClose, title, children, foot }: any) {
+export function Modal({ open, onClose, title, children, foot }: ModalProps) {
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogHeader>

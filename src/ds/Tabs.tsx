@@ -1,4 +1,16 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, type ReactNode } from "react";
+import type { TabsProps, TabProps, TabPanelProps } from "./types.ts";
+
+interface TabListProps {
+  children?: ReactNode;
+  ariaLabel?: string;
+}
+interface TabPanelsProps {
+  children?: ReactNode;
+}
+interface TabPropsExt extends TabProps {
+  disabled?: boolean;
+}
 
 /* ================================================================
    Tabs — API composable.
@@ -24,7 +36,7 @@ function useTabs() {
   return useContext(TabsContext);
 }
 
-export function Tabs({ value, onChange, children }: any) {
+export function Tabs({ value, onChange, children }: TabsProps) {
   return (
     <TabsContext.Provider value={{ value, onChange }}>
       {children}
@@ -32,7 +44,7 @@ export function Tabs({ value, onChange, children }: any) {
   );
 }
 
-export function TabList({ children, ariaLabel }: any) {
+export function TabList({ children, ariaLabel }: TabListProps) {
   return (
     <div className="ds-tabs" role="tablist" aria-label={ariaLabel}>
       {children}
@@ -40,7 +52,7 @@ export function TabList({ children, ariaLabel }: any) {
   );
 }
 
-export function Tab({ value, children, disabled = false }: any) {
+export function Tab({ value, children, disabled = false }: TabPropsExt) {
   const ctx = useTabs();
   const active = ctx.value === value;
   return (
@@ -57,11 +69,11 @@ export function Tab({ value, children, disabled = false }: any) {
   );
 }
 
-export function TabPanels({ children }: any) {
+export function TabPanels({ children }: TabPanelsProps) {
   return <div className="ds-tab-panels">{children}</div>;
 }
 
-export function TabPanel({ value, children }: any) {
+export function TabPanel({ value, children }: TabPanelProps) {
   const ctx = useTabs();
   if (ctx.value !== value) return null;
   return (

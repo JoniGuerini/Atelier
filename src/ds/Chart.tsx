@@ -1,4 +1,31 @@
-import { useState } from "react";
+import { useState, type ElementType, type ReactNode } from "react";
+import type {
+  BarChartProps,
+  LineChartProps,
+  AreaChartProps,
+  PieChartProps,
+  DonutChartProps,
+  RadarChartProps,
+  RadialChartProps,
+  SparklineProps,
+} from "./types.ts";
+
+interface SlotProps {
+  children?: ReactNode;
+}
+interface ChartProps {
+  children?: ReactNode;
+  className?: string;
+}
+interface ChartTitleProps {
+  children?: ReactNode;
+  as?: ElementType;
+}
+interface ChartLegendItemProps {
+  color?: string;
+  shape?: "square" | "circle";
+  label?: ReactNode;
+}
 
 /* ================================================================
    Chart — visualizações editoriais.
@@ -30,29 +57,29 @@ import { useState } from "react";
 
 /* ---------- Wrappers composable ---------- */
 
-export function Chart({ children, className = "" }: any) {
+export function Chart({ children, className = "" }: ChartProps) {
   const cls = ["ds-chart"];
   if (className) cls.push(className);
   return <article className={cls.join(" ")}>{children}</article>;
 }
 
-export function ChartHeader({ children }: any) {
+export function ChartHeader({ children }: SlotProps) {
   return <header className="ds-chart-head">{children}</header>;
 }
 
-export function ChartKicker({ children }: any) {
+export function ChartKicker({ children }: SlotProps) {
   return <span className="ds-chart-kicker">{children}</span>;
 }
 
-export function ChartTitle({ children, as: Comp = "h3" }: any) {
+export function ChartTitle({ children, as: Comp = "h3" }: ChartTitleProps) {
   return <Comp className="ds-chart-title">{children}</Comp>;
 }
 
-export function ChartLegend({ children }: any) {
+export function ChartLegend({ children }: SlotProps) {
   return <div className="ds-chart-legend">{children}</div>;
 }
 
-export function ChartLegendItem({ color = "var(--accent)", shape = "square", label }: any) {
+export function ChartLegendItem({ color = "var(--accent)", shape = "square", label }: ChartLegendItemProps) {
   return (
     <span className="ds-chart-legend-item">
       <span
@@ -69,19 +96,19 @@ export function ChartLegendItem({ color = "var(--accent)", shape = "square", lab
    Helpers internos
    ================================================================ */
 
-function normalizeData(data) {
+function normalizeData(data: any[]) {
   // Aceita number[] ou { label, value }[]
-  return data.map((d, i) => {
+  return data.map((d: any, i: number) => {
     if (typeof d === "number") return { label: undefined, value: d, index: i };
     return { label: d.label, value: d.value, index: i };
   });
 }
 
-function pad(n, p = 0) {
+function pad(n: number, p = 0): string {
   return Math.max(0, Number.isFinite(n) ? n : 0).toFixed(p);
 }
 
-function polarToCartesian(cx, cy, r, deg) {
+function polarToCartesian(cx: number, cy: number, r: number, deg: number) {
   const rad = ((deg - 90) * Math.PI) / 180;
   return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
 }
@@ -121,7 +148,7 @@ function ChartFrame({ children, tooltip }: any) {
   );
 }
 
-function arcPath(cx, cy, r, startDeg, endDeg, innerR = 0) {
+function arcPath(cx: number, cy: number, r: number, startDeg: number, endDeg: number, innerR = 0): string {
   // Trata ângulo total = 360 (1 fatia) com dois arcos para evitar zero-length
   const sweep = endDeg - startDeg;
   if (sweep >= 359.999) {
@@ -179,7 +206,7 @@ export function BarChart({
   yTicks = 4,
   valueLabel,
   className = "",
-}: any) {
+}: BarChartProps & { showValues?: boolean; yTicks?: number }) {
   const norm = normalizeData(data);
   // viewBox alongado (W >> H) e preserveAspectRatio padrão fazem o
   // SVG manter proporção quando o container é largo, evitando o
@@ -192,7 +219,7 @@ export function BarChart({
   const padB = labels?.length ? 32 : 14;
   const innerW = W - padL - padR;
   const innerH = H - padT - padB;
-  const max = Math.max(...norm.map((d) => d.value), 1);
+  const max = Math.max(...norm.map((d: any) => d.value), 1);
   const barW = (innerW / norm.length) * 0.66;
   const gap = (innerW / norm.length) * 0.34;
 
@@ -230,7 +257,7 @@ export function BarChart({
         role="img"
         onMouseLeave={() => setHover(null)}
       >
-        {ticks.map((t, i) => (
+        {ticks.map((t: any, i: any) => (
           <line
             key={i}
             x1={padL}
@@ -241,7 +268,7 @@ export function BarChart({
             strokeWidth="1"
           />
         ))}
-        {ticks.map((t, i) => (
+        {ticks.map((t: any, i: any) => (
           <text
             key={`l${i}`}
             x={padL - 8}
@@ -254,7 +281,7 @@ export function BarChart({
             {Math.round(t.v)}
           </text>
         ))}
-        {norm.map((d, i) => {
+        {norm.map((d: any, i: any) => {
           const h = (d.value / max) * innerH;
           const x = padL + i * (barW + gap) + gap / 2;
           const y = padT + innerH - h;
@@ -320,11 +347,19 @@ export function BarChart({
    LineChart — linha simples.
    ================================================================ */
 
-function buildLinePath(values, padL, padT, innerW, innerH, max, min) {
+function buildLinePath(
+  values: number[],
+  padL: number,
+  padT: number,
+  innerW: number,
+  innerH: number,
+  max: number,
+  min: number,
+): string {
   const range = max - min || 1;
   const stepX = innerW / Math.max(1, values.length - 1);
   return values
-    .map((v, i) => {
+    .map((v: any, i: any) => {
       const x = padL + i * stepX;
       const y = padT + innerH - ((v - min) / range) * innerH;
       return `${i === 0 ? "M" : "L"} ${x} ${y}`;
@@ -341,9 +376,9 @@ export function LineChart({
   accentIndex,
   valueLabel,
   className = "",
-}: any) {
+}: LineChartProps & { yTicks?: number; showDots?: boolean }) {
   const norm = normalizeData(data);
-  const values = norm.map((d) => d.value);
+  const values = norm.map((d: any) => d.value);
   const W = 720;
   const H = height;
   const padL = 38;
@@ -369,7 +404,7 @@ export function LineChart({
   const [hover, setHover] = useState(null);
 
   // Calcula o índice mais próximo do mouse via getBoundingClientRect.
-  const handleMove = (e) => {
+  const handleMove = (e: any) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const xPx = e.clientX - rect.left;
     const xRatio = xPx / rect.width; // 0..1 dentro do svg
@@ -405,7 +440,7 @@ export function LineChart({
         onMouseMove={handleMove}
         onMouseLeave={() => setHover(null)}
       >
-        {ticks.map((t, i) => (
+        {ticks.map((t: any, i: any) => (
           <line
             key={i}
             x1={padL}
@@ -416,7 +451,7 @@ export function LineChart({
             strokeWidth="1"
           />
         ))}
-        {ticks.map((t, i) => (
+        {ticks.map((t: any, i: any) => (
           <text
             key={`l${i}`}
             x={padL - 8}
@@ -450,7 +485,7 @@ export function LineChart({
           strokeLinecap="round"
         />
         {showDots &&
-          values.map((v, i) => {
+          values.map((v: any, i: any) => {
             const x = padL + i * stepX;
             const y = padT + innerH - ((v - min) / range) * innerH;
             const isAccent = i === accent;
@@ -470,7 +505,7 @@ export function LineChart({
             );
           })}
         {labels &&
-          labels.map((l, i) => (
+          labels.map((l: any, i: any) => (
             <text
               key={i}
               x={padL + i * stepX}
@@ -500,9 +535,9 @@ export function AreaChart({
   yTicks = 4,
   valueLabel,
   className = "",
-}: any) {
+}: AreaChartProps & { yTicks?: number }) {
   const norm = normalizeData(data);
-  const values = norm.map((d) => d.value);
+  const values = norm.map((d: any) => d.value);
   const W = 720;
   const H = height;
   const padL = 38;
@@ -530,7 +565,7 @@ export function AreaChart({
   });
 
   const [hover, setHover] = useState(null);
-  const handleMove = (e) => {
+  const handleMove = (e: any) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const xRatio = (e.clientX - rect.left) / rect.width;
     const xSvg = xRatio * W;
@@ -569,7 +604,7 @@ export function AreaChart({
             <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
           </linearGradient>
         </defs>
-        {ticks.map((t, i) => (
+        {ticks.map((t: any, i: any) => (
           <line
             key={i}
             x1={padL}
@@ -580,7 +615,7 @@ export function AreaChart({
             strokeWidth="1"
           />
         ))}
-        {ticks.map((t, i) => (
+        {ticks.map((t: any, i: any) => (
           <text
             key={`l${i}`}
             x={padL - 8}
@@ -624,7 +659,7 @@ export function AreaChart({
           />
         )}
         {labels &&
-          labels.map((l, i) => (
+          labels.map((l: any, i: any) => (
             <text
               key={i}
               x={padL + i * stepX}
@@ -656,9 +691,9 @@ const SLICE_TONES = [
   "var(--accent-soft)",
 ];
 
-function PieOrDonut({ data, height = 200, donut = false, className = "" }: any) {
+function PieOrDonut({ data, height = 200, donut = false, className = "" }: any & { donut?: boolean }) {
   const norm = normalizeData(data);
-  const total = norm.reduce((s, d) => s + d.value, 0) || 1;
+  const total = norm.reduce((s: any, d: any) => s + d.value, 0) || 1;
   const W = height; // square
   const H = height;
   const cx = W / 2;
@@ -667,7 +702,7 @@ function PieOrDonut({ data, height = 200, donut = false, className = "" }: any) 
   const innerR = donut ? r * 0.56 : 0;
 
   let startDeg = 0;
-  const slices = norm.map((d, i) => {
+  const slices = norm.map((d: any, i: any) => {
     const sweep = (d.value / total) * 360;
     const midDeg = startDeg + sweep / 2;
     const path = arcPath(cx, cy, r, startDeg, startDeg + sweep, innerR);
@@ -706,7 +741,7 @@ function PieOrDonut({ data, height = 200, donut = false, className = "" }: any) 
         role="img"
         onMouseLeave={() => setHover(null)}
       >
-        {slices.map((s, i) => (
+        {slices.map((s: any, i: any) => (
           <path
             key={i}
             d={s.path}
@@ -737,12 +772,12 @@ function PieOrDonut({ data, height = 200, donut = false, className = "" }: any) 
   );
 }
 
-export function PieChart(props) {
-  return <PieOrDonut {...props} donut={false} />;
+export function PieChart(props: PieChartProps) {
+  return <PieOrDonut {...(props as any)} donut={false} />;
 }
 
-export function DonutChart(props) {
-  return <PieOrDonut {...props} donut={true} />;
+export function DonutChart(props: DonutChartProps) {
+  return <PieOrDonut {...(props as any)} donut={true} />;
 }
 
 /* ================================================================
@@ -762,17 +797,17 @@ export function RadarChart({
   height = 280,
   max,
   className = "",
-}) {
+}: RadarChartProps & { height?: number; max?: number }) {
   const W = height;
   const H = height;
   const cx = W / 2;
   const cy = H / 2;
   const r = (Math.min(W, H) / 2) * 0.74;
   const N = axes.length;
-  const allValues = series.flatMap((s) => s.values);
+  const allValues = series.flatMap((s: any) => s.values);
   const M = max ?? Math.max(...allValues, 1);
 
-  const pointAt = (axisIdx, value) => {
+  const pointAt = (axisIdx: number, value: number) => {
     const angle = (axisIdx / N) * 360 - 90;
     const ratio = value / M;
     return polarToCartesian(cx, cy, r * ratio, angle);
@@ -782,21 +817,21 @@ export function RadarChart({
   const grid = [0.25, 0.5, 0.75, 1];
 
   // Pontos de cada eixo (no raio máximo) — para desenhar as linhas radiais
-  const axisEnds = axes.map((_, i) => {
+  const axisEnds = axes.map((_: any, i: any) => {
     const angle = (i / N) * 360 - 90;
     return { ...polarToCartesian(cx, cy, r, angle), angle };
   });
 
   // Posição do label de cada eixo (um pouco fora)
-  const labelPos = axes.map((_, i) => {
+  const labelPos = axes.map((_: any, i: any) => {
     const angle = (i / N) * 360 - 90;
     return polarToCartesian(cx, cy, r * 1.16, angle);
   });
 
-  const seriesData = series.map((s, i) => {
-    const points = s.values.map((v, axisIdx) => pointAt(axisIdx, v));
+  const seriesData = series.map((s: any, i: any) => {
+    const points = s.values.map((v: any, axisIdx: any) => pointAt(axisIdx, v));
     const path =
-      points.map((p, j) => `${j === 0 ? "M" : "L"} ${p.x} ${p.y}`).join(" ") +
+      points.map((p: any, j: any) => `${j === 0 ? "M" : "L"} ${p.x} ${p.y}`).join(" ") +
       " Z";
     return {
       name: s.name,
@@ -828,7 +863,7 @@ export function RadarChart({
         onMouseLeave={() => setHover(null)}
       >
         {/* círculos concêntricos */}
-        {grid.map((ratio, i) => (
+        {grid.map((ratio: any, i: any) => (
           <circle
             key={i}
             cx={cx}
@@ -840,7 +875,7 @@ export function RadarChart({
           />
         ))}
         {/* eixos radiais */}
-        {axisEnds.map((p, i) => (
+        {axisEnds.map((p: any, i: any) => (
           <line
             key={i}
             x1={cx}
@@ -852,7 +887,7 @@ export function RadarChart({
           />
         ))}
         {/* polígonos */}
-        {seriesData.map((s, i) => (
+        {seriesData.map((s: any, i: any) => (
           <g key={i}>
             <path
               d={s.path}
@@ -862,7 +897,7 @@ export function RadarChart({
               strokeWidth="1.75"
               strokeLinejoin="round"
             />
-            {s.points.map((p, j) => (
+            {s.points.map((p: any, j: any) => (
               <circle
                 key={j}
                 cx={p.x}
@@ -886,7 +921,7 @@ export function RadarChart({
           </g>
         ))}
         {/* labels dos eixos */}
-        {labelPos.map((p, i) => (
+        {labelPos.map((p: any, i: any) => (
           <text
             key={i}
             x={p.x}
@@ -910,12 +945,12 @@ export function RadarChart({
    ================================================================ */
 
 export function RadialChart({
-  data,                // [{ label, value, max }]
+  data,
   height = 280,
   showCenter = true,
   centerLabel,
   className = "",
-}) {
+}: any) {
   const W = height;
   const H = height;
   const cx = W / 2;
@@ -925,7 +960,7 @@ export function RadialChart({
   const trackW = (maxR - minR) / data.length;
   const stroke = trackW * 0.62;
 
-  const items = data.map((d, i) => {
+  const items = data.map((d: any, i: any) => {
     const r = maxR - i * trackW - trackW / 2;
     const max = d.max || 100;
     const ratio = Math.min(1, d.value / max);
@@ -964,7 +999,7 @@ export function RadialChart({
         role="img"
         onMouseLeave={() => setHover(null)}
       >
-        {items.map((it, i) => (
+        {items.map((it: any, i: any) => (
           <g
             key={i}
             transform={`rotate(-90 ${cx} ${cy})`}
@@ -1021,7 +1056,7 @@ export function RadialChart({
               pointerEvents="none"
             >
               {Math.round(
-                data.reduce((s, d) => s + (d.value / (d.max || 100)) * 100, 0) /
+                data.reduce((s: any, d: any) => s + (d.value / (d.max || 100)) * 100, 0) /
                   data.length
               )}
               %
@@ -1043,9 +1078,9 @@ export function Sparkline({
   height = 36,
   filled = false,
   className = "",
-}: any) {
+}: SparklineProps) {
   const norm = normalizeData(data);
-  const values = norm.map((d) => d.value);
+  const values = norm.map((d: any) => d.value);
   const W = width;
   const H = height;
   const padX = 2;
@@ -1058,7 +1093,7 @@ export function Sparkline({
   const stepX = innerW / Math.max(1, values.length - 1);
 
   const linePath = values
-    .map((v, i) => {
+    .map((v: any, i: any) => {
       const x = padX + i * stepX;
       const y = padY + innerH - ((v - min) / range) * innerH;
       return `${i === 0 ? "M" : "L"} ${x} ${y}`;

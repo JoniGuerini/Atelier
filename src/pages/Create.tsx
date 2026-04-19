@@ -89,24 +89,24 @@ export default function Create() {
     }
   }, [theme]);
 
-  const update = (key) => (value) => setTheme((p) => ({ ...p, [key]: value }));
+  const update = (key: any) => (value: any) => setTheme((p: any) => ({ ...p, [key]: value }));
   // Reset volta aos defaults, mas mantém o tema light/dark alinhado
   // ao que o usuário está usando no resto do app — assim "restaurar"
   // não dá um salto de paleta inesperado.
   const reset = () => setTheme({ ...DEFAULT_THEME, theme: readAppTheme() });
-  const shuffle = () => setTheme((p) => shuffleTheme(p));
+  const shuffle = () => setTheme((p: any) => shuffleTheme(p));
 
   const previewStyle = useMemo(() => themeToStyle(theme), [theme]);
   const css = useMemo(() => themeToCss(theme), [theme]);
 
   const accentLabel =
-    ACCENT_PRESETS.find((p) => p.id === theme.accent)?.label || "—";
+    ACCENT_PRESETS.find((p: any) => p.id === theme.accent)?.label || "—";
   const baseLabel =
-    BASE_PRESETS.find((p) => p.id === theme.base)?.label || "—";
-  const fontPreset = FONT_PRESETS.find((p) => p.id === theme.font);
+    BASE_PRESETS.find((p: any) => p.id === theme.base)?.label || "—";
+  const fontPreset = FONT_PRESETS.find((p: any) => p.id === theme.font);
   const fontLabel = fontPreset?.label || "—";
   const spacingLabel =
-    SPACING_PRESETS.find((p) => p.id === theme.spacing)?.label || "—";
+    SPACING_PRESETS.find((p: any) => p.id === theme.spacing)?.label || "—";
   const themeLabel =
     theme.theme === "dark"
       ? t("pages.create.controls.themeDark")
@@ -150,7 +150,7 @@ export default function Create() {
             iconChar="✦"
           >
             <div className="studio-options">
-              {STUDIO_PRESETS.map((p) => {
+              {STUDIO_PRESETS.map((p: any) => {
                 const active = activePreset?.id === p.id;
                 return (
                   <button
@@ -175,7 +175,7 @@ export default function Create() {
             iconChar={theme.theme === "dark" ? "◐" : "○"}
           >
             <Segmented
-              options={THEME_OPTIONS.map((o) => ({
+              options={THEME_OPTIONS.map((o: any) => ({
                 id: o.id,
                 label:
                   o.id === "dark"
@@ -191,7 +191,7 @@ export default function Create() {
             label={t("pages.create.controls.accent")}
             value={accentLabel}
             iconColor={
-              ACCENT_PRESETS.find((p) => p.id === theme.accent)?.accent
+              ACCENT_PRESETS.find((p: any) => p.id === theme.accent)?.accent
             }
           >
             <Swatches
@@ -207,7 +207,7 @@ export default function Create() {
             iconChar="▢"
           >
             <Segmented
-              options={BASE_PRESETS.map((o) => ({
+              options={BASE_PRESETS.map((o: any) => ({
                 id: o.id,
                 label: o.label,
               }))}
@@ -235,7 +235,7 @@ export default function Create() {
             iconChar="↔"
           >
             <Segmented
-              options={SPACING_PRESETS.map((o) => ({
+              options={SPACING_PRESETS.map((o: any) => ({
                 id: o.id,
                 label: o.label,
               }))}
@@ -637,7 +637,7 @@ function PreviewTabs({ t }: any) {
   );
 }
 
-function downloadCss(css) {
+function downloadCss(css: string) {
   if (typeof window === "undefined") return;
   const blob = new Blob([css], { type: "text/css" });
   const url = URL.createObjectURL(blob);
@@ -688,7 +688,7 @@ function ControlCard({
 function Segmented({ options, value, onChange }: any) {
   return (
     <div className="studio-segmented" role="group">
-      {options.map((o) => (
+      {options.map((o: any) => (
         <button
           key={o.id}
           type="button"
@@ -705,7 +705,7 @@ function Segmented({ options, value, onChange }: any) {
 function Swatches({ options, value, onChange }: any) {
   return (
     <div className="studio-swatches">
-      {options.map((o) => (
+      {options.map((o: any) => (
         <button
           key={o.id}
           type="button"
@@ -727,7 +727,7 @@ function Swatches({ options, value, onChange }: any) {
 function FontList({ options, value, onChange }: any) {
   return (
     <div className="studio-font-list">
-      {options.map((o) => (
+      {options.map((o: any) => (
         <button
           key={o.id}
           type="button"

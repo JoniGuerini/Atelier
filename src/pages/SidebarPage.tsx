@@ -69,12 +69,12 @@ function SidebarSpecimen({
 
       {!isCollapsed && (
         <nav className="ds-sidebar-specimen-nav">
-          {groups.map((g) => (
+          {groups.map((g: any) => (
             <div className="ds-sidebar-specimen-group" key={g.key}>
               <div className="ds-sidebar-specimen-group-title">
                 {t(`nav.groups.${g.key}`)}
               </div>
-              {g.items.map((it) => (
+              {g.items.map((it: any) => (
                 <button
                   key={it.id}
                   type="button"
@@ -167,7 +167,7 @@ export default function SidebarPage() {
               </div>
             </div>
             <dl className="ds-anatomy-list">
-              {parts.map((p, i) => (
+              {parts.map((p: any, i: any) => (
                 <div className="ds-anatomy-row" key={p.n}>
                   <dt>
                     <span className="n">{p.n}</span>
@@ -275,7 +275,7 @@ export default function SidebarPage() {
         kicker={t("pages.sidebar.guidelines.kicker")}
       >
         <div className="ds-guidelines-grid">
-          {guidelines.map((g, i) => (
+          {guidelines.map((g: any, i: any) => (
             <article className="ds-guideline-card" key={g.n}>
               <div className="num">{g.n}</div>
               <h3>

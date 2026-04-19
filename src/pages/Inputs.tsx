@@ -13,7 +13,7 @@ import { useT } from "../lib/i18n.tsx";
 
 export default function Inputs() {
   const { t, tr, raw } = useT();
-  const lb = (k) => t(`pages.inputs.labels.${k}`);
+  const lb = (k: any) => t(`pages.inputs.labels.${k}`);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("clara@atelier.com");
@@ -138,7 +138,7 @@ export default function Inputs() {
 
 <Field label="${lb("format")}">
   <Select>
-${formatOpts.map((o) => `    <option>${o}</option>`).join("\n")}
+${formatOpts.map((o: any) => `    <option>${o}</option>`).join("\n")}
   </Select>
 </Field>`}
         >
@@ -160,7 +160,7 @@ ${formatOpts.map((o) => `    <option>${o}</option>`).join("\n")}
             </Field>
             <Field label={lb("format")}>
               <Select>
-                {formatOpts.map((o) => (
+                {formatOpts.map((o: any) => (
                   <option key={o}>{o}</option>
                 ))}
               </Select>

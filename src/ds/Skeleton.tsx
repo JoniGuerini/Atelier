@@ -1,3 +1,29 @@
+import type { CSSProperties } from "react";
+import type {
+  SkeletonProps,
+  SkeletonTextProps,
+  SkeletonVariant,
+} from "./types.ts";
+
+interface ExtendedSkeletonProps extends Omit<SkeletonProps, "variant"> {
+  /** "text" cai pro SkeletonText; "circle" pode cair pro SkeletonAvatar se size for passado. */
+  variant?: SkeletonVariant | "text";
+  /** Quando variant="text", número de linhas. */
+  lines?: number;
+}
+interface SkeletonAvatarProps {
+  size?: number | string;
+  className?: string;
+  pulse?: boolean;
+  style?: CSSProperties;
+}
+interface SkeletonCardProps {
+  className?: string;
+}
+interface InternalSkeletonTextProps extends SkeletonTextProps {
+  pulse?: boolean;
+}
+
 /* ================================================================
    Skeleton — placeholders editoriais para estados de loading.
    ----------------------------------------------------------------
@@ -23,7 +49,7 @@ export function Skeleton({
   className = "",
   pulse = true,
   style,
-}: any) {
+}: ExtendedSkeletonProps) {
   if (variant === "text" && lines && lines > 0) {
     return <SkeletonText lines={lines} className={className} pulse={pulse} />;
   }
@@ -43,7 +69,7 @@ export function Skeleton({
   return <span className={cls.join(" ")} style={styleProps} aria-hidden="true" />;
 }
 
-export function SkeletonText({ lines = 3, className = "", pulse = true }: any) {
+export function SkeletonText({ lines = 3, className = "", pulse = true }: InternalSkeletonTextProps) {
   return (
     <span
       className={`ds-skeleton-text ${className}`}
@@ -67,7 +93,7 @@ export function SkeletonText({ lines = 3, className = "", pulse = true }: any) {
   );
 }
 
-export function SkeletonAvatar({ size = 40, className = "", pulse = true, style }: any) {
+export function SkeletonAvatar({ size = 40, className = "", pulse = true, style }: SkeletonAvatarProps) {
   const cls = ["ds-skeleton", "variant-circle"];
   if (pulse) cls.push("pulse");
   if (className) cls.push(className);
@@ -81,7 +107,7 @@ export function SkeletonAvatar({ size = 40, className = "", pulse = true, style 
 }
 
 /* SkeletonCard — composição comum: avatar + título + 2 linhas */
-export function SkeletonCard({ className = "" }: any) {
+export function SkeletonCard({ className = "" }: SkeletonCardProps) {
   return (
     <div className={`ds-skeleton-card ${className}`} aria-hidden="true">
       <div className="ds-skeleton-card-head">

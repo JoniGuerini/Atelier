@@ -11,7 +11,7 @@
      </EmptyState>
    ================================================================ */
 
-export function EmptyState({ children }: any) {
+export function EmptyState({ children }: { children?: import("react").ReactNode }) {
   return (
     <div
       style={{
@@ -30,7 +30,7 @@ export function EmptyState({ children }: any) {
   );
 }
 
-export function EmptyGlyph({ children }: any) {
+export function EmptyGlyph({ children }: { children?: import("react").ReactNode }) {
   return (
     <div
       style={{
@@ -48,7 +48,7 @@ export function EmptyGlyph({ children }: any) {
   );
 }
 
-export function EmptyTitle({ children }: any) {
+export function EmptyTitle({ children }: { children?: import("react").ReactNode }) {
   return (
     <div
       style={{
@@ -63,7 +63,7 @@ export function EmptyTitle({ children }: any) {
   );
 }
 
-export function EmptyDescription({ children }: any) {
+export function EmptyDescription({ children }: { children?: import("react").ReactNode }) {
   return (
     <div
       style={{
@@ -79,6 +79,6 @@ export function EmptyDescription({ children }: any) {
   );
 }
 
-export function EmptyActions({ children }: any) {
+export function EmptyActions({ children }: { children?: import("react").ReactNode }) {
   return <div style={{ marginTop: 10 }}>{children}</div>;
 }

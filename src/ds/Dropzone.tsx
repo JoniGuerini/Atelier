@@ -1,4 +1,19 @@
-import { useRef, useState } from "react";
+import {
+  useRef,
+  useState,
+  type ChangeEvent,
+  type DragEvent,
+  type ReactNode,
+} from "react";
+import type { DropzoneProps, DropzoneMetaItem } from "./types.ts";
+
+interface SlotProps {
+  children?: ReactNode;
+}
+interface DropzoneMetaProps {
+  items?: DropzoneMetaItem[];
+}
+interface DropzoneMetaRowProps extends DropzoneMetaItem {}
 
 /* ================================================================
    Dropzone — API composable.
@@ -26,19 +41,19 @@ export function Dropzone({
   children,
   className = "",
   ...rest
-}: any) {
+}: DropzoneProps) {
   const [drag, setDrag] = useState(false);
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const open = () => inputRef.current?.click();
 
-  const handleInput = (e) => {
+  const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0];
     if (f) onSelect?.(f);
     e.target.value = "";
   };
 
-  const handleDrop = (e) => {
+  const handleDrop = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setDrag(false);
     const f = e.dataTransfer.files?.[0];
@@ -80,21 +95,21 @@ export function Dropzone({
   );
 }
 
-export function DropzoneIcon({ children }: any) {
+export function DropzoneIcon({ children }: SlotProps) {
   return <div className="icon">{children}</div>;
 }
 
-export function DropzoneTitle({ children }: any) {
+export function DropzoneTitle({ children }: SlotProps) {
   return <div className="title">{children}</div>;
 }
 
-export function DropzoneHint({ children }: any) {
+export function DropzoneHint({ children }: SlotProps) {
   return <div className="sub">{children}</div>;
 }
 
 /* ---------- Estado preenchido ---------- */
 
-export function DropzoneFile({ children }: any) {
+export function DropzoneFile({ children }: SlotProps) {
   return (
     <div
       className="dropzone has-file"
@@ -111,7 +126,7 @@ export function DropzoneFile({ children }: any) {
   );
 }
 
-export function DropzoneFilename({ children }: any) {
+export function DropzoneFilename({ children }: SlotProps) {
   return (
     <div
       style={{
@@ -126,7 +141,7 @@ export function DropzoneFilename({ children }: any) {
   );
 }
 
-export function DropzoneMeta({ items = [] }: any) {
+export function DropzoneMeta({ items = [] }: DropzoneMetaProps) {
   return (
     <dl
       style={{
@@ -147,7 +162,7 @@ export function DropzoneMeta({ items = [] }: any) {
   );
 }
 
-function DropzoneMetaRow({ label, value }: any) {
+function DropzoneMetaRow({ label, value }: DropzoneMetaRowProps) {
   return (
     <>
       <dt
@@ -165,6 +180,6 @@ function DropzoneMetaRow({ label, value }: any) {
   );
 }
 
-export function DropzoneActions({ children }: any) {
+export function DropzoneActions({ children }: SlotProps) {
   return <div style={{ marginTop: 16 }}>{children}</div>;
 }

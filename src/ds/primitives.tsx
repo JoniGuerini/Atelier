@@ -1,7 +1,60 @@
-import { useEffect, useState } from "react";
+import {
+  useEffect,
+  useState,
+  type ButtonHTMLAttributes,
+  type ReactNode,
+} from "react";
 import { useCopy } from "../lib/useCopy.ts";
 import { useT } from "../lib/i18n.tsx";
 import { useTheme } from "../lib/theme.tsx";
+import type {
+  ButtonProps,
+  InputProps,
+  TextareaProps,
+  SelectProps,
+  CheckboxProps,
+  RadioProps,
+  SwitchProps,
+  BadgeProps,
+  AvatarProps,
+  AvatarGroupProps,
+  ProgressProps,
+  TooltipProps,
+  CodeProps,
+  PageHeadProps,
+  SectionProps,
+  ExampleProps,
+  CompositionTreeProps,
+  CompositionSectionProps,
+  NavMode,
+  Theme,
+} from "./types.ts";
+
+interface SidebarToggleProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  collapsed?: boolean;
+  onToggle?: () => void;
+}
+interface NavModeToggleProps {
+  mode?: NavMode;
+  onChange?: (mode: NavMode) => void;
+  className?: string;
+}
+interface ThemeToggleProps {
+  variant?: "segmented" | "compact";
+  className?: string;
+}
+interface CopyButtonProps {
+  text: string;
+  label?: string;
+  copiedLabel?: string;
+}
+interface DividerProps {
+  children?: ReactNode;
+}
+interface BackToTopProps {
+  threshold?: number;
+  scrollTarget?: HTMLElement | Window | null;
+}
 
 /* ---------- Button ---------- */
 export function Button({
@@ -10,7 +63,7 @@ export function Button({
   children,
   className = "",
   ...rest
-}: any) {
+}: ButtonProps) {
   const classes = ["ds-btn"];
   if (variant !== "default") classes.push(variant);
   if (size !== "md") classes.push(size);
@@ -33,7 +86,7 @@ export function SidebarToggle({
   className = "",
   title,
   ...rest
-}: any) {
+}: SidebarToggleProps) {
   const { t } = useT();
   const label = collapsed
     ? t("common.expandSidebar")
@@ -78,7 +131,7 @@ export function SidebarToggle({
    do pai — este componente é puramente controlado.
      <NavModeToggle mode="navbar" onChange={setMode} />
 */
-function NavModeGlyph({ id }: any) {
+function NavModeGlyph({ id }: { id: NavMode }) {
   if (id === "sidebar") {
     return (
       <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false">
@@ -96,9 +149,9 @@ function NavModeGlyph({ id }: any) {
   );
 }
 
-export function NavModeToggle({ mode = "navbar", onChange, className = "" }: any) {
+export function NavModeToggle({ mode = "navbar", onChange, className = "" }: NavModeToggleProps) {
   const { t } = useT();
-  const modes = [
+  const modes: { id: NavMode; labelKey: string }[] = [
     { id: "sidebar", labelKey: "nav.mode.sidebar" },
     { id: "navbar", labelKey: "nav.mode.navbar" },
   ];
@@ -110,7 +163,7 @@ export function NavModeToggle({ mode = "navbar", onChange, className = "" }: any
       role="group"
       aria-label={t("nav.mode.label")}
     >
-      {modes.map((m) => {
+      {modes.map((m: any) => {
         const label = t(m.labelKey);
         const active = mode === m.id;
         return (
@@ -147,13 +200,13 @@ export function BackToTop({
   className = "",
   scrollTarget,
   ...rest
-}: any) {
+}: BackToTopProps & ButtonHTMLAttributes<HTMLButtonElement>) {
   const { t } = useT();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const target = scrollTarget ?? window;
+    const target: any = scrollTarget ?? window;
     const getY = () =>
       target === window
         ? window.scrollY || document.documentElement.scrollTop || 0
@@ -165,7 +218,7 @@ export function BackToTop({
     return () => target.removeEventListener("scroll", check);
   }, [threshold, scrollTarget]);
 
-  const handleClick = (e) => {
+  const handleClick = (e: any) => {
     if (onClick) {
       onClick(e);
       if (e.defaultPrevented) return;
@@ -173,8 +226,8 @@ export function BackToTop({
     const prefersReduced =
       typeof window !== "undefined" &&
       window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-    const target = scrollTarget ?? window;
-    const behavior = prefersReduced ? "auto" : "smooth";
+    const target: any = scrollTarget ?? window;
+    const behavior: ScrollBehavior = prefersReduced ? "auto" : "smooth";
     if (target === window) {
       window.scrollTo({ top: 0, behavior });
     } else {
@@ -229,7 +282,7 @@ export function BackToTop({
        - segmented: dois botões lado a lado, um ativo
        - compact:   um único botão que alterna light/dark
 */
-function ThemeGlyph({ id, className = "" }: any) {
+function ThemeGlyph({ id, className = "" }: { id: Theme; className?: string }) {
   if (id === "dark") {
     return (
       <svg
@@ -278,7 +331,7 @@ function ThemeGlyph({ id, className = "" }: any) {
   );
 }
 
-export function ThemeToggle({ variant = "segmented", className = "" }: any) {
+export function ThemeToggle({ variant = "segmented", className = "" }: ThemeToggleProps) {
   const { t } = useT();
   const { theme, setTheme, resolved, toggle, themes } = useTheme();
 
@@ -293,7 +346,7 @@ export function ThemeToggle({ variant = "segmented", className = "" }: any) {
         aria-label={label}
         title={label}
       >
-        <ThemeGlyph id={isDark ? "light" : "dark"} />
+          <ThemeGlyph id={(isDark ? "light" : "dark") as Theme} />
       </button>
     );
   }
@@ -303,7 +356,7 @@ export function ThemeToggle({ variant = "segmented", className = "" }: any) {
 
   return (
     <div className={classes.join(" ")} role="group" aria-label={t("theme.label")}>
-      {themes.map((m) => {
+      {themes.map((m: any) => {
         const label = t(m.labelKey);
         const active = theme === m.id;
         return (
@@ -315,7 +368,7 @@ export function ThemeToggle({ variant = "segmented", className = "" }: any) {
             aria-pressed={active}
             title={label}
           >
-            <ThemeGlyph id={m.id} />
+            <ThemeGlyph id={m.id as Theme} />
             <span className="theme-btn-label">{label}</span>
           </button>
         );
@@ -330,7 +383,7 @@ export function ThemeToggle({ variant = "segmented", className = "" }: any) {
    os controles atômicos (Input/Textarea/Select). */
 export { Field, FieldLabel, FieldHint, FieldError } from "./Field.tsx";
 
-export function Input({ invalid, className = "", ...rest }: any) {
+export function Input({ invalid, className = "", ...rest }: InputProps & { className?: string }) {
   return (
     <input
       className={`ds-input ${invalid ? "invalid" : ""} ${className}`}
@@ -339,7 +392,7 @@ export function Input({ invalid, className = "", ...rest }: any) {
   );
 }
 
-export function Textarea({ invalid, className = "", ...rest }: any) {
+export function Textarea({ invalid, className = "", ...rest }: TextareaProps & { className?: string }) {
   return (
     <textarea
       className={`ds-textarea ${invalid ? "invalid" : ""} ${className}`}
@@ -348,7 +401,7 @@ export function Textarea({ invalid, className = "", ...rest }: any) {
   );
 }
 
-export function Select({ invalid, className = "", children, ...rest }: any) {
+export function Select({ invalid, className = "", children, ...rest }: SelectProps & { className?: string }) {
   return (
     <select
       className={`ds-select ${invalid ? "invalid" : ""} ${className}`}
@@ -360,7 +413,7 @@ export function Select({ invalid, className = "", children, ...rest }: any) {
 }
 
 /* ---------- Checkbox / Radio ---------- */
-export function Checkbox({ label, disabled, ...rest }: any) {
+export function Checkbox({ label, disabled, ...rest }: CheckboxProps) {
   return (
     <label className={`ds-check ${disabled ? "disabled" : ""}`}>
       <input type="checkbox" disabled={disabled} {...rest} />
@@ -369,7 +422,7 @@ export function Checkbox({ label, disabled, ...rest }: any) {
   );
 }
 
-export function Radio({ label, disabled, ...rest }: any) {
+export function Radio({ label, disabled, ...rest }: RadioProps) {
   return (
     <label className={`ds-check ${disabled ? "disabled" : ""}`}>
       <input type="radio" disabled={disabled} {...rest} />
@@ -379,7 +432,7 @@ export function Radio({ label, disabled, ...rest }: any) {
 }
 
 /* ---------- Switch ---------- */
-export function Switch({ label, checked, onChange, disabled }: any) {
+export function Switch({ label, checked, onChange, disabled }: SwitchProps) {
   return (
     <label className="ds-switch">
       <input
@@ -397,7 +450,7 @@ export function Switch({ label, checked, onChange, disabled }: any) {
 }
 
 /* ---------- Badge ---------- */
-export function Badge({ variant = "default", dot, children }: any) {
+export function Badge({ variant = "default", dot, children }: BadgeProps) {
   const cls = `ds-badge${variant !== "default" ? " " + variant : ""}`;
   return (
     <span className={cls}>
@@ -448,7 +501,7 @@ export {
 } from "./Breadcrumbs.tsx";
 
 /* ---------- Progress ---------- */
-export function Progress({ value = 0, label }: any) {
+export function Progress({ value = 0, label }: ProgressProps) {
   const pct = Math.max(0, Math.min(100, value));
   return (
     <div>
@@ -484,7 +537,7 @@ export {
 } from "./Toast.tsx";
 
 /* ---------- Tooltip ---------- */
-export function Tooltip({ tip, children }: any) {
+export function Tooltip({ tip, children }: TooltipProps) {
   return (
     <span className="ds-tt" data-tip={tip} tabIndex={0}>
       {children}
@@ -519,7 +572,7 @@ export function Avatar({
   className = "",
   style,
   ...rest
-}: any) {
+}: AvatarProps & { children?: ReactNode; onClick?: () => void; style?: any; [key: string]: any }) {
   const [imgFailed, setImgFailed] = useState(false);
   const cls = ["ds-avatar"];
   if (size) cls.push(size);
@@ -566,7 +619,7 @@ export function Avatar({
 
 /* ---------- AvatarGroup ----------
    Coleção de avatares sobrepostos (times, colaboradores). */
-export function AvatarGroup({ children, max = 4, size, className = "" }: any) {
+export function AvatarGroup({ children, max = 4, size, className = "" }: AvatarGroupProps & { size?: any; className?: string }) {
   const kids = Array.isArray(children) ? children : [children].filter(Boolean);
   const visible = kids.slice(0, max);
   const rest = kids.length - visible.length;
@@ -575,7 +628,7 @@ export function AvatarGroup({ children, max = 4, size, className = "" }: any) {
   if (className) cls.push(className);
   return (
     <div className={cls.join(" ")}>
-      {visible.map((child, i) => (
+      {visible.map((child: any, i: any) => (
         <span key={i} className="ds-avatar-group-slot">
           {child}
         </span>
@@ -590,7 +643,7 @@ export function AvatarGroup({ children, max = 4, size, className = "" }: any) {
 }
 
 /* ---------- Divider ---------- */
-export function Divider({ children }: any) {
+export function Divider({ children }: DividerProps) {
   return (
     <div className="ds-divider">
       <span className="ornament">§</span>
@@ -601,7 +654,7 @@ export function Divider({ children }: any) {
 }
 
 /* ---------- Copy button ---------- */
-export function CopyButton({ text, label, copiedLabel }: any) {
+export function CopyButton({ text, label, copiedLabel }: CopyButtonProps) {
   const { copy, copied } = useCopy();
   const { t } = useT();
   const l = label ?? t("common.copy");
@@ -622,14 +675,14 @@ export function CopyButton({ text, label, copiedLabel }: any) {
 }
 
 /* ---------- Lightweight syntax highlighter (JSX / CSS) ---------- */
-function escapeHtml(s) {
+function escapeHtml(s: string): string {
   return s
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;");
 }
 
-function highlightJsx(src) {
+function highlightJsx(src: string): string {
   let s = escapeHtml(src);
   s = s.replace(/(\{\/\*[\s\S]*?\*\/\})/g, '<span class="c">$1</span>');
   s = s.replace(/(&quot;[^&]*?&quot;|&#39;[^&]*?&#39;|`[^`]*`)/g, '<span class="s">$1</span>');
@@ -642,7 +695,7 @@ function highlightJsx(src) {
   return s;
 }
 
-function highlightCss(src) {
+function highlightCss(src: string): string {
   let s = escapeHtml(src);
   s = s.replace(/(\/\*[\s\S]*?\*\/)/g, '<span class="c">$1</span>');
   s = s.replace(/(--[a-z0-9-]+)/gi, '<span class="n">$1</span>');
@@ -651,7 +704,7 @@ function highlightCss(src) {
   return s;
 }
 
-function highlightShell(src) {
+function highlightShell(src: string): string {
   const s = escapeHtml(src);
   return s
     .replace(/^(\$\s.*)$/gm, '<span class="c">$1</span>')
@@ -659,9 +712,9 @@ function highlightShell(src) {
 }
 
 /* ---------- Code block ---------- */
-export function Code({ children, lang = "jsx", copy = true }: any) {
+export function Code({ children, lang = "jsx", copy = true }: CodeProps) {
   const raw = typeof children === "string" ? children : String(children);
-  let html;
+  let html: string;
   if (lang === "css") html = highlightCss(raw);
   else if (lang === "shell") html = highlightShell(raw);
   else html = highlightJsx(raw);
@@ -690,8 +743,8 @@ export function Code({ children, lang = "jsx", copy = true }: any) {
        ]}
      />
 */
-function buildTreeLines(nodes, prefix = "", out = []) {
-  nodes.forEach((node, i) => {
+function buildTreeLines(nodes: any[], prefix = "", out: string[] = []): string[] {
+  nodes.forEach((node: any, i: number) => {
     const isLast = i === nodes.length - 1;
     const connector = isLast ? "└── " : "├── ";
     out.push(prefix + connector + node.name);
@@ -703,7 +756,7 @@ function buildTreeLines(nodes, prefix = "", out = []) {
   return out;
 }
 
-export function CompositionTree({ root, nodes = [], copy = true }: any) {
+export function CompositionTree({ root, nodes = [], copy = true }: CompositionTreeProps & { copy?: boolean }) {
   const lines = [root, ...buildTreeLines(nodes)];
   const text = lines.join("\n");
   return (
@@ -732,10 +785,10 @@ export function CompositionTree({ root, nodes = [], copy = true }: any) {
        nodes={[...]}
      />
 */
-export function CompositionSection({ num, i18nPrefix, root, nodes = [] }: any) {
+export function CompositionSection({ num, i18nPrefix, root, nodes = [] }: CompositionSectionProps) {
   const { t, tr } = useT();
   // tenta a chave específica da página; cai no genérico de `common.composition`.
-  const tryT = (suffix) => {
+  const tryT = (suffix: string) => {
     if (i18nPrefix) {
       const k = `${i18nPrefix}.${suffix}`;
       const v = t(k);
@@ -743,7 +796,7 @@ export function CompositionSection({ num, i18nPrefix, root, nodes = [] }: any) {
     }
     return t(`common.composition.${suffix}`);
   };
-  const tryTr = (suffix, vars) => {
+  const tryTr = (suffix: string, vars?: any) => {
     if (i18nPrefix) {
       const k = `${i18nPrefix}.${suffix}`;
       const v = tr(k, vars);
@@ -783,7 +836,7 @@ export function Example({
   center,
   code,
   lang = "jsx",
-}: any) {
+}: ExampleProps) {
   const [open, setOpen] = useState(false);
   const { t } = useT();
   const cls = ["example-preview"];
@@ -815,7 +868,7 @@ export function Example({
       )}
       {code && open && (
         <div className="example-code">
-          <Code lang={lang}>{code}</Code>
+          <Code lang={lang as any}>{code}</Code>
         </div>
       )}
     </div>
@@ -823,7 +876,7 @@ export function Example({
 }
 
 /* ---------- Section header helper ---------- */
-export function Section({ num, title, kicker, desc, children }: any) {
+export function Section({ num, title, kicker, desc, children }: SectionProps) {
   return (
     <section className="section">
       <div className="section-head">
@@ -838,7 +891,7 @@ export function Section({ num, title, kicker, desc, children }: any) {
 }
 
 /* ---------- Page header ---------- */
-export function PageHead({ lead, title, meta, metaLabel, intro }: any) {
+export function PageHead({ lead, title, meta, metaLabel, intro }: PageHeadProps) {
   return (
     <>
       <header className="page-head">

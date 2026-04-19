@@ -1,3 +1,10 @@
+import type { ReactNode } from "react";
+import type { FieldProps } from "./types.ts";
+
+interface SlotProps {
+  children?: ReactNode;
+}
+
 /* ================================================================
    Field — API composable para inputs.
    ----------------------------------------------------------------
@@ -15,7 +22,7 @@
      </Field>
    ================================================================ */
 
-export function Field({ label, hint, error, children, className = "" }: any) {
+export function Field({ label, hint, error, children, className = "" }: FieldProps) {
   const composed = hasComposable(children);
   if (composed) {
     return (
@@ -31,10 +38,10 @@ export function Field({ label, hint, error, children, className = "" }: any) {
   );
 }
 
-function hasComposable(children) {
+function hasComposable(children: ReactNode): boolean {
   let found = false;
   const arr = Array.isArray(children) ? children : [children];
-  arr.forEach((c) => {
+  arr.forEach((c: any) => {
     if (c && typeof c === "object" && c.type) {
       const name = c.type.displayName || c.type.name;
       if (name === "FieldLabel" || name === "FieldHint" || name === "FieldError") {
@@ -45,17 +52,17 @@ function hasComposable(children) {
   return found;
 }
 
-export function FieldLabel({ children }: any) {
+export function FieldLabel({ children }: SlotProps) {
   return <span className="ds-label">{children}</span>;
 }
 FieldLabel.displayName = "FieldLabel";
 
-export function FieldHint({ children }: any) {
+export function FieldHint({ children }: SlotProps) {
   return <span className="ds-hint">{children}</span>;
 }
 FieldHint.displayName = "FieldHint";
 
-export function FieldError({ children }: any) {
+export function FieldError({ children }: SlotProps) {
   return <span className="ds-hint error">{children}</span>;
 }
 FieldError.displayName = "FieldError";

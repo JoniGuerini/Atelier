@@ -22,7 +22,7 @@ export default function DropzonePage() {
   const { t, tr, locale } = useT();
   const [file, setFile] = useState(null);
 
-  const onFile = useCallback((f) => setFile(f), []);
+  const onFile = useCallback((f: any) => setFile(f), []);
   const reset = useCallback(() => setFile(null), []);
 
   const dateLocale = locale === "en" ? "en-US" : "pt-BR";

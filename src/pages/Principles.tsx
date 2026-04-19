@@ -40,7 +40,7 @@ export default function Principles() {
             background: "var(--bg-panel)",
           }}
         >
-          {items.map((p, i) => (
+          {items.map((p: any, i: any) => (
             <div
               key={p.n}
               style={{

@@ -1,6 +1,33 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useT } from "../lib/i18n.tsx";
 import { buildSearchIndex, searchIndex } from "../lib/searchIndex.ts";
+import type {
+  SearchPaletteProps,
+  SearchTriggerProps,
+} from "./types.ts";
+
+interface SearchItem {
+  id: string;
+  type: "page" | "component" | "token";
+  label: string;
+  route: string;
+  group?: string;
+  sub?: string;
+  n?: string;
+}
+interface GroupedResultsProps {
+  results: SearchItem[];
+  active: number;
+  setActive: (i: number) => void;
+  onPick: (item: SearchItem) => void;
+  groupLabels: Record<string, string>;
+}
+interface ResultRowProps {
+  item: SearchItem;
+  isActive: boolean;
+  onMouseEnter: () => void;
+  onClick: () => void;
+}
 
 /* ================================================================
    SearchPalette — command palette ⌘K.
@@ -11,16 +38,16 @@ import { buildSearchIndex, searchIndex } from "../lib/searchIndex.ts";
    useSearchHotkey(onOpen). O trigger visual usa <SearchTrigger />.
    ================================================================ */
 
-export function SearchPalette({ open, onClose, onNavigate }: any) {
+export function SearchPalette({ open, onClose, onNavigate }: SearchPaletteProps) {
   const { t, locale } = useT();
   const [query, setQuery] = useState("");
   const [active, setActive] = useState(0);
-  const inputRef = useRef(null);
-  const listRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const listRef = useRef<HTMLDivElement | null>(null);
 
   // Constrói o índice (depende do locale para resolver labels)
   const allItems = useMemo(() => buildSearchIndex(t), [t, locale]);
-  const results = useMemo(
+  const results: SearchItem[] = useMemo(
     () => searchIndex(allItems, query),
     [allItems, query]
   );
@@ -51,7 +78,7 @@ export function SearchPalette({ open, onClose, onNavigate }: any) {
   // Teclas globais quando aberto
   useEffect(() => {
     if (!open) return;
-    const onKey = (e) => {
+    const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         e.preventDefault();
         onClose();
@@ -146,27 +173,27 @@ export function SearchPalette({ open, onClose, onNavigate }: any) {
 }
 
 /* Agrupa por type, mantendo a ordem original (que já vem com score). */
-function GroupedResults({ results, active, setActive, onPick, groupLabels }: any) {
+function GroupedResults({ results, active, setActive, onPick, groupLabels }: GroupedResultsProps) {
   // mantém ordem por type encontrado
-  const groups = [];
-  const seen = new Map();
-  results.forEach((r) => {
+  const groups: { type: string; items: SearchItem[] }[] = [];
+  const seen = new Map<string, SearchItem[]>();
+  results.forEach((r: any) => {
     if (!seen.has(r.type)) {
       seen.set(r.type, []);
-      groups.push({ type: r.type, items: seen.get(r.type) });
+      groups.push({ type: r.type, items: seen.get(r.type)! });
     }
-    seen.get(r.type).push(r);
+    seen.get(r.type)!.push(r);
   });
 
   let cursor = 0;
   return (
     <>
-      {groups.map((g) => (
+      {groups.map((g: any) => (
         <div className="search-group" key={g.type}>
           <div className="search-group-label">
             {groupLabels[g.type] || g.type}
           </div>
-          {g.items.map((it) => {
+          {g.items.map((it: any) => {
             const idx = cursor++;
             return (
               <ResultRow
@@ -184,7 +211,7 @@ function GroupedResults({ results, active, setActive, onPick, groupLabels }: any
   );
 }
 
-function ResultRow({ item, isActive, onMouseEnter, onClick }: any) {
+function ResultRow({ item, isActive, onMouseEnter, onClick }: ResultRowProps) {
   return (
     <button
       type="button"
@@ -217,7 +244,7 @@ function ResultRow({ item, isActive, onMouseEnter, onClick }: any) {
    sinalização visual do atalho ⌘K para descoberta.
    ================================================================ */
 
-export function SearchTrigger({ onClick, compact = false }: any) {
+export function SearchTrigger({ onClick, compact = false }: SearchTriggerProps) {
   const { t } = useT();
   return (
     <button
@@ -246,9 +273,9 @@ export function SearchTrigger({ onClick, compact = false }: any) {
    useSearchHotkey — registra ⌘/Ctrl + K globalmente.
    ================================================================ */
 
-export function useSearchHotkey(onOpen) {
+export function useSearchHotkey(onOpen: () => void) {
   useEffect(() => {
-    const onKey = (e) => {
+    const onKey = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && !e.shiftKey && !e.altKey) {
         if (e.key === "k" || e.key === "K") {
           e.preventDefault();

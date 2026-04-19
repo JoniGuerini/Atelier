@@ -5,7 +5,7 @@ import { useT } from "../lib/i18n.tsx";
 export default function Overview({ onNavigate }: any) {
   const { t, tr, raw } = useT();
   const cards = raw("pages.overview.cards") || [];
-  const bk = (k) => t(`pages.overview.badges.${k}`);
+  const bk = (k: any) => t(`pages.overview.badges.${k}`);
 
   return (
     <>
@@ -24,7 +24,7 @@ export default function Overview({ onNavigate }: any) {
       />
 
       <div className="grid cols-3" style={{ marginBottom: "var(--space-7)" }}>
-        {cards.map((c, i) => (
+        {cards.map((c: any, i: any) => (
           <Card key={i}>
             <CardKicker>{c.kicker}</CardKicker>
             <CardTitle>

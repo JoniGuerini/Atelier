@@ -1,3 +1,6 @@
+import type { ElementType, HTMLAttributes, ReactNode } from "react";
+import type { CardProps } from "./types.ts";
+
 /* ================================================================
    Card — API composable (estilo shadcn).
    ----------------------------------------------------------------
@@ -11,7 +14,18 @@
      </Card>
    ================================================================ */
 
-export function Card({ children, className = "", ...rest }: any) {
+interface CardSlotProps {
+  children?: ReactNode;
+}
+interface CardTitleProps extends CardSlotProps {
+  as?: ElementType;
+}
+
+export function Card({
+  children,
+  className = "",
+  ...rest
+}: CardProps & HTMLAttributes<HTMLElement>) {
   const classes = ["ds-card"];
   if (className) classes.push(className);
   return (
@@ -23,22 +37,22 @@ export function Card({ children, className = "", ...rest }: any) {
 
 /* Header é opcional — pode-se usar CardKicker/CardTitle direto.
    Existe para semântica + agrupar quando o consumidor quiser. */
-export function CardHeader({ children }: any) {
+export function CardHeader({ children }: CardSlotProps) {
   return <>{children}</>;
 }
 
-export function CardKicker({ children }: any) {
+export function CardKicker({ children }: CardSlotProps) {
   return <div className="card-kicker">{children}</div>;
 }
 
-export function CardTitle({ children, as: Comp = "h3" }: any) {
+export function CardTitle({ children, as: Comp = "h3" }: CardTitleProps) {
   return <Comp className="card-title">{children}</Comp>;
 }
 
-export function CardBody({ children }: any) {
+export function CardBody({ children }: CardSlotProps) {
   return <div className="card-body">{children}</div>;
 }
 
-export function CardFooter({ children }: any) {
+export function CardFooter({ children }: CardSlotProps) {
   return <div className="card-foot">{children}</div>;
 }

@@ -44,7 +44,7 @@ export default function Spacing() {
             padding: "var(--space-5) var(--space-6)",
           }}
         >
-          {SCALE.map((s) => (
+          {SCALE.map((s: any) => (
             <div key={s.token} className="space-row">
               <div className="space-token">{s.token}</div>
               <div className="space-bar" style={{ width: s.px }} />
@@ -70,7 +70,7 @@ export default function Spacing() {
             gap: 10,
           }}
         >
-          {Array.from({ length: 12 }).map((_, i) => (
+          {Array.from({ length: 12 }).map((_: any, i: any) => (
             <div
               key={i}
               style={{
@@ -99,7 +99,7 @@ export default function Spacing() {
         kicker={t("pages.spacing.rulesKicker")}
       >
         <div className="grid cols-3">
-          {rules.map((r) => (
+          {rules.map((r: any) => (
             <div
               key={r.n}
               style={{

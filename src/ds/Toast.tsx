@@ -1,3 +1,10 @@
+import type { ReactNode } from "react";
+import type { ToastProps } from "./types.ts";
+
+interface SlotProps {
+  children?: ReactNode;
+}
+
 /* ================================================================
    Toast — API composable.
    ----------------------------------------------------------------
@@ -14,7 +21,7 @@
      <Toast message="Copiado." visible={visible} />
    ================================================================ */
 
-export function Toast({ message, visible, children, className = "" }: any) {
+export function Toast({ message, visible, children, className = "" }: ToastProps) {
   const cls = ["ds-toast"];
   if (visible) cls.push("show");
   if (className) cls.push(className);
@@ -25,15 +32,15 @@ export function Toast({ message, visible, children, className = "" }: any) {
   );
 }
 
-export function ToastTitle({ children }: any) {
+export function ToastTitle({ children }: SlotProps) {
   return <div className="toast-title">{children}</div>;
 }
 
-export function ToastDescription({ children }: any) {
+export function ToastDescription({ children }: SlotProps) {
   return <div className="toast-desc">{children}</div>;
 }
 
-export function ToastActions({ children }: any) {
+export function ToastActions({ children }: SlotProps) {
   return (
     <div
       className="toast-actions"

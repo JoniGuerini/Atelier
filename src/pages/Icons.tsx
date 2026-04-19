@@ -40,7 +40,7 @@ export default function Icons() {
         kicker={t("pages.icons.repertoireKicker")}
       >
         <div className="grid cols-4">
-          {GLYPHS.map((g) => (
+          {GLYPHS.map((g: any) => (
             <div
               key={g.key}
               style={{

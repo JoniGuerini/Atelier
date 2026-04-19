@@ -1,7 +1,33 @@
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { ROUTE_BY_ID } from "../lib/routes.ts";
 import { useT } from "../lib/i18n.tsx";
 import { ThemeToggle, NavModeToggle } from "../ds/primitives.tsx";
+import type {
+  NavbarProps,
+  NavbarDropdownProps,
+  NavbarDropdownItemProps,
+} from "../ds/types.ts";
+
+interface SlotProps {
+  children?: ReactNode;
+}
+interface NavbarBrandProps {
+  target?: string;
+  children?: ReactNode;
+}
+interface NavbarNavProps {
+  ariaLabel?: string;
+  children?: ReactNode;
+}
+interface NavbarDropdownPanelProps {
+  cols?: 1 | 2 | 3;
+  isOpen?: boolean;
+  children?: ReactNode;
+}
+interface NavbarDropdownItemPropsExt extends NavbarDropdownItemProps {
+  href?: string;
+  active?: boolean;
+}
 
 /* ================================================================
    Navbar — API composable (estilo shadcn)
@@ -52,7 +78,7 @@ function useMenuState() {
   return useContext(MenuStateContext);
 }
 
-function MenuStateProvider({ children }: any) {
+function MenuStateProvider({ children }: SlotProps) {
   const [activeKey, setActiveKey] = useState<string | null>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -84,12 +110,13 @@ function MenuStateProvider({ children }: any) {
   ---------------------------------------------------------------- */
   useEffect(() => {
     if (!activeKey) return;
-    const onMove = (e) => {
+    const onMove = (e: MouseEvent) => {
       const nav = document.querySelector(".site-navbar-nav");
       const panel = document.querySelector(".nav-menu-panel.is-open");
+      const target = e.target as Node;
       const inside =
-        (nav && nav.contains(e.target)) ||
-        (panel && panel.contains(e.target));
+        (nav && nav.contains(target)) ||
+        (panel && panel.contains(target));
       if (inside) {
         cancelClose();
       } else {
@@ -110,7 +137,7 @@ function MenuStateProvider({ children }: any) {
   );
 }
 
-export function Navbar({ current, onNavigate, children, className = "" }: any) {
+export function Navbar({ current, onNavigate, children, className = "" }: NavbarProps & { className?: string }) {
   const classes = ["site-navbar"];
   if (className) classes.push(className);
   return (
@@ -124,7 +151,7 @@ export function Navbar({ current, onNavigate, children, className = "" }: any) {
   );
 }
 
-export function NavbarBrand({ target = "overview", children }: any) {
+export function NavbarBrand({ target = "overview", children }: NavbarBrandProps) {
   const { t } = useT();
   const { onNavigate } = useNavbar();
   return (
@@ -148,7 +175,7 @@ export function NavbarBrand({ target = "overview", children }: any) {
   );
 }
 
-export function NavbarNav({ ariaLabel = "Primary", children }: any) {
+export function NavbarNav({ ariaLabel = "Primary", children }: NavbarNavProps) {
   // O abre/fecha não usa mais onMouseEnter/Leave aqui — o detector
   // global no MenuStateProvider (mouseover no document) cuida de
   // tudo com precisão, evitando os pontos cegos de listeners locais.
@@ -162,7 +189,7 @@ export function NavbarNav({ ariaLabel = "Primary", children }: any) {
 /* Dropdown — controlado pelo MenuStateProvider.
    `active` é só visual (algum item filho é current).
    `cols` define o layout do painel (1 / 2 / 3). */
-export function NavbarDropdown({ label, active = false, cols = 1, children }: any) {
+export function NavbarDropdown({ label, active = false, cols = 1, children }: NavbarDropdownProps & { active?: boolean }) {
   // Chave única para identificar este menu no estado compartilhado.
   const keyRef = useRef(`menu-${Math.random().toString(36).slice(2, 9)}`);
   const key = keyRef.current;
@@ -194,7 +221,7 @@ export function NavbarDropdown({ label, active = false, cols = 1, children }: an
   );
 }
 
-export function NavbarDropdownPanel({ cols = 1, isOpen = false, children }: any) {
+export function NavbarDropdownPanel({ cols = 1, isOpen = false, children }: NavbarDropdownPanelProps) {
   // Sem handlers locais — quem decide abrir/fechar é o detector
   // global. Mantemos só o role/className.
   return (
@@ -219,7 +246,7 @@ export function NavbarDropdownItem({
   description,
   isNew = false,
   children,
-}: any) {
+}: NavbarDropdownItemPropsExt) {
   const { onNavigate } = useNavbar();
   const { t } = useT();
   const url = href ?? (slug ? `#/${slug}` : "#");
@@ -255,7 +282,7 @@ export function NavbarDropdownItem({
   );
 }
 
-export function NavbarActions({ children }: any) {
+export function NavbarActions({ children }: SlotProps) {
   return <div className="site-navbar-actions">{children}</div>;
 }
 
@@ -268,7 +295,7 @@ export function NavbarLocale() {
       role="group"
       aria-label={t("nav.footer.language")}
     >
-      {locales.map((l) => (
+      {locales.map((l: any) => (
         <button
           key={l.id}
           type="button"

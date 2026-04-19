@@ -85,12 +85,12 @@ const TOKENS = [
 
 /* ---------- BUILD INDEX ----------
    Recebe a função `t` (i18n) para resolver labels de páginas. */
-export function buildSearchIndex(t) {
-  const items = [];
+export function buildSearchIndex(t: (k: string) => any): any[] {
+  const items: any[] = [];
 
   // 1) Páginas
-  ROUTES.forEach((group) => {
-    group.items.forEach((item) => {
+  ROUTES.forEach((group: any) => {
+    group.items.forEach((item: any) => {
       const slug = item.route || item.id;
       items.push({
         id: `page:${slug}`,
@@ -104,7 +104,7 @@ export function buildSearchIndex(t) {
   });
 
   // 2) Componentes
-  COMPONENTS.forEach((c) => {
+  COMPONENTS.forEach((c: any) => {
     items.push({
       id: `comp:${c.id}`,
       type: "component",
@@ -116,7 +116,7 @@ export function buildSearchIndex(t) {
   });
 
   // 3) Tokens
-  TOKENS.forEach((tk) => {
+  TOKENS.forEach((tk: any) => {
     items.push({
       id: `token:${tk.id}`,
       type: "token",
@@ -132,7 +132,7 @@ export function buildSearchIndex(t) {
 
 /* ---------- NORMALIZE ----------
    lowercase + remoção de diacríticos (NFD + strip). */
-function normalize(s) {
+function normalize(s: any): string {
   return String(s || "")
     .toLowerCase()
     .normalize("NFD")
@@ -145,7 +145,7 @@ function normalize(s) {
      containsLabel      →  60
      keywordMatch       →  40
      groupContains      →  20 */
-function scoreMatch(item, q) {
+function scoreMatch(item: any, q: string): number {
   const label = normalize(item.label);
   const group = normalize(item.group || "");
   const sub = normalize(item.sub || "");
@@ -155,24 +155,24 @@ function scoreMatch(item, q) {
   if (label.startsWith(q)) return 100;
   if (label.includes(q)) return 60;
   if (sub.includes(q)) return 40;
-  if (kws.some((k) => k.includes(q))) return 40;
+  if (kws.some((k: any) => k.includes(q))) return 40;
   if (group.includes(q)) return 20;
   return 0;
 }
 
-export function searchIndex(items, query) {
+export function searchIndex(items: any[], query: string): any[] {
   const q = normalize(query);
   if (!q) {
     // Sem query → mostra páginas (top 16) ordenadas pela "n" da rota
     return items
-      .filter((i) => i.type === "page")
-      .sort((a, b) => String(a.n).localeCompare(String(b.n)))
+      .filter((i: any) => i.type === "page")
+      .sort((a: any, b: any) => String(a.n).localeCompare(String(b.n)))
       .slice(0, 16);
   }
   return items
-    .map((it) => ({ it, score: scoreMatch(it, q) }))
+    .map((it: any) => ({ it, score: scoreMatch(it, q) }))
     .filter(({ score }) => score > 0)
-    .sort((a, b) => b.score - a.score)
+    .sort((a: any, b: any) => b.score - a.score)
     .slice(0, 30)
     .map(({ it }) => it);
 }

@@ -1,3 +1,10 @@
+import type { ReactNode } from "react";
+import type { AlertProps, AlertVariant } from "./types.ts";
+
+interface SlotProps {
+  children?: ReactNode;
+}
+
 /* ================================================================
    Alert — API composable.
    ----------------------------------------------------------------
@@ -13,7 +20,7 @@
    `title` e `children`, com Mark inferido pelo `variant`.
    ================================================================ */
 
-const ALERT_MARK = {
+const ALERT_MARK: Record<AlertVariant, string> = {
   info: "i",
   ok: "✓",
   warn: "!",
@@ -26,7 +33,7 @@ export function Alert({
   title,
   children,
   className = "",
-}: any) {
+}: AlertProps) {
   // Modo composable: se children já contém AlertMark/AlertContent, renderiza direto.
   // Modo curto: monta automaticamente Mark + Title + Description.
   const composed = hasComposable(children);
@@ -48,11 +55,11 @@ export function Alert({
   );
 }
 
-function hasComposable(children) {
+function hasComposable(children: ReactNode): boolean {
   let found = false;
   // Aceita um único filho ou array
   const arr = Array.isArray(children) ? children : [children];
-  arr.forEach((c) => {
+  arr.forEach((c: any) => {
     if (c && typeof c === "object" && c.type) {
       const name = c.type.displayName || c.type.name;
       if (
@@ -69,27 +76,27 @@ function hasComposable(children) {
   return found;
 }
 
-export function AlertMark({ children }: any) {
+export function AlertMark({ children }: SlotProps) {
   return <div className="alert-mark">{children}</div>;
 }
 AlertMark.displayName = "AlertMark";
 
-export function AlertContent({ children }: any) {
+export function AlertContent({ children }: SlotProps) {
   return <div className="alert-body">{children}</div>;
 }
 AlertContent.displayName = "AlertContent";
 
-export function AlertTitle({ children }: any) {
+export function AlertTitle({ children }: SlotProps) {
   return <div className="alert-title">{children}</div>;
 }
 AlertTitle.displayName = "AlertTitle";
 
-export function AlertDescription({ children }: any) {
+export function AlertDescription({ children }: SlotProps) {
   return <div className="alert-text">{children}</div>;
 }
 AlertDescription.displayName = "AlertDescription";
 
-export function AlertActions({ children }: any) {
+export function AlertActions({ children }: SlotProps) {
   return (
     <div
       className="alert-actions"

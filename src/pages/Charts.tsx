@@ -232,7 +232,7 @@ export default function Charts() {
                     <div className="ds-chart-pie-row">
                       <PieChart data={pieData} height={220} />
                       <ChartLegend>
-                        {pieData.map((d, i) => (
+                        {pieData.map((d: any, i: any) => (
                           <ChartLegendItem
                             key={d.label}
                             color={[
@@ -251,7 +251,7 @@ export default function Charts() {
                     <div className="ds-chart-pie-row">
                       <DonutChart data={pieData} height={220} />
                       <ChartLegend>
-                        {pieData.map((d, i) => (
+                        {pieData.map((d: any, i: any) => (
                           <ChartLegendItem
                             key={d.label}
                             color={[
@@ -352,7 +352,7 @@ export default function Charts() {
                         centerLabel={t("pages.charts.radial.average")}
                       />
                       <ChartLegend>
-                        {radialData.map((d, i) => (
+                        {radialData.map((d: any, i: any) => (
                           <ChartLegendItem
                             key={d.label}
                             color={[
@@ -410,7 +410,7 @@ export default function Charts() {
                     <div className="ds-chart-pie-row">
                       <PieChart data={pieData} height={220} />
                       <ChartLegend>
-                        {pieData.map((d, i) => (
+                        {pieData.map((d: any, i: any) => (
                           <ChartLegendItem
                             key={d.label}
                             color={[

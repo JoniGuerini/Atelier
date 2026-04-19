@@ -23,14 +23,14 @@ export interface LocaleContextValue {
 const LocaleCtx = createContext<LocaleContextValue>({
   locale: DEFAULT_LOCALE as Locale,
   setLocale: () => {},
-  dict: LOCALES[DEFAULT_LOCALE],
+  dict: (LOCALES as any)[DEFAULT_LOCALE],
   locales: LOCALE_LIST,
 });
 
 function readInitialLocale(): Locale {
   try {
     const saved = window.localStorage.getItem(STORAGE_KEY);
-    if (saved && LOCALES[saved]) return saved as Locale;
+    if (saved && (LOCALES as any)[saved]) return saved as Locale;
   } catch {
     /* ignore */
   }
@@ -43,7 +43,7 @@ export function LocaleProvider({ children }: { children?: ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>(readInitialLocale);
 
   const setLocale = useCallback((next: Locale) => {
-    if (!LOCALES[next]) return;
+    if (!(LOCALES as any)[next]) return;
     setLocaleState(next);
     try {
       window.localStorage.setItem(STORAGE_KEY, next);
@@ -56,7 +56,7 @@ export function LocaleProvider({ children }: { children?: ReactNode }) {
     () => ({
       locale,
       setLocale,
-      dict: LOCALES[locale] || LOCALES[DEFAULT_LOCALE],
+      dict: (LOCALES as any)[locale] || (LOCALES as any)[DEFAULT_LOCALE],
       locales: LOCALE_LIST,
     }),
     [locale, setLocale]

@@ -1,6 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useT } from "../lib/i18n.tsx";
 import { ThemeToggle, NavModeToggle } from "./primitives.tsx";
+import type { SettingsMenuProps } from "./types.ts";
+
+interface RowProps {
+  label: ReactNode;
+  children?: ReactNode;
+}
 
 /* ================================================================
    SettingsMenu — disparador único + popover com as 3 opções
@@ -19,18 +25,18 @@ export function SettingsMenu({
   navMode,
   onToggleNavMode,
   placement = "bottom-end",
-}: any) {
+}: SettingsMenuProps) {
   const [open, setOpen] = useState(false);
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement | null>(null);
   const { t, locale, setLocale, locales } = useT();
 
   // Fecha ao clicar fora ou apertar Esc
   useEffect(() => {
     if (!open) return;
-    const onClick = (e) => {
-      if (ref.current && !ref.current.contains(e.target)) setOpen(false);
+    const onClick = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
     };
-    const onKey = (e) => e.key === "Escape" && setOpen(false);
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
     document.addEventListener("mousedown", onClick);
     document.addEventListener("keydown", onKey);
     return () => {
@@ -75,7 +81,7 @@ export function SettingsMenu({
               role="group"
               aria-label={t("nav.footer.language")}
             >
-              {locales.map((l) => (
+              {locales.map((l: any) => (
                 <button
                   key={l.id}
                   type="button"
@@ -105,7 +111,7 @@ export function SettingsMenu({
   );
 }
 
-function Row({ label, children }: any) {
+function Row({ label, children }: RowProps) {
   return (
     <div className="settings-menu-row">
       <span className="settings-menu-label">{label}</span>

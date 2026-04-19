@@ -65,7 +65,7 @@ export default function Tables() {
     </TableRow>
   </TableHead>
   <TableBody>
-    {rows.map((r) => (
+    {rows.map((r: any) => (
       <TableRow key={r.n}>
         <TableCell mono>{r.n}</TableCell>
         <TableCell><em>{r.title}</em></TableCell>
@@ -90,7 +90,7 @@ export default function Tables() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((r) => (
+              {rows.map((r: any) => (
                 <TableRow key={r.n}>
                   <TableCell mono>{r.n}</TableCell>
                   <TableCell>
@@ -102,9 +102,9 @@ export default function Tables() {
                   <TableCell>
                     <Badge
                       dot
-                      variant={STATE_VARIANT[r.stateKey] || "info"}
+                      variant={(STATE_VARIANT as any)[r.stateKey] || "info"}
                     >
-                      {states[r.stateKey]}
+                      {(states as any)[r.stateKey]}
                     </Badge>
                   </TableCell>
                   <TableCell mono>{r.date}</TableCell>

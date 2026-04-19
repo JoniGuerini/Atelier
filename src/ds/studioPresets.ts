@@ -66,7 +66,7 @@ export const STUDIO_PRESETS = [
   },
 ];
 
-function pick(list) {
+function pick(list: { id: string }[]): string {
   return list[Math.floor(Math.random() * list.length)].id;
 }
 

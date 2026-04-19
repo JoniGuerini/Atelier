@@ -1,4 +1,15 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, type ReactNode } from "react";
+import type { StepperProps, StepProps, StepperOrientation } from "./types.ts";
+
+interface StepperContextValue {
+  current: number;
+  orientation: StepperOrientation;
+}
+interface StepperItemProps {
+  state: "pending" | "active" | "completed";
+  index: number;
+  children?: ReactNode;
+}
 
 /* ================================================================
    Stepper — indicador de progresso multi-etapa.
@@ -19,7 +30,7 @@ import { createContext, useContext } from "react";
      • pending   — futuros (label em ink-soft, número em ink-faint)
    ================================================================ */
 
-const StepperContext = createContext({ current: 0, orientation: "horizontal" });
+const StepperContext = createContext<StepperContextValue>({ current: 0, orientation: "horizontal" });
 
 function useStepper() {
   return useContext(StepperContext);
@@ -30,7 +41,7 @@ export function Stepper({
   orientation = "horizontal",
   children,
   className = "",
-}: any) {
+}: StepperProps) {
   // Resolve estado de cada step automaticamente baseado em sua posição
   const items = Array.isArray(children) ? children : [children];
   return (
@@ -39,9 +50,9 @@ export function Stepper({
         className={`ds-stepper orientation-${orientation} ${className}`.trim()}
         role="list"
       >
-        {items.map((child, i) => {
+        {items.map((child: any, i: any) => {
           if (!child) return null;
-          let state = "pending";
+          let state: "pending" | "active" | "completed" = "pending";
           if (i < current) state = "completed";
           else if (i === current) state = "active";
           return (
@@ -56,7 +67,7 @@ export function Stepper({
 }
 
 /* Wrapper interno que provê o estado pra cada Step */
-function StepperItem({ state, index, children }: any) {
+function StepperItem({ state, index, children }: StepperItemProps) {
   return (
     <li className={`ds-step state-${state}`} data-index={index}>
       {children}
@@ -64,7 +75,7 @@ function StepperItem({ state, index, children }: any) {
   );
 }
 
-export function Step({ n, label, description }: any) {
+export function Step({ n, label, description }: StepProps) {
   return (
     <>
       <span className="ds-step-marker">

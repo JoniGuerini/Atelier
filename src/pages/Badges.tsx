@@ -9,7 +9,7 @@ import { useT } from "../lib/i18n.tsx";
 
 export default function Badges() {
   const { t, tr } = useT();
-  const lb = (k) => t(`pages.badges.labels.${k}`);
+  const lb = (k: any) => t(`pages.badges.labels.${k}`);
 
   return (
     <>

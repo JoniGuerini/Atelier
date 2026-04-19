@@ -52,7 +52,7 @@ export default function AccessibilityPage() {
             width: "100%",
           }}
         >
-          {principles.map((p, i) => (
+          {principles.map((p: any, i: any) => (
             <Card key={i}>
               <CardKicker>{p.n}</CardKicker>
               <CardTitle>
@@ -94,7 +94,7 @@ export default function AccessibilityPage() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {shortcuts.map((s, i) => (
+              {shortcuts.map((s: any, i: any) => (
                 <TableRow key={i}>
                   <TableCell>
                     <Keys keys={s.keys} />
@@ -234,7 +234,7 @@ export default function AccessibilityPage() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {(raw("pages.accessibility.aria.items") || []).map((row, i) => (
+              {(raw("pages.accessibility.aria.items") || []).map((row: any, i: any) => (
                 <TableRow key={i}>
                   <TableCell mono>{row.component}</TableCell>
                   <TableCell>{row.strategy}</TableCell>
@@ -255,7 +255,7 @@ function Keys({ keys }: any) {
   const parts = (keys || "").split(" ").filter(Boolean);
   return (
     <span style={{ display: "inline-flex", gap: 4, alignItems: "center" }}>
-      {parts.map((k, i) => (
+      {parts.map((k: any, i: any) => (
         <span
           key={i}
           style={{

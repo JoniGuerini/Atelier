@@ -1,4 +1,18 @@
+import type { MouseEvent, ReactNode } from "react";
 import { useT } from "../lib/i18n.tsx";
+import type { BreadcrumbsProps, BreadcrumbProps } from "./types.ts";
+
+interface BreadcrumbsRootProps {
+  children?: ReactNode;
+  className?: string;
+  ariaLabel?: string;
+}
+interface BreadcrumbCurrentProps {
+  children?: ReactNode;
+}
+interface BreadcrumbSeparatorProps {
+  children?: ReactNode;
+}
 
 /* ================================================================
    Breadcrumbs — trilha de navegação editorial.
@@ -18,12 +32,12 @@ import { useT } from "../lib/i18n.tsx";
      </BreadcrumbsRoot>
    ================================================================ */
 
-export function Breadcrumbs({ items, separator, className = "" }: any) {
+export function Breadcrumbs({ items, separator, className = "" }: BreadcrumbsProps) {
   // Atalho: aceita array de strings; o último é o current.
   if (!items || items.length === 0) return null;
   return (
     <BreadcrumbsRoot className={className}>
-      {items.map((label, i) => {
+      {items.map((label: any, i: any) => {
         const isLast = i === items.length - 1;
         return (
           <span key={i} className="ds-crumbs-group">
@@ -40,7 +54,7 @@ export function Breadcrumbs({ items, separator, className = "" }: any) {
   );
 }
 
-export function BreadcrumbsRoot({ children, className = "", ariaLabel }: any) {
+export function BreadcrumbsRoot({ children, className = "", ariaLabel }: BreadcrumbsRootProps) {
   const { t } = useT();
   return (
     <nav
@@ -52,11 +66,11 @@ export function BreadcrumbsRoot({ children, className = "", ariaLabel }: any) {
   );
 }
 
-export function Breadcrumb({ href, onClick, children }: any) {
-  const handle = (e) => {
+export function Breadcrumb({ href, onClick, children }: BreadcrumbProps) {
+  const handle = (e: MouseEvent<HTMLAnchorElement>) => {
     if (onClick) {
       e.preventDefault();
-      onClick(e);
+      onClick();
     }
   };
   if (href || onClick) {
@@ -71,7 +85,7 @@ export function Breadcrumb({ href, onClick, children }: any) {
   return <li className="ds-crumbs-item">{children}</li>;
 }
 
-export function BreadcrumbCurrent({ children }: any) {
+export function BreadcrumbCurrent({ children }: BreadcrumbCurrentProps) {
   return (
     <li className="ds-crumbs-item is-current" aria-current="page">
       {children}
@@ -79,7 +93,7 @@ export function BreadcrumbCurrent({ children }: any) {
   );
 }
 
-export function BreadcrumbSeparator({ children = "/" }: any) {
+export function BreadcrumbSeparator({ children = "/" }: BreadcrumbSeparatorProps) {
   return (
     <li className="ds-crumbs-sep" aria-hidden="true">
       {children}

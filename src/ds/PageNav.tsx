@@ -1,6 +1,23 @@
 import { FLAT_ROUTES, findFlatIndex } from "../lib/routes.ts";
 import { useT } from "../lib/i18n.tsx";
 
+interface PageNavProps {
+  current: string;
+  onNavigate?: (slug: string) => void;
+}
+interface FlatEntry {
+  id: string;
+  n: string;
+  slug: string;
+  groupKey: string;
+}
+interface PageNavLinkProps {
+  entry: FlatEntry;
+  direction: "prev" | "next";
+  label: string;
+  onNavigate?: (slug: string) => void;
+}
+
 /* ================================================================
    PageNav — paginação editorial entre páginas consecutivas.
    ----------------------------------------------------------------
@@ -13,7 +30,7 @@ import { useT } from "../lib/i18n.tsx";
    FLAT_ROUTES (a ordem de leitura).
    ================================================================ */
 
-export function PageNav({ current, onNavigate }: any) {
+export function PageNav({ current, onNavigate }: PageNavProps) {
   const { t } = useT();
   const idx = findFlatIndex(current);
   if (idx < 0) return null;
@@ -53,7 +70,7 @@ export function PageNav({ current, onNavigate }: any) {
   );
 }
 
-function PageNavLink({ entry, direction, label, onNavigate }: any) {
+function PageNavLink({ entry, direction, label, onNavigate }: PageNavLinkProps) {
   const { t } = useT();
   const arrow = direction === "prev" ? "←" : "→";
   const itemLabel = t(`nav.items.${entry.id}`);

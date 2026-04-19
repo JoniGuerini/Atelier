@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, type ReactNode } from "react";
 import { ROUTE_BY_ID } from "../lib/routes.ts";
 import { useT } from "../lib/i18n.tsx";
 import {
@@ -6,6 +6,22 @@ import {
   ThemeToggle,
   NavModeToggle,
 } from "../ds/primitives.tsx";
+import type { SidebarProps, SidebarNavItemProps, NavMode } from "../ds/types.ts";
+
+interface SidebarContextValue {
+  collapsed: boolean;
+}
+interface SlotProps {
+  children?: ReactNode;
+}
+interface SidebarBrandProps {
+  onNavigate?: (route: string) => void;
+  target?: string;
+}
+interface SidebarNavModeProps {
+  mode: NavMode;
+  onChange?: (mode: NavMode) => void;
+}
 
 /* ================================================================
    Sidebar — API composable (estilo shadcn)
@@ -35,13 +51,13 @@ import {
    sem prop drilling.
    ================================================================ */
 
-const SidebarContext = createContext({ collapsed: false });
+const SidebarContext = createContext<SidebarContextValue>({ collapsed: false });
 
 function useSidebar() {
   return useContext(SidebarContext);
 }
 
-export function Sidebar({ collapsed = false, children, className = "" }: any) {
+export function Sidebar({ collapsed = false, children, className = "" }: SidebarProps) {
   const classes = ["sidebar"];
   if (className) classes.push(className);
   return (
@@ -58,11 +74,11 @@ export function Sidebar({ collapsed = false, children, className = "" }: any) {
 }
 
 /* ---------- Head ---------- */
-export function SidebarHead({ children }: any) {
+export function SidebarHead({ children }: SlotProps) {
   return <div className="sidebar-head">{children}</div>;
 }
 
-export function SidebarBrand({ onNavigate, target = "overview" }: any) {
+export function SidebarBrand({ onNavigate, target = "overview" }: SidebarBrandProps) {
   const { t } = useT();
   return (
     <a
@@ -83,19 +99,19 @@ export function SidebarBrand({ onNavigate, target = "overview" }: any) {
 }
 
 /* ---------- Nav ---------- */
-export function SidebarNav({ children }: any) {
+export function SidebarNav({ children }: SlotProps) {
   return <nav>{children}</nav>;
 }
 
-export function SidebarGroup({ children }: any) {
+export function SidebarGroup({ children }: SlotProps) {
   return <div className="nav-group">{children}</div>;
 }
 
-export function SidebarGroupTitle({ children }: any) {
+export function SidebarGroupTitle({ children }: SlotProps) {
   return <div className="group-title">{children}</div>;
 }
 
-export function SidebarNavItem({ n, active = false, onClick, children }: any) {
+export function SidebarNavItem({ n, active = false, onClick, children }: SidebarNavItemProps) {
   const { collapsed } = useSidebar();
   return (
     <button
@@ -118,7 +134,7 @@ export function SidebarLocale() {
     <div className="sidebar-locale">
       <div className="group-title">{t("nav.footer.language")}</div>
       <div className="locale-switch" role="group" aria-label="Language">
-        {locales.map((l) => (
+        {locales.map((l: any) => (
           <button
             key={l.id}
             type="button"
@@ -147,7 +163,7 @@ export function SidebarTheme() {
   );
 }
 
-export function SidebarNavMode({ mode, onChange }: any) {
+export function SidebarNavMode({ mode, onChange }: SidebarNavModeProps) {
   const { t } = useT();
   const { collapsed } = useSidebar();
   if (!onChange) return null;
@@ -160,7 +176,7 @@ export function SidebarNavMode({ mode, onChange }: any) {
 }
 
 /* ---------- Footer ---------- */
-export function SidebarFooter({ children }: any) {
+export function SidebarFooter({ children }: SlotProps) {
   const { t } = useT();
   return (
     <div className="sidebar-footer">

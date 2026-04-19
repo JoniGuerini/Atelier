@@ -103,9 +103,9 @@ export const SPACING_PRESETS = [
 
 const BASE_SPACES = [4, 8, 12, 16, 24, 32, 48, 64, 96];
 
-export function spacingVars(multiplier) {
-  const out = {};
-  BASE_SPACES.forEach((px, i) => {
+export function spacingVars(multiplier: number): Record<string, string> {
+  const out: Record<string, string> = {};
+  BASE_SPACES.forEach((px: any, i: any) => {
     out[`--space-${i + 1}`] = `${Math.round(px * multiplier)}px`;
   });
   return out;
@@ -131,14 +131,14 @@ export const DEFAULT_THEME = {
   radius: 0,
 };
 
-function lookup(list, id) {
-  return list.find((p) => p.id === id) || list[0];
+function lookup<T extends { id: string }>(list: T[], id: string): T {
+  return list.find((p: any) => p.id === id) || list[0];
 }
 
 // Converte o objeto `theme` em um style={{ ... }} pronto para
 // envolver qualquer subárvore — todas as CSS vars são sobrescritas
 // no escopo, preservando o resto do site intacto.
-export function themeToStyle(theme) {
+export function themeToStyle(theme: any): any {
   const accent = lookup(ACCENT_PRESETS, theme.accent);
   const base = lookup(BASE_PRESETS, theme.base);
   const font = lookup(FONT_PRESETS, theme.font);
@@ -178,7 +178,7 @@ export function themeToStyle(theme) {
 }
 
 // Gera o snippet CSS para o "Copy tokens" / "Download CSS"
-export function themeToCss(theme) {
+export function themeToCss(theme: any): string {
   const style = themeToStyle(theme);
   const lines = [":root {"];
   Object.entries(style).forEach(([k, v]) => {

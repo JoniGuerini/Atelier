@@ -9,9 +9,9 @@ import { useT } from "../lib/i18n.tsx";
 
 export default function Alerts() {
   const { t, tr } = useT();
-  const a = (k, f) => t(`pages.alerts.${k}.${f}`);
+  const a = (k: any, f: any) => t(`pages.alerts.${k}.${f}`);
 
-  const make = (key, num, variant) => (
+  const make = (key: any, num: any, variant: any) => (
     <Section
       num={num}
       title={<>{a(key, "title")}</>}

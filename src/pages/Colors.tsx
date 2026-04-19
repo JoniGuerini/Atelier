@@ -100,7 +100,7 @@ function Swatch({ name, token, light, dark, resolved }: any) {
 function SwatchGrid({ items, t, resolved }: any) {
   return (
     <div className="grid cols-4">
-      {items.map((s) => (
+      {items.map((s: any) => (
         <Swatch
           key={s.token}
           name={t(`pages.colors.swatches.${s.key}`)}
@@ -117,7 +117,7 @@ function SwatchGrid({ items, t, resolved }: any) {
 export default function Colors() {
   const { t, tr } = useT();
   const { resolved } = useTheme();
-  const sr = (k, f) => tr(`pages.colors.sections.${k}.${f}`);
+  const sr = (k: any, f: any) => tr(`pages.colors.sections.${k}.${f}`);
 
   return (
     <>

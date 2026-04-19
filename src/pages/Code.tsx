@@ -264,7 +264,7 @@ const API = [
     </TableRow>
   </TableHead>
   <TableBody>
-    {rows.map((r) => (
+    {rows.map((r: any) => (
       <TableRow key={r.n}>
         <TableCell mono>{r.n}</TableCell>
         <TableCell><em>{r.title}</em></TableCell>
@@ -634,7 +634,7 @@ function ApiTable({ rows, labels }: any) {
           </tr>
         </thead>
         <tbody>
-          {rows.map((row, i) => (
+          {rows.map((row: any, i: any) => (
             <tr key={i}>
               <td className="mono" style={{ color: "var(--accent)" }}>
                 {row[0]}
@@ -726,7 +726,7 @@ export default function CodePage({ onNavigate }: any) {
       >
         <p className="section-desc">{tr("pages.code.api.desc")}</p>
 
-        {API.map((c) => (
+        {API.map((c: any) => (
           <article key={c.id} className="api-card">
             <header className="api-card-head">
               <div>
@@ -777,7 +777,7 @@ export default function CodePage({ onNavigate }: any) {
       >
         <p className="section-desc">{tr("pages.code.decisions.desc")}</p>
         <div style={{ display: "grid", gap: "var(--space-4)" }}>
-          {decisions.map((d, i) => (
+          {decisions.map((d: any, i: any) => (
             <article key={d.n} className="adr-card">
               <header className="adr-card-head">
                 <span className="adr-card-n">{d.n}</span>
@@ -803,7 +803,7 @@ export default function CodePage({ onNavigate }: any) {
         kicker={t("pages.code.conventions.kicker")}
       >
         <div className="grid cols-3">
-          {conventions.map((rule) => (
+          {conventions.map((rule: any) => (
             <div
               key={rule.n}
               style={{
@@ -844,7 +844,7 @@ export default function CodePage({ onNavigate }: any) {
               >
                 {(() => {
                   const parts = rule.body.split(/\[em\]|\[\/em\]/);
-                  return parts.map((p, i) =>
+                  return parts.map((p: any, i: any) =>
                     i % 2 === 1 ? (
                       <em key={i} style={{ fontStyle: "italic" }}>
                         {p}

@@ -54,7 +54,7 @@ export default function Cards() {
 </Card>`}
         >
           <div className="grid cols-3" style={{ width: "100%" }}>
-            {items.map((c, i) => (
+            {items.map((c: any, i: any) => (
               <Card key={i}>
                 <CardKicker>{c.kicker}</CardKicker>
                 <CardTitle>
@@ -66,7 +66,7 @@ export default function Cards() {
                   {(() => {
                     const body = c.body || "";
                     const parts = body.split(/\[em\]|\[\/em\]/);
-                    return parts.map((p, j) =>
+                    return parts.map((p: any, j: any) =>
                       j % 2 === 1 ? (
                         <em key={j} style={{ fontStyle: "italic" }}>
                           {p}

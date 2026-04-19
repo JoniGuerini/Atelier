@@ -3,7 +3,7 @@ import { useT } from "../lib/i18n.tsx";
 
 export default function Typography() {
   const { t, tr } = useT();
-  const sp = (k, f) => t(`pages.typography.specimens.${k}.${f}`);
+  const sp = (k: any, f: any) => t(`pages.typography.specimens.${k}.${f}`);
 
   const SPECIMENS = [
     {
@@ -122,7 +122,7 @@ export default function Typography() {
             padding: "var(--space-6)",
           }}
         >
-          {SPECIMENS.map((s, i) => (
+          {SPECIMENS.map((s: any, i: any) => (
             <div key={i} className="type-row">
               <div className="type-meta">
                 <b>{s.meta}</b>
@@ -152,7 +152,7 @@ export default function Typography() {
             alignItems: "baseline",
           }}
         >
-          {[10, 12, 14, 16, 20, 28].map((n) => (
+          {[10, 12, 14, 16, 20, 28].map((n: any) => (
             <div
               key={n}
               style={{

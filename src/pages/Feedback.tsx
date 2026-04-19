@@ -16,7 +16,7 @@ export default function Feedback() {
   const [toast, setToast] = useState({ message: "", visible: false });
   const timer = useRef(null);
 
-  const show = useCallback((message) => {
+  const show = useCallback((message: string) => {
     setToast({ message, visible: true });
     if (timer.current) clearTimeout(timer.current);
     timer.current = setTimeout(

@@ -2,10 +2,10 @@ import { useCallback, useRef, useState } from "react";
 
 export function useCopy(timeout = 1400) {
   const [copied, setCopied] = useState(false);
-  const timer = useRef(null);
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const copy = useCallback(
-    async (text) => {
+    async (text: string): Promise<boolean> => {
       try {
         if (navigator.clipboard?.writeText) {
           await navigator.clipboard.writeText(text);

@@ -101,7 +101,7 @@ export default function App() {
   const { t } = useT();
   const [route, navigate] = useHashRoute();
   const current = ALL_ROUTE_IDS.includes(route) ? route : "overview";
-  const Page = PAGES[current] || Overview;
+  const Page = (PAGES as any)[current] || Overview;
 
   const [collapsed, setCollapsed] = useState(() => {
     if (typeof window === "undefined") return false;
@@ -139,7 +139,7 @@ export default function App() {
 
   // Atalho: Ctrl/Cmd + B  (convenção de editores; não conflita com o navegador)
   useEffect(() => {
-    const handler = (e) => {
+    const handler = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && !e.shiftKey && !e.altKey) {
         if (e.key === "b" || e.key === "B") {
           e.preventDefault();
@@ -222,9 +222,9 @@ function AppNavbar({ current, navigate, navMode, setNavMode, openSearch }: any) 
     <Navbar current={current} onNavigate={navigate}>
       <NavbarBrand />
       <NavbarNav ariaLabel={t("nav.navLabel") || "Primary"}>
-        {ROUTES.map((group) => {
+        {ROUTES.map((group: any) => {
           const anyActive = group.items.some(
-            (it) => (it.route || it.id) === current
+            (it: any) => (it.route || it.id) === current
           );
           // Quantas colunas no painel? Escala com o tamanho do grupo.
           // Threshold mais cedo para 2 colunas — 3 itens já justifica
@@ -241,7 +241,7 @@ function AppNavbar({ current, navigate, navMode, setNavMode, openSearch }: any) 
               active={anyActive}
               cols={cols}
             >
-              {group.items.map((it) => {
+              {group.items.map((it: any) => {
                 const slug = it.route || it.id;
                 // Tenta resolver descrição específica (se i18n
                 // declarou nav.descriptions.<id>); cai num fallback
@@ -305,12 +305,12 @@ function AppSidebar({
       </SidebarHead>
 
       <SidebarNav>
-        {ROUTES.map((group) => (
+        {ROUTES.map((group: any) => (
           <SidebarGroup key={group.groupKey}>
             <SidebarGroupTitle>
               {t(`nav.groups.${group.groupKey}`)}
             </SidebarGroupTitle>
-            {group.items.map((it) => {
+            {group.items.map((it: any) => {
               const slug = it.route || it.id;
               return (
                 <SidebarNavItem

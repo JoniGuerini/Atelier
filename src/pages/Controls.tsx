@@ -12,7 +12,7 @@ import { useT } from "../lib/i18n.tsx";
 
 export default function Controls() {
   const { t, tr, raw } = useT();
-  const lb = (k) => t(`pages.controls.labels.${k}`);
+  const lb = (k: any) => t(`pages.controls.labels.${k}`);
   const plans = raw("pages.controls.labels.plans") || [];
 
   const [a, setA] = useState(true);
@@ -84,7 +84,7 @@ export default function Controls() {
   checked={plan === "quarterly"} onChange={() => setPlan("quarterly")} />`}
         >
           <div style={{ display: "grid", gap: 10 }}>
-            {["monthly", "quarterly", "annual"].map((v, i) => (
+            {["monthly", "quarterly", "annual"].map((v: any, i: any) => (
               <Radio
                 key={v}
                 name="plan"

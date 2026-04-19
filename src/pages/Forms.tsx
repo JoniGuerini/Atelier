@@ -78,7 +78,7 @@ export default function Forms() {
       </Select>
     </FormField>
     <FormField label="${t("pages.forms.format")}">
-      <Select>${(formats || []).map((f) => `<option>${f}</option>`).join("")}</Select>
+      <Select>${(formats || []).map((f: any) => `<option>${f}</option>`).join("")}</Select>
     </FormField>
   </FormRow>
 
@@ -128,7 +128,7 @@ export default function Forms() {
               </FormField>
               <FormField label={t("pages.forms.format")}>
                 <Select>
-                  {formats.map((f) => (
+                  {formats.map((f: any) => (
                     <option key={f}>{f}</option>
                   ))}
                 </Select>

@@ -1,7 +1,19 @@
 /* Navigation map — labels are resolved via i18n dictionary
    (nav.items.<id> and nav.groups.<groupKey>). */
 
-export const ROUTES = [
+export interface RouteItem {
+  id: string;
+  n: string;
+  route?: string;
+  isNew?: boolean;
+  tool?: boolean;
+}
+export interface RouteGroup {
+  groupKey: string;
+  items: RouteItem[];
+}
+
+export const ROUTES: RouteGroup[] = [
   {
     groupKey: "start",
     items: [
@@ -67,20 +79,20 @@ export const ROUTES = [
 ];
 
 /* All route ids (url slugs). Uses `route` override when it differs from `id`. */
-export const ALL_ROUTE_IDS = ROUTES.flatMap((g) =>
-  g.items.map((i) => i.route || i.id)
+export const ALL_ROUTE_IDS = ROUTES.flatMap((g: any) =>
+  g.items.map((i: any) => i.route || i.id)
 );
 
 /* Map from id → route slug */
 export const ROUTE_BY_ID = Object.fromEntries(
-  ROUTES.flatMap((g) => g.items.map((i) => [i.id, i.route || i.id]))
+  ROUTES.flatMap((g: any) => g.items.map((i: any) => [i.id, i.route || i.id]))
 );
 
 /* Flattened reading order (used for prev/next pagination at the foot of
    each page). Each entry carries its slug, id, ordinal (`n`) and group.
    Items marked `tool: true` (eg. Create) are excluded — they are
    self-contained tools, not chapters in the manual. */
-export const FLAT_ROUTES = ROUTES.flatMap((g) =>
+export const FLAT_ROUTES = ROUTES.flatMap((g: any) =>
   g.items
     .filter((i: any) => !i.tool)
     .map((i: any) => ({
@@ -93,7 +105,7 @@ export const FLAT_ROUTES = ROUTES.flatMap((g) =>
 
 /** Slugs that should NOT render the global PageNav at the foot. */
 export const TOOL_ROUTE_IDS = new Set<string>(
-  ROUTES.flatMap((g) =>
+  ROUTES.flatMap((g: any) =>
     g.items.filter((i: any) => i.tool).map((i: any) => i.route || i.id)
   )
 );
