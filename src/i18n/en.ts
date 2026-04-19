@@ -2006,15 +2006,6 @@ const en = {
         body:
           "Try dragging the crosshair in the center — it moves all 3 panels in both dimensions.",
       },
-      nested: {
-        title: "Simple nesting (no junction)",
-        kicker: "ResizablePanels inside ResizablePanel",
-        desc:
-          "If you prefer [em]independent handles[/em] (no junction handle), just [em]nest[/em] a ResizablePanels inside a ResizablePanel. Each level has its own separate handle. Supports any depth.",
-        caption: "L-shape — One on the left, Two/Three split the right",
-        label: "L-shaped layout",
-        innerLabel: "Right column (Two/Three)",
-      },
       persist: {
         title: "localStorage persistence",
         kicker: "storageKey",

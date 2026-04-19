@@ -226,64 +226,9 @@ export default function ResizablePage() {
         </Example>
       </Section>
 
-      {/* v · Aninhamento simples (sem junction) */}
+      {/* v · Persistência */}
       <Section
         num="v"
-        title={<>{t("pages.resizable.nested.title")}</>}
-        kicker={t("pages.resizable.nested.kicker")}
-      >
-        <p className="section-desc">{tr("pages.resizable.nested.desc")}</p>
-        <Example
-          caption={t("pages.resizable.nested.caption")}
-          tech="nested"
-          stack
-          code={`<ResizablePanels orientation="horizontal" defaultSizes={[50, 50]}>
-  <ResizablePanel>One</ResizablePanel>
-  <ResizablePanel>
-    <ResizablePanels orientation="vertical" defaultSizes={[50, 50]}>
-      <ResizablePanel>Two</ResizablePanel>
-      <ResizablePanel>Three</ResizablePanel>
-    </ResizablePanels>
-  </ResizablePanel>
-</ResizablePanels>`}
-        >
-          <div style={{ height: 360, width: "100%" }}>
-            <ResizablePanels
-              orientation="horizontal"
-              defaultSizes={[50, 50]}
-              ariaLabel={t("pages.resizable.nested.label")}
-            >
-              <ResizablePanel>
-                <FakePanel bg="var(--bg-panel)">
-                  <strong>{t("pages.resizable.labels.one")}</strong>
-                </FakePanel>
-              </ResizablePanel>
-              <ResizablePanel>
-                <ResizablePanels
-                  orientation="vertical"
-                  defaultSizes={[50, 50]}
-                  ariaLabel={t("pages.resizable.nested.innerLabel")}
-                >
-                  <ResizablePanel>
-                    <FakePanel bg="var(--bg-sunken)">
-                      <strong>{t("pages.resizable.labels.two")}</strong>
-                    </FakePanel>
-                  </ResizablePanel>
-                  <ResizablePanel>
-                    <FakePanel bg="var(--bg)">
-                      <strong>{t("pages.resizable.labels.three")}</strong>
-                    </FakePanel>
-                  </ResizablePanel>
-                </ResizablePanels>
-              </ResizablePanel>
-            </ResizablePanels>
-          </div>
-        </Example>
-      </Section>
-
-      {/* vi · Persistência */}
-      <Section
-        num="vi"
         title={<>{t("pages.resizable.persist.title")}</>}
         kicker={t("pages.resizable.persist.kicker")}
       >
@@ -325,7 +270,7 @@ export default function ResizablePage() {
       </Section>
 
       <CompositionSection
-        num="vii"
+        num="vi"
         i18nPrefix="pages.resizable.composition"
         root="ResizablePanels · ResizableJunction"
         nodes={[{ name: "ResizablePanel" }]}

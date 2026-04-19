@@ -2067,15 +2067,6 @@ const ptBR = {
         body:
           "Tente arrastar a cruz no centro — ela move os 3 painéis em ambas as dimensões.",
       },
-      nested: {
-        title: "Aninhamento simples (sem junction)",
-        kicker: "ResizablePanels dentro de ResizablePanel",
-        desc:
-          "Caso prefira [em]handles independentes[/em] (sem junction handle), basta [em]aninhar[/em] um ResizablePanels dentro de um ResizablePanel. Cada nível tem seu próprio handle separado. Suporta qualquer profundidade.",
-        caption: "Layout em L — One ocupa a esquerda, Two/Three dividem a direita",
-        label: "Layout em L",
-        innerLabel: "Coluna direita (Two/Three)",
-      },
       persist: {
         title: "Persistência em localStorage",
         kicker: "storageKey",
