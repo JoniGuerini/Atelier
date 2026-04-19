@@ -34,16 +34,16 @@ export const ROUTES = [
       { id: "overlays", n: "16" },
       { id: "feedback", n: "17" },
       { id: "dropzone", n: "18" },
-      { id: "pagination", n: "19", isNew: true },
-      { id: "breadcrumbs", n: "20", isNew: true },
-      { id: "skeleton", n: "21", isNew: true },
+      { id: "pagination", n: "19" },
+      { id: "breadcrumbs", n: "20" },
+      { id: "skeleton", n: "21" },
     ],
   },
   {
     groupKey: "patterns",
     items: [
       { id: "forms", n: "22" },
-      { id: "stepper", n: "23", isNew: true },
+      { id: "stepper", n: "23" },
       { id: "emptyStates", n: "24", route: "empty-states" },
       { id: "sidebar", n: "25" },
       { id: "navbar", n: "26" },
@@ -52,8 +52,8 @@ export const ROUTES = [
   {
     groupKey: "reference",
     items: [
-      { id: "accessibility", n: "27", isNew: true },
-      { id: "code", n: "28" },
+      { id: "accessibility", n: "27" },
+      { id: "code", n: "28", isNew: true },
     ],
   },
   {

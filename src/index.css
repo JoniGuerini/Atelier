@@ -4443,6 +4443,126 @@ input[type="file"] { display: none; }
 }
 
 /* ----------------------------------------------------------------
+   Code page (#/code) — API cards + ADR cards.
+---------------------------------------------------------------- */
+.api-card {
+  border: 1px solid var(--rule-soft);
+  background: var(--bg-panel);
+  margin-bottom: var(--space-5);
+}
+.api-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--rule-soft);
+  background: var(--bg);
+}
+.api-card-import {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 4px;
+}
+.api-card-name {
+  appearance: none;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+  color: var(--accent);
+  text-align: left;
+  transition: opacity var(--dur-fast) var(--ease);
+}
+.api-card-name:hover {
+  opacity: 0.75;
+}
+.api-card-view {
+  appearance: none;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.api-card-body {
+  padding: var(--space-5);
+}
+.api-card-section-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 0 0 10px;
+}
+.api-card-body > .api-card-section-label:not(:first-child) {
+  margin-top: var(--space-5);
+}
+.api-card-body .ds-table-wrap {
+  margin: 0;
+}
+
+/* ADR cards (decision log) */
+.adr-card {
+  border-left: 2px solid var(--accent);
+  padding: var(--space-3) 0 var(--space-3) var(--space-5);
+}
+.adr-card-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  margin-bottom: 6px;
+}
+.adr-card-n {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--accent);
+}
+.adr-card-status {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  border: 1px solid var(--rule-soft);
+  padding: 1px 6px;
+}
+.adr-card-title {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 0 0 8px;
+}
+.adr-card-title em {
+  font-style: italic;
+  color: var(--accent);
+}
+.adr-card-body {
+  font-family: var(--font-serif);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin: 0;
+  max-width: 70ch;
+}
+
+/* ----------------------------------------------------------------
    Skeleton — placeholders editoriais (#/skeleton).
 ---------------------------------------------------------------- */
 .ds-skeleton {

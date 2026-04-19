@@ -1625,7 +1625,85 @@ const ptBR = {
           },
         ],
       },
+      decisions: {
+        titleA: "Decisões de ",
+        titleB: "arquitetura",
+        kicker: "ADRs",
+        desc:
+          "Os porquês por trás das escolhas estruturais do Atelier — registradas como [em]Architecture Decision Records[/em] curtos, em ordem cronológica.",
+        items: [
+          {
+            n: "ADR-001",
+            status: "accepted",
+            titleA: "Zero ",
+            titleB: "dependências",
+            titleC: " além do React",
+            body:
+              "O Atelier roda só com [em]react[/em] e [em]react-dom[/em]. Sem libraries de UI, sem bibliotecas de ícones, sem framework CSS. Cada glifo, cada gráfico, cada animação foi desenhado à mão. O bundle pesa o estritamente necessário, e qualquer pessoa consegue ler todo o código em poucas tardes.",
+          },
+          {
+            n: "ADR-002",
+            status: "accepted",
+            titleA: "Glifos ",
+            titleB: "tipográficos",
+            titleC: ", não uma library de ícones",
+            body:
+              "Em vez de Lucide ou Phosphor, o Atelier usa caracteres Unicode reais ([em]→ ✓ § ¶ ⋯[/em]) renderizados em Fraunces itálico. A página [em]/icons[/em] documenta o repertório oficial. Ícones de UI específicos (chevron, sliders, etc.) são SVGs inline curtinhos. Coerência total com a alma editorial.",
+          },
+          {
+            n: "ADR-003",
+            status: "accepted",
+            titleA: "API ",
+            titleB: "composable",
+            titleC: " (estilo shadcn)",
+            body:
+              "Todo componente expõe seus subcomponentes — [em]<Card><CardKicker /><CardTitle /></Card>[/em] em vez de [em]<Card kicker=\"…\" title=\"…\" />[/em]. O consumidor monta a árvore como quiser. Cada página de doc tem uma seção [em]Composição[/em] com a árvore real exportada.",
+          },
+          {
+            n: "ADR-004",
+            status: "accepted",
+            titleA: "Peso da régua ",
+            titleB: "= significado",
+            body:
+              "[em]--rule[/em] (linha forte) marca [em]affordance ou hierarquia[/em] (botões, divisores de seção, linha das tabs). [em]--rule-soft[/em] (linha suave) marca [em]container[/em] (cards, painéis, modais, sidebar). Nunca alternar arbitrariamente. O comentário em [em]:root[/em] codifica essa regra.",
+          },
+          {
+            n: "ADR-005",
+            status: "accepted",
+            titleA: "Right angles ",
+            titleB: "no border-radius",
+            body:
+              "O DS [em]nasce angular[/em]. O Studio expõe um slider de border-radius marcado como [em]Avançado · fora do cânone[/em] — quem quiser arredondar, sabe que está saindo do estilo. O default permanece intocado.",
+          },
+          {
+            n: "ADR-006",
+            status: "accepted",
+            titleA: "Studio ",
+            titleB: "escopado",
+            body:
+              "O playground de tema (Studio) injeta CSS vars apenas dentro de [em][data-studio-scope][/em], nunca no [em]:root[/em] global. Brincar com o tema não afeta a sidebar, navbar ou qualquer outra página — separação total entre [em]ferramenta[/em] e [em]aplicação[/em].",
+          },
+          {
+            n: "ADR-007",
+            status: "accepted",
+            titleA: "Search ",
+            titleB: "estática",
+            titleC: " indexada em build-time",
+            body:
+              "A paleta [em]⌘K[/em] usa um índice estático construído de [em]routes.js[/em] + uma lista curada de componentes e tokens. Sem fuse.js, sem servidor, sem fetch. Build-time → instantâneo no client. Trade-off aceito: precisa atualizar [em]searchIndex.js[/em] ao adicionar componentes.",
+          },
+          {
+            n: "ADR-008",
+            status: "accepted",
+            titleA: "i18n com ",
+            titleB: "fallback genérico",
+            body:
+              "[em]<CompositionSection>[/em] tenta [em]pages.X.composition.title[/em] e cai em [em]common.composition.title[/em] se não existir. Páginas novas ganham a seção [em]Composição[/em] sem precisar replicar boilerplate de tradução. Mesmo padrão pra outros helpers que vierem.",
+          },
+        ],
+      },
       divider: "componentes",
+      dividerDecisions: "decisões",
     },
 
     /* ------------- Accessibility ------------- */

@@ -1,8 +1,17 @@
 import { PageHead, Section, Code, Divider } from "../ds/primitives.jsx";
 import { useT } from "../lib/i18n.jsx";
 
-/* The token block and install snippets are language-agnostic
-   (just CSS / shell) and stay inline. */
+/* ================================================================
+   Code — guia técnico para devs.
+   ----------------------------------------------------------------
+   Estrutura:
+     i.   Install — como começar
+     ii.  Tokens — bloco CSS canônico
+     iii. API — todos os componentes agrupados por família
+     iv.  Decisions — ADRs editoriais (por que zero deps, etc.)
+     v.   Conventions — regras de uso
+   ================================================================ */
+
 const TOKENS = `:root {
   /* Surface */
   --bg: #f4f1ea;
@@ -46,6 +55,10 @@ const TOKENS = `:root {
   --dur-fast: 120ms;
   --dur: 200ms;
   --dur-slow: 320ms;
+
+  /* Layout */
+  --sidebar-w: 260px;
+  --content-max: clamp(1200px, 70vw, 1600px);
 }`;
 
 const FONT_IMPORT = `<link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -62,21 +75,23 @@ $ npm install`;
 const IMPORT_CSS = `/* src/main.jsx */
 import "./index.css";`;
 
-/* Component API — the example snippets stay in a neutral / English-friendly
-   form so developers can copy/paste directly regardless of UI locale. */
+/* ================================================================
+   API — agrupada por família. Cada entry tem nome, imports,
+   props mais relevantes e snippet de uso.
+   ================================================================ */
 const API = [
   {
     id: "buttons",
     name: "Button",
     route: "buttons",
+    imports: `import { Button, SidebarToggle, BackToTop } from "./ds/primitives";`,
     props: [
       ["variant", "'default' | 'primary' | 'accent' | 'ghost' | 'link'", "'default'"],
       ["size", "'sm' | 'md' | 'lg'", "'md'"],
       ["disabled", "boolean", "false"],
+      ["onClick", "(e) => void", "—"],
     ],
-    code: `import { Button } from "./ds/primitives";
-
-<Button variant="primary">Confirm</Button>
+    code: `<Button variant="primary">Confirm</Button>
 <Button>Secondary</Button>
 <Button variant="accent">Featured</Button>
 <Button variant="ghost">Ghost</Button>
@@ -86,23 +101,22 @@ const API = [
 <Button size="lg" variant="primary">Large</Button>`,
   },
   {
-    id: "inputs",
-    name: "Field + Input / Textarea / Select",
+    id: "fields",
+    name: "Field · Input · Textarea · Select",
     route: "inputs",
+    imports: `import { Field, Input, Textarea, Select, FieldLabel, FieldHint, FieldError } from "./ds/primitives";`,
     props: [
       ["label", "ReactNode", "—"],
       ["hint", "ReactNode", "—"],
       ["error", "ReactNode", "—"],
       ["invalid", "boolean", "false"],
     ],
-    code: `import { Field, Input, Textarea, Select } from "./ds/primitives";
-
-<Field label="Email" hint="We only use it to send the edition.">
-  <Input type="email" placeholder="clara@atelier.com" />
+    code: `<Field label="Email" hint="Used only for the edition.">
+  <Input type="email" placeholder="you@atelier.com" />
 </Field>
 
-<Field label="About you" error="Required field.">
-  <Textarea rows={3} invalid placeholder="Write something…" />
+<Field label="About" error="Required">
+  <Textarea rows={4} invalid />
 </Field>
 
 <Field label="Plan">
@@ -117,168 +131,500 @@ const API = [
     id: "controls",
     name: "Checkbox · Radio · Switch",
     route: "controls",
+    imports: `import { Checkbox, Radio, Switch } from "./ds/primitives";`,
     props: [
-      ["label", "ReactNode", "—"],
-      ["checked", "boolean", "false"],
-      ["onChange", "(event | boolean) => void", "—"],
+      ["label", "string", "—"],
+      ["checked", "boolean", "—"],
+      ["onChange", "(e) => void · for Switch: (boolean) => void", "—"],
       ["disabled", "boolean", "false"],
     ],
-    code: `import { Checkbox, Radio, Switch } from "./ds/primitives";
-
-<Checkbox
-  label="I agree to receive the edition"
-  checked={accepted}
-  onChange={(e) => setAccepted(e.target.checked)}
-/>
-
-<Radio
-  name="plan"
-  label="Quarterly — $ 16"
-  value="quarterly"
-  checked={plan === "quarterly"}
-  onChange={() => setPlan("quarterly")}
-/>
-
-<Switch
-  label="Email notifications"
-  checked={notif}
-  onChange={setNotif}
-/>`,
+    code: `<Checkbox label="Subscribe" checked={a} onChange={(e) => setA(e.target.checked)} />
+<Radio name="plan" label="Quarterly" checked={p === "q"} onChange={() => setP("q")} />
+<Switch label="Notifications" checked={n} onChange={setN} />`,
   },
   {
     id: "badges",
     name: "Badge",
     route: "badges",
+    imports: `import { Badge } from "./ds/primitives";`,
     props: [
-      ["variant", "'default' | 'solid' | 'accent' | 'ok' | 'warn' | 'info'", "'default'"],
+      ["variant", "'default' | 'solid' | 'accent' | 'ok' | 'warn' | 'info' | 'danger'", "'default'"],
       ["dot", "boolean", "false"],
     ],
-    code: `import { Badge } from "./ds/primitives";
-
-<Badge>Default</Badge>
+    code: `<Badge>Default</Badge>
 <Badge variant="solid">Solid</Badge>
-<Badge variant="accent" dot>New</Badge>
-<Badge variant="ok" dot>Published</Badge>
-<Badge variant="warn">Draft</Badge>
-<Badge variant="info">Info</Badge>`,
+<Badge variant="accent">Accent</Badge>
+<Badge dot variant="ok">Published</Badge>
+<Badge dot variant="warn">Draft</Badge>`,
+  },
+  {
+    id: "avatars",
+    name: "Avatar · AvatarGroup",
+    route: "avatars",
+    imports: `import { Avatar, AvatarGroup } from "./ds/primitives";`,
+    props: [
+      ["initials", "string", "—"],
+      ["src", "string", "—"],
+      ["size", "'sm' | 'md' | 'lg' | 'xl'", "'md'"],
+      ["variant", "'default' | 'solid' | 'accent'", "'default'"],
+      ["shape", "'square' | 'circle'", "'square'"],
+    ],
+    code: `<Avatar initials="CA" />
+<Avatar src="/photo.jpg" alt="Clara A." size="lg" />
+<Avatar initials="JO" variant="accent" shape="circle" />
+
+<AvatarGroup max={4}>
+  <Avatar initials="CA" />
+  <Avatar initials="JO" variant="solid" />
+  <Avatar initials="MR" />
+  <Avatar initials="LP" />
+  <Avatar initials="XX" />
+</AvatarGroup>`,
   },
   {
     id: "alerts",
     name: "Alert",
     route: "alerts",
+    imports: `import { Alert, AlertMark, AlertContent, AlertTitle, AlertDescription, AlertActions } from "./ds/Alert";`,
     props: [
-      ["variant", "'info' | 'ok' | 'warn' | 'danger'", "'default'"],
-      ["title", "ReactNode", "—"],
+      ["variant", "'default' | 'info' | 'ok' | 'warn' | 'danger'", "'default'"],
+      ["title", "ReactNode (forma curta)", "—"],
     ],
-    code: `import { Alert } from "./ds/primitives";
-
-<Alert variant="info" title="About this edition">
-  Atelier publishes one issue per quarter.
+    code: `<Alert variant="info" title="Heads up">
+  Atelier publishes once per quarter.
 </Alert>
 
-<Alert variant="ok" title="Draft published">
-  Your piece has been published in the April edition.
-</Alert>
-
-<Alert variant="warn" title="Three images without caption">
-  Before publishing, add captions.
-</Alert>
-
-<Alert variant="danger" title="Could not save">
-  We lost the connection mid-upload.
+{/* Composable */}
+<Alert variant="ok">
+  <AlertMark>✓</AlertMark>
+  <AlertContent>
+    <AlertTitle>Saved</AlertTitle>
+    <AlertDescription>The article was published.</AlertDescription>
+    <AlertActions>
+      <Button variant="link">Undo</Button>
+    </AlertActions>
+  </AlertContent>
 </Alert>`,
   },
   {
     id: "cards",
-    name: "Card",
+    name: "Card family",
     route: "cards",
+    imports: `import { Card, CardKicker, CardTitle, CardBody, CardFooter } from "./ds/Card";`,
     props: [
-      ["kicker", "ReactNode", "—"],
-      ["title", "ReactNode", "—"],
-      ["foot", "ReactNode", "—"],
+      ["Card", "container", "—"],
+      ["CardKicker", "small mono header", "—"],
+      ["CardTitle", "serif title (as: 'h3' default)", "—"],
+      ["CardBody", "main content", "—"],
+      ["CardFooter", "actions / meta", "—"],
     ],
-    code: `import { Card, Button } from "./ds/primitives";
-
-<Card
-  kicker="Chronicle · 04"
-  title={<>On the <em>silence</em> of interfaces</>}
-  foot={<>By Clara A. · 5 min</>}
->
-  There is a difference between quiet and empty.
+    code: `<Card>
+  <CardKicker>Chronicle · 04</CardKicker>
+  <CardTitle>On <em>type</em></CardTitle>
+  <CardBody>A well-chosen typeface solves half the problems.</CardBody>
+  <CardFooter>read →</CardFooter>
 </Card>`,
   },
   {
     id: "tabs",
-    name: "Tabs · Breadcrumbs",
+    name: "Tabs family",
     route: "tabs",
+    imports: `import { Tabs, TabList, Tab, TabPanels, TabPanel } from "./ds/Tabs";`,
     props: [
-      ["value", "string", "—"],
-      ["onChange", "(value: string) => void", "—"],
-      ["items", "{ value, label, panel }[]", "—"],
+      ["value", "string (controlled)", "—"],
+      ["onChange", "(value) => void", "—"],
     ],
-    code: `import { Tabs, Breadcrumbs } from "./ds/primitives";
+    code: `const [tab, setTab] = useState("a");
 
-<Tabs
-  value={tab}
-  onChange={setTab}
-  items={[
-    { value: "a", label: "Foundations", panel: <p>…</p> },
-    { value: "b", label: "Components", panel: <p>…</p> },
-  ]}
-/>
+<Tabs value={tab} onChange={setTab}>
+  <TabList>
+    <Tab value="a">Foundations</Tab>
+    <Tab value="b">Components</Tab>
+  </TabList>
+  <TabPanels>
+    <TabPanel value="a"><p>...</p></TabPanel>
+    <TabPanel value="b"><p>...</p></TabPanel>
+  </TabPanels>
+</Tabs>`,
+  },
+  {
+    id: "tables",
+    name: "Table family",
+    route: "tables",
+    imports: `import { Table, TableHead, TableBody, TableRow, TableHeader, TableCell } from "./ds/Table";`,
+    props: [
+      ["TableHeader", "width, align", "—"],
+      ["TableCell", "mono (boolean), align", "—"],
+    ],
+    code: `<Table>
+  <TableHead>
+    <TableRow>
+      <TableHeader width={80}>n</TableHeader>
+      <TableHeader>Title</TableHeader>
+    </TableRow>
+  </TableHead>
+  <TableBody>
+    {rows.map((r) => (
+      <TableRow key={r.n}>
+        <TableCell mono>{r.n}</TableCell>
+        <TableCell><em>{r.title}</em></TableCell>
+      </TableRow>
+    ))}
+  </TableBody>
+</Table>`,
+  },
+  {
+    id: "charts",
+    name: "Charts (Bar · Line · Area · Pie · Donut · Radar · Radial · Sparkline)",
+    route: "charts",
+    imports: `import {
+  Chart, ChartHeader, ChartKicker, ChartTitle, ChartLegend, ChartLegendItem,
+  BarChart, LineChart, AreaChart, PieChart, DonutChart, RadarChart, RadialChart, Sparkline,
+} from "./ds/Chart";`,
+    props: [
+      ["data", "number[] | { label, value }[] | { axis, value }[]", "—"],
+      ["labels", "string[]", "—"],
+      ["height", "number", "180-280"],
+      ["accentIndex", "number — qual elemento ganha --accent", "last"],
+      ["valueLabel", "string — sufixo no tooltip ('subscribers')", "—"],
+    ],
+    code: `<Chart>
+  <ChartHeader>
+    <ChartKicker>Q3 · 2026</ChartKicker>
+    <ChartTitle>Editions per month</ChartTitle>
+  </ChartHeader>
+  <BarChart
+    data={[42, 58, 35, 72, 89, 65, 94, 78]}
+    labels={["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"]}
+    accentIndex={6}
+    valueLabel="editions"
+  />
+</Chart>
 
-<Breadcrumbs items={["Atelier", "Components", "Tabs"]} />`,
+<RadarChart axes={["A","B","C","D"]} series={[{ name: "Atelier", values: [9,8,7,6] }]} />
+<DonutChart data={[{ label: "Done", value: 73 }, { label: "Left", value: 27 }]} />
+<Sparkline data={[12, 15, 14, 18, 22, 26, 30, 38]} filled />`,
   },
   {
     id: "overlays",
-    name: "Modal · Tooltip",
+    name: "Dialog · Modal · Tooltip",
     route: "overlays",
+    imports: `import { Dialog, DialogHeader, DialogTitle, DialogClose, DialogBody, DialogFooter, Modal, Tooltip } from "./ds/Dialog";`,
     props: [
-      ["open", "boolean", "false"],
-      ["onClose", "() => void", "—"],
-      ["title", "ReactNode", "—"],
-      ["foot", "ReactNode", "—"],
+      ["Dialog open", "boolean", "false"],
+      ["Dialog onClose", "() => void", "—"],
+      ["Modal", "alias retrocompatível com title / foot props", "—"],
+      ["Tooltip tip", "string", "—"],
     ],
-    code: `import { Modal, Tooltip, Button } from "./ds/primitives";
+    code: `<Dialog open={open} onClose={() => setOpen(false)}>
+  <DialogHeader>
+    <DialogTitle>Discard changes?</DialogTitle>
+    <DialogClose />
+  </DialogHeader>
+  <DialogBody>Anything unsaved will be lost.</DialogBody>
+  <DialogFooter>
+    <Button variant="ghost" onClick={...}>Cancel</Button>
+    <Button variant="primary" onClick={...}>Discard</Button>
+  </DialogFooter>
+</Dialog>
 
-<Tooltip tip="Copy to clipboard">
+<Tooltip tip="Copy URL">
   <Button>Copy</Button>
-</Tooltip>
-
-<Modal
-  open={open}
-  onClose={() => setOpen(false)}
-  title={<>Discard <em>draft</em>?</>}
-  foot={
-    <>
-      <Button variant="ghost" onClick={() => setOpen(false)}>Cancel</Button>
-      <Button variant="primary" onClick={() => setOpen(false)}>Discard</Button>
-    </>
-  }
->
-  This action is final.
-</Modal>`,
+</Tooltip>`,
   },
   {
     id: "feedback",
-    name: "Progress · Toast",
+    name: "Toast · Progress",
     route: "feedback",
+    imports: `import { Toast, ToastTitle, ToastDescription, ToastActions, Progress } from "./ds/primitives";`,
     props: [
-      ["value (Progress)", "number (0–100)", "0"],
-      ["message (Toast)", "string", "—"],
-      ["visible (Toast)", "boolean", "false"],
+      ["Toast visible", "boolean", "false"],
+      ["Toast message", "string (forma curta)", "—"],
+      ["Progress value", "number 0..100", "0"],
     ],
-    code: `import { Progress, Toast } from "./ds/primitives";
+    code: `<Toast message="Copied." visible={visible} />
 
-<Progress value={42} label="Uploading file" />
+<Toast visible={open}>
+  <ToastTitle>Saved</ToastTitle>
+  <ToastDescription>The article was published.</ToastDescription>
+  <ToastActions><Button variant="link">Undo</Button></ToastActions>
+</Toast>
 
-<Toast message="Copied to clipboard" visible={show} />`,
+<Progress value={42} label="Loading" />`,
+  },
+  {
+    id: "dropzone",
+    name: "Dropzone family",
+    route: "dropzone",
+    imports: `import {
+  Dropzone, DropzoneIcon, DropzoneTitle, DropzoneHint,
+  DropzoneFile, DropzoneFilename, DropzoneMeta, DropzoneActions,
+} from "./ds/Dropzone";`,
+    props: [
+      ["Dropzone accept", "string ('.csv,.txt')", "—"],
+      ["Dropzone onSelect", "(file) => void", "—"],
+    ],
+    code: `<Dropzone accept=".csv,.tsv,.txt" onSelect={setFile}>
+  <DropzoneIcon>csv<span className="dot">.</span></DropzoneIcon>
+  <DropzoneTitle>Drop here or <em>pick</em></DropzoneTitle>
+  <DropzoneHint>or drag a CSV file</DropzoneHint>
+</Dropzone>
+
+{file && (
+  <DropzoneFile>
+    <DropzoneFilename>{file.name}</DropzoneFilename>
+    <DropzoneMeta items={[{ label: "Size", value: ... }]} />
+    <DropzoneActions><Button variant="link" onClick={reset}>Reset</Button></DropzoneActions>
+  </DropzoneFile>
+)}`,
+  },
+  {
+    id: "pagination",
+    name: "Pagination family",
+    route: "pagination",
+    imports: `import {
+  Pagination,
+  PaginationRoot, PaginationItem, PaginationPrev, PaginationNext, PaginationEllipsis,
+} from "./ds/Pagination";`,
+    props: [
+      ["current", "number", "—"],
+      ["total", "number", "—"],
+      ["onChange", "(page) => void", "—"],
+      ["siblings", "number — vizinhos do atual", "1"],
+      ["boundaries", "number — quantos das pontas", "1"],
+      ["showLabels", "boolean — mostra Anterior/Próximo", "false"],
+    ],
+    code: `<Pagination
+  current={page}
+  total={20}
+  onChange={setPage}
+  siblings={1}
+  showLabels
+/>`,
+  },
+  {
+    id: "breadcrumbs",
+    name: "Breadcrumbs family",
+    route: "breadcrumbs",
+    imports: `import {
+  Breadcrumbs,
+  BreadcrumbsRoot, Breadcrumb, BreadcrumbCurrent, BreadcrumbSeparator,
+} from "./ds/Breadcrumbs";`,
+    props: [
+      ["items", "string[] (forma curta)", "—"],
+      ["separator", "string ('/' default, '·', '→')", "'/'"],
+      ["Breadcrumb href", "string", "—"],
+    ],
+    code: `<Breadcrumbs items={["Atelier", "Components", "Tabs"]} />
+<Breadcrumbs items={["A", "B", "C"]} separator="·" />
+
+<BreadcrumbsRoot>
+  <Breadcrumb href="#/overview">Atelier</Breadcrumb>
+  <BreadcrumbSeparator />
+  <BreadcrumbCurrent>Tabs</BreadcrumbCurrent>
+</BreadcrumbsRoot>`,
+  },
+  {
+    id: "skeleton",
+    name: "Skeleton family",
+    route: "skeleton",
+    imports: `import { Skeleton, SkeletonText, SkeletonAvatar, SkeletonCard } from "./ds/Skeleton";`,
+    props: [
+      ["variant", "'rect' | 'circle'", "'rect'"],
+      ["width / height", "number | string", "100% / 16px"],
+      ["pulse", "boolean", "true"],
+      ["lines (text)", "number", "3"],
+    ],
+    code: `<Skeleton width={120} height={20} />
+<Skeleton variant="circle" size={40} />
+<SkeletonText lines={3} />
+<SkeletonAvatar size={48} />
+<SkeletonCard />`,
+  },
+  {
+    id: "stepper",
+    name: "Stepper · Step",
+    route: "stepper",
+    imports: `import { Stepper, Step } from "./ds/Stepper";`,
+    props: [
+      ["Stepper current", "number — index", "0"],
+      ["Stepper orientation", "'horizontal' | 'vertical'", "'horizontal'"],
+      ["Step n", "string ('01')", "—"],
+      ["Step label", "string", "—"],
+      ["Step description", "string", "—"],
+    ],
+    code: `<Stepper current={1}>
+  <Step n="01" label="Account" description="Your basic data" />
+  <Step n="02" label="Plan" description="Frequency and format" />
+  <Step n="03" label="Confirm" description="Review and send" />
+</Stepper>`,
+  },
+  {
+    id: "form",
+    name: "Form pattern",
+    route: "forms",
+    imports: `import { Form, FormStep, FormRow, FormField, FormDivider, FormActions } from "./ds/Form";`,
+    props: [
+      ["FormRow cols", "number", "2"],
+      ["FormActions align", "'start' | 'end' | 'between'", "'end'"],
+    ],
+    code: `<Form onSubmit={handleSubmit}>
+  <FormStep>i · Your details</FormStep>
+  <FormRow cols={2}>
+    <FormField label="First name"><Input /></FormField>
+    <FormField label="Last name"><Input /></FormField>
+  </FormRow>
+  <FormDivider>preferences</FormDivider>
+  <FormField label="Email" hint="Only used to send the edition">
+    <Input type="email" />
+  </FormField>
+  <FormActions>
+    <Button variant="ghost">Cancel</Button>
+    <Button variant="primary">Subscribe</Button>
+  </FormActions>
+</Form>`,
+  },
+  {
+    id: "empty",
+    name: "EmptyState family",
+    route: "empty-states",
+    imports: `import { EmptyState, EmptyGlyph, EmptyTitle, EmptyDescription, EmptyActions } from "./ds/EmptyState";`,
+    props: [
+      ["composable — sem props específicas", "—", "—"],
+    ],
+    code: `<EmptyState>
+  <EmptyGlyph>¶</EmptyGlyph>
+  <EmptyTitle>No <em>articles</em> yet</EmptyTitle>
+  <EmptyDescription>Invite an author to publish the first piece.</EmptyDescription>
+  <EmptyActions>
+    <Button variant="primary">Invite an author</Button>
+  </EmptyActions>
+</EmptyState>`,
+  },
+  {
+    id: "sidebar",
+    name: "Sidebar family",
+    route: "sidebar",
+    imports: `import {
+  Sidebar, SidebarHead, SidebarBrand,
+  SidebarNav, SidebarGroup, SidebarGroupTitle, SidebarNavItem,
+  SidebarLocale, SidebarTheme, SidebarNavMode, SidebarFooter,
+} from "./components/Sidebar";`,
+    props: [
+      ["Sidebar collapsed", "boolean", "false"],
+      ["SidebarNavItem n / active / onClick", "—", "—"],
+    ],
+    code: `<Sidebar collapsed={collapsed}>
+  <SidebarHead>
+    <SidebarBrand onNavigate={navigate} />
+    <SidebarToggle collapsed={collapsed} onToggle={toggle} />
+  </SidebarHead>
+  <SidebarNav>
+    <SidebarGroup>
+      <SidebarGroupTitle>Foundations</SidebarGroupTitle>
+      <SidebarNavItem n="02" active>Colors</SidebarNavItem>
+      <SidebarNavItem n="03">Typography</SidebarNavItem>
+    </SidebarGroup>
+  </SidebarNav>
+  <SidebarFooter />
+</Sidebar>`,
+  },
+  {
+    id: "navbar",
+    name: "Navbar family",
+    route: "navbar",
+    imports: `import {
+  Navbar, NavbarBrand, NavbarNav,
+  NavbarDropdown, NavbarDropdownItem, NavbarActions,
+} from "./components/Navbar";`,
+    props: [
+      ["Navbar current / onNavigate", "—", "—"],
+      ["NavbarDropdown cols", "1 | 2 | 3", "1"],
+      ["NavbarDropdownItem isNew / description", "—", "—"],
+    ],
+    code: `<Navbar current={current} onNavigate={navigate}>
+  <NavbarBrand />
+  <NavbarNav>
+    <NavbarDropdown label="Components" cols={3}>
+      <NavbarDropdownItem slug="buttons" n="06" description="Primary, ghost, link…">
+        Buttons
+      </NavbarDropdownItem>
+    </NavbarDropdown>
+  </NavbarNav>
+  <NavbarActions>{/* SettingsMenu, etc. */}</NavbarActions>
+</Navbar>`,
+  },
+  {
+    id: "editorial",
+    name: "Editorial primitives",
+    route: "code",
+    imports: `import {
+  PageHead, Section, Example, Code, CopyButton, Divider,
+  CompositionTree, CompositionSection,
+} from "./ds/primitives";`,
+    props: [
+      ["PageHead lead / title / metaLabel / meta / intro", "—", "—"],
+      ["Section num / title / kicker / desc", "—", "—"],
+      ["Example caption / tech / code / lang / stack / center", "—", "—"],
+      ["Code lang / copy", "'jsx' | 'css' | 'shell'", "'jsx'"],
+      ["CompositionTree root / nodes", "—", "—"],
+    ],
+    code: `<PageHead
+  lead="Pattern · 22"
+  title={<>The <em>forms</em></>}
+  metaLabel="Composition"
+  meta="Fields + actions"
+  intro="A form is a staged narrative…"
+/>
+
+<Section num="i" title="Complete form" kicker="pattern">
+  <Example caption="Full subscription" tech="form pattern" stack code={...}>
+    {/* ... */}
+  </Example>
+</Section>
+
+<CompositionSection
+  num="ii"
+  i18nPrefix="pages.forms.composition"
+  root="Form"
+  nodes={[{ name: "FormStep" }, { name: "FormActions" }]}
+/>`,
+  },
+  {
+    id: "search",
+    name: "SearchPalette · SettingsMenu",
+    route: "code",
+    imports: `import { SearchPalette, SearchTrigger, useSearchHotkey } from "./ds/SearchPalette";
+import { SettingsMenu } from "./ds/SettingsMenu";`,
+    props: [
+      ["SearchPalette open / onClose / onNavigate", "—", "—"],
+      ["SearchTrigger compact", "boolean", "false"],
+      ["SettingsMenu navMode / onToggleNavMode / placement", "—", "—"],
+    ],
+    code: `// Hotkey global Cmd+K
+useSearchHotkey(() => setSearchOpen(true));
+
+<SearchTrigger onClick={() => setSearchOpen(true)} />
+<SearchPalette
+  open={searchOpen}
+  onClose={() => setSearchOpen(false)}
+  onNavigate={navigate}
+/>
+
+<SettingsMenu
+  navMode={navMode}
+  onToggleNavMode={setNavMode}
+  placement="bottom-end"  // ou "top-end" pra sidebar
+/>`,
   },
 ];
 
+/* ================================================================
+   ApiTable — utilizada em cada card da seção API
+   ================================================================ */
 function ApiTable({ rows, labels }) {
   return (
-    <div className="ds-table-wrap">
+    <div className="ds-table-wrap" style={{ marginBottom: 0 }}>
       <table className="ds-table">
         <thead>
           <tr>
@@ -288,13 +634,17 @@ function ApiTable({ rows, labels }) {
           </tr>
         </thead>
         <tbody>
-          {rows.map(([name, type, def]) => (
-            <tr key={name}>
-              <td className="mono">{name}</td>
-              <td className="mono" style={{ color: "var(--ink-soft)" }}>
-                {type}
+          {rows.map((row, i) => (
+            <tr key={i}>
+              <td className="mono" style={{ color: "var(--accent)" }}>
+                {row[0]}
               </td>
-              <td className="mono">{def}</td>
+              <td className="mono" style={{ fontSize: 11 }}>
+                {row[1]}
+              </td>
+              <td className="mono" style={{ color: "var(--ink-faint)" }}>
+                {row[2]}
+              </td>
             </tr>
           ))}
         </tbody>
@@ -306,6 +656,7 @@ function ApiTable({ rows, labels }) {
 export default function CodePage({ onNavigate }) {
   const { t, tr, raw } = useT();
   const conventions = raw("pages.code.conventions.items") || [];
+  const decisions = raw("pages.code.decisions.items") || [];
   const tableLabels = {
     prop: t("common.prop"),
     type: t("common.type"),
@@ -327,6 +678,7 @@ export default function CodePage({ onNavigate }) {
         intro={tr("pages.code.intro")}
       />
 
+      {/* i · Install */}
       <Section
         num="i"
         title={<>{t("pages.code.start.title")}</>}
@@ -344,6 +696,7 @@ export default function CodePage({ onNavigate }) {
         <Code lang="jsx">{IMPORT_CSS}</Code>
       </Section>
 
+      {/* ii · Tokens */}
       <Section
         num="ii"
         title={
@@ -360,6 +713,7 @@ export default function CodePage({ onNavigate }) {
 
       <Divider>{t("pages.code.divider")}</Divider>
 
+      {/* iii · API */}
       <Section
         num="iii"
         title={
@@ -373,117 +727,78 @@ export default function CodePage({ onNavigate }) {
         <p className="section-desc">{tr("pages.code.api.desc")}</p>
 
         {API.map((c) => (
-          <div
-            key={c.id}
-            style={{
-              border: "1px solid var(--rule-soft)",
-              background: "var(--bg-panel)",
-              marginBottom: "var(--space-5)",
-            }}
-          >
-            <header
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "baseline",
-                gap: "var(--space-4)",
-                padding: "var(--space-4) var(--space-5)",
-                borderBottom: "1px solid var(--rule-soft)",
-                background: "var(--bg)",
-              }}
-            >
+          <article key={c.id} className="api-card">
+            <header className="api-card-head">
               <div>
-                <div
-                  style={{
-                    fontFamily: "var(--font-mono)",
-                    fontSize: 10,
-                    letterSpacing: "0.2em",
-                    textTransform: "uppercase",
-                    color: "var(--ink-faint)",
-                    marginBottom: 4,
-                  }}
-                >
-                  {t("common.import")}
-                </div>
+                <div className="api-card-import">{t("common.import")}</div>
                 <button
                   type="button"
                   onClick={() => onNavigate?.(c.route)}
-                  style={{
-                    background: "none",
-                    border: "none",
-                    padding: 0,
-                    cursor: "pointer",
-                    fontFamily: "var(--font-serif)",
-                    fontWeight: 300,
-                    fontSize: 22,
-                    letterSpacing: "-0.01em",
-                    color: "var(--ink)",
-                  }}
+                  className="api-card-name"
                 >
-                  <em style={{ fontStyle: "italic", color: "var(--accent)" }}>
-                    {c.name.split(" ")[0]}
-                  </em>
-                  {c.name.includes(" ") && (
-                    <span style={{ color: "var(--ink-soft)" }}>
-                      {" " + c.name.slice(c.name.indexOf(" "))}
-                    </span>
-                  )}
+                  {c.name}
                 </button>
               </div>
               <button
                 type="button"
                 onClick={() => onNavigate?.(c.route)}
-                style={{
-                  background: "none",
-                  border: "none",
-                  padding: 0,
-                  cursor: "pointer",
-                  fontFamily: "var(--font-mono)",
-                  fontSize: 10,
-                  letterSpacing: "0.18em",
-                  textTransform: "uppercase",
-                  color: "var(--accent)",
-                }}
+                className="api-card-view"
               >
                 {t("pages.code.api.view")}
               </button>
             </header>
 
-            <div style={{ padding: "var(--space-5)" }}>
-              <h4
-                style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: 10,
-                  letterSpacing: "0.2em",
-                  textTransform: "uppercase",
-                  color: "var(--ink-faint)",
-                  marginBottom: 10,
-                }}
-              >
-                {t("common.props")}
-              </h4>
+            <div className="api-card-body">
+              <h4 className="api-card-section-label">{t("common.import")}</h4>
+              <Code lang="jsx">{c.imports}</Code>
+
+              <h4 className="api-card-section-label">{t("common.props")}</h4>
               <ApiTable rows={c.props} labels={tableLabels} />
 
-              <h4
-                style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: 10,
-                  letterSpacing: "0.2em",
-                  textTransform: "uppercase",
-                  color: "var(--ink-faint)",
-                  margin: "var(--space-5) 0 10px",
-                }}
-              >
-                {t("common.example")}
-              </h4>
+              <h4 className="api-card-section-label">{t("common.example")}</h4>
               <Code lang="jsx">{c.code}</Code>
             </div>
-          </div>
+          </article>
         ))}
       </Section>
 
+      <Divider>{t("pages.code.dividerDecisions")}</Divider>
+
+      {/* iv · Decision log (ADRs) */}
       <Section
         num="iv"
+        title={
+          <>
+            {tr("pages.code.decisions.titleA")}
+            <em>{t("pages.code.decisions.titleB")}</em>
+          </>
+        }
+        kicker={t("pages.code.decisions.kicker")}
+      >
+        <p className="section-desc">{tr("pages.code.decisions.desc")}</p>
+        <div style={{ display: "grid", gap: "var(--space-4)" }}>
+          {decisions.map((d, i) => (
+            <article key={d.n} className="adr-card">
+              <header className="adr-card-head">
+                <span className="adr-card-n">{d.n}</span>
+                <span className="adr-card-status">{d.status}</span>
+              </header>
+              <h3 className="adr-card-title">
+                {d.titleA}
+                <em>{d.titleB}</em>
+                {d.titleC || ""}
+              </h3>
+              <p className="adr-card-body">
+                {tr(`pages.code.decisions.items.${i}.body`)}
+              </p>
+            </article>
+          ))}
+        </div>
+      </Section>
+
+      {/* v · Conventions */}
+      <Section
+        num="v"
         title={<>{t("pages.code.conventions.title")}</>}
         kicker={t("pages.code.conventions.kicker")}
       >

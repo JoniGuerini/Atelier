@@ -1558,7 +1558,85 @@ const en = {
           },
         ],
       },
+      decisions: {
+        titleA: "Architecture ",
+        titleB: "decisions",
+        kicker: "ADRs",
+        desc:
+          "The reasons behind Atelier's structural choices — recorded as short [em]Architecture Decision Records[/em] in chronological order.",
+        items: [
+          {
+            n: "ADR-001",
+            status: "accepted",
+            titleA: "Zero ",
+            titleB: "dependencies",
+            titleC: " beyond React",
+            body:
+              "Atelier ships with [em]react[/em] and [em]react-dom[/em] only. No UI library, no icon library, no CSS framework. Every glyph, every chart, every animation drawn by hand. The bundle weighs strictly what it must, and anyone can read the entire codebase in a few afternoons.",
+          },
+          {
+            n: "ADR-002",
+            status: "accepted",
+            titleA: "Typographic ",
+            titleB: "glyphs",
+            titleC: ", not an icon library",
+            body:
+              "Instead of Lucide or Phosphor, Atelier uses real Unicode characters ([em]→ ✓ § ¶ ⋯[/em]) rendered in italic Fraunces. The [em]/icons[/em] page documents the official repertoire. Specific UI icons (chevron, sliders, etc.) are tiny inline SVGs. Total coherence with the editorial soul.",
+          },
+          {
+            n: "ADR-003",
+            status: "accepted",
+            titleA: "Composable ",
+            titleB: "API",
+            titleC: " (shadcn-style)",
+            body:
+              "Every component exposes its subcomponents — [em]<Card><CardKicker /><CardTitle /></Card>[/em] instead of [em]<Card kicker=\"…\" title=\"…\" />[/em]. The consumer assembles the tree as they wish. Each docs page has a [em]Composition[/em] section with the actual exported tree.",
+          },
+          {
+            n: "ADR-004",
+            status: "accepted",
+            titleA: "Rule weight ",
+            titleB: "= meaning",
+            body:
+              "[em]--rule[/em] (strong line) marks [em]affordance or hierarchy[/em] (buttons, section dividers, tabs underline). [em]--rule-soft[/em] (soft line) marks [em]containers[/em] (cards, panels, modals, sidebar). Never alternate arbitrarily. The comment in [em]:root[/em] codifies the rule.",
+          },
+          {
+            n: "ADR-005",
+            status: "accepted",
+            titleA: "Right angles ",
+            titleB: "no border-radius",
+            body:
+              "The DS [em]is born angular[/em]. The Studio exposes a border-radius slider marked [em]Advanced · off-canon[/em] — anyone who rounds corners knows they're departing from the style. The default stays untouched.",
+          },
+          {
+            n: "ADR-006",
+            status: "accepted",
+            titleA: "Scoped ",
+            titleB: "Studio",
+            body:
+              "The theme playground (Studio) injects CSS vars only inside [em][data-studio-scope][/em], never in the global [em]:root[/em]. Playing with the theme doesn't affect sidebar, navbar or any other page — total separation between [em]tool[/em] and [em]application[/em].",
+          },
+          {
+            n: "ADR-007",
+            status: "accepted",
+            titleA: "Static ",
+            titleB: "search",
+            titleC: ", indexed at build time",
+            body:
+              "The [em]⌘K[/em] palette uses a static index built from [em]routes.js[/em] + a curated list of components and tokens. No fuse.js, no server, no fetch. Build-time → instant on the client. Trade-off accepted: [em]searchIndex.js[/em] must be updated when adding components.",
+          },
+          {
+            n: "ADR-008",
+            status: "accepted",
+            titleA: "i18n with ",
+            titleB: "generic fallback",
+            body:
+              "[em]<CompositionSection>[/em] tries [em]pages.X.composition.title[/em] and falls back to [em]common.composition.title[/em] if missing. New pages get the [em]Composition[/em] section without replicating translation boilerplate. Same pattern for other helpers to come.",
+          },
+        ],
+      },
       divider: "components",
+      dividerDecisions: "decisions",
     },
 
     accessibility: {
