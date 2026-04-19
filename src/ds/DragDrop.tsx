@@ -368,7 +368,12 @@ export function DragSource({
   const onPointerUp = (e: ReactPointerEvent<HTMLDivElement>) => {
     if (!drag || drag.pointerId !== e.pointerId) return;
     if (drag.dragging) {
-      ctx.end();
+      /* Adia o reset pra próxima frame. Garante que o listener
+         global de pointerup do <DropZone> rode primeiro com
+         `ctx.current` ainda truthy — caso contrário o drop seria
+         silenciosamente perdido. */
+      const endFn = ctx.end;
+      requestAnimationFrame(() => endFn());
     }
     setDrag(null);
     (e.currentTarget as HTMLElement).releasePointerCapture?.(e.pointerId);
@@ -414,67 +419,62 @@ export function DropZone({
   const ref = useRef<HTMLDivElement | null>(null);
   const [isOver, setIsOver] = useState(false);
 
-  // Atualiza isOver baseado no pointer global
-  const checkOver = useCallback(() => {
-    if (!ctx.current || !ref.current) {
-      setIsOver(false);
-      return;
-    }
-    const rect = ref.current.getBoundingClientRect();
-    const { x, y } = ctx.pointer;
-    const inside =
-      x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
-    setIsOver(inside);
-  }, [ctx]);
-
-  // Observa mudanças do pointer e do current via effect
-  // Usamos useState do pointer no provider — qualquer mudança re-renderiza
-  // este componente e chamamos checkOver.
-  if (typeof window !== "undefined") {
-    // Sem useEffect: chamada síncrona após cada render é OK aqui pq
-    // só lê DOM/state. Mas pra ficar consistente, vou usar useEffect
-    // tradicional via referência ao ctx.
-  }
+  /* Refs sempre atualizadas — o listener global registrado abaixo
+     usa um closure que precisa enxergar o pointer/onDrop mais recentes
+     (não os do momento em que `ctx.current` virou truthy). */
+  const ctxRef = useRef(ctx);
+  ctxRef.current = ctx;
+  const onDropRef = useRef(onDrop);
+  onDropRef.current = onDrop;
 
   const acceptsList: string[] | null = accepts
     ? Array.isArray(accepts)
       ? accepts
       : [accepts]
     : null;
+  const acceptsRef = useRef(acceptsList);
+  acceptsRef.current = acceptsList;
 
-  // Re-checa hover sempre que o pointer ou current muda
+  /* Atualiza visualmente o estado "is-over" conforme o pointer
+     atravessa a zona durante um drag ativo. */
   useEffect(() => {
-    if (!ctx.current) {
+    if (!ctx.current || !ref.current) {
       if (isOver) setIsOver(false);
       return;
     }
-    checkOver();
+    const rect = ref.current.getBoundingClientRect();
+    const { x, y } = ctx.pointer;
+    const inside =
+      x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
+    if (inside !== isOver) setIsOver(inside);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ctx.current, ctx.pointer.x, ctx.pointer.y]);
 
-  // Listener global de pointerup pra capturar o "drop"
+  /* Listener global de pointerup pra capturar o "drop". Registrado
+     uma única vez por sessão de drag (quando current vira truthy). */
   useEffect(() => {
     if (!ctx.current) return;
     const onUp = () => {
-      if (!ref.current || !ctx.current) return;
+      const liveCtx = ctxRef.current;
+      const cur = liveCtx.current;
+      if (!ref.current || !cur) return;
       const rect = ref.current.getBoundingClientRect();
-      const { x, y } = ctx.pointer;
+      const { x, y } = liveCtx.pointer;
       const inside =
         x >= rect.left &&
         x <= rect.right &&
         y >= rect.top &&
         y <= rect.bottom;
       if (inside) {
-        const cur = ctx.current;
-        if (!acceptsList || (cur.type && acceptsList.includes(cur.type))) {
-          onDrop(cur.data, cur.type);
+        const list = acceptsRef.current;
+        if (!list || (cur.type && list.includes(cur.type))) {
+          onDropRef.current(cur.data, cur.type);
         }
       }
       setIsOver(false);
     };
     document.addEventListener("pointerup", onUp);
     return () => document.removeEventListener("pointerup", onUp);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ctx.current]);
 
   const canAccept =
