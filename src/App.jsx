@@ -243,8 +243,8 @@ function AppNavbar({ current, navigate, navMode, setNavMode, openSearch }) {
           );
         })}
       </NavbarNav>
+      <SearchTrigger onClick={openSearch} />
       <NavbarActions>
-        <SearchTrigger onClick={openSearch} />
         <SettingsMenu
           navMode={navMode}
           onToggleNavMode={setNavMode}
