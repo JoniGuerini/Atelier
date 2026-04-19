@@ -5780,6 +5780,11 @@ input[type="file"] { display: none; }
 
 /* ================================================================
    DatePicker / DateRangePicker — Input + Popover.
+   ----------------------------------------------------------------
+   Usa o mesmo box-look dos outros inputs do DS (Field/Input,
+   Combobox). O trigger é só o glifo no canto direito — sem
+   divisor, sem fundo, sem caixa. Mantém o input visualmente
+   uniforme com o resto.
 ================================================================ */
 .ds-datepicker {
   position: relative;
@@ -5790,6 +5795,8 @@ input[type="file"] { display: none; }
 .ds-datepicker-input-wrap {
   display: flex;
   align-items: center;
+  gap: 4px;
+  padding-right: 8px;
   background: var(--bg);
   border: 1px solid var(--rule-soft);
   transition: border-color var(--dur-fast) var(--ease);
@@ -5816,24 +5823,23 @@ input[type="file"] { display: none; }
 }
 .ds-datepicker-input::placeholder {
   color: var(--ink-faint);
-  font-style: italic;
-  font-family: var(--font-serif);
-  letter-spacing: 0;
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
   text-transform: lowercase;
+  opacity: 0.7;
 }
 .ds-datepicker-trigger {
   appearance: none;
   background: none;
   border: none;
-  border-left: 1px solid var(--rule-soft);
   cursor: pointer;
-  width: 36px;
-  height: 100%;
-  align-self: stretch;
+  width: 22px;
+  height: 22px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--ink-soft);
+  flex-shrink: 0;
+  color: var(--ink-faint);
   transition: color var(--dur-fast) var(--ease);
 }
 .ds-datepicker-trigger:hover:not(:disabled) {
@@ -5841,7 +5847,7 @@ input[type="file"] { display: none; }
 }
 .ds-datepicker-trigger:focus-visible {
   outline: 2px solid var(--accent);
-  outline-offset: -2px;
+  outline-offset: 2px;
 }
 .ds-datepicker-trigger:disabled {
   cursor: not-allowed;
