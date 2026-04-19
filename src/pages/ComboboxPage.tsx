@@ -104,7 +104,7 @@ export default function ComboboxPage() {
         </Example>
       </Section>
 
-      {/* ii · Multi-select */}
+      {/* ii · Multi (com creatable opcional) */}
       <Section
         num="ii"
         title={<>{t("pages.combobox.multi.title")}</>}
@@ -113,14 +113,16 @@ export default function ComboboxPage() {
         <p className="section-desc">{tr("pages.combobox.multi.desc")}</p>
         <Example
           caption={t("pages.combobox.multi.caption")}
-          tech="multi"
+          tech="multi + creatable"
           stack
           code={`<Combobox
   multi
+  creatable     // opcional — aceita tags novas digitadas
   options={tags}
   value={selected}
   onChange={setSelected}
   placeholder="${t("pages.combobox.multi.placeholder")}"
+  createLabel={(q) => <>Criar <em>"{q}"</em></>}
 />`}
         >
           <div style={{ width: "100%", maxWidth: 480 }}>
@@ -130,55 +132,15 @@ export default function ComboboxPage() {
             >
               <Combobox
                 multi
+                creatable
                 options={TAGS}
                 value={tagsSel}
                 onChange={setTagsSel}
                 placeholder={t("pages.combobox.multi.placeholder")}
                 emptyMessage={t("pages.combobox.basic.empty")}
-              />
-            </Field>
-          </div>
-        </Example>
-      </Section>
-
-      {/* ii.b · Creatable */}
-      <Section
-        num="iii"
-        title={<>{t("pages.combobox.creatable.title")}</>}
-        kicker={t("pages.combobox.creatable.kicker")}
-      >
-        <p className="section-desc">
-          {tr("pages.combobox.creatable.desc")}
-        </p>
-        <Example
-          caption={t("pages.combobox.creatable.caption")}
-          tech="creatable"
-          stack
-          code={`<Combobox
-  multi
-  creatable
-  options={tags}
-  value={selected}
-  onChange={setSelected}
-  createLabel={(q) => <>Criar <em>"{q}"</em></>}
-/>`}
-        >
-          <div style={{ width: "100%", maxWidth: 480 }}>
-            <Field
-              label={t("pages.combobox.creatable.field")}
-              hint={t("pages.combobox.creatable.hint")}
-            >
-              <Combobox
-                multi
-                creatable
-                options={TAGS}
-                value={tagsSel}
-                onChange={setTagsSel}
-                placeholder={t("pages.combobox.creatable.placeholder")}
-                emptyMessage={t("pages.combobox.basic.empty")}
                 createLabel={(q) => (
                   <>
-                    {t("pages.combobox.creatable.create")} <em>"{q}"</em>
+                    {t("pages.combobox.multi.create")} <em>"{q}"</em>
                   </>
                 )}
               />
@@ -187,9 +149,9 @@ export default function ComboboxPage() {
         </Example>
       </Section>
 
-      {/* iv · Grupos */}
+      {/* iii · Grupos */}
       <Section
-        num="iv"
+        num="iii"
         title={<>{t("pages.combobox.groups.title")}</>}
         kicker={t("pages.combobox.groups.kicker")}
       >
@@ -219,9 +181,9 @@ export default function ComboboxPage() {
         </Example>
       </Section>
 
-      {/* v · Disabled state + custom render */}
+      {/* iv · Disabled state + custom render */}
       <Section
-        num="v"
+        num="iv"
         title={<>{t("pages.combobox.states.title")}</>}
         kicker={t("pages.combobox.states.kicker")}
       >
@@ -259,9 +221,9 @@ export default function ComboboxPage() {
         </Example>
       </Section>
 
-      {/* vi · Disabled total */}
+      {/* v · Disabled total */}
       <Section
-        num="vi"
+        num="v"
         title={<>{t("pages.combobox.disabled.title")}</>}
         kicker={t("pages.combobox.disabled.kicker")}
       >
@@ -287,7 +249,7 @@ export default function ComboboxPage() {
       </Section>
 
       <CompositionSection
-        num="vii"
+        num="vi"
         i18nPrefix="pages.combobox.composition"
         root="Combobox"
         nodes={[]}

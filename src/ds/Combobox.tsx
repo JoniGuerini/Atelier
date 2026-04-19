@@ -163,12 +163,23 @@ export function Combobox<T extends ComboboxOption = ComboboxOption>(
     return m;
   }, [options, getOptionValue]);
 
-  // Lista filtrada pelo query
+  // Lista filtrada pelo query.
+  // Em modo multi+creatable, OPÇÕES JÁ SELECIONADAS são removidas do
+  // painel — só aparecem como chip no input. Isso elimina o problema
+  // de o user digitar uma tag já existente e o Enter "deselecionar"
+  // por causa do toggle behavior. Pra remover, usa o × do chip ou
+  // Backspace. Em multi-puro (sem creatable) o comportamento clássico
+  // de toggle é mantido (opções selecionadas continuam visíveis com ✓).
   const filtered = useMemo(() => {
-    if (!query.trim()) return options;
+    let pool = options;
+    if (isMulti && creatable) {
+      const selected = new Set((value as string[]) ?? []);
+      pool = pool.filter((o) => !selected.has(getOptionValue(o)));
+    }
+    if (!query.trim()) return pool;
     const q = normalize(query);
-    return options.filter((o) => normalize(getOptionLabel(o)).includes(q));
-  }, [options, query, getOptionLabel]);
+    return pool.filter((o) => normalize(getOptionLabel(o)).includes(q));
+  }, [options, query, getOptionLabel, getOptionValue, isMulti, creatable, value]);
 
   // creatable: detectar se podemos oferecer criação
   // Mostra a creation row quando:

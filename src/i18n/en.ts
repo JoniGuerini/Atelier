@@ -1578,22 +1578,12 @@ const en = {
       },
       multi: {
         title: "Multi — many selections",
-        kicker: "multi=true",
+        kicker: "multi=true · creatable optional",
         desc:
-          "Each selected item becomes a [em]chip[/em] inside the input. [em]Backspace[/em] with empty input removes the last chip. The panel stays open between selections.",
-        caption: "Article tags",
-        field: "Tags",
-        hint: "You can pick several. Backspace removes the last.",
-        placeholder: "Add tag…",
-      },
-      creatable: {
-        title: "Creatable — accept new values",
-        kicker: "creatable=true",
-        desc:
-          "By default Combobox is a [em]select[/em] — it only lets you pick from the array. With [em]creatable[/em], a [em]Create \"…\"[/em] row appears at the top of the panel whenever what you typed doesn't match any existing option. Enter or click creates the free value — in multi it becomes a chip, in single it becomes the value.",
-        caption: "Tags with free creation — type and Enter",
+          "Each selected item becomes a [em]chip[/em] inside the input. By default it's a [em]select[/em] — only accepts options from the array. With [em]creatable[/em], a [em]Create \"…\"[/em] row appears whenever you type something that doesn't match existing options (Enter or click creates). [em]Backspace[/em] with empty input removes the last chip. In multi+creatable, already-selected options [em]disappear from the panel[/em] — to remove, use the chip's ×.",
+        caption: "Article tags — pick from suggestions OR type a new one",
         field: "Article tags",
-        hint: "Pick from suggestions or type a new tag and press Enter.",
+        hint: "Pick from suggestions or type a new tag and press Enter. Use × or Backspace to remove.",
         placeholder: "Existing tag or new one…",
         create: "Create",
       },

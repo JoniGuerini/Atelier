@@ -1639,22 +1639,12 @@ const ptBR = {
       },
       multi: {
         title: "Multi — várias seleções",
-        kicker: "multi=true",
+        kicker: "multi=true · creatable opcional",
         desc:
-          "Cada item selecionado vira um [em]chip[/em] dentro do input. [em]Backspace[/em] com input vazio remove o último chip. O painel não fecha entre seleções.",
-        caption: "Tags do artigo",
-        field: "Tags",
-        hint: "Você pode escolher várias. Backspace remove a última.",
-        placeholder: "Adicionar tag…",
-      },
-      creatable: {
-        title: "Creatable — aceita valores novos",
-        kicker: "creatable=true",
-        desc:
-          "Combobox padrão é um [em]select[/em] — só permite escolher do array. Com [em]creatable[/em], aparece uma linha [em]Criar \"…\"[/em] no topo do painel sempre que o que você digitou não bate com nenhuma opção existente. Enter ou click cria o item livre — em multi vira chip, em single vira o valor.",
-        caption: "Tags com criação livre — digite e Enter",
+          "Cada item selecionado vira um [em]chip[/em] dentro do input. Por padrão é um [em]select[/em] — só aceita opções do array. Com [em]creatable[/em], aparece uma linha [em]Criar \"…\"[/em] sempre que você digita algo que não bate com as opções existentes (Enter ou click cria). [em]Backspace[/em] com input vazio remove o último chip. Em multi+creatable, opções já selecionadas [em]somem do painel[/em] — pra remover, usa o × do chip.",
+        caption: "Tags do artigo — escolha das sugestões OU digite uma nova",
         field: "Tags do artigo",
-        hint: "Escolha das sugestões ou digite uma tag nova e tecle Enter.",
+        hint: "Escolha das sugestões ou digite uma tag nova e tecle Enter. Use × ou Backspace pra remover.",
         placeholder: "Tag existente ou nova…",
         create: "Criar",
       },
