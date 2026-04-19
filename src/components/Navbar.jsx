@@ -1,4 +1,4 @@
-import { createContext, useContext, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { ROUTE_BY_ID } from "../lib/routes.js";
 import { useT } from "../lib/i18n.jsx";
 import { ThemeToggle, NavModeToggle } from "../ds/primitives.jsx";
@@ -62,8 +62,38 @@ function MenuStateProvider({ children }) {
 
   const scheduleClose = () => {
     cancelClose();
-    timerRef.current = setTimeout(() => setActiveKey(null), 120);
+    timerRef.current = setTimeout(() => setActiveKey(null), 180);
   };
+
+  /* ----------------------------------------------------------------
+     Quando algum menu está aberto, escutamos mouse moves no document
+     pra detectar com precisão se o cursor saiu da combinação
+     (.site-navbar-nav + .nav-menu-panel.is-open). Os listeners
+     individuais nos elementos têm pontos cegos (gaps entre triggers,
+     entrada direta vinda de fora etc.); o detector global é o único
+     jeito 100% confiável de fechar SOMENTE quando o cursor está
+     realmente fora.
+  ---------------------------------------------------------------- */
+  useEffect(() => {
+    if (!activeKey) return;
+    const onMove = (e) => {
+      const nav = document.querySelector(".site-navbar-nav");
+      const panel = document.querySelector(".nav-menu-panel.is-open");
+      const inside =
+        (nav && nav.contains(e.target)) ||
+        (panel && panel.contains(e.target));
+      if (inside) {
+        cancelClose();
+      } else {
+        // Já agendado? Mantém. Senão, agenda.
+        if (!timerRef.current) {
+          timerRef.current = setTimeout(() => setActiveKey(null), 180);
+        }
+      }
+    };
+    document.addEventListener("mouseover", onMove);
+    return () => document.removeEventListener("mouseover", onMove);
+  }, [activeKey]);
 
   return (
     <MenuStateContext.Provider value={{ activeKey, open, scheduleClose, cancelClose }}>
@@ -111,17 +141,11 @@ export function NavbarBrand({ target = "overview", children }) {
 }
 
 export function NavbarNav({ ariaLabel = "Primary", children }) {
-  // Os handlers vivem na <nav> inteira (não em cada <li>): sair de
-  // um trigger e atravessar o gap de 4px entre triggers não fecha
-  // mais o painel — só sair da nav inteira fecha.
-  const { cancelClose, scheduleClose } = useMenuState();
+  // O abre/fecha não usa mais onMouseEnter/Leave aqui — o detector
+  // global no MenuStateProvider (mouseover no document) cuida de
+  // tudo com precisão, evitando os pontos cegos de listeners locais.
   return (
-    <nav
-      className="site-navbar-nav"
-      aria-label={ariaLabel}
-      onMouseEnter={cancelClose}
-      onMouseLeave={scheduleClose}
-    >
+    <nav className="site-navbar-nav" aria-label={ariaLabel}>
       <ul>{children}</ul>
     </nav>
   );
@@ -163,13 +187,12 @@ export function NavbarDropdown({ label, active = false, cols = 1, children }) {
 }
 
 export function NavbarDropdownPanel({ cols = 1, isOpen = false, children }) {
-  const { open, scheduleClose, cancelClose } = useMenuState();
+  // Sem handlers locais — quem decide abrir/fechar é o detector
+  // global. Mantemos só o role/className.
   return (
     <div
       className={`nav-menu-panel cols-${cols} ${isOpen ? "is-open" : ""}`}
       role="menu"
-      onMouseEnter={cancelClose}
-      onMouseLeave={scheduleClose}
     >
       <ul>{children}</ul>
     </div>
