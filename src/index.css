@@ -24,9 +24,20 @@
   --space-8: 64px;
   --space-9: 96px;
 
-  /* Layout */
+  /* Layout
+     ----------------------------------------------------------------
+     --content-max é fluido: 1200px em laptops/HD, escala com a
+     viewport e capeia em 1600px em monitores 2K/4K. Mantém a
+     respiração editorial em telas pequenas e usa o espaço
+     disponível sem virar uma "ilha estreita" no centro de
+     monitores grandes.
+        ≤ 1714px → 1200px       (HD, 13"/14"/15" laptops)
+        1714–2285px → 70vw      (Full HD a quase 2K)
+        ≥ 2285px → 1600px       (2K, 4K — teto editorial)
+     Linhas de texto longas continuam restritas via `max-width`
+     próprio em .page-intro, .section-desc e parágrafos de body. */
   --sidebar-w: 260px;
-  --content-max: 1200px;
+  --content-max: clamp(1200px, 70vw, 1600px);
 
   /* Motion */
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
