@@ -137,6 +137,10 @@ const ptBR = {
       kicker: "preferências",
       title: "Configurações",
     },
+    layout: {
+      toWide: "Expandir para largura total",
+      toBoxed: "Voltar à largura padrão",
+    },
     newBadge: "Novo",
     navLabel: "Navegação principal",
   },

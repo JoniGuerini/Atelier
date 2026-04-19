@@ -137,8 +137,15 @@ function MenuStateProvider({ children }: SlotProps) {
   );
 }
 
-export function Navbar({ current, onNavigate, children, className = "" }: NavbarProps & { className?: string }) {
+export function Navbar({
+  current,
+  onNavigate,
+  children,
+  className = "",
+  wide = false,
+}: NavbarProps & { className?: string; wide?: boolean }) {
   const classes = ["site-navbar"];
+  if (wide) classes.push("is-wide");
   if (className) classes.push(className);
   return (
     <NavbarContext.Provider value={{ current, onNavigate }}>

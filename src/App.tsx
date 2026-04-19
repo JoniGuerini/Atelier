@@ -24,6 +24,7 @@ import { ALL_ROUTE_IDS, ROUTES, TOOL_ROUTE_IDS } from "./lib/routes.ts";
 import { SidebarToggle, BackToTop } from "./ds/primitives.tsx";
 import { PageNav } from "./ds/PageNav.tsx";
 import { SettingsMenu } from "./ds/SettingsMenu.tsx";
+import { LayoutToggle } from "./ds/LayoutToggle.tsx";
 import {
   SearchPalette,
   SearchTrigger,
@@ -96,6 +97,7 @@ const PAGES = {
 
 const SIDEBAR_KEY = "atelier.sidebarCollapsed";
 const NAV_MODE_KEY = "atelier.navMode";
+const NAV_WIDE_KEY = "atelier.navWide";
 
 export default function App() {
   const { t } = useT();
@@ -115,6 +117,15 @@ export default function App() {
     return "navbar";
   });
 
+  // Layout do navbar: "boxed" (default — limita ao --content-max,
+  // alinhado com o conteúdo da página) ou "wide" (ocupa 100% do
+  // viewport, mais arejado em monitores grandes). Replica o toggle
+  // que o shadcn tem no canto superior do site deles.
+  const [navWide, setNavWide] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.localStorage.getItem(NAV_WIDE_KEY) === "1";
+  });
+
   useEffect(() => {
     try {
       window.localStorage.setItem(SIDEBAR_KEY, collapsed ? "1" : "0");
@@ -130,6 +141,16 @@ export default function App() {
       /* storage indisponível */
     }
   }, [navMode]);
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(NAV_WIDE_KEY, navWide ? "1" : "0");
+    } catch {
+      /* storage indisponível */
+    }
+  }, [navWide]);
+
+  const toggleNavWide = useCallback(() => setNavWide((v) => !v), []);
 
   const toggleSidebar = useCallback(() => setCollapsed((c) => !c), []);
 
@@ -171,6 +192,8 @@ export default function App() {
           navigate={navigate}
           navMode={navMode}
           setNavMode={setNavMode}
+          navWide={navWide}
+          toggleNavWide={toggleNavWide}
           openSearch={() => setSearchOpen(true)}
         />
       ) : (
@@ -216,10 +239,18 @@ export default function App() {
    AppNavbar — composição real da Navbar do Atelier.
    Documenta, no próprio uso, a árvore exposta na página #/navbar.
 ---------------------------------------------------------------- */
-function AppNavbar({ current, navigate, navMode, setNavMode, openSearch }: any) {
+function AppNavbar({
+  current,
+  navigate,
+  navMode,
+  setNavMode,
+  navWide,
+  toggleNavWide,
+  openSearch,
+}: any) {
   const { t } = useT();
   return (
-    <Navbar current={current} onNavigate={navigate}>
+    <Navbar current={current} onNavigate={navigate} wide={navWide}>
       <NavbarBrand />
       <NavbarNav ariaLabel={t("nav.navLabel") || "Primary"}>
         {ROUTES.map((group: any) => {
@@ -268,6 +299,7 @@ function AppNavbar({ current, navigate, navMode, setNavMode, openSearch }: any) 
       </NavbarNav>
       <SearchTrigger onClick={openSearch} />
       <NavbarActions>
+        <LayoutToggle wide={navWide} onToggle={toggleNavWide} />
         <SettingsMenu
           navMode={navMode}
           onToggleNavMode={setNavMode}

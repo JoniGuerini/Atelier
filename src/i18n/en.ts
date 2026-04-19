@@ -137,6 +137,10 @@ const en = {
       kicker: "preferences",
       title: "Settings",
     },
+    layout: {
+      toWide: "Expand to full width",
+      toBoxed: "Back to default width",
+    },
     newBadge: "New",
     navLabel: "Primary navigation",
   },

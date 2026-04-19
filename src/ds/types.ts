@@ -324,6 +324,9 @@ export interface NavbarProps {
   current: string;
   onNavigate: (route: string) => void;
   children?: ReactNode;
+  /** Quando true, o navbar ocupa 100% do viewport (em vez de ficar
+      limitado pelo --content-max). Útil em monitores grandes. */
+  wide?: boolean;
 }
 export interface NavbarDropdownProps {
   label: ReactNode;
