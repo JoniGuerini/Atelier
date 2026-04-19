@@ -398,6 +398,62 @@ export interface CompositionSectionProps {
   nodes: CompositionNode[];
 }
 
+/* ----------------- Popover ----------------- */
+export type PopoverSide = "top" | "right" | "bottom" | "left";
+export type PopoverAlign = "start" | "center" | "end";
+export type PopoverPlacement = `${PopoverSide}-${PopoverAlign}`;
+export interface PopoverProps {
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  defaultOpen?: boolean;
+  children?: ReactNode;
+}
+export interface PopoverContentProps {
+  children?: ReactNode;
+  placement?: PopoverPlacement;
+  offset?: number;
+  arrow?: boolean;
+  closeOnClickOutside?: boolean;
+  closeOnEscape?: boolean;
+  minWidth?: number;
+  className?: string;
+  role?: string;
+  ariaLabel?: string;
+}
+
+/* ----------------- DropdownMenu ----------------- */
+export interface DropdownMenuProps {
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  defaultOpen?: boolean;
+  children?: ReactNode;
+}
+export interface DropdownMenuItemProps {
+  children?: ReactNode;
+  onSelect?: () => void;
+  glyph?: ReactNode;
+  shortcut?: string;
+  destructive?: boolean;
+  disabled?: boolean;
+}
+export interface DropdownMenuCheckboxItemProps {
+  children?: ReactNode;
+  checked?: boolean;
+  onCheckedChange?: (next: boolean) => void;
+  shortcut?: string;
+  disabled?: boolean;
+}
+
+/* ----------------- ContextMenu ----------------- */
+export interface ContextMenuItemProps {
+  children?: ReactNode;
+  onSelect?: () => void;
+  glyph?: ReactNode;
+  shortcut?: string;
+  destructive?: boolean;
+  disabled?: boolean;
+}
+
 /* ----------------- Tools (Search / Settings) ----------------- */
 export interface SearchPaletteProps {
   open: boolean;

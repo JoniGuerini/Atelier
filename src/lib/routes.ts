@@ -52,20 +52,28 @@ export const ROUTES: RouteGroup[] = [
     ],
   },
   {
+    groupKey: "advanced",
+    items: [
+      { id: "popover", n: "22", isNew: true },
+      { id: "dropdownMenu", n: "23", route: "dropdown-menu", isNew: true },
+      { id: "contextMenu", n: "24", route: "context-menu", isNew: true },
+    ],
+  },
+  {
     groupKey: "patterns",
     items: [
-      { id: "forms", n: "22" },
-      { id: "stepper", n: "23" },
-      { id: "emptyStates", n: "24", route: "empty-states" },
-      { id: "sidebar", n: "25" },
-      { id: "navbar", n: "26" },
+      { id: "forms", n: "25" },
+      { id: "stepper", n: "26" },
+      { id: "emptyStates", n: "27", route: "empty-states" },
+      { id: "sidebar", n: "28" },
+      { id: "navbar", n: "29" },
     ],
   },
   {
     groupKey: "reference",
     items: [
-      { id: "accessibility", n: "27" },
-      { id: "code", n: "28", isNew: true },
+      { id: "accessibility", n: "30" },
+      { id: "code", n: "31" },
     ],
   },
   {

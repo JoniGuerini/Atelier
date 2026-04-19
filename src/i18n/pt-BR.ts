@@ -53,6 +53,7 @@ const ptBR = {
       start: "Início",
       foundations: "Fundamentos",
       components: "Componentes",
+      advanced: "Avançados",
       patterns: "Padrões",
       reference: "Referência",
       studio: "Studio",
@@ -80,6 +81,9 @@ const ptBR = {
       pagination: "Paginação",
       breadcrumbs: "Breadcrumbs",
       skeleton: "Skeleton",
+      popover: "Popover",
+      dropdownMenu: "Dropdown Menu",
+      contextMenu: "Context Menu",
       forms: "Formulários",
       stepper: "Stepper",
       emptyStates: "Estados vazios",
@@ -112,6 +116,9 @@ const ptBR = {
       pagination: "Paginar listas e tabelas — anterior/próximo + páginas.",
       breadcrumbs: "Trilha de onde o leitor está no mapa do site.",
       skeleton: "Placeholders editoriais para estados de loading.",
+      popover: "Painel posicionado ancorado a um trigger — base de dropdowns, tooltips ricos e mais.",
+      dropdownMenu: "Menu de ações com items, separadores, checkbox/radio e shortcuts.",
+      contextMenu: "Menu disparado pelo clique direito — abre nas coordenadas do cursor.",
       forms: "Composição completa: campos, divisores e ações.",
       stepper: "Indicador de progresso multi-etapa para forms longos.",
       emptyStates: "Convites, não derrotas — espaço com intenção.",
@@ -1287,9 +1294,181 @@ const ptBR = {
       },
     },
 
+    /* ------------- Popover ------------- */
+    popover: {
+      lead: "Avançado · 22",
+      titleA: "O ",
+      titleB: "popover",
+      metaLabel: "Overlay",
+      meta: "Base de menus, tooltips ricos, datepickers",
+      intro:
+        "Um painel posicionado ancorado a um trigger. É a [em]primitive[/em] sobre a qual nascem o DropdownMenu, o ContextMenu, e — em breve — Combobox e DatePicker. Sem libs externas: posicionamento próprio em ~40 linhas, com auto-flip e clamp de viewport.",
+      basic: {
+        title: "Uso básico",
+        kicker: "primitive",
+        desc:
+          "Trigger + Content. Sem props obrigatórias — o estado open/close é interno (descontrolado).",
+        caption: "Popover básico ao lado do trigger",
+        btn: "Abrir popover",
+        body:
+          "Conteúdo arbitrário. Pode receber qualquer ReactNode — texto, formulário, lista, gráfico.",
+      },
+      placements: {
+        title: "Doze posicionamentos",
+        kicker: "placement",
+        desc:
+          "[em]side-align[/em]. Quatro lados (top, right, bottom, left) × três alinhamentos (start, center, end). Default: [em]bottom-start[/em].",
+        caption: "Os 12 placements possíveis",
+      },
+      arrow: {
+        title: "Com indicador",
+        kicker: "arrow",
+        desc:
+          "Triângulo angular apontando pro trigger. Útil quando o painel pode estar visualmente desconectado do que o originou.",
+        caption: "Popover com arrow",
+        btn: "Abrir com arrow",
+        body:
+          "O triângulo é desenhado em CSS puro (sem SVG) — mantém a coerência angular do Atelier.",
+      },
+      form: {
+        title: "Conteúdo rico",
+        kicker: "rich content",
+        desc:
+          "Aceita qualquer composição React — formulários, listas, painéis. O foco fica preso dentro do painel até o usuário fechar.",
+        caption: "Popover com formulário inline",
+        btn: "Editar nome",
+        label: "Nome de exibição",
+        placeholder: "Como gostaria de ser chamado?",
+        save: "Salvar",
+        cancel: "Cancelar",
+      },
+      flip: {
+        title: "Auto-flip",
+        kicker: "viewport-aware",
+        desc:
+          "Se o painel não cabe no lado preferido, o Popover [em]inverte[/em] automaticamente para o lado oposto. Tente abrir um trigger perto do canto inferior da tela com placement=\"bottom\" — ele abre pra cima sozinho.",
+      },
+      composition: {
+        title: "Composição",
+        titleB: "árvore",
+        kicker: "estrutura",
+        caption: "Os subcomponentes do Popover.",
+      },
+    },
+
+    /* ------------- DropdownMenu ------------- */
+    dropdownMenu: {
+      lead: "Avançado · 23",
+      titleA: "Os ",
+      titleB: "menus",
+      metaLabel: "Ações",
+      meta: "Composto sobre Popover",
+      intro:
+        "Menu de ações disparado por um botão. Items, separadores, labels de grupo, [em]checkbox/radio[/em], shortcuts mono, glifos serifados, items destrutivos. Navegação por teclado completa.",
+      basic: {
+        title: "Uso básico",
+        kicker: "items",
+        desc:
+          "Apenas itens clicáveis. [em]Enter[/em] ou clique selecionam, [em]Escape[/em] fecha.",
+        caption: "Menu básico de edição",
+        btn: "Editar",
+        cut: "Recortar",
+        copy: "Copiar",
+        paste: "Colar",
+      },
+      rich: {
+        title: "Glifos e atalhos",
+        kicker: "glyph + shortcut",
+        desc:
+          "Cada item aceita [em]glyph[/em] (símbolo serifado à esquerda) e [em]shortcut[/em] (texto mono à direita). Use com parcimônia — itens com glifo demais ficam pesados.",
+        caption: "Menu rico com label, glifo, shortcut e item destrutivo",
+        btn: "Conta",
+        account: "Conta",
+        profile: "Perfil",
+        settings: "Configurações",
+        bookmarks: "Favoritos",
+        signOut: "Sair",
+      },
+      checkbox: {
+        title: "Checkbox items",
+        kicker: "menuitemcheckbox",
+        desc:
+          "Toggle visíveis dentro do menu — não fecham ao serem clicados, permitindo múltipla seleção. Marca usa [em]✓[/em] em accent.",
+        caption: "Menu com toggles persistentes",
+        btn: "Visualização",
+        preferences: "Preferências",
+        rulers: "Mostrar réguas",
+        hidden: "Mostrar arquivos ocultos",
+      },
+      radio: {
+        title: "Radio group",
+        kicker: "menuitemradio",
+        desc:
+          "Escolha única entre opções mutuamente excludentes. Indicador usa [em]●[/em] em accent.",
+        caption: "Seletor de tema",
+        btn: "Tema",
+        label: "Aparência",
+        auto: "Automático",
+        light: "Claro",
+        dark: "Escuro",
+      },
+      composition: {
+        title: "Composição",
+        titleB: "árvore",
+        kicker: "estrutura",
+        caption: "Os subcomponentes do DropdownMenu.",
+      },
+    },
+
+    /* ------------- ContextMenu ------------- */
+    contextMenu: {
+      lead: "Avançado · 24",
+      titleA: "O ",
+      titleB: "context menu",
+      metaLabel: "Right-click",
+      meta: "Ancorado nas coordenadas do cursor",
+      intro:
+        "Menu disparado pelo [em]clique direito[/em] (ou Shift+F10 no teclado). Diferente do DropdownMenu, abre exatamente onde o cursor está — com [em]clamp de viewport[/em] pra não vazar pra fora da tela.",
+      basic: {
+        title: "Ações básicas",
+        kicker: "right-click area",
+        desc:
+          "Clique com o botão direito sobre a área. As mesmas opções primitivas de qualquer menu de aplicação.",
+        caption: "Menu contextual com cut/copy/paste/delete",
+        area: "Clique com o botão direito aqui",
+        hint: "Right-click ou Shift+F10",
+        cut: "Recortar",
+        copy: "Copiar",
+        paste: "Colar",
+        delete: "Excluir",
+        history: "Última ação",
+      },
+      editor: {
+        title: "Editor de texto",
+        kicker: "formatting",
+        desc:
+          "Caso de uso clássico: formatação inline. Mistura [em]checkbox items[/em] (estados toggláveis: bold, italic) com items normais para ações.",
+        caption: "Menu contextual de formatação",
+        lorem:
+          "Clique com o botão direito sobre este parágrafo para abrir o menu de formatação — alterne negrito e itálico, e veja o texto reagir em tempo real.",
+        text: "Texto",
+        bold: "Negrito",
+        italic: "Itálico",
+        actions: "Ações",
+        paragraph: "Transformar em parágrafo",
+        heading: "Transformar em título",
+      },
+      composition: {
+        title: "Composição",
+        titleB: "árvore",
+        kicker: "estrutura",
+        caption: "Os subcomponentes do ContextMenu.",
+      },
+    },
+
     /* ------------- Forms ------------- */
     forms: {
-      lead: "Padrão · 22",
+      lead: "Padrão · 25",
       titleA: "Os ",
       titleB: "formulários",
       metaLabel: "Composição",
@@ -1330,7 +1509,7 @@ const ptBR = {
 
     /* ------------- Stepper ------------- */
     stepper: {
-      lead: "Padrão · 23",
+      lead: "Padrão · 26",
       titleA: "O ",
       titleB: "stepper",
       metaLabel: "Multi-etapa",
@@ -1375,7 +1554,7 @@ const ptBR = {
 
     /* ------------- Empty States ------------- */
     emptyStates: {
-      lead: "Padrão · 24",
+      lead: "Padrão · 27",
       titleA: "Os ",
       titleB: "vazios",
       metaLabel: "Sem conteúdo",
@@ -1426,7 +1605,7 @@ const ptBR = {
 
     /* ------------- Sidebar (pattern) ------------- */
     sidebar: {
-      lead: "Padrão · 25",
+      lead: "Padrão · 28",
       titleA: "A ",
       titleB: "sidebar",
       metaLabel: "Navegação",
@@ -1526,7 +1705,7 @@ const ptBR = {
 
     /* ------------- Navbar (pattern) ------------- */
     navbar: {
-      lead: "Padrão · 26",
+      lead: "Padrão · 29",
       titleA: "A ",
       titleB: "navbar",
       metaLabel: "Navegação",
@@ -1760,7 +1939,7 @@ const ptBR = {
 
     /* ------------- Accessibility ------------- */
     accessibility: {
-      lead: "Referência · 27",
+      lead: "Referência · 30",
       titleA: "A ",
       titleB: "acessibilidade",
       metaLabel: "Conformidade",

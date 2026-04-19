@@ -350,6 +350,94 @@ const API = [
 </Tooltip>`,
   },
   {
+    id: "popover",
+    name: "Popover family",
+    route: "popover",
+    imports: `import { Popover, PopoverTrigger, PopoverContent } from "./ds/Popover";
+import type { PopoverPlacement } from "./ds/types";`,
+    props: [
+      ["Popover open / onOpenChange / defaultOpen", "controlado ou descontrolado", "—"],
+      ["PopoverContent placement", "12 opções: \"${side}-${align}\"", "'bottom-start'"],
+      ["PopoverContent offset", "number (px entre trigger e content)", "6"],
+      ["PopoverContent arrow", "boolean", "false"],
+      ["PopoverContent closeOnClickOutside / closeOnEscape", "boolean", "true"],
+    ],
+    code: `<Popover>
+  <PopoverTrigger>
+    <Button>Open</Button>
+  </PopoverTrigger>
+  <PopoverContent placement="bottom-start" arrow>
+    <p>Anything goes here.</p>
+  </PopoverContent>
+</Popover>
+
+{/* Controlled */}
+<Popover open={open} onOpenChange={setOpen}>…</Popover>`,
+  },
+  {
+    id: "dropdownMenu",
+    name: "DropdownMenu family",
+    route: "dropdown-menu",
+    imports: `import {
+  DropdownMenu, DropdownMenuTrigger, DropdownMenuContent,
+  DropdownMenuItem, DropdownMenuCheckboxItem,
+  DropdownMenuRadioGroup, DropdownMenuRadioItem,
+  DropdownMenuLabel, DropdownMenuSeparator,
+} from "./ds/DropdownMenu";`,
+    props: [
+      ["Item onSelect", "() => void", "—"],
+      ["Item glyph", "ReactNode (símbolo serif)", "—"],
+      ["Item shortcut", "string ('⌘K')", "—"],
+      ["Item destructive", "boolean (cor accent)", "false"],
+      ["CheckboxItem checked / onCheckedChange", "boolean / callback", "—"],
+      ["RadioGroup value / onValueChange", "string / callback", "—"],
+    ],
+    code: `<DropdownMenu>
+  <DropdownMenuTrigger>
+    <Button>Account</Button>
+  </DropdownMenuTrigger>
+  <DropdownMenuContent>
+    <DropdownMenuLabel>Account</DropdownMenuLabel>
+    <DropdownMenuItem glyph="§" shortcut="⌘P">Profile</DropdownMenuItem>
+    <DropdownMenuItem glyph="¶" shortcut="⌘,">Settings</DropdownMenuItem>
+    <DropdownMenuSeparator />
+    <DropdownMenuCheckboxItem checked={dark} onCheckedChange={setDark}>
+      Dark mode
+    </DropdownMenuCheckboxItem>
+    <DropdownMenuSeparator />
+    <DropdownMenuItem destructive>Sign out</DropdownMenuItem>
+  </DropdownMenuContent>
+</DropdownMenu>`,
+  },
+  {
+    id: "contextMenu",
+    name: "ContextMenu family",
+    route: "context-menu",
+    imports: `import {
+  ContextMenu, ContextMenuTrigger, ContextMenuContent,
+  ContextMenuItem, ContextMenuLabel,
+  ContextMenuCheckboxItem, ContextMenuSeparator,
+} from "./ds/ContextMenu";`,
+    props: [
+      ["Trigger", "wraps qualquer ReactElement; intercepta onContextMenu", "—"],
+      ["Content", "abre nas coords do clique, com clamp de viewport", "—"],
+      ["Item / CheckboxItem", "mesma API do DropdownMenu", "—"],
+      ["keyboard", "Shift+F10 / tecla ContextMenu também abre", "—"],
+    ],
+    code: `<ContextMenu>
+  <ContextMenuTrigger>
+    <div>Right-click me</div>
+  </ContextMenuTrigger>
+  <ContextMenuContent>
+    <ContextMenuItem shortcut="⌘X">Cut</ContextMenuItem>
+    <ContextMenuItem shortcut="⌘C">Copy</ContextMenuItem>
+    <ContextMenuItem shortcut="⌘V">Paste</ContextMenuItem>
+    <ContextMenuSeparator />
+    <ContextMenuItem destructive>Delete</ContextMenuItem>
+  </ContextMenuContent>
+</ContextMenu>`,
+  },
+  {
     id: "feedback",
     name: "Toast · Progress",
     route: "feedback",

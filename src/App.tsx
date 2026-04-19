@@ -61,6 +61,9 @@ import SidebarPage from "./pages/SidebarPage.tsx";
 import NavbarPage from "./pages/NavbarPage.tsx";
 import CodePage from "./pages/Code.tsx";
 import Create from "./pages/Create.tsx";
+import PopoverPage from "./pages/PopoverPage.tsx";
+import DropdownMenuPage from "./pages/DropdownMenuPage.tsx";
+import ContextMenuPage from "./pages/ContextMenuPage.tsx";
 
 const PAGES = {
   overview: Overview,
@@ -93,6 +96,9 @@ const PAGES = {
   navbar: NavbarPage,
   code: CodePage,
   create: Create,
+  popover: PopoverPage,
+  "dropdown-menu": DropdownMenuPage,
+  "context-menu": ContextMenuPage,
 };
 
 const SIDEBAR_KEY = "atelier.sidebarCollapsed";

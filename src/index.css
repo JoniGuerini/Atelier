@@ -4711,6 +4711,215 @@ input[type="file"] { display: none; }
   line-height: 1;
 }
 
+/* ================================================================
+   Popover + DropdownMenu + ContextMenu — overlays foundation.
+   ----------------------------------------------------------------
+   Estrutura visual canônica: painel angular, borda forte,
+   sombra discreta. Aparece com fade + translate de 4px no eixo
+   relevante (controlado pela classe .side-X). Anima em todas as
+   direções; respeita prefers-reduced-motion.
+
+   Items usam a mesma família visual de buttons fantasma — mono
+   compacto pra labels/shortcuts, serif itálico pra glifos.
+---------------------------------------------------------------- */
+.ds-popover {
+  background: var(--bg-panel);
+  border: 1px solid var(--rule);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12),
+    0 2px 6px rgba(0, 0, 0, 0.06);
+  z-index: 1000;
+  animation: ds-popover-in var(--dur) var(--ease);
+}
+[data-theme="dark"] .ds-popover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5),
+    0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes ds-popover-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.ds-popover.side-top {
+  animation-name: ds-popover-in-top;
+}
+@keyframes ds-popover-in-top {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.ds-popover.side-left {
+  animation-name: ds-popover-in-left;
+}
+@keyframes ds-popover-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.ds-popover.side-right {
+  animation-name: ds-popover-in-right;
+}
+@keyframes ds-popover-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Arrow opcional — pequeno triângulo angular */
+.ds-popover-arrow {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--bg-panel);
+  border: 1px solid var(--rule);
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+.ds-popover-arrow.side-bottom {
+  top: -5px;
+  border-right: none;
+  border-bottom: none;
+}
+.ds-popover-arrow.side-top {
+  bottom: -5px;
+  border-left: none;
+  border-top: none;
+}
+.ds-popover-arrow.side-right {
+  left: -5px;
+  border-right: none;
+  border-top: none;
+}
+.ds-popover-arrow.side-left {
+  right: -5px;
+  border-left: none;
+  border-bottom: none;
+}
+
+/* ---------- DropdownMenu / ContextMenu items ---------- */
+.ds-menu {
+  padding: 4px 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+}
+.ds-menu-label {
+  padding: 8px 12px 4px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  user-select: none;
+}
+.ds-menu-separator {
+  height: 1px;
+  background: var(--rule-soft);
+  margin: 4px 0;
+}
+.ds-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 12px;
+  background: none;
+  border: none;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  letter-spacing: inherit;
+  transition: background var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease);
+}
+.ds-menu-item:hover:not([disabled]),
+.ds-menu-item:focus-visible {
+  background: var(--bg-sunken);
+  outline: none;
+}
+.ds-menu-item[disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.ds-menu-item.destructive {
+  color: var(--accent);
+}
+.ds-menu-item.destructive:hover:not([disabled]),
+.ds-menu-item.destructive:focus-visible {
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+}
+
+.ds-menu-item-glyph {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--accent);
+  letter-spacing: 0;
+  text-transform: none;
+  width: 16px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.ds-menu-item-mark {
+  width: 16px;
+  text-align: center;
+  flex-shrink: 0;
+  color: var(--accent);
+  font-family: var(--font-serif);
+  font-size: 12px;
+}
+.ds-menu-item-label {
+  flex: 1;
+  text-transform: none;
+  letter-spacing: 0.04em;
+  font-family: var(--font-serif);
+  font-size: 13px;
+  color: var(--ink);
+}
+.ds-menu-item.destructive .ds-menu-item-label {
+  color: inherit;
+}
+.ds-menu-item-shortcut {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--ink-faint);
+  flex-shrink: 0;
+}
+
+/* Reduced motion: desliga o slide/fade */
+@media (prefers-reduced-motion: reduce) {
+  .ds-popover,
+  .ds-popover.side-top,
+  .ds-popover.side-left,
+  .ds-popover.side-right {
+    animation: none;
+  }
+}
+
 /* ----------------------------------------------------------------
    Code page (#/code) — API cards + ADR cards.
 ---------------------------------------------------------------- */
