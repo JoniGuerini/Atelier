@@ -555,6 +555,7 @@ export interface SortableProps<T> {
 export interface DragSourceProps {
   data: any;
   type?: string;
+  preview?: ReactNode;
   dragThreshold?: number;
   children?: ReactNode;
   className?: string;

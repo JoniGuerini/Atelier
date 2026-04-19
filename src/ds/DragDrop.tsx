@@ -272,6 +272,12 @@ interface DragData {
   data: any;
   type?: string;
   sourceId: number;
+  /** Conteúdo do card que será renderizado dentro do ghost. */
+  preview: ReactNode;
+  /** Bounding rect do source no momento do pointerdown. */
+  rect: { width: number; height: number };
+  /** Offset (px) do cursor relativo ao canto superior esquerdo do source. */
+  grabOffset: { x: number; y: number };
 }
 
 interface DnDContextValue {
@@ -298,6 +304,8 @@ export function DragDropProvider({ children }: { children?: ReactNode }) {
       value={{ current, start, end, pointer, setPointer }}
     >
       {children}
+      {/* Auto-mounta o ghost — o consumidor não precisa pensar nisso. */}
+      <DragGhost />
     </DnDContext.Provider>
   );
 }
@@ -320,6 +328,8 @@ export interface DragSourceProps {
   data: any;
   /** Tipo opcional (ex: "card", "task") pra filtrar drops. */
   type?: string;
+  /** Preview customizado do ghost. Default: clone visual dos children. */
+  preview?: ReactNode;
   /** Distância mínima pra começar drag. Default: 4. */
   dragThreshold?: number;
   children?: ReactNode;
@@ -329,28 +339,36 @@ export interface DragSourceProps {
 export function DragSource({
   data,
   type,
+  preview,
   dragThreshold = 4,
   children,
   className = "",
 }: DragSourceProps) {
   const ctx = useDnD("DragSource");
   const idRef = useRef(++nextSourceId);
+  const elRef = useRef<HTMLDivElement | null>(null);
   const [drag, setDrag] = useState<{
     pointerId: number;
     startX: number;
     startY: number;
+    grabOffset: { x: number; y: number };
+    rect: { width: number; height: number };
     dragging: boolean;
   } | null>(null);
 
   const onPointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
     if (e.button !== 0) return;
+    const el = e.currentTarget as HTMLElement;
+    const r = el.getBoundingClientRect();
     setDrag({
       pointerId: e.pointerId,
       startX: e.clientX,
       startY: e.clientY,
+      grabOffset: { x: e.clientX - r.left, y: e.clientY - r.top },
+      rect: { width: r.width, height: r.height },
       dragging: false,
     });
-    (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
+    el.setPointerCapture?.(e.pointerId);
   };
 
   const onPointerMove = (e: ReactPointerEvent<HTMLDivElement>) => {
@@ -358,7 +376,15 @@ export function DragSource({
     const dist = Math.hypot(e.clientX - drag.startX, e.clientY - drag.startY);
     if (!drag.dragging && dist > dragThreshold) {
       setDrag({ ...drag, dragging: true });
-      ctx.start({ data, type, sourceId: idRef.current });
+      ctx.start({
+        data,
+        type,
+        sourceId: idRef.current,
+        preview: preview ?? children,
+        rect: drag.rect,
+        grabOffset: drag.grabOffset,
+      });
+      ctx.setPointer({ x: e.clientX, y: e.clientY });
     }
     if (drag.dragging) {
       ctx.setPointer({ x: e.clientX, y: e.clientY });
@@ -381,10 +407,31 @@ export function DragSource({
 
   const isDragging = drag?.dragging;
 
+  /* Quando dragging, o source vira um placeholder fantasmagórico
+     com a mesma altura — preserva o layout e mostra "de onde saiu". */
+  if (isDragging) {
+    return (
+      <div
+        ref={elRef}
+        className={`ds-drag-source-placeholder ${className}`.trim()}
+        style={{
+          width: drag.rect.width,
+          height: drag.rect.height,
+          touchAction: "none",
+        }}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+        onPointerCancel={onPointerUp}
+        aria-hidden="true"
+      />
+    );
+  }
+
   return (
     <div
-      className={`ds-drag-source ${isDragging ? "dragging" : ""} ${className}`.trim()}
-      style={{ touchAction: "none", cursor: isDragging ? "grabbing" : "grab" }}
+      ref={elRef}
+      className={`ds-drag-source ${className}`.trim()}
+      style={{ touchAction: "none", cursor: "grab" }}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
@@ -499,25 +546,29 @@ export function DropZone({
 }
 
 /* ----------------------------------------------------------------
-   GHOST — pequena preview seguindo o cursor durante drag.
-   Renderizado pelo Provider (zindex altíssimo).
-   Por enquanto, simples: um quadrado discreto. Se o consumidor
-   quiser preview customizado, pode usar createPortal manualmente.
+   GHOST — clone visual do card seguindo o cursor.
+   Renderizado automaticamente pelo Provider (zindex altíssimo).
+   Mantém a largura do source original e ancora o cursor no mesmo
+   ponto onde o user clicou (grabOffset).
 ---------------------------------------------------------------- */
 export function DragGhost() {
   const ctx = useContext(DnDContext);
   if (!ctx?.current) return null;
+  const { preview, rect, grabOffset } = ctx.current;
   return (
     <div
       className="ds-drag-ghost"
       style={{
         position: "fixed",
-        left: ctx.pointer.x + 8,
-        top: ctx.pointer.y + 8,
+        left: ctx.pointer.x - grabOffset.x,
+        top: ctx.pointer.y - grabOffset.y,
+        width: rect.width,
         pointerEvents: "none",
         zIndex: 9999,
       }}
       aria-hidden="true"
-    />
+    >
+      {preview}
+    </div>
   );
 }

@@ -11,7 +11,6 @@ import {
   DragSource,
   DropZone,
   DragDropProvider,
-  DragGhost,
 } from "../ds/DragDrop.tsx";
 import { useT } from "../lib/i18n.tsx";
 
@@ -174,8 +173,9 @@ export default function DragDropPage() {
             style={{
               display: "grid",
               gridTemplateColumns: "1fr 1fr 1fr",
-              gap: "var(--space-3)",
-              padding: "var(--space-3)",
+              gap: "1px",
+              background: "var(--rule-soft)",
+              border: "1px solid var(--rule-soft)",
             }}
           >
             <KanbanColumn
@@ -268,10 +268,9 @@ export default function DragDropPage() {
               { name: "props.accepts (filter por type)" },
             ],
           },
-          { name: "<DragGhost> (opcional)" },
+          { name: "<DragGhost> (auto-mounted)" },
         ]}
       />
-      <DragGhost />
     </DragDropProvider>
   );
 }
@@ -282,8 +281,8 @@ function CardRow({ card }: { card: Card }) {
     <div
       style={{
         padding: "var(--space-3) var(--space-4)",
-        border: "1px solid var(--rule-soft)",
         background: "var(--surface)",
+        border: "1px solid var(--rule-soft)",
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
@@ -311,8 +310,8 @@ function KanbanColumn({
       style={{
         display: "flex",
         flexDirection: "column",
-        gap: "var(--space-2)",
-        minHeight: 180,
+        background: "color-mix(in srgb, var(--ink) 3%, transparent)",
+        minHeight: 240,
       }}
     >
       <div
@@ -322,11 +321,15 @@ function KanbanColumn({
           letterSpacing: "0.08em",
           textTransform: "uppercase",
           color: "var(--ink-soft)",
-          paddingBottom: "var(--space-2)",
+          padding: "var(--space-3) var(--space-3)",
           borderBottom: "1px solid var(--rule-soft)",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
         }}
       >
-        {label} · {cards.length}
+        <span>{label}</span>
+        <span style={{ opacity: 0.6 }}>{cards.length}</span>
       </div>
       <DropZone
         onDrop={(c) => onDrop(c as Card)}
@@ -338,27 +341,15 @@ function KanbanColumn({
             display: "flex",
             flexDirection: "column",
             gap: "var(--space-2)",
-            minHeight: 80,
+            padding: "var(--space-3)",
+            minHeight: 200,
           }}
         >
-          {cards.length === 0 ? (
-            <span
-              style={{
-                fontSize: 12,
-                color: "var(--ink-soft)",
-                fontStyle: "italic",
-                fontFamily: "var(--font-serif)",
-              }}
-            >
-              —
-            </span>
-          ) : (
-            cards.map((c) => (
-              <DragSource key={c.id} data={c} type="card">
-                <CardRow card={c} />
-              </DragSource>
-            ))
-          )}
+          {cards.map((c) => (
+            <DragSource key={c.id} data={c} type="card">
+              <CardRow card={c} />
+            </DragSource>
+          ))}
         </div>
       </DropZone>
     </div>
