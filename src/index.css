@@ -6228,82 +6228,75 @@ input[type="file"] { display: none; }
   grid-row: 3;
 }
 
-/* Handles — track de 6px com cor sólida = borda visual + área draggable */
+/* Handles — track de 6px (área draggable) com linha visual de 1px
+   no centro via ::before. Visualmente fica como uma divisão fina,
+   mas o pointer captura uma região maior pra facilitar agarrar. */
 .ds-junction-grid-handle {
-  background: var(--rule-soft);
+  position: relative;
+  background: transparent;
   outline: none;
+}
+.ds-junction-grid-handle::before {
+  content: "";
+  position: absolute;
+  background: var(--rule-soft);
   transition: background var(--dur-fast) var(--ease);
 }
-.ds-junction-grid-handle:hover,
-.ds-junction-grid-handle:focus-visible {
+.ds-junction-grid-handle:hover::before,
+.ds-junction-grid-handle:focus-visible::before {
   background: var(--accent);
 }
 .ds-junction-grid-handle.handle-v {
   grid-column: 2;
-  grid-row: 1 / -1; /* span vertical inteiro */
+  grid-row: 1 / -1;
   cursor: col-resize;
+}
+.ds-junction-grid-handle.handle-v::before {
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  transform: translateX(-0.5px);
 }
 .ds-junction-grid-handle.handle-h {
   grid-column: 3;
   grid-row: 2;
   cursor: row-resize;
 }
-
-/* Junction handle — quadrado 16x16 no centro do "+", sobreposto.
-   Posicionado via inline left/top calculados pelo componente. */
-.ds-junction-grid-cross {
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  z-index: 10;
-  cursor: move;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--bg-panel);
-  border: 1px solid var(--rule);
-  outline: none;
-  transition: background var(--dur-fast) var(--ease),
-    border-color var(--dur-fast) var(--ease);
-}
-.ds-junction-grid-cross:hover,
-.ds-junction-grid-cross:focus-visible {
-  background: var(--accent);
-  border-color: var(--accent);
-}
-.ds-junction-grid-cross-grip {
-  width: 10px;
-  height: 10px;
-  position: relative;
-}
-.ds-junction-grid-cross-grip::before,
-.ds-junction-grid-cross-grip::after {
-  content: "";
-  position: absolute;
-  background: var(--ink);
-  transition: background var(--dur-fast) var(--ease);
-}
-.ds-junction-grid-cross-grip::before {
-  /* linha horizontal da cruz */
-  top: 50%;
+.ds-junction-grid-handle.handle-h::before {
   left: 0;
   right: 0;
+  top: 50%;
   height: 1px;
   transform: translateY(-0.5px);
 }
-.ds-junction-grid-cross-grip::after {
-  /* linha vertical da cruz */
-  left: 50%;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  transform: translateX(-0.5px);
+
+/* Junction handle — área invisível draggable na intersecção.
+   Sem quadrado, sem cruz. Apenas o cursor "move" e um leve glow
+   no hover pra dar afordância. Mantém a função de drag em ambos
+   eixos sem ruído visual. */
+.ds-junction-grid-cross {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  z-index: 10;
+  cursor: move;
+  background: transparent;
+  outline: none;
+  border-radius: 0;
+  transition: background var(--dur-fast) var(--ease);
 }
-.ds-junction-grid-cross:hover .ds-junction-grid-cross-grip::before,
-.ds-junction-grid-cross:hover .ds-junction-grid-cross-grip::after,
-.ds-junction-grid-cross:focus-visible .ds-junction-grid-cross-grip::before,
-.ds-junction-grid-cross:focus-visible .ds-junction-grid-cross-grip::after {
-  background: var(--bg-panel);
+.ds-junction-grid-cross:hover,
+.ds-junction-grid-cross:focus-visible {
+  background: var(--accent-soft);
+}
+.ds-junction-grid-cross:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: -1px;
+}
+/* Grip: invisível por padrão. Removido completamente. */
+.ds-junction-grid-cross-grip {
+  display: none;
 }
 
 /* ----------------------------------------------------------------

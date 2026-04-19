@@ -273,26 +273,25 @@ export function ResizableJunction({
       {/* Cell: Three (col 3, row 3) */}
       <div className="ds-junction-grid-cell cell-three">{three}</div>
 
-      {/* Junction handle — absolute overlay no centro do "+".
-          Posicionado em (h%, v%) — exatamente onde os 2 handles
-          se cruzam. Usa coordenadas relativas ao container. */}
+      {/* Junction handle — área invisível draggable centrada no "+".
+          Sem visual: apenas cursor "move" + leve highlight no hover.
+          Tamanho 20×20, posicionado em (h%, v%) com offset pra
+          centralizar (10px = metade do tamanho). */}
       <div
         role="separator"
         aria-label={t("ds.resizable.junction")}
         tabIndex={0}
         className="ds-junction-grid-cross"
         style={{
-          left: `calc(${h}% - 8px + ${HANDLE_TRACK / 2}px)`,
-          top: `calc(${v}% - 8px + ${HANDLE_TRACK / 2}px)`,
+          left: `calc(${h}% - 10px + ${HANDLE_TRACK / 2}px)`,
+          top: `calc(${v}% - 10px + ${HANDLE_TRACK / 2}px)`,
         }}
         onPointerDown={(e) => onDown(e, "junction")}
         onPointerMove={onMove}
         onPointerUp={onUp}
         onPointerCancel={onUp}
         onKeyDown={(e) => onKey(e, "junction")}
-      >
-        <span className="ds-junction-grid-cross-grip" aria-hidden="true" />
-      </div>
+      />
     </div>
   );
 }
