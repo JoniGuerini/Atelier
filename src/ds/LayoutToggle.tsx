@@ -37,22 +37,25 @@ export function LayoutToggle({ wide = false, onToggle }: LayoutToggleProps) {
         aria-hidden="true"
         focusable="false"
       >
-        {/* Moldura externa — sempre presente */}
+        {/* Dois painéis verticais lado a lado, com pequeno gap entre
+           eles. É o glifo "split view" — universalmente reconhecido
+           como "alterna o layout em dois", sem se confundir com o
+           ícone de toggle de sidebar (chevron). */}
         <rect
           x="1.5"
           y="3"
-          width="13"
+          width="5.5"
           height="10"
           fill="none"
           stroke="currentColor"
           strokeWidth="1.25"
         />
-        {/* Coluna esquerda — fixa (representa o "boxed") */}
-        <line
-          x1="6"
-          y1="3"
-          x2="6"
-          y2="13"
+        <rect
+          x="9"
+          y="3"
+          width="5.5"
+          height="10"
+          fill="none"
           stroke="currentColor"
           strokeWidth="1.25"
         />
