@@ -61,6 +61,54 @@
   --code-btn-bg-hover: rgba(26, 26, 26, 0.8);
 }
 
+/* ================================================================
+   Acessibilidade — Reduced motion + Skip link.
+   ================================================================ */
+
+/* Visitantes que pedem menos movimento no SO ganham um app
+   estaticamente legível: anima 0.01ms (instantâneo, mas mantém
+   eventos de fim) e desliga scroll-behavior smooth. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Skip link — visualmente escondido até receber foco por teclado.
+   Pula direto pro conteúdo principal, evitando re-tabular toda a
+   sidebar/navbar. Aparece na borda superior esquerda quando focado. */
+.skip-link {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2000;
+  padding: 10px 16px;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transform: translateY(-110%);
+  transition: transform var(--dur-fast) var(--ease);
+}
+.skip-link:focus {
+  transform: translateY(0);
+  outline: 2px solid var(--ink);
+  outline-offset: -4px;
+}
+/* Quando o foco vai pro <main>, esconde o outline default (já
+   temos region role implícita via <main>) */
+.content:focus {
+  outline: none;
+}
+
 /* ---------- LIGHT (default) ----------
    Papel envelhecido · tinta grafite · vermelho tijolo. */
 :root,

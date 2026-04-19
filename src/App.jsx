@@ -50,6 +50,7 @@ import PaginationPage from "./pages/Pagination.jsx";
 import BreadcrumbsPage from "./pages/BreadcrumbsPage.jsx";
 import SkeletonPage from "./pages/SkeletonPage.jsx";
 import StepperPage from "./pages/StepperPage.jsx";
+import AccessibilityPage from "./pages/Accessibility.jsx";
 import Overlays from "./pages/Overlays.jsx";
 import Feedback from "./pages/Feedback.jsx";
 import DropzonePage from "./pages/DropzonePage.jsx";
@@ -81,6 +82,7 @@ const PAGES = {
   breadcrumbs: BreadcrumbsPage,
   skeleton: SkeletonPage,
   stepper: StepperPage,
+  accessibility: AccessibilityPage,
   overlays: Overlays,
   feedback: Feedback,
   dropzone: DropzonePage,
@@ -155,6 +157,13 @@ export default function App() {
 
   return (
     <div className={shellClasses.join(" ")}>
+      {/* Skip link — visualmente escondido até receber foco por teclado.
+          Pula direto pro conteúdo principal, evitando re-tabular toda
+          a sidebar/navbar quando o usuário só quer LER. */}
+      <a href="#main-content" className="skip-link">
+        {t("accessibility.skipLink")}
+      </a>
+
       {isTopbar ? (
         <AppNavbar
           current={current}
@@ -174,7 +183,11 @@ export default function App() {
           openSearch={() => setSearchOpen(true)}
         />
       )}
-      <main className={`content ${TOOL_ROUTE_IDS.has(current) ? "content--tool" : ""}`}>
+      <main
+        id="main-content"
+        tabIndex={-1}
+        className={`content ${TOOL_ROUTE_IDS.has(current) ? "content--tool" : ""}`}
+      >
         {!isTopbar && collapsed && (
           <SidebarToggle
             collapsed={collapsed}

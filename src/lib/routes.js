@@ -51,7 +51,10 @@ export const ROUTES = [
   },
   {
     groupKey: "reference",
-    items: [{ id: "code", n: "27" }],
+    items: [
+      { id: "accessibility", n: "27", isNew: true },
+      { id: "code", n: "28" },
+    ],
   },
   {
     groupKey: "studio",

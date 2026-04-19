@@ -85,6 +85,7 @@ const ptBR = {
       emptyStates: "Estados vazios",
       sidebar: "Sidebar",
       navbar: "Navbar",
+      accessibility: "Acessibilidade",
       code: "Para devs · código",
       create: "Create · personalizar",
     },
@@ -116,6 +117,7 @@ const ptBR = {
       emptyStates: "Convites, não derrotas — espaço com intenção.",
       sidebar: "Sumário vertical para sites com muitas páginas.",
       navbar: "Cabeçalho horizontal com dropdowns por hover.",
+      accessibility: "Atalhos, foco, contraste e ARIA.",
       code: "Tokens, primitivas e API para desenvolvedores.",
       create: "Construa seu tema ao vivo e exporte os tokens.",
     },
@@ -150,6 +152,12 @@ const ptBR = {
     breadcrumbs: {
       label: "Trilha de navegação",
     },
+  },
+
+  /* ============================================================ */
+  /* Acessibilidade (skip link, etc.) */
+  accessibility: {
+    skipLink: "Pular para o conteúdo",
   },
 
   /* ============================================================ */
@@ -1618,6 +1626,92 @@ const ptBR = {
         ],
       },
       divider: "componentes",
+    },
+
+    /* ------------- Accessibility ------------- */
+    accessibility: {
+      lead: "Referência · 27",
+      titleA: "A ",
+      titleB: "acessibilidade",
+      metaLabel: "Conformidade",
+      meta: "WCAG · ARIA · teclado",
+      intro:
+        "Acessibilidade no Atelier não é um [em]extra[/em]; está na raiz do estilo. Tipografia generosa, contraste cuidadoso, foco visível, atalhos consistentes e movimento contido — tudo escolhido para que o leitor possa [em]ler[/em], independente de como.",
+      principles: {
+        title: "Princípios",
+        kicker: "six rules",
+        desc: "Seis compromissos que regem cada decisão de DS.",
+        items: [
+          { n: "01", titleA: "Contraste ", titleB: "alto", body: "Texto em [em]ink[/em] sobre [em]bg[/em] mantém ≥ 4.5:1 (WCAG AA). Cores secundárias também passam." },
+          { n: "02", titleA: "Foco ", titleB: "visível", body: "Sempre. Filete de 2px em [em]--accent[/em] em qualquer elemento focável — nunca [em]outline: none[/em] sem substituto." },
+          { n: "03", titleA: "Tipografia ", titleB: "legível", body: "Mínimo de 14px no body, 10-12px só em metadados. [em]Line-height[/em] ≥ 1.5 em texto longo." },
+          { n: "04", titleA: "Movimento ", titleB: "contido", body: "Transições entre 120-320ms. Respeita [em]prefers-reduced-motion[/em] desligando animações automaticamente." },
+          { n: "05", titleA: "Teclado ", titleB: "completo", body: "Tudo que se faz com mouse se faz com teclado. Atalhos consistentes ([em]⌘K[/em], [em]⌘B[/em], [em]Esc[/em], [em]Tab[/em])." },
+          { n: "06", titleA: "ARIA ", titleB: "quando preciso", body: "Semântica HTML primeiro. ARIA só pra preencher gaps — [em]nunca substituir[/em] tags semânticas." },
+        ],
+      },
+      shortcuts: {
+        title: "Atalhos de teclado",
+        kicker: "keyboard map",
+        desc: "Atalhos globais funcionam em [em]qualquer página[/em]; os contextuais valem dentro de seus componentes.",
+        caption: "Cobre 100% das ações principais sem mouse.",
+        thKeys: "Teclas",
+        thAction: "Ação",
+        thScope: "Escopo",
+        items: [
+          { keys: "⌘ K", action: "Abrir paleta de busca", scope: "global" },
+          { keys: "⌃ K", action: "Abrir paleta de busca (Windows/Linux)", scope: "global" },
+          { keys: "⌘ B", action: "Recolher / expandir sidebar", scope: "global" },
+          { keys: "Esc", action: "Fechar overlays (modal, popover, palette)", scope: "overlay" },
+          { keys: "Tab", action: "Avançar foco", scope: "global" },
+          { keys: "⇧ Tab", action: "Voltar foco", scope: "global" },
+          { keys: "↑ ↓", action: "Navegar resultados / opções", scope: "lista" },
+          { keys: "← →", action: "Mudar de aba (no foco)", scope: "tabs" },
+          { keys: "↵", action: "Confirmar / abrir item ativo", scope: "lista · form" },
+          { keys: "Espaço", action: "Alternar switch / checkbox", scope: "controles" },
+        ],
+      },
+      focus: {
+        title: "Foco e navegação",
+        kicker: "focus-visible",
+        desc: "O Atelier garante que o foco esteja [em]sempre visível[/em] e que o leitor possa pular blocos repetitivos de UI.",
+        tipTitle: "Skip link",
+        tipBody: "No topo desta página, aperte [em]Tab[/em] uma vez — vai aparecer um link \"Pular para o conteúdo\" que leva direto ao [em]<main>[/em], evitando re-tabular toda a navegação.",
+        caption: "Estratégias de foco implementadas.",
+        skipNote: "Aparece no Tab inicial; pula a sidebar e a navbar inteiras.",
+        focusNote: "Outline de 2px --accent em todo elemento focável (botões, links, inputs, switches).",
+        trapNote: "Modais (Dialog) confinam o foco até serem fechados; Esc devolve ao trigger.",
+      },
+      motion: {
+        title: "Movimento",
+        kicker: "prefers-reduced-motion",
+        desc: "Motion no Atelier é discreto por princípio (120-320ms). Para visitantes que [em]pedem menos movimento[/em] no SO, todas as animações e transições são desligadas globalmente.",
+        tipTitle: "Como ativar no seu dispositivo",
+        tipBody: "macOS: [em]Sistema → Acessibilidade → Mostrador → Reduzir movimento[/em]. Windows: [em]Configurações → Acessibilidade → Efeitos visuais → Animações[/em]. iOS: [em]Acessibilidade → Movimento[/em].",
+      },
+      contrast: {
+        title: "Contraste",
+        kicker: "WCAG AA",
+        desc: "As combinações de cor do tema padrão passam pelo critério WCAG AA (4.5:1 para texto). Use o [em]Studio[/em] para auditar temas customizados.",
+        caption: "Razões de contraste do tema light · padrão.",
+      },
+      aria: {
+        title: "ARIA & screen readers",
+        kicker: "semantic html first",
+        desc: "Semântica HTML primeiro. ARIA é usado apenas para preencher gaps em widgets compostos.",
+        caption: "Padrões ARIA por componente.",
+        thComponent: "Componente",
+        thStrategy: "Estratégia",
+        items: [
+          { component: "Modal · Dialog", strategy: "role=dialog, aria-modal=true, aria-label, foco confinado, Esc fecha." },
+          { component: "Tabs", strategy: "role=tablist/tab/tabpanel, aria-selected, aria-controls, navegação por setas." },
+          { component: "Tooltip", strategy: "data-tip + aria-label; aparece em :hover/:focus-within." },
+          { component: "Pagination", strategy: "nav + aria-label, aria-current=page no item ativo, aria-label por número." },
+          { component: "Breadcrumbs", strategy: "nav + aria-label, ordered list, aria-current=page no último." },
+          { component: "Search Palette", strategy: "role=dialog, autofocus no input, ↑↓ navegam, Enter abre, Esc fecha." },
+          { component: "Skeleton", strategy: "aria-hidden=true (não anuncia placeholder pra screen readers)." },
+        ],
+      },
     },
 
     /* ============================================================ */

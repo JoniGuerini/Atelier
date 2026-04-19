@@ -85,6 +85,7 @@ const en = {
       emptyStates: "Empty states",
       sidebar: "Sidebar",
       navbar: "Navbar",
+      accessibility: "Accessibility",
       code: "For devs · code",
       create: "Create · customize",
     },
@@ -116,6 +117,7 @@ const en = {
       emptyStates: "Invitations, not defeats — space with intent.",
       sidebar: "Vertical table-of-contents for many-paged sites.",
       navbar: "Horizontal header with hover dropdowns.",
+      accessibility: "Shortcuts, focus, contrast and ARIA.",
       code: "Tokens, primitives and API for developers.",
       create: "Build your theme live and export the tokens.",
     },
@@ -150,6 +152,12 @@ const en = {
     breadcrumbs: {
       label: "Breadcrumb trail",
     },
+  },
+
+  /* ============================================================ */
+  /* Accessibility (skip link, etc.) */
+  accessibility: {
+    skipLink: "Skip to main content",
   },
 
   /* ============================================================ */
@@ -1551,6 +1559,91 @@ const en = {
         ],
       },
       divider: "components",
+    },
+
+    accessibility: {
+      lead: "Reference · 27",
+      titleA: "On ",
+      titleB: "accessibility",
+      metaLabel: "Conformance",
+      meta: "WCAG · ARIA · keyboard",
+      intro:
+        "Accessibility at Atelier isn't an [em]extra[/em]; it lives at the root of the style. Generous typography, careful contrast, visible focus, consistent shortcuts and contained motion — chosen so the reader can [em]read[/em], no matter how.",
+      principles: {
+        title: "Principles",
+        kicker: "six rules",
+        desc: "Six commitments that govern every DS decision.",
+        items: [
+          { n: "01", titleA: "High ", titleB: "contrast", body: "Text in [em]ink[/em] over [em]bg[/em] keeps ≥ 4.5:1 (WCAG AA). Secondary colours pass too." },
+          { n: "02", titleA: "Visible ", titleB: "focus", body: "Always. A 2px [em]--accent[/em] outline on every focusable element — never [em]outline: none[/em] without a replacement." },
+          { n: "03", titleA: "Readable ", titleB: "type", body: "14px minimum in body, 10-12px reserved for metadata. [em]Line-height[/em] ≥ 1.5 in long text." },
+          { n: "04", titleA: "Restrained ", titleB: "motion", body: "Transitions stay 120-320ms. Honors [em]prefers-reduced-motion[/em], turning animations off automatically." },
+          { n: "05", titleA: "Full ", titleB: "keyboard", body: "Anything done with mouse can be done with keyboard. Consistent shortcuts ([em]⌘K[/em], [em]⌘B[/em], [em]Esc[/em], [em]Tab[/em])." },
+          { n: "06", titleA: "ARIA ", titleB: "when needed", body: "HTML semantics first. ARIA only fills the gaps — [em]never replaces[/em] semantic tags." },
+        ],
+      },
+      shortcuts: {
+        title: "Keyboard shortcuts",
+        kicker: "keyboard map",
+        desc: "Global shortcuts work [em]on any page[/em]; contextual ones live inside their components.",
+        caption: "Covers 100% of primary actions without a mouse.",
+        thKeys: "Keys",
+        thAction: "Action",
+        thScope: "Scope",
+        items: [
+          { keys: "⌘ K", action: "Open search palette", scope: "global" },
+          { keys: "⌃ K", action: "Open search palette (Windows/Linux)", scope: "global" },
+          { keys: "⌘ B", action: "Collapse / expand sidebar", scope: "global" },
+          { keys: "Esc", action: "Close overlays (modal, popover, palette)", scope: "overlay" },
+          { keys: "Tab", action: "Move focus forward", scope: "global" },
+          { keys: "⇧ Tab", action: "Move focus backward", scope: "global" },
+          { keys: "↑ ↓", action: "Navigate results / options", scope: "list" },
+          { keys: "← →", action: "Switch tabs (when focused)", scope: "tabs" },
+          { keys: "↵", action: "Confirm / open active item", scope: "list · form" },
+          { keys: "Space", action: "Toggle switch / checkbox", scope: "controls" },
+        ],
+      },
+      focus: {
+        title: "Focus and navigation",
+        kicker: "focus-visible",
+        desc: "Atelier guarantees focus is [em]always visible[/em] and that the reader can skip repetitive UI blocks.",
+        tipTitle: "Skip link",
+        tipBody: "At the top of this page, press [em]Tab[/em] once — a \"Skip to main content\" link appears, jumping straight to the [em]<main>[/em] and avoiding re-tabbing the whole navigation.",
+        caption: "Focus strategies in place.",
+        skipNote: "Appears on initial Tab; skips the entire sidebar and navbar.",
+        focusNote: "2px --accent outline on every focusable element (buttons, links, inputs, switches).",
+        trapNote: "Modals (Dialog) trap focus until closed; Esc returns it to the trigger.",
+      },
+      motion: {
+        title: "Motion",
+        kicker: "prefers-reduced-motion",
+        desc: "Motion at Atelier is restrained by principle (120-320ms). For visitors who [em]ask for less motion[/em] in their OS, all animations and transitions are turned off globally.",
+        tipTitle: "How to enable on your device",
+        tipBody: "macOS: [em]System → Accessibility → Display → Reduce motion[/em]. Windows: [em]Settings → Accessibility → Visual effects → Animations[/em]. iOS: [em]Accessibility → Motion[/em].",
+      },
+      contrast: {
+        title: "Contrast",
+        kicker: "WCAG AA",
+        desc: "The default theme's color combinations pass WCAG AA (4.5:1 for text). Use the [em]Studio[/em] to audit custom themes.",
+        caption: "Default light theme contrast ratios.",
+      },
+      aria: {
+        title: "ARIA & screen readers",
+        kicker: "semantic html first",
+        desc: "HTML semantics first. ARIA is only used to fill gaps in composed widgets.",
+        caption: "ARIA patterns by component.",
+        thComponent: "Component",
+        thStrategy: "Strategy",
+        items: [
+          { component: "Modal · Dialog", strategy: "role=dialog, aria-modal=true, aria-label, focus trap, Esc closes." },
+          { component: "Tabs", strategy: "role=tablist/tab/tabpanel, aria-selected, aria-controls, arrow-key navigation." },
+          { component: "Tooltip", strategy: "data-tip + aria-label; appears on :hover/:focus-within." },
+          { component: "Pagination", strategy: "nav + aria-label, aria-current=page on active item, per-number aria-label." },
+          { component: "Breadcrumbs", strategy: "nav + aria-label, ordered list, aria-current=page on the last." },
+          { component: "Search Palette", strategy: "role=dialog, input autofocus, ↑↓ navigate, Enter opens, Esc closes." },
+          { component: "Skeleton", strategy: "aria-hidden=true (placeholder isn't announced to screen readers)." },
+        ],
+      },
     },
 
     /* ============================================================ */
