@@ -2224,23 +2224,21 @@ input[type="file"] { display: none; }
   margin-inline: auto;
   padding: var(--space-3) var(--space-7);
   display: grid;
-  /* 5 colunas: brand | nav (1fr) | search | spacer (1fr) | settings.
-     O segundo 1fr empurra o settings pro canto direito enquanto
-     o search descansa no meio do espaço entre o nav e o settings.
-     Resultado: search visualmente equidistante das duas pontas. */
-  grid-template-columns: auto 1fr auto 1fr auto;
+  /* 7 colunas com 3 spacers (1fr) IGUAIS entre os 4 elementos:
+       brand | spacer | nav | spacer | search | spacer | settings
+     Os 3 spacers dividem o espaço sobrando em partes iguais,
+     então o search vive realmente no "meio termo" entre o nav e o
+     settings, com a mesma distância dos dois lados. */
+  grid-template-columns: auto 1fr auto 1fr auto 1fr auto;
   align-items: center;
-  gap: var(--space-5);
+  gap: 0;
 }
-/* Spacer fantasma entre search e settings — só pra ocupar a coluna
-   1fr do meio. Renderizado via CSS pra não poluir o JSX. */
-.site-navbar-inner > .search-trigger {
-  /* search vive na coluna 3; o spacer da coluna 4 fica vazio
-     (não tem child correspondente). Settings se ancora na 5. */
-}
-.site-navbar-inner > .site-navbar-actions {
-  grid-column: 5;
-}
+/* Posicionamento explícito de cada filho — as cols 2, 4 e 6 são
+   spacers vazios que não correspondem a nenhum DOM child. */
+.site-navbar-inner > .site-navbar-brand { grid-column: 1; }
+.site-navbar-inner > .site-navbar-nav   { grid-column: 3; }
+.site-navbar-inner > .search-trigger    { grid-column: 5; }
+.site-navbar-inner > .site-navbar-actions { grid-column: 7; }
 .site-navbar-brand {
   text-decoration: none;
   color: var(--ink);
@@ -2479,9 +2477,11 @@ input[type="file"] { display: none; }
 /* Responsivo da navbar */
 @media (max-width: 1080px) {
   .site-navbar-nav { display: none; }
-  /* Sem o nav central: brand | spacer | search | spacer | settings */
+  /* Sem o nav: brand | spacer | search | spacer | settings (5 cols).
+     Spacers continuam iguais — search permanece equidistante. */
   .site-navbar-inner { grid-template-columns: auto 1fr auto 1fr auto; }
-  .site-navbar-actions { justify-self: end; grid-column: 5; }
+  .site-navbar-inner > .search-trigger { grid-column: 3; }
+  .site-navbar-inner > .site-navbar-actions { grid-column: 5; justify-self: end; }
 }
 @media (max-width: 560px) {
   .site-navbar-inner { padding: var(--space-3) var(--space-5); }
