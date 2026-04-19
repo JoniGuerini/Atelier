@@ -90,6 +90,9 @@ const en = {
       slider: "Range Slider",
       calendar: "Calendar",
       datePicker: "Date Picker",
+      carousel: "Carousel",
+      tree: "Tree View",
+      resizable: "Resizable Panels",
       forms: "Forms",
       stepper: "Stepper",
       emptyStates: "Empty states",
@@ -131,6 +134,9 @@ const en = {
       slider: "Numeric slider with 1 or 2 handles, marks, vertical, and full keyboard support.",
       calendar: "Month view with single, range or multiple selection — date logic in pure JS.",
       datePicker: "Masked input + Calendar in popover; includes DateRangePicker with 2 months.",
+      carousel: "Slides with touch swipe, prev/next, dots, optional auto-play and loop.",
+      tree: "Hierarchical tree with expand/collapse, single or multi selection, full keyboard nav.",
+      resizable: "Panels with draggable handles — horizontal/vertical, optional localStorage persist.",
       forms: "Full composition: fields, dividers, actions.",
       stepper: "Multi-step progress indicator for long forms.",
       emptyStates: "Invitations, not defeats — space with intent.",
@@ -182,6 +188,16 @@ const en = {
       openPicker: "Open calendar",
       rangeStart: "Range start",
       rangeEnd: "Range end",
+    },
+    carousel: {
+      label: "Carousel",
+      prev: "Previous slide",
+      next: "Next slide",
+      goTo: "Go to slide",
+    },
+    resizable: {
+      label: "Resizable panels",
+      handle: "Handle",
     },
   },
 
@@ -1820,8 +1836,182 @@ const en = {
       },
     },
 
+    /* ------------- Carousel ------------- */
+    carousel: {
+      lead: "Advanced · 31",
+      titleA: "The ",
+      titleB: "carousel",
+      metaLabel: "Slides",
+      meta: "Swipe + dots + auto-play + loop",
+      intro:
+        "Horizontal slides with [em]prev/next navigation[/em], dot indicators, [em]touch swipe[/em] (PointerEvents) and optional auto-play. Supports infinite loop or stopping at edges. Default transition is [em]slide[/em]; also has a [em]fade[/em] variant.",
+      slides: {
+        "0": "Colors, typography and spacing — the silent spine.",
+        "1": "Refined components, each with a clear function.",
+        "2": "Patterns — recipes, not rules.",
+      },
+      basic: {
+        title: "Basic",
+        kicker: "default",
+        desc:
+          "No props — just slides as children. Prev/next buttons on the sides, dot indicators below. Stops at start/end (no loop).",
+        caption: "Default carousel with 3 slides",
+        label: "Basic carousel",
+      },
+      loop: {
+        title: "Infinite loop",
+        kicker: "loop",
+        desc:
+          "Clicking [em]next[/em] on the last slide goes back to the first (and vice versa). Useful in galleries and banners.",
+        caption: "Carousel with loop on",
+        label: "Carousel with loop",
+      },
+      auto: {
+        title: "Auto-play",
+        kicker: "autoPlay + interval",
+        desc:
+          "Advances automatically every [em]interval[/em] ms (default 5000). Pauses while the cursor is over the component or it has focus — house default [em]pause-on-hover[/em].",
+        caption: "Auto-play 3.5s + loop",
+        label: "Automatic carousel",
+      },
+      fade: {
+        title: "Fade transition",
+        kicker: 'transition="fade"',
+        desc:
+          "Instead of sliding, slides [em]crossfade[/em] between each other. Useful when content is too distinct for spatial sliding to make sense.",
+        caption: "Carousel with crossfade",
+        label: "Fade carousel",
+      },
+      bare: {
+        title: "Without indicators",
+        kicker: "showDots=false · showArrows=false",
+        desc:
+          "When the context already implies navigation (e.g. an entire carousel as a clickable banner), hide the controls and let swipe / keyboard do the work.",
+        caption: "Bare carousel — only swipe and keyboard",
+        label: "Carousel without controls",
+      },
+      composition: {
+        title: "Composition",
+        titleB: "tree",
+        kicker: "structure",
+        caption: "The Carousel subcomponents.",
+      },
+    },
+
+    /* ------------- TreeView ------------- */
+    tree: {
+      lead: "Advanced · 32",
+      titleA: "The ",
+      titleB: "tree view",
+      metaLabel: "Hierarchy",
+      meta: "Single + multi · full keyboard",
+      intro:
+        "Hierarchical tree with [em]expandable nodes[/em], automatic indentation per level, and optional selection ([em]single, multi or none[/em]). Full keyboard: ←→ expand/collapse or navigate parent/child, ↑↓ moves, Enter selects.",
+      single: {
+        title: "Single selection",
+        kicker: "selectionMode=single",
+        desc:
+          "Click selects; clicking again on the same deselects. Click on a node with children also toggles expand/collapse simultaneously.",
+        caption: "Single tree view (filesystem)",
+        label: "File tree",
+      },
+      multi: {
+        title: "Multi selection",
+        kicker: "selectionMode=multi",
+        desc:
+          "Each click adds or removes. Selected items get [em]✓[/em] on the right + accent color.",
+        caption: "Multi selection — {n} categories",
+        label: "Blog categories",
+      },
+      nav: {
+        title: "Without selection (nav only)",
+        kicker: "selectionMode=none",
+        desc:
+          "For [em]navigational[/em] trees (TOC, outline). Click only expands/collapses; no selection state.",
+        caption: "Tree just for navigation",
+        label: "Outline",
+      },
+      controlled: {
+        title: "Controlled expanded",
+        kicker: "expanded prop",
+        desc:
+          "By default, expand/collapse is internal. Pass [em]expanded[/em] + [em]onExpandedChange[/em] to sync with URL, localStorage or other state.",
+        caption: "{n} expanded nodes (controlled)",
+        label: "Controlled tree",
+      },
+      composition: {
+        title: "API",
+        titleB: "",
+        kicker: "single tag",
+        caption:
+          "TreeView accepts an array of [em]TreeNode[/em] (id, label, children?, glyph?, disabled?). No subcomponents — internal recursion.",
+      },
+    },
+
+    /* ------------- ResizablePanels ------------- */
+    resizable: {
+      lead: "Advanced · 33",
+      titleA: "The ",
+      titleB: "resizable panels",
+      metaLabel: "Layout",
+      meta: "Drag + keyboard · horizontal/vertical",
+      intro:
+        "Layout of [em]2+ panels[/em] separated by draggable handles. Supports horizontal or vertical orientation, [em]min-size[/em] per panel, and optional persistence in [em]localStorage[/em] (same key across sessions).",
+      labels: {
+        left: "Left",
+        right: "Right",
+        top: "Top",
+        bottom: "Bottom",
+        sidebar: "Sidebar",
+        content: "Content",
+        inspector: "Inspector",
+      },
+      basic: {
+        title: "Horizontal — 2 panels",
+        kicker: "default",
+        desc:
+          "Drag the divider between panels to resize. Tab on the handle activates keyboard nav: ←→ adjusts by 5%, Shift by 10%, Home/End go to extremes.",
+        caption: "60/40 horizontal split",
+        label: "Horizontal split layout",
+        lorem:
+          "Arbitrary content lives here. The panel has overflow auto, so internal scrolling works naturally.",
+      },
+      vertical: {
+        title: "Vertical",
+        kicker: 'orientation="vertical"',
+        desc:
+          "Same logic, but the handle becomes horizontal and panels stack. Useful for splitting between [em]preview[/em] and [em]code[/em] in editors.",
+        caption: "40/60 vertical split",
+        label: "Vertical split layout",
+      },
+      three: {
+        title: "Three panels",
+        kicker: "2 handles",
+        desc:
+          "As many panels as you want — just pass more [em]<ResizablePanel>[/em] as children. Each pair gets a handle between them.",
+        caption: "Sidebar 20% · Content 60% · Inspector 20%",
+        label: "Three-column layout",
+      },
+      persist: {
+        title: "localStorage persistence",
+        kicker: "storageKey",
+        desc:
+          "Pass a [em]storageKey[/em] and the panel sizes are saved automatically. Reload the page to see — the split stays the way you left it.",
+        caption: "Persisted sizes",
+        label: "Layout with persistence",
+        body:
+          "Drag the divider, reload the page, and see that the size is saved (key: atelier.docs.persistDemo).",
+      },
+      composition: {
+        title: "Composition",
+        titleB: "tree",
+        kicker: "structure",
+        caption: "The subcomponents.",
+      },
+    },
+
     forms: {
-      lead: "Pattern · 31",
+      lead: "Pattern · 34",
       titleA: "The ",
       titleB: "forms",
       metaLabel: "Composition",
@@ -1861,7 +2051,7 @@ const en = {
     },
 
     stepper: {
-      lead: "Pattern · 32",
+      lead: "Pattern · 35",
       titleA: "The ",
       titleB: "stepper",
       metaLabel: "Multi-step",
@@ -1905,7 +2095,7 @@ const en = {
     },
 
     emptyStates: {
-      lead: "Pattern · 33",
+      lead: "Pattern · 36",
       titleA: "The ",
       titleB: "emptiness",
       metaLabel: "No content",
@@ -1955,7 +2145,7 @@ const en = {
     },
 
     sidebar: {
-      lead: "Pattern · 34",
+      lead: "Pattern · 37",
       titleA: "The ",
       titleB: "sidebar",
       metaLabel: "Navigation",
@@ -2054,7 +2244,7 @@ const en = {
     },
 
     navbar: {
-      lead: "Pattern · 35",
+      lead: "Pattern · 38",
       titleA: "The ",
       titleB: "navbar",
       metaLabel: "Navigation",
@@ -2286,7 +2476,7 @@ const en = {
     },
 
     accessibility: {
-      lead: "Reference · 36",
+      lead: "Reference · 39",
       titleA: "On ",
       titleB: "accessibility",
       metaLabel: "Conformance",

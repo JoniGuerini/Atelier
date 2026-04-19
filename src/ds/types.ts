@@ -454,6 +454,46 @@ export interface ContextMenuItemProps {
   disabled?: boolean;
 }
 
+/* ----------------- Carousel ----------------- */
+export type CarouselTransition = "slide" | "fade";
+export interface CarouselProps {
+  children?: ReactNode;
+  loop?: boolean;
+  autoPlay?: boolean;
+  interval?: number;
+  showDots?: boolean;
+  showArrows?: boolean;
+  transition?: CarouselTransition;
+  defaultIndex?: number;
+  onChange?: (index: number) => void;
+  className?: string;
+  ariaLabel?: string;
+}
+
+/* ----------------- TreeView ----------------- */
+export interface TreeNode {
+  id: string;
+  label: ReactNode;
+  glyph?: ReactNode;
+  children?: TreeNode[];
+  disabled?: boolean;
+}
+export type TreeSelectionMode = "single" | "multi" | "none";
+
+/* ----------------- ResizablePanels ----------------- */
+export type ResizableOrientation = "horizontal" | "vertical";
+export interface ResizablePanelsProps {
+  children?: ReactNode;
+  orientation?: ResizableOrientation;
+  defaultSizes?: number[];
+  sizes?: number[];
+  onSizesChange?: (sizes: number[]) => void;
+  minSize?: number;
+  storageKey?: string;
+  className?: string;
+  ariaLabel?: string;
+}
+
 /* ----------------- Calendar / DatePicker ----------------- */
 export type CalendarMode = "single" | "range" | "multiple";
 export type CalendarRange = [Date | null, Date | null];

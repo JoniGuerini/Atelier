@@ -70,6 +70,9 @@ import ComboboxPage from "./pages/ComboboxPage.tsx";
 import RangeSliderPage from "./pages/RangeSliderPage.tsx";
 import CalendarPage from "./pages/CalendarPage.tsx";
 import DatePickerPage from "./pages/DatePickerPage.tsx";
+import CarouselPage from "./pages/CarouselPage.tsx";
+import TreeViewPage from "./pages/TreeViewPage.tsx";
+import ResizablePage from "./pages/ResizablePage.tsx";
 import { Toaster } from "./ds/Toaster.tsx";
 
 const PAGES = {
@@ -112,6 +115,9 @@ const PAGES = {
   slider: RangeSliderPage,
   calendar: CalendarPage,
   "date-picker": DatePickerPage,
+  carousel: CarouselPage,
+  tree: TreeViewPage,
+  resizable: ResizablePage,
 };
 
 const SIDEBAR_KEY = "atelier.sidebarCollapsed";

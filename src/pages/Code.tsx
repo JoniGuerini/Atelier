@@ -640,6 +640,112 @@ const [range, setRange] = useState<CalendarRange>([null, null]);
 />`,
   },
   {
+    id: "carousel",
+    name: "Carousel",
+    route: "carousel",
+    imports: `import { Carousel, CarouselSlide } from "./ds/Carousel";`,
+    props: [
+      ["loop", "boolean — wrap-around no fim/início", "false"],
+      ["autoPlay", "boolean — avança sozinho", "false"],
+      ["interval", "number (ms entre auto-advances)", "5000"],
+      ["showDots / showArrows", "boolean", "true / true"],
+      ["transition", "'slide' | 'fade'", "'slide'"],
+      ["defaultIndex", "number — slide inicial", "0"],
+      ["onChange", "(index) => void", "—"],
+    ],
+    code: `<Carousel loop autoPlay interval={4000}>
+  <CarouselSlide>
+    <img src="/01.jpg" alt="…" />
+  </CarouselSlide>
+  <CarouselSlide>
+    <img src="/02.jpg" alt="…" />
+  </CarouselSlide>
+  <CarouselSlide>
+    <img src="/03.jpg" alt="…" />
+  </CarouselSlide>
+</Carousel>
+
+// Fade entre slides em vez de deslizar
+<Carousel transition="fade">…</Carousel>
+
+// Carousel cru — só swipe e teclado
+<Carousel showDots={false} showArrows={false}>…</Carousel>`,
+  },
+  {
+    id: "tree",
+    name: "TreeView",
+    route: "tree",
+    imports: `import { TreeView, type TreeNode } from "./ds/TreeView";`,
+    props: [
+      ["data", "TreeNode[] — id, label, children?, glyph?, disabled?", "—"],
+      ["selectionMode", "'single' | 'multi' | 'none'", "'single'"],
+      ["value", "string | null (single) | string[] (multi)", "—"],
+      ["onChange", "(value) => void", "—"],
+      ["defaultExpanded / expanded / onExpandedChange", "controlled or uncontrolled", "—"],
+    ],
+    code: `const data: TreeNode[] = [
+  { id: "src", label: "src/", children: [
+    { id: "ds", label: "ds/", children: [
+      { id: "btn", label: "Button.tsx" },
+    ]},
+  ]},
+];
+
+// Single
+<TreeView
+  data={data}
+  selectionMode="single"
+  value={selected}
+  onChange={setSelected}
+  defaultExpanded={["src", "ds"]}
+/>
+
+// Multi
+<TreeView
+  data={cats}
+  selectionMode="multi"
+  value={selected}
+  onChange={setSelected}
+/>
+
+// Sem seleção (só nav)
+<TreeView data={outline} selectionMode="none" />`,
+  },
+  {
+    id: "resizable",
+    name: "ResizablePanels",
+    route: "resizable",
+    imports: `import { ResizablePanels, ResizablePanel } from "./ds/ResizablePanels";`,
+    props: [
+      ["orientation", "'horizontal' | 'vertical'", "'horizontal'"],
+      ["defaultSizes", "number[] — % por painel (soma 100)", "dividir igual"],
+      ["sizes / onSizesChange", "controlado", "—"],
+      ["minSize", "% mínimo por painel", "10"],
+      ["storageKey", "persiste em localStorage", "—"],
+    ],
+    code: `// Horizontal — 2 panels
+<ResizablePanels defaultSizes={[60, 40]}>
+  <ResizablePanel>Left</ResizablePanel>
+  <ResizablePanel>Right</ResizablePanel>
+</ResizablePanels>
+
+// Vertical
+<ResizablePanels orientation="vertical" defaultSizes={[40, 60]}>
+  <ResizablePanel>Top</ResizablePanel>
+  <ResizablePanel>Bottom</ResizablePanel>
+</ResizablePanels>
+
+// 3 panels (2 handles)
+<ResizablePanels defaultSizes={[20, 60, 20]}>
+  <ResizablePanel>Sidebar</ResizablePanel>
+  <ResizablePanel>Content</ResizablePanel>
+  <ResizablePanel>Inspector</ResizablePanel>
+</ResizablePanels>
+
+// Persiste em localStorage
+<ResizablePanels storageKey="my.split">…</ResizablePanels>`,
+  },
+  {
     id: "contextMenu",
     name: "ContextMenu family",
     route: "context-menu",

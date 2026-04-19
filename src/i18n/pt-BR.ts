@@ -90,6 +90,9 @@ const ptBR = {
       slider: "Range Slider",
       calendar: "Calendar",
       datePicker: "Date Picker",
+      carousel: "Carousel",
+      tree: "Tree View",
+      resizable: "Resizable Panels",
       forms: "Formulários",
       stepper: "Stepper",
       emptyStates: "Estados vazios",
@@ -131,6 +134,9 @@ const ptBR = {
       slider: "Slider numérico com 1 ou 2 handles, marks, vertical e suporte total a teclado.",
       calendar: "View de mês com seleção single, range ou multiple — lógica de datas em JS puro.",
       datePicker: "Input mascarado + Calendar em popover; inclui DateRangePicker com 2 meses.",
+      carousel: "Slides com swipe touch, prev/next, dots indicadores, auto-play e loop opcionais.",
+      tree: "Árvore hierárquica com expand/collapse, seleção single ou multi, e teclado completo.",
+      resizable: "Painéis com handles draggable — horizontal/vertical, persistência opcional em localStorage.",
       forms: "Composição completa: campos, divisores e ações.",
       stepper: "Indicador de progresso multi-etapa para forms longos.",
       emptyStates: "Convites, não derrotas — espaço com intenção.",
@@ -182,6 +188,16 @@ const ptBR = {
       openPicker: "Abrir calendário",
       rangeStart: "Início do intervalo",
       rangeEnd: "Fim do intervalo",
+    },
+    carousel: {
+      label: "Carrossel",
+      prev: "Slide anterior",
+      next: "Próximo slide",
+      goTo: "Ir para o slide",
+    },
+    resizable: {
+      label: "Painéis redimensionáveis",
+      handle: "Divisor",
     },
   },
 
@@ -1881,9 +1897,183 @@ const ptBR = {
       },
     },
 
+    /* ------------- Carousel ------------- */
+    carousel: {
+      lead: "Avançado · 31",
+      titleA: "O ",
+      titleB: "carousel",
+      metaLabel: "Slides",
+      meta: "Swipe + dots + auto-play + loop",
+      intro:
+        "Slides horizontais com [em]navegação prev/next[/em], dots indicadores, [em]swipe touch[/em] (PointerEvents) e auto-play opcional. Suporta loop infinito ou parar nos extremos. Transição padrão é [em]slide[/em]; também tem variante [em]fade[/em].",
+      slides: {
+        "0": "Cores, tipografia e espaçamento — a espinha silenciosa.",
+        "1": "Componentes refinados, cada um com função clara.",
+        "2": "Padrões — receitas, não regras.",
+      },
+      basic: {
+        title: "Básico",
+        kicker: "default",
+        desc:
+          "Sem props — apenas slides como filhos. Botões prev/next nas laterais, dots indicadores embaixo. Para no início/fim (não tem loop).",
+        caption: "Carousel padrão com 3 slides",
+        label: "Carousel básico",
+      },
+      loop: {
+        title: "Loop infinito",
+        kicker: "loop",
+        desc:
+          "Ao clicar [em]next[/em] no último slide, volta pro primeiro (e vice-versa). Útil em galerias e banners.",
+        caption: "Carousel com loop ativo",
+        label: "Carousel com loop",
+      },
+      auto: {
+        title: "Auto-play",
+        kicker: "autoPlay + interval",
+        desc:
+          "Avança automaticamente a cada [em]interval[/em] ms (default 5000). Pausa enquanto o cursor está sobre o componente ou ele tem foco — [em]pause-on-hover[/em] padrão da casa.",
+        caption: "Auto-play 3.5s + loop",
+        label: "Carousel automático",
+      },
+      fade: {
+        title: "Transição fade",
+        kicker: 'transition="fade"',
+        desc:
+          "Em vez de deslizar, os slides fazem [em]crossfade[/em] entre si. Útil quando o conteúdo é distinto demais pra fazer sentido um deslizamento espacial (ex: imagens de marcas diferentes).",
+        caption: "Carousel com crossfade",
+        label: "Carousel fade",
+      },
+      bare: {
+        title: "Sem indicadores",
+        kicker: "showDots=false · showArrows=false",
+        desc:
+          "Quando o contexto já indica navegação (ex: um carousel inteiro como banner clicável), oculte os controles e deixe o swipe / keyboard fazerem o trabalho.",
+        caption: "Carousel cru — só swipe e teclado",
+        label: "Carousel sem controles",
+      },
+      composition: {
+        title: "Composição",
+        titleB: "árvore",
+        kicker: "estrutura",
+        caption: "Os subcomponentes do Carousel.",
+      },
+    },
+
+    /* ------------- TreeView ------------- */
+    tree: {
+      lead: "Avançado · 32",
+      titleA: "A ",
+      titleB: "tree view",
+      metaLabel: "Hierarquia",
+      meta: "Single + multi · keyboard completo",
+      intro:
+        "Árvore hierárquica com [em]nós expansíveis[/em], indentação automática por nível, e seleção opcional ([em]single, multi ou nenhuma[/em]). Keyboard completa: ←→ expande/colapsa ou navega pai/filho, ↑↓ percorre, Enter seleciona.",
+      single: {
+        title: "Seleção single",
+        kicker: "selectionMode=single",
+        desc:
+          "Clique seleciona; clicar de novo no mesmo desseleciona. Click num nó com filhos também alterna expand/collapse simultaneamente.",
+        caption: "Tree view single (filesystem)",
+        label: "Árvore de arquivos",
+      },
+      multi: {
+        title: "Seleção multi",
+        kicker: "selectionMode=multi",
+        desc:
+          "Cada click adiciona ou remove. Itens selecionados ganham [em]✓[/em] no canto direito + cor accent.",
+        caption: "Multi seleção — {n} categorias",
+        label: "Categorias do blog",
+      },
+      nav: {
+        title: "Sem seleção (só navegação)",
+        kicker: "selectionMode=none",
+        desc:
+          "Para árvores [em]navegacionais[/em] (sumário, outline). Clique apenas expande/colapsa; sem state de seleção.",
+        caption: "Árvore só pra navegar",
+        label: "Outline",
+      },
+      controlled: {
+        title: "Expanded controlado",
+        kicker: "expanded prop",
+        desc:
+          "Por padrão, o expand/collapse é interno. Passe [em]expanded[/em] + [em]onExpandedChange[/em] pra sincronizar com URL, localStorage ou outro state.",
+        caption: "{n} nós expandidos (controlado)",
+        label: "Árvore controlada",
+      },
+      composition: {
+        title: "API",
+        titleB: "",
+        kicker: "uma única tag",
+        caption:
+          "TreeView aceita um array de [em]TreeNode[/em] (id, label, children?, glyph?, disabled?). Sem subcomponentes — recursividade interna.",
+      },
+    },
+
+    /* ------------- ResizablePanels ------------- */
+    resizable: {
+      lead: "Avançado · 33",
+      titleA: "Os ",
+      titleB: "resizable panels",
+      metaLabel: "Layout",
+      meta: "Drag + keyboard · horizontal/vertical",
+      intro:
+        "Layout de [em]2+ painéis[/em] separados por handles arrastáveis. Suporta orientação horizontal ou vertical, [em]min-size[/em] por painel, e persistência opcional em [em]localStorage[/em] (mesma key entre sessões).",
+      labels: {
+        left: "Esquerda",
+        right: "Direita",
+        top: "Topo",
+        bottom: "Base",
+        sidebar: "Sidebar",
+        content: "Conteúdo",
+        inspector: "Inspector",
+      },
+      basic: {
+        title: "Horizontal — 2 painéis",
+        kicker: "default",
+        desc:
+          "Arraste o divisor entre os painéis pra redimensionar. Tab no handle ativa keyboard nav: ←→ ajusta por 5%, Shift por 10%, Home/End vão pro extremo.",
+        caption: "60/40 split horizontal",
+        label: "Layout split horizontal",
+        lorem:
+          "Conteúdo arbitrário aqui dentro. O painel tem overflow auto, então rolar internamente funciona naturalmente.",
+      },
+      vertical: {
+        title: "Vertical",
+        kicker: 'orientation="vertical"',
+        desc:
+          "Mesma lógica, mas o handle fica horizontal e os painéis empilham. Útil para dividir entre [em]preview[/em] e [em]código[/em] em editores, por exemplo.",
+        caption: "40/60 split vertical",
+        label: "Layout split vertical",
+      },
+      three: {
+        title: "Três painéis",
+        kicker: "2 handles",
+        desc:
+          "Quantos painéis quiser — basta passar mais [em]<ResizablePanel>[/em] como filhos. Cada par ganha um handle entre eles.",
+        caption: "Sidebar 20% · Conteúdo 60% · Inspector 20%",
+        label: "Layout de três colunas",
+      },
+      persist: {
+        title: "Persistência em localStorage",
+        kicker: "storageKey",
+        desc:
+          "Passe uma [em]storageKey[/em] e o tamanho dos painéis é salvo automaticamente. Recarregue a página pra ver — o split fica como você deixou.",
+        caption: "Tamanhos persistidos",
+        label: "Layout com persistência",
+        body:
+          "Arraste o divisor, recarregue a página, e veja que o tamanho fica salvo (key: atelier.docs.persistDemo).",
+      },
+      composition: {
+        title: "Composição",
+        titleB: "árvore",
+        kicker: "estrutura",
+        caption: "Os subcomponentes.",
+      },
+    },
+
     /* ------------- Forms ------------- */
     forms: {
-      lead: "Padrão · 31",
+      lead: "Padrão · 34",
       titleA: "Os ",
       titleB: "formulários",
       metaLabel: "Composição",
@@ -1924,7 +2114,7 @@ const ptBR = {
 
     /* ------------- Stepper ------------- */
     stepper: {
-      lead: "Padrão · 32",
+      lead: "Padrão · 35",
       titleA: "O ",
       titleB: "stepper",
       metaLabel: "Multi-etapa",
@@ -1969,7 +2159,7 @@ const ptBR = {
 
     /* ------------- Empty States ------------- */
     emptyStates: {
-      lead: "Padrão · 33",
+      lead: "Padrão · 36",
       titleA: "Os ",
       titleB: "vazios",
       metaLabel: "Sem conteúdo",
@@ -2020,7 +2210,7 @@ const ptBR = {
 
     /* ------------- Sidebar (pattern) ------------- */
     sidebar: {
-      lead: "Padrão · 34",
+      lead: "Padrão · 37",
       titleA: "A ",
       titleB: "sidebar",
       metaLabel: "Navegação",
@@ -2120,7 +2310,7 @@ const ptBR = {
 
     /* ------------- Navbar (pattern) ------------- */
     navbar: {
-      lead: "Padrão · 35",
+      lead: "Padrão · 38",
       titleA: "A ",
       titleB: "navbar",
       metaLabel: "Navegação",
@@ -2354,7 +2544,7 @@ const ptBR = {
 
     /* ------------- Accessibility ------------- */
     accessibility: {
-      lead: "Referência · 36",
+      lead: "Referência · 39",
       titleA: "A ",
       titleB: "acessibilidade",
       metaLabel: "Conformidade",
