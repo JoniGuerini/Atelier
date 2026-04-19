@@ -84,6 +84,8 @@ const en = {
       popover: "Popover",
       dropdownMenu: "Dropdown Menu",
       contextMenu: "Context Menu",
+      drawer: "Drawer",
+      toaster: "Toaster",
       forms: "Forms",
       stepper: "Stepper",
       emptyStates: "Empty states",
@@ -119,6 +121,8 @@ const en = {
       popover: "Anchored panel — base for dropdowns, rich tooltips and more.",
       dropdownMenu: "Action menu with items, separators, checkbox/radio and shortcuts.",
       contextMenu: "Menu triggered by right-click — opens at cursor coordinates.",
+      drawer: "Side modal that slides from one of four edges — sheets, settings panels.",
+      toaster: "Notification system with queue, auto-dismiss and five semantic variants.",
       forms: "Full composition: fields, dividers, actions.",
       stepper: "Multi-step progress indicator for long forms.",
       emptyStates: "Invitations, not defeats — space with intent.",
@@ -1405,8 +1409,152 @@ const en = {
       },
     },
 
+    /* ------------- Drawer ------------- */
+    drawer: {
+      lead: "Advanced · 25",
+      titleA: "The ",
+      titleB: "drawer",
+      metaLabel: "Side modal",
+      meta: "4 sides · focus trap · backdrop",
+      intro:
+        "A side modal that slides in from one of the [em]four edges[/em]. Unlike Dialog (which centers in the viewport), Drawer is ideal for [em]mobile menus[/em], settings panels and secondary details — without fully interrupting the main flow.",
+      basic: {
+        title: "Basic usage",
+        kicker: "side=right",
+        desc:
+          "Trigger + Content. Default opens from the [em]right[/em], 380px wide. Semi-opaque backdrop closes on click; Escape too.",
+        caption: "Basic drawer opening from the right",
+        btn: "Open drawer",
+        heading: "Side panel",
+        body:
+          "Arbitrary content lives here. Body scroll is locked while the Drawer is open, and focus returns to the trigger on close.",
+      },
+      sides: {
+        title: "Four sides",
+        kicker: "side prop",
+        desc:
+          "[em]top, right, bottom, left[/em]. Each side has its matching slide animation. For [em]top[/em] and [em]bottom[/em], the [em]size[/em] prop is treated as height.",
+        caption: "Drawer opening from each of the four sides",
+        title2: "Opened from",
+        right: "Right",
+        left: "Left",
+        top: "Top",
+        bottom: "Bottom",
+        body:
+          "All four sides share the same subcomponents — only the animation axis changes.",
+      },
+      form: {
+        title: "Rich content — form",
+        kicker: "Header + Body + Footer",
+        desc:
+          "Typical case: editing a secondary item without leaving the current page. The Footer pins to the bottom with confirm/cancel actions.",
+        caption: "Drawer with a form and actions",
+        btn: "Edit profile",
+        heading: "Edit profile",
+        name: "Name",
+        namePh: "How would you like to appear?",
+        bio: "Bio",
+        bioHint: "A few lines about you. Markdown supported.",
+        save: "Save",
+        cancel: "Cancel",
+      },
+      size: {
+        title: "Custom size",
+        kicker: "size prop",
+        desc:
+          "For left/right, [em]size[/em] is the width. For top/bottom, it's the height. In pixels.",
+        caption: "Three different sizes",
+        body:
+          "This Drawer is {size}px on the axis parallel to the chosen edge.",
+      },
+      close: "Close",
+      composition: {
+        title: "Composition",
+        titleB: "tree",
+        kicker: "structure",
+        caption: "The Drawer subcomponents.",
+      },
+    },
+
+    /* ------------- Toaster ------------- */
+    toaster: {
+      lead: "Advanced · 26",
+      titleA: "The ",
+      titleB: "toaster",
+      metaLabel: "Notifications",
+      meta: "Queue · 5 variants · 6 positions",
+      intro:
+        "Notification system with [em]queue[/em], auto-dismiss and [em]pause-on-hover[/em]. Unlike the existing <Toast> (a pure component), the Toaster is a system: mount [em]once[/em] at the app root, and anywhere use the [em]useToast()[/em] hook to dispatch.",
+      setup: {
+        title: "Initial setup",
+        kicker: "once at root",
+        desc:
+          "Wrap the app tree with [em]<Toaster />[/em]. In any descendant, use the [em]useToast()[/em] hook to dispatch notifications.",
+      },
+      short: {
+        title: "Short form",
+        kicker: "toast(string)",
+        desc:
+          "For the most common case (a quick message without extras), just pass a string.",
+        caption: "Minimal form",
+        message: "Saved.",
+        btn: "Fire toast",
+      },
+      variants: {
+        title: "Five variants",
+        kicker: "default · info · ok · warn · danger",
+        desc:
+          "Each variant changes the [em]left border[/em] (semantic color) and the default glyph. Use sparingly — silence is the house tone.",
+        caption: "Click to fire each variant",
+        default: { title: "Notification", desc: "A neutral message, no urgency." },
+        info: { title: "New message", desc: "You have an unread conversation in your inbox." },
+        ok: { title: "Saved.", desc: "Your changes have been recorded." },
+        warn: { title: "Storage almost full", desc: "2GB of storage left. Consider clearing old files." },
+        danger: { title: "Connection lost", desc: "Trying to reconnect — your change will sync when it's back." },
+      },
+      action: {
+        title: "Toast with action",
+        kicker: "action button",
+        desc:
+          "Action button on the right — useful for [em]Undo[/em], [em]Retry[/em] etc. Clicking the action fires the callback and dismisses the toast.",
+        caption: "Toast with Undo button",
+        title2: "Item moved to trash.",
+        desc2: "You can revert this for a few seconds.",
+        undo: "Undo",
+        undone: "Restored.",
+        btn: "Delete item",
+      },
+      persistent: {
+        title: "Persistent toast",
+        kicker: "duration: 0",
+        desc:
+          "For critical errors or warnings that [em]require action[/em], disable auto-dismiss. The user must close manually.",
+        caption: "A toast that doesn't disappear on its own",
+        title2: "Connection unavailable",
+        desc2: "Some features are limited until the network returns.",
+        btn: "Fire persistent toast",
+        clear: "Clear all",
+      },
+      stack: {
+        title: "Stack and queue",
+        kicker: "queue + limit",
+        desc:
+          "Multiple toasts stack with breathing gap. Toaster accepts a [em]limit[/em] prop (default: 5) — when exceeded, oldest are removed. [em]Pause-on-hover[/em] freezes auto-dismiss while the cursor is over any item.",
+        caption: "Fires 6 toasts in sequence (limit=5)",
+        label: "Toast",
+        body: "Message #{n} fired in sequence.",
+        btn: "Fire 6 toasts",
+      },
+      composition: {
+        title: "Hook ",
+        titleB: "API",
+        kicker: "useToast",
+        caption: "The hook exposes three functions:",
+      },
+    },
+
     forms: {
-      lead: "Pattern · 25",
+      lead: "Pattern · 27",
       titleA: "The ",
       titleB: "forms",
       metaLabel: "Composition",
@@ -1446,7 +1594,7 @@ const en = {
     },
 
     stepper: {
-      lead: "Pattern · 26",
+      lead: "Pattern · 28",
       titleA: "The ",
       titleB: "stepper",
       metaLabel: "Multi-step",
@@ -1490,7 +1638,7 @@ const en = {
     },
 
     emptyStates: {
-      lead: "Pattern · 27",
+      lead: "Pattern · 29",
       titleA: "The ",
       titleB: "emptiness",
       metaLabel: "No content",
@@ -1540,7 +1688,7 @@ const en = {
     },
 
     sidebar: {
-      lead: "Pattern · 28",
+      lead: "Pattern · 30",
       titleA: "The ",
       titleB: "sidebar",
       metaLabel: "Navigation",
@@ -1639,7 +1787,7 @@ const en = {
     },
 
     navbar: {
-      lead: "Pattern · 29",
+      lead: "Pattern · 31",
       titleA: "The ",
       titleB: "navbar",
       metaLabel: "Navigation",
@@ -1871,7 +2019,7 @@ const en = {
     },
 
     accessibility: {
-      lead: "Reference · 30",
+      lead: "Reference · 32",
       titleA: "On ",
       titleB: "accessibility",
       metaLabel: "Conformance",

@@ -84,6 +84,8 @@ const ptBR = {
       popover: "Popover",
       dropdownMenu: "Dropdown Menu",
       contextMenu: "Context Menu",
+      drawer: "Drawer",
+      toaster: "Toaster",
       forms: "Formulários",
       stepper: "Stepper",
       emptyStates: "Estados vazios",
@@ -119,6 +121,8 @@ const ptBR = {
       popover: "Painel posicionado ancorado a um trigger — base de dropdowns, tooltips ricos e mais.",
       dropdownMenu: "Menu de ações com items, separadores, checkbox/radio e shortcuts.",
       contextMenu: "Menu disparado pelo clique direito — abre nas coordenadas do cursor.",
+      drawer: "Modal lateral que desliza de um dos quatro lados — sheets, painéis de configuração.",
+      toaster: "Sistema de notificações com queue, auto-dismiss e cinco variantes semânticas.",
       forms: "Composição completa: campos, divisores e ações.",
       stepper: "Indicador de progresso multi-etapa para forms longos.",
       emptyStates: "Convites, não derrotas — espaço com intenção.",
@@ -1466,9 +1470,153 @@ const ptBR = {
       },
     },
 
+    /* ------------- Drawer ------------- */
+    drawer: {
+      lead: "Avançado · 25",
+      titleA: "O ",
+      titleB: "drawer",
+      metaLabel: "Modal lateral",
+      meta: "4 lados · focus trap · backdrop",
+      intro:
+        "Modal lateral que desliza de uma das [em]quatro bordas[/em] da tela. Diferente do Dialog (centralizado), o Drawer é ideal para [em]menus mobile[/em], painéis de configuração e detalhes secundários — sem interromper completamente o fluxo principal.",
+      basic: {
+        title: "Uso básico",
+        kicker: "side=right",
+        desc:
+          "Trigger + Content. Default abre da [em]direita[/em], com 380px de largura. Backdrop semi-opaco fecha ao clique; Escape também.",
+        caption: "Drawer básico abrindo da direita",
+        btn: "Abrir drawer",
+        heading: "Painel lateral",
+        body:
+          "Conteúdo arbitrário aqui dentro. O scroll do body é bloqueado enquanto o Drawer está aberto, e o foco volta para o trigger ao fechar.",
+      },
+      sides: {
+        title: "Os quatro lados",
+        kicker: "side prop",
+        desc:
+          "[em]top, right, bottom, left[/em]. Cada lado tem sua animação de slide correspondente. Em [em]top[/em] e [em]bottom[/em], a prop [em]size[/em] é tratada como altura.",
+        caption: "Drawer abrindo de cada um dos quatro lados",
+        title2: "Aberto da",
+        right: "Direita",
+        left: "Esquerda",
+        top: "Topo",
+        bottom: "Base",
+        body:
+          "Os quatro lados compartilham todos os subcomponentes — só o eixo de animação muda.",
+      },
+      form: {
+        title: "Conteúdo rico — formulário",
+        kicker: "Header + Body + Footer",
+        desc:
+          "Caso típico: edição de um item secundário sem deixar a página atual. O Footer fica fixado na base com as ações de confirmar/cancelar.",
+        caption: "Drawer com formulário e ações",
+        btn: "Editar perfil",
+        heading: "Editar perfil",
+        name: "Nome",
+        namePh: "Como você gostaria de aparecer?",
+        bio: "Bio",
+        bioHint: "Algumas linhas sobre você. Markdown suportado.",
+        save: "Salvar",
+        cancel: "Cancelar",
+      },
+      size: {
+        title: "Tamanho customizado",
+        kicker: "size prop",
+        desc:
+          "Para left/right, [em]size[/em] é a largura. Para top/bottom, é a altura. Em pixels.",
+        caption: "Três tamanhos diferentes",
+        body:
+          "Este Drawer tem {size}px no eixo paralelo à borda escolhida.",
+      },
+      close: "Fechar",
+      composition: {
+        title: "Composição",
+        titleB: "árvore",
+        kicker: "estrutura",
+        caption: "Os subcomponentes do Drawer.",
+      },
+    },
+
+    /* ------------- Toaster ------------- */
+    toaster: {
+      lead: "Avançado · 26",
+      titleA: "O ",
+      titleB: "toaster",
+      metaLabel: "Notificações",
+      meta: "Queue · 5 variantes · 6 posições",
+      intro:
+        "Sistema de notificações com [em]queue[/em], auto-dismiss e [em]pause-on-hover[/em]. Diferente do <Toast> existente (componente puro), o Toaster é um sistema: monta-se [em]uma vez[/em] no root da app, e em qualquer lugar usa-se o hook [em]useToast()[/em] para disparar.",
+      setup: {
+        title: "Setup inicial",
+        kicker: "uma vez no root",
+        desc:
+          "Envolva a árvore da app com [em]<Toaster />[/em]. Em qualquer descendente, use o hook [em]useToast()[/em] para disparar notificações.",
+      },
+      short: {
+        title: "Forma curta",
+        kicker: "toast(string)",
+        desc:
+          "Para o caso mais comum (uma mensagem rápida sem extras), basta passar uma string.",
+        caption: "Forma mínima",
+        message: "Salvo.",
+        btn: "Disparar toast",
+      },
+      variants: {
+        title: "Cinco variantes",
+        kicker: "default · info · ok · warn · danger",
+        desc:
+          "Cada variante muda a [em]borda esquerda[/em] (cor semântica) e o glifo padrão. Use com parcimônia — o silêncio é o tom da casa.",
+        caption: "Clique para disparar cada variante",
+        default: { title: "Notificação", desc: "Uma mensagem neutra, sem urgência." },
+        info: { title: "Nova mensagem", desc: "Você tem uma conversa não lida no inbox." },
+        ok: { title: "Salvo.", desc: "Suas alterações foram registradas." },
+        warn: { title: "Espaço quase cheio", desc: "Restam 2GB de armazenamento. Considere limpar arquivos antigos." },
+        danger: { title: "Conexão perdida", desc: "Tentando reconectar — sua mudança será sincronizada quando voltar." },
+      },
+      action: {
+        title: "Toast com ação",
+        kicker: "action button",
+        desc:
+          "Botão de ação à direita — útil para [em]Desfazer[/em], [em]Tentar de novo[/em] etc. Clicar na ação dispara o callback e dismissa o toast.",
+        caption: "Toast com botão Desfazer",
+        title2: "Item enviado para a lixeira.",
+        desc2: "Você pode reverter por alguns segundos.",
+        undo: "Desfazer",
+        undone: "Restaurado.",
+        btn: "Excluir item",
+      },
+      persistent: {
+        title: "Toast persistente",
+        kicker: "duration: 0",
+        desc:
+          "Para erros críticos ou avisos que [em]exigem ação[/em], desabilite o auto-dismiss. O usuário precisa fechar manualmente.",
+        caption: "Toast que não desaparece sozinho",
+        title2: "Conexão indisponível",
+        desc2: "Algumas funcionalidades estão limitadas até a rede voltar.",
+        btn: "Disparar toast persistente",
+        clear: "Limpar todos",
+      },
+      stack: {
+        title: "Stack e fila",
+        kicker: "queue + limit",
+        desc:
+          "Múltiplos toasts empilham com gap respiratório. O Toaster aceita uma prop [em]limit[/em] (default: 5) — quando excede, os mais antigos são removidos. [em]Pause-on-hover[/em] congela o auto-dismiss enquanto o cursor está sobre qualquer item.",
+        caption: "Dispara 6 toasts em sequência (limit=5)",
+        label: "Toast",
+        body: "Mensagem #{n} disparada em sequência.",
+        btn: "Disparar 6 toasts",
+      },
+      composition: {
+        title: "API",
+        titleB: " do hook",
+        kicker: "useToast",
+        caption: "O hook expõe três funções:",
+      },
+    },
+
     /* ------------- Forms ------------- */
     forms: {
-      lead: "Padrão · 25",
+      lead: "Padrão · 27",
       titleA: "Os ",
       titleB: "formulários",
       metaLabel: "Composição",
@@ -1509,7 +1657,7 @@ const ptBR = {
 
     /* ------------- Stepper ------------- */
     stepper: {
-      lead: "Padrão · 26",
+      lead: "Padrão · 28",
       titleA: "O ",
       titleB: "stepper",
       metaLabel: "Multi-etapa",
@@ -1554,7 +1702,7 @@ const ptBR = {
 
     /* ------------- Empty States ------------- */
     emptyStates: {
-      lead: "Padrão · 27",
+      lead: "Padrão · 29",
       titleA: "Os ",
       titleB: "vazios",
       metaLabel: "Sem conteúdo",
@@ -1605,7 +1753,7 @@ const ptBR = {
 
     /* ------------- Sidebar (pattern) ------------- */
     sidebar: {
-      lead: "Padrão · 28",
+      lead: "Padrão · 30",
       titleA: "A ",
       titleB: "sidebar",
       metaLabel: "Navegação",
@@ -1705,7 +1853,7 @@ const ptBR = {
 
     /* ------------- Navbar (pattern) ------------- */
     navbar: {
-      lead: "Padrão · 29",
+      lead: "Padrão · 31",
       titleA: "A ",
       titleB: "navbar",
       metaLabel: "Navegação",
@@ -1939,7 +2087,7 @@ const ptBR = {
 
     /* ------------- Accessibility ------------- */
     accessibility: {
-      lead: "Referência · 30",
+      lead: "Referência · 32",
       titleA: "A ",
       titleB: "acessibilidade",
       metaLabel: "Conformidade",

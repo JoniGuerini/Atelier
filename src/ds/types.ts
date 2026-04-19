@@ -454,6 +454,52 @@ export interface ContextMenuItemProps {
   disabled?: boolean;
 }
 
+/* ----------------- Drawer ----------------- */
+export type DrawerSide = "top" | "right" | "bottom" | "left";
+export interface DrawerProps {
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  defaultOpen?: boolean;
+  side?: DrawerSide;
+  closeOnBackdrop?: boolean;
+  closeOnEscape?: boolean;
+  children?: ReactNode;
+}
+export interface DrawerContentProps {
+  children?: ReactNode;
+  size?: number;
+  className?: string;
+  ariaLabel?: string;
+}
+
+/* ----------------- Toaster ----------------- */
+export type ToastVariant = "default" | "info" | "ok" | "warn" | "danger";
+export type ToasterPosition =
+  | "top-left"
+  | "top-center"
+  | "top-right"
+  | "bottom-left"
+  | "bottom-center"
+  | "bottom-right";
+export interface ToastAction {
+  label: string;
+  onClick: () => void;
+}
+export interface ToastOptions {
+  title?: ReactNode;
+  description?: ReactNode;
+  variant?: ToastVariant;
+  duration?: number;
+  action?: ToastAction;
+  glyph?: ReactNode;
+}
+export interface ToasterProps {
+  position?: ToasterPosition;
+  defaultDuration?: number;
+  limit?: number;
+  children?: ReactNode;
+}
+
 /* ----------------- Tools (Search / Settings) ----------------- */
 export interface SearchPaletteProps {
   open: boolean;

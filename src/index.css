@@ -4920,6 +4920,360 @@ input[type="file"] { display: none; }
   }
 }
 
+/* ================================================================
+   Drawer (Sheet) — modal lateral.
+   ----------------------------------------------------------------
+   Backdrop semi-opaco + painel ancorado a uma das 4 bordas. O
+   painel ocupa a dimensão perpendicular inteira (100vh para
+   left/right, 100vw para top/bottom) e a dimensão paralela vem
+   da prop size (default 380px).
+================================================================ */
+.ds-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  animation: ds-drawer-backdrop-in var(--dur) var(--ease);
+}
+@keyframes ds-drawer-backdrop-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.ds-drawer {
+  position: fixed;
+  background: var(--bg-panel);
+  border: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  outline: none;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+}
+[data-theme="dark"] .ds-drawer {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+}
+.ds-drawer.side-right {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  border-right: none;
+  animation: ds-drawer-in-right var(--dur) var(--ease);
+}
+.ds-drawer.side-left {
+  top: 0;
+  left: 0;
+  bottom: 0;
+  border-left: none;
+  animation: ds-drawer-in-left var(--dur) var(--ease);
+}
+.ds-drawer.side-top {
+  top: 0;
+  left: 0;
+  right: 0;
+  border-top: none;
+  animation: ds-drawer-in-top var(--dur) var(--ease);
+}
+.ds-drawer.side-bottom {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-bottom: none;
+  animation: ds-drawer-in-bottom var(--dur) var(--ease);
+}
+@keyframes ds-drawer-in-right {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+@keyframes ds-drawer-in-left {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+@keyframes ds-drawer-in-top {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(0); }
+}
+@keyframes ds-drawer-in-bottom {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.ds-drawer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-5) var(--space-6);
+  border-bottom: 1px solid var(--rule-soft);
+}
+.ds-drawer-title {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  margin: 0;
+  color: var(--ink);
+}
+.ds-drawer-close {
+  appearance: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  font-family: var(--font-serif);
+  font-size: 22px;
+  line-height: 1;
+  color: var(--ink-faint);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: color var(--dur-fast) var(--ease);
+}
+.ds-drawer-close:hover {
+  color: var(--ink);
+}
+.ds-drawer-close:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.ds-drawer-body {
+  flex: 1;
+  padding: var(--space-5) var(--space-6);
+  overflow: auto;
+  font-family: var(--font-serif);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+.ds-drawer-foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-6);
+  border-top: 1px solid var(--rule-soft);
+}
+
+/* ================================================================
+   Toaster — sistema de notificações com queue.
+   ----------------------------------------------------------------
+   Container fixed em uma das 6 posições. Cada item tem variante
+   semântica (info/ok/warn/danger) + glifo + título + descrição
+   + ação opcional + botão fechar.
+================================================================ */
+.ds-toaster {
+  position: fixed;
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  pointer-events: none;
+  max-width: 420px;
+}
+.ds-toaster.position-top-left {
+  top: 0;
+  left: 0;
+  align-items: flex-start;
+}
+.ds-toaster.position-top-center {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  align-items: center;
+}
+.ds-toaster.position-top-right {
+  top: 0;
+  right: 0;
+  align-items: flex-end;
+}
+.ds-toaster.position-bottom-left {
+  bottom: 0;
+  left: 0;
+  align-items: flex-start;
+  /* novos toasts entram embaixo — empilha de baixo pra cima */
+  flex-direction: column-reverse;
+}
+.ds-toaster.position-bottom-center {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  align-items: center;
+  flex-direction: column-reverse;
+}
+.ds-toaster.position-bottom-right {
+  bottom: 0;
+  right: 0;
+  align-items: flex-end;
+  flex-direction: column-reverse;
+}
+
+.ds-toaster-item {
+  pointer-events: auto;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  width: 360px;
+  max-width: 100%;
+  padding: var(--space-4);
+  background: var(--bg-panel);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--ink-faint);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12),
+    0 2px 6px rgba(0, 0, 0, 0.06);
+}
+[data-theme="dark"] .ds-toaster-item {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5),
+    0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Animações de entrada — slide do lado correspondente */
+.ds-toaster-item.pos-top-left,
+.ds-toaster-item.pos-bottom-left {
+  animation: ds-toaster-in-left var(--dur) var(--ease);
+}
+.ds-toaster-item.pos-top-right,
+.ds-toaster-item.pos-bottom-right {
+  animation: ds-toaster-in-right var(--dur) var(--ease);
+}
+.ds-toaster-item.pos-top-center {
+  animation: ds-toaster-in-top var(--dur) var(--ease);
+}
+.ds-toaster-item.pos-bottom-center {
+  animation: ds-toaster-in-bottom var(--dur) var(--ease);
+}
+@keyframes ds-toaster-in-right {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes ds-toaster-in-left {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes ds-toaster-in-top {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes ds-toaster-in-bottom {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Variantes — borda esquerda muda de cor */
+.ds-toaster-item.variant-info {
+  border-left-color: var(--info);
+}
+.ds-toaster-item.variant-ok {
+  border-left-color: var(--ok);
+}
+.ds-toaster-item.variant-warn {
+  border-left-color: var(--warn);
+}
+.ds-toaster-item.variant-danger {
+  border-left-color: var(--accent);
+}
+
+.ds-toaster-glyph {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 16px;
+  color: var(--ink-faint);
+}
+.ds-toaster-item.variant-info .ds-toaster-glyph {
+  color: var(--info);
+}
+.ds-toaster-item.variant-ok .ds-toaster-glyph {
+  color: var(--ok);
+}
+.ds-toaster-item.variant-warn .ds-toaster-glyph {
+  color: var(--warn);
+}
+.ds-toaster-item.variant-danger .ds-toaster-glyph {
+  color: var(--accent);
+}
+
+.ds-toaster-content {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+.ds-toaster-title {
+  font-family: var(--font-serif);
+  font-size: 14px;
+  color: var(--ink);
+  line-height: 1.4;
+}
+.ds-toaster-desc {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+.ds-toaster-action {
+  appearance: none;
+  background: none;
+  border: 1px solid var(--rule-soft);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 6px 10px;
+  cursor: pointer;
+  color: var(--accent);
+  align-self: center;
+  flex-shrink: 0;
+  transition: border-color var(--dur-fast) var(--ease),
+    background var(--dur-fast) var(--ease);
+}
+.ds-toaster-action:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.ds-toaster-action:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.ds-toaster-close {
+  appearance: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  font-family: var(--font-serif);
+  font-size: 18px;
+  line-height: 1;
+  color: var(--ink-faint);
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-top: 2px;
+  transition: color var(--dur-fast) var(--ease);
+}
+.ds-toaster-close:hover {
+  color: var(--ink);
+}
+.ds-toaster-close:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-drawer-backdrop,
+  .ds-drawer,
+  .ds-toaster-item {
+    animation: none;
+  }
+}
+
 /* ----------------------------------------------------------------
    Code page (#/code) — API cards + ADR cards.
 ---------------------------------------------------------------- */

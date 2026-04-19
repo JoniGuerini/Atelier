@@ -54,26 +54,28 @@ export const ROUTES: RouteGroup[] = [
   {
     groupKey: "advanced",
     items: [
-      { id: "popover", n: "22", isNew: true },
-      { id: "dropdownMenu", n: "23", route: "dropdown-menu", isNew: true },
-      { id: "contextMenu", n: "24", route: "context-menu", isNew: true },
+      { id: "popover", n: "22" },
+      { id: "dropdownMenu", n: "23", route: "dropdown-menu" },
+      { id: "contextMenu", n: "24", route: "context-menu" },
+      { id: "drawer", n: "25", isNew: true },
+      { id: "toaster", n: "26", isNew: true },
     ],
   },
   {
     groupKey: "patterns",
     items: [
-      { id: "forms", n: "25" },
-      { id: "stepper", n: "26" },
-      { id: "emptyStates", n: "27", route: "empty-states" },
-      { id: "sidebar", n: "28" },
-      { id: "navbar", n: "29" },
+      { id: "forms", n: "27" },
+      { id: "stepper", n: "28" },
+      { id: "emptyStates", n: "29", route: "empty-states" },
+      { id: "sidebar", n: "30" },
+      { id: "navbar", n: "31" },
     ],
   },
   {
     groupKey: "reference",
     items: [
-      { id: "accessibility", n: "30" },
-      { id: "code", n: "31" },
+      { id: "accessibility", n: "32" },
+      { id: "code", n: "33" },
     ],
   },
   {

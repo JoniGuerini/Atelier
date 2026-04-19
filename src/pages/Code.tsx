@@ -410,6 +410,70 @@ import type { PopoverPlacement } from "./ds/types";`,
 </DropdownMenu>`,
   },
   {
+    id: "drawer",
+    name: "Drawer family",
+    route: "drawer",
+    imports: `import {
+  Drawer, DrawerTrigger, DrawerContent,
+  DrawerHeader, DrawerTitle, DrawerClose,
+  DrawerBody, DrawerFooter,
+} from "./ds/Drawer";`,
+    props: [
+      ["Drawer side", "'top' | 'right' | 'bottom' | 'left'", "'right'"],
+      ["Drawer open / onOpenChange / defaultOpen", "controlado ou descontrolado", "—"],
+      ["Drawer closeOnBackdrop / closeOnEscape", "boolean", "true"],
+      ["DrawerContent size", "number (px)", "380"],
+    ],
+    code: `<Drawer side="right">
+  <DrawerTrigger>
+    <Button>Open</Button>
+  </DrawerTrigger>
+  <DrawerContent size={420}>
+    <DrawerHeader>
+      <DrawerTitle>Edit profile</DrawerTitle>
+      <DrawerClose />
+    </DrawerHeader>
+    <DrawerBody>…</DrawerBody>
+    <DrawerFooter>
+      <Button variant="ghost">Cancel</Button>
+      <Button variant="primary">Save</Button>
+    </DrawerFooter>
+  </DrawerContent>
+</Drawer>`,
+  },
+  {
+    id: "toaster",
+    name: "Toaster (queue manager)",
+    route: "toaster",
+    imports: `import { Toaster, useToast } from "./ds/Toaster";
+import type { ToastVariant, ToasterPosition } from "./ds/types";`,
+    props: [
+      ["Toaster position", "6 opções (top|bottom)-(left|center|right)", "'bottom-right'"],
+      ["Toaster defaultDuration", "number (ms; 0 = no auto-dismiss)", "4000"],
+      ["Toaster limit", "number (max simultâneos)", "5"],
+      ["toast(input, opts?)", "string ou ToastOptions; retorna id", "—"],
+      ["dismiss(id)", "remove um toast específico", "—"],
+      ["clear()", "remove todos", "—"],
+    ],
+    code: `// 1) No root da app
+<Toaster position="bottom-right">
+  <App />
+</Toaster>
+
+// 2) Em qualquer descendente
+const { toast, dismiss, clear } = useToast();
+
+toast("Saved.");
+toast("Connection lost", { variant: "danger" });
+toast({
+  title: "Item moved to trash.",
+  description: "You can revert this for a few seconds.",
+  variant: "ok",
+  duration: 8000,
+  action: { label: "Undo", onClick: () => undo() },
+});`,
+  },
+  {
     id: "contextMenu",
     name: "ContextMenu family",
     route: "context-menu",

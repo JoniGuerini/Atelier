@@ -64,6 +64,9 @@ import Create from "./pages/Create.tsx";
 import PopoverPage from "./pages/PopoverPage.tsx";
 import DropdownMenuPage from "./pages/DropdownMenuPage.tsx";
 import ContextMenuPage from "./pages/ContextMenuPage.tsx";
+import DrawerPage from "./pages/DrawerPage.tsx";
+import ToasterPage from "./pages/ToasterPage.tsx";
+import { Toaster } from "./ds/Toaster.tsx";
 
 const PAGES = {
   overview: Overview,
@@ -99,6 +102,8 @@ const PAGES = {
   popover: PopoverPage,
   "dropdown-menu": DropdownMenuPage,
   "context-menu": ContextMenuPage,
+  drawer: DrawerPage,
+  toaster: ToasterPage,
 };
 
 const SIDEBAR_KEY = "atelier.sidebarCollapsed";
@@ -184,13 +189,14 @@ export default function App() {
   else if (collapsed) shellClasses.push("collapsed");
 
   return (
-    <div className={shellClasses.join(" ")}>
-      {/* Skip link — visualmente escondido até receber foco por teclado.
-          Pula direto pro conteúdo principal, evitando re-tabular toda
-          a sidebar/navbar quando o usuário só quer LER. */}
-      <a href="#main-content" className="skip-link">
-        {t("accessibility.skipLink")}
-      </a>
+    <Toaster position="bottom-right">
+      <div className={shellClasses.join(" ")}>
+        {/* Skip link — visualmente escondido até receber foco por teclado.
+            Pula direto pro conteúdo principal, evitando re-tabular toda
+            a sidebar/navbar quando o usuário só quer LER. */}
+        <a href="#main-content" className="skip-link">
+          {t("accessibility.skipLink")}
+        </a>
 
       {isTopbar ? (
         <AppNavbar
@@ -238,6 +244,7 @@ export default function App() {
         onNavigate={navigate}
       />
     </div>
+    </Toaster>
   );
 }
 
