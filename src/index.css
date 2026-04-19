@@ -2335,11 +2335,18 @@ input[type="file"] { display: none; }
   position: relative;
 }
 
-/* Trigger de cada menu (ex: "Início", "Fundamentos") */
+/* Trigger de cada menu (ex: "Início", "Fundamentos").
+   Position por classe:
+     • cols-1 → relative (painel pequeno ancora no próprio trigger,
+                visualmente conectado a ele)
+     • cols-2/3 → static (painel grande ancora na <ul> inteira pra
+                  ter espaço de respiro — todos abrem na mesma origem)
+*/
 .nav-menu {
-  /* static (não-relative) faz com que .nav-menu-panel se posicione
-     em relação à <ul> acima. */
   position: static;
+}
+.nav-menu.cols-1 {
+  position: relative;
 }
 .nav-menu-trigger {
   appearance: none;

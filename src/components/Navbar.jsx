@@ -166,7 +166,7 @@ export function NavbarDropdown({ label, active = false, cols = 1, children }) {
   // painel. Só onMouseEnter pra atualizar qual menu está ativo.
   return (
     <li
-      className={`nav-menu ${active ? "active" : ""} ${isOpen ? "open" : ""}`}
+      className={`nav-menu cols-${cols} ${active ? "active" : ""} ${isOpen ? "open" : ""}`}
       onMouseEnter={() => open(key)}
     >
       <button
