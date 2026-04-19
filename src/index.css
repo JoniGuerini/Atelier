@@ -4503,6 +4503,13 @@ input[type="file"] { display: none; }
   /* Âncora pra .ds-step-line, que é child direto do <li>. */
   position: relative;
 }
+/* Horizontal: número EM CIMA, label embaixo — assim a linha
+   conectora corre na altura do número sem atravessar texto. */
+.ds-stepper.orientation-horizontal .ds-step {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
 .ds-stepper.orientation-vertical .ds-step {
   flex: 0 0 auto;
 }
@@ -4569,6 +4576,9 @@ input[type="file"] { display: none; }
   flex-direction: column;
   gap: 2px;
   min-width: 0;
+}
+/* No vertical, o text sobe um pouco pra alinhar com o topo do número */
+.ds-stepper.orientation-vertical .ds-step-text {
   padding-top: 4px;
 }
 .ds-step-label {
@@ -4602,7 +4612,8 @@ input[type="file"] { display: none; }
   color: var(--ink-soft);
 }
 
-/* Versão horizontal: items distribuídos */
+/* Versão horizontal: text ganha respiro à direita pra não tocar
+   no número do próximo step. */
 .ds-stepper.orientation-horizontal .ds-step-text {
   padding-right: var(--space-3);
 }
