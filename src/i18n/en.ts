@@ -57,14 +57,22 @@ const en = {
       patterns: "Patterns",
       reference: "Reference",
       studio: "Studio",
+      tools: "Tools",
     },
     items: {
       overview: "Overview",
       principles: "Principles",
       colors: "Colors",
       typography: "Typography",
+      voice: "Voice & tone",
       spacing: "Spacing",
       icons: "Glyphs",
+      elevation: "Elevation",
+      radius: "Corners",
+      zIndex: "Layers",
+      breakpoints: "Breakpoints",
+      density: "Density",
+      motion: "Motion",
       buttons: "Buttons",
       inputs: "Fields",
       controls: "Controls",
@@ -105,15 +113,43 @@ const en = {
       navbar: "Navbar",
       accessibility: "Accessibility",
       code: "For devs · code",
+      kbd: "Keys · KBD",
+      hooks: "Hooks",
+      changelog: "Changelog",
+      tokens: "Tokens",
+      loadingStates: "Loading states",
+      errorHandling: "Error handling",
+      formsPatterns: "Forms patterns",
+      destructive: "Destructive actions",
+      onboarding: "Onboarding",
+      darkMode: "Dark mode",
+      print: "Print",
+      i18nPatterns: "i18n patterns",
+      install: "Install",
+      apiReference: "API reference",
+      browserSupport: "Browser support",
+      performance: "Performance",
+      recipes: "Recipes",
+      dataTable: "Data Table",
+      timeline: "Timeline",
+      tagInput: "Tag Input",
       create: "Create · customize",
+      roadmap: "Roadmap",
     },
     descriptions: {
       overview: "The manual's cover — what's coming up.",
       principles: "The six rules that govern the editorial style.",
       colors: "Four families: surface, ink, accent, semantic.",
       typography: "Editorial voice in Fraunces and JetBrains Mono.",
+      voice: "How the Atelier writes — principles, tone by context, vocabulary, and microcopy.",
       spacing: "8pt scale and the twelve-column grid.",
       icons: "Twelve typographic glyphs — not UI icons.",
+      elevation: "Shadow as signal — flat-by-default scale and when to elevate.",
+      radius: "Sharp corners by default — a controlled exception scale.",
+      zIndex: "Stacking layers — one fixed scale for every overlay.",
+      breakpoints: "Five breakpoints replacing nine ad-hoc values.",
+      density: "Compact, comfortable, spacious — density that cascades.",
+      motion: "Formal animation layer — primitives, easings and editorial rules.",
       buttons: "Primary, ghost, link and variants.",
       inputs: "Inputs, textareas and selects with hint and error.",
       controls: "Checkbox, radio and switch.",
@@ -154,7 +190,28 @@ const en = {
       navbar: "Horizontal header with hover dropdowns.",
       accessibility: "Shortcuts, focus, contrast and ARIA.",
       code: "Tokens, primitives and API for developers.",
+      kbd: "Keys and inline code — editorial primitives for shortcuts and snippets.",
+      hooks: "Public utility hooks — environment, DOM and state, all zero-deps.",
+      changelog: "Version history — Keep a Changelog format, rendered by the MarkdownViewer.",
+      tokens: "Full inventory — every scale living in :root, with swatch, values and export.",
+      loadingStates: "Skeleton, Spinner, Progress, Empty — which to use when.",
+      errorHandling: "ErrorBoundary, inline messages, retry and fallback UI.",
+      formsPatterns: "Inline validation, async submit, multi-step, messages.",
+      destructive: "Confirmation, undo, risk modals, double-confirm.",
+      onboarding: "Tour, Coachmark, guided Empty State — when to use each.",
+      darkMode: "Editorial palette, contrast, charts and code edge cases.",
+      print: "Print styles, hide chrome, strong B&W contrast.",
+      i18nPatterns: "Plurals, dates, numbers, currency with native Intl.",
+      install: "Setup, peer deps, first component — with philosophy.",
+      apiReference: "Map of what lives in each module — where to find what.",
+      browserSupport: "Official targets, assumed APIs, fallbacks.",
+      performance: "Bundle budgets, code-splitting, Phase 8.1 wins.",
+      recipes: "Ready-made compositions — live, editable, open in external sandbox.",
+      dataTable: "Composable editorial table: sort, filters, selection, pagination and virtualization.",
+      timeline: "Vertical or horizontal timeline with markers, states and a 'now' divider.",
+      tagInput: "Free-form tag collector with removable chips, validation and custom separators.",
       create: "Build your theme live and export the tokens.",
+      roadmap: "What's been shipped and what's coming — phases, priorities and dependencies.",
     },
     footer: {
       study: "A quiet study",
@@ -171,6 +228,12 @@ const en = {
       label: "Settings",
       kicker: "preferences",
       title: "Settings",
+      dir: {
+        label: "Direction",
+        auto: "Auto",
+        ltr: "LTR",
+        rtl: "RTL",
+      },
     },
     layout: {
       toWide: "Expand to full width",
@@ -183,6 +246,12 @@ const en = {
   /* ============================================================ */
   /* Labels used internally by DS components (aria-label, etc.) */
   ds: {
+    example: {
+      editLabel: "Edit",
+      previewLabel: "Preview",
+      resetLabel: "Reset",
+      editorLabel: "Example code editor",
+    },
     pagination: {
       label: "Pagination",
       previous: "Previous",
@@ -190,6 +259,9 @@ const en = {
     },
     breadcrumbs: {
       label: "Breadcrumb trail",
+    },
+    timeline: {
+      nowLabel: "Now",
     },
     calendar: {
       prev: "Previous month",
@@ -256,28 +328,9 @@ const en = {
     groups: {
       foundations: "Foundations",
       components: "Components",
+      advanced: "Advanced",
       patterns: "Patterns",
       atelier: "Atelier",
-    },
-    links: {
-      principles: "Principles",
-      colors: "Colors",
-      typography: "Typography",
-      spacing: "Spacing",
-      icons: "Glyphs",
-      buttons: "Buttons",
-      inputs: "Inputs",
-      avatars: "Avatars",
-      badges: "Badges",
-      cards: "Cards",
-      tables: "Tables",
-      forms: "Forms",
-      empty_states: "Empty states",
-      sidebar: "Sidebar",
-      navbar: "Navbar",
-      dropzone: "Dropzone",
-      overview: "Overview",
-      code: "For devs · code",
     },
     social: {
       github: "https://github.com/",
@@ -472,50 +525,770 @@ const en = {
       metaLabel: "Families",
       meta: "Fraunces · JetBrains Mono",
       intro:
-        "Two families do all the work. [em]Fraunces[/em] for reading and emphasis, [em]JetBrains Mono[/em] for metadata and code. Italic is the only decoration allowed.",
+        "Two families do all the work. [em]Fraunces[/em] for reading and emphasis, [em]JetBrains Mono[/em] for metadata and code. Italic is the only decoration allowed — and the scale, modular at a [em]perfect fourth[/em] ratio (1.333), provides exactly nine sizes.",
+
+      /* ---------- i. Families ---------- */
+      families: {
+        title: "Families",
+        kicker: "two voices",
+        desc:
+          "Two voices, distinct roles. The serif carries reading and lifts headlines; the monospace annotates, identifies, and marks code. [em]Nothing more[/em] is needed.",
+        weights: "Weights",
+        stack: "Stack",
+        serif: {
+          name: "Fraunces",
+          role: "Editorial voice · reading & headlines",
+          rationale:
+            "A contemporary serif with optical sizing — lively shapes at large sizes, calm shapes at body. An expressive italic, used only for emphasis.",
+          weights: "300 · 400 · 500 · 600 · italic",
+          stack: '"Fraunces", Georgia, serif',
+        },
+        mono: {
+          name: "JetBrains Mono",
+          role: "Technical voice · metadata & code",
+          rationale:
+            "A monospace tuned for long-form code reading. Differentiated glyphs (slashed zero, l vs 1) and optional ligatures. Here also used in caps for kickers and captions.",
+          weights: "400 · 500 · 600",
+          stack: '"JetBrains Mono", ui-monospace, monospace',
+        },
+      },
+
+      /* ---------- ii. Specimens (table) ---------- */
       specimensTitle: "Specimens",
       specimensKicker: "hierarchy",
-      scaleTitle: "Scale",
-      scaleKicker: "ratios",
-      scaleDesc:
-        "Perfect-fifth ratio (1.5) for the serif, compressed into discreet steps for the monospace. Never more than six levels per screen.",
+      specimensDesc:
+        "Each row is a token — the actual size, line-height and weight applied to the sample text itself. The [em]Use[/em] column tells you when to reach for each one.",
+      cols: {
+        name: "Name",
+        token: "Token",
+        size: "Size",
+        lh: "LH",
+        weight: "Weight",
+        use: "Use",
+        preview: "Sample",
+      },
       specimens: {
-        display: {
-          meta: "Display",
-          weight: "300 · italic optional",
-          textA: "The ",
-          textB: "morning",
-          textC: " begins in the headline.",
+        display: { name: "Display", use: "Openings, covers, brand", preview: "Atelier." },
+        h3xl:    { name: "3XL",     use: "Inner heroes, page titles", preview: "Bright morning" },
+        h2xl:    { name: "2XL",     use: "Section headlines", preview: "Editorial typography" },
+        hxl:     { name: "XL",      use: "Section titles (Section)", preview: "The rhythm of text" },
+        hlg:     { name: "LG",      use: "UI sub-titles, leads", preview: "An example sub-title" },
+        body:    { name: "MD · body", use: "Long-form reading, paragraphs", preview: "The body breathes at 16/1.65." },
+        ui:      { name: "SM · UI", use: "Inputs, labels, UI links", preview: "Interface text" },
+        small:   { name: "XS · small", use: "Long captions, helper text", preview: "Smaller helper text" },
+        micro:   { name: "Micro", use: "Status, dense metadata", preview: "STATUS · ACTIVE" },
+        meta:    { name: "Meta", use: "Overlines, kickers, caps captions", preview: "FOUNDATION · 03" },
+      },
+
+      /* ---------- iii. Scale ---------- */
+      scale: {
+        title: "Scale as system",
+        kicker: "modular · 1.333",
+        desc:
+          "A modular scale anchored at 16px and expanded at a [em]perfect fourth[/em] ratio (1.333). Nine sizes cover everything from monospace captions to editorial displays — anything outside the scale needs a case-by-case justification.",
+        usageTitle: "CSS usage",
+        fluidTitle: "Fluid typography",
+        fluidDesc:
+          "Only the [em]--text-display[/em] token scales with the viewport via [em]clamp(...)[/em]. The rest is fixed on purpose: typographic predictability beats flexibility on extreme screens.",
+      },
+
+      /* ---------- iv. Rhythm & reading ---------- */
+      rhythm: {
+        title: "Rhythm & reading",
+        kicker: "measure · line-height",
+        desc:
+          "Readable type is rhythm: the relationship between size, line-height and measure. We control the three as one system.",
+        measureTitle: "Measure (ideal width)",
+        measureDesc:
+          "Lines that are too long tire the eye — it loses the start of the next line. Lines too short break thought. The sweet spot lives between [em]45 and 75 characters[/em]; our default is 65ch.",
+        measureSample:
+          "Good typography isn't seen — it's felt. When the measure is right, the reader moves forward effortlessly; when it's wrong, they blame the font without knowing why.",
+        measure: {
+          narrow: { label: "30ch · narrow", note: "Tight, friction every line" },
+          ideal:  { label: "65ch · ideal",  note: "Editorial comfort — our default" },
+          wide:   { label: "100ch · wide",  note: "Eye gets lost between lines" },
         },
-        headline: {
-          meta: "Headline",
-          weight: "300",
-          textA: "Silences also ",
-          textB: "have",
-          textC: " a voice.",
+        lhTitle: "Paired line-heights",
+        lhDesc:
+          "Display goes tight (0.95–1.1), body breathes (1.65), UI sits in the middle (1.5–1.55). No universal line-height.",
+      },
+
+      /* ---------- v. Text styles ---------- */
+      styles: {
+        title: "Text styles",
+        kicker: "long-form prose",
+          desc:
+            "The canonical building blocks of editorial prose: kicker, title, lead, drop cap, body paragraphs, blockquote, lists, links and captions. All built on the same tokens.",
+          kickerSample: "ESSAY · 03",
+        h1: "On typographic quietness",
+        h2: "Hierarchy without hierarchism",
+        h3: "The weight of the pause",
+        h4: "Small details that add up",
+        lead:
+          "Some types shout, others whisper. The ones that whisper age better — they invite the reader instead of demanding them.",
+        dropcap:
+          " good page of text begins in silence and ends in silence. What happens in between is reading — and reading is, above all, a delicate negotiation between the eye and rhythm.",
+        body1:
+          "Each paragraph is a breath. The line-height decides how long the reader can hold that breath before needing the next sip of air — and the measure decides how many words fit in each mouthful.",
+        body2:
+          "When the title shouts, the body falls silent. When the body asserts itself with clarity, the title can speak softly. That's the economy of hierarchy: enough contrast, no more.",
+        quote:
+          "Good typography is like air — no one notices until it's gone.",
+        quoteAttr: "— some typographer, somewhere",
+        ulItems: [
+          "Italic for emphasis, never for decoration.",
+          "Bold for visual search anchors, used sparingly.",
+          "All caps only in monospace, with generous tracking.",
+        ],
+        olItems: [
+          "Establish the body (16px / 1.65).",
+          "Define the measure (45–75 characters).",
+          "Calibrate the title from the body, not the other way around.",
+        ],
+        linksLead: "Links are part of the text — they should not ",
+        linkText: "interrupt the reading rhythm",
+        linksTrail: ". Discreet underline, stable color, visible focus.",
+        caption:
+          "Set in Fraunces · Atelier · first edition",
+      },
+
+      /* ---------- vi. Microtypography ---------- */
+      micro: {
+        title: "Microtypography",
+        kicker: "details that breathe",
+        desc:
+          "What separates good text from beautiful text lives in the details that [em]nobody sees[/em] — and that everybody feels. Here are the fine controls.",
+        numTitle: "Numerals: tabular vs proportional",
+        numDesc:
+          "In tables, numbers must [em]align vertically[/em] — use [em]tabular-nums[/em]. In running prose, proportional numerals breathe better.",
+        numProportional: "Proportional · in prose",
+        numTabular: "Tabular · in tables",
+        pairsTitle: "Editorial pairs",
+        avoid: "Avoid",
+        use: "Use",
+        pairs: [
+          { label: "Quotes",    bad: "\"morning\"", good: "“morning”", note: "Curly quotes in prose. Straight ones only in code." },
+          { label: "Em-dash",   bad: "Atelier - manual", good: "Atelier — manual", note: "Em-dash (—) separates thought. Hyphen (-) only joins words." },
+          { label: "Ellipsis",  bad: "...", good: "…", note: "A single character (…), not three dots in a row." },
+          { label: "Apostrophe", bad: "it's a draft", good: "it’s a draft", note: "Curly apostrophe (’), never the straight one (')." },
+        ],
+        wrapTitle: "Line wrapping (text-wrap)",
+        wrapDesc:
+          "[em]balance[/em] balances short titles across two lines; [em]pretty[/em] avoids orphans at the end of paragraphs. [em]normal[/em] is the historical default.",
+        wrapSample: "An editorial title that would land on exactly two lines",
+      },
+
+      /* ---------- vii. Accessibility ---------- */
+      a11y: {
+        title: "Typographic accessibility",
+        kicker: "legibility for everyone",
+        desc:
+          "Editorial typography isn't only aesthetic — it's reading. And reading is a right. These rules are non-negotiable.",
+        rules: [
+          { t: "Minimum legible size", b: "Body never below 14px (var(--text-sm)). Critical text at 16px. Caps captions can go to 10px thanks to generous tracking." },
+          { t: "Hierarchy by size + weight", b: "Never differentiate levels by weight alone (400 vs 500). Always combine size + weight + color." },
+          { t: "Contrast is typography", b: "Primary text > 7:1 (ink over bg). Auxiliary text > 4.5:1. Validated on both themes." },
+          { t: "Don't synthesize italic or bold", b: "Always use the real weights from the font. Synthesis produces distorted shapes that hurt reading." },
+          { t: "Respect browser zoom", b: "Use rem in critical layouts. Don't lock font-size in px without thinking about zoom." },
+          { t: "Typographic animation", b: "Honor prefers-reduced-motion. Text shouldn't dance — text should just be there." },
+        ],
+        darkTitle: "Typography in dark mode",
+        darkDesc:
+          "In dark mode, text wants slightly less weight — light serif fonts on dark backgrounds [em]gain visual mass[/em]. We keep the same tokens, but the ink colors (warmer, less saturated) compensate without touching weight.",
+      },
+
+      /* ---------- viii. Do's & Don'ts ---------- */
+      dosDonts: {
+        title: "Do's & Don'ts",
+        kicker: "editorial hygiene",
+        desc:
+          "Four common traps — and the editorial way out of each. Clean typography is mostly [em]the discipline of removal[/em].",
+        do: "Do",
+        dont: "Don't",
+        items: [
+          {
+            sample:
+              "Editorial typography demands rhythm. Left-aligned lines give the eye a fixed return point; centering long paragraphs steals that point and tires the reader.",
+            align: "left",
+            badStyle: { textAlign: "center" },
+            goodStyle: { textAlign: "left" },
+            note: "Don't center long paragraphs. Centering is for short titles and captions.",
+          },
+          {
+            sample:
+              "Justifying text without hyphenation produces gaps between words — vertical \"rivers\" that tear the page. If you must justify, enable [em]hyphens: auto[/em].",
+            align: "justify",
+            badStyle: { textAlign: "justify", hyphens: "manual" },
+            goodStyle: { textAlign: "left", hyphens: "auto" },
+            note: "Don't justify without hyphenation. Generally, prefer left-aligned.",
+          },
+          {
+            sample:
+              "More than two families in the same sentence is typography in identity crisis. Use serif for reading, mono for technical — and nothing else.",
+            align: "left",
+            badStyle: { fontFamily: "var(--font-mono)", fontSize: "var(--text-sm)" },
+            goodStyle: { fontFamily: "var(--font-serif)" },
+            note: "Don't mix families for decoration. Each family has a functional role.",
+          },
+          {
+            sample:
+              "Typographic hierarchy is a staircase of at most three steps. Four levels or more and the reader stops climbing — they leave the page.",
+            align: "left",
+            badStyle: { fontWeight: 700, fontSize: "var(--text-xs)", textTransform: "uppercase", letterSpacing: "0.1em" },
+            goodStyle: { fontWeight: 400 },
+            note: "Don't invent a fourth hierarchy level. If you need one, simplify the structure.",
+          },
+        ],
+      },
+    },
+
+    /* ------------- Voice & tone ------------- */
+    voice: {
+      lead: "Foundation · 04",
+      titleA: "The ",
+      titleB: "tone",
+      metaLabel: "Base",
+      meta: "Voice · writing",
+      intro:
+        "Typography is the shape of letters. [em]Voice[/em] is what those letters say — and how they behave when the reader is distracted, hurried, or in trouble. The Atelier writes like a quiet manual: contained, precise, honest, and human.",
+
+      principles: {
+        title: "Principles",
+        kicker: "i. base",
+        desc:
+          "Four pillars before any rule. Everything that follows — vocabulary, microcopy, punctuation — flows from these.",
+        quiet: {
+          name: "Quiet",
+          desc:
+            "Say what's needed, then stop. No marketing enthusiasm, no exclamation marks, no emojis. If a sentence can shrink, shrink it.",
+          tag: "calm",
         },
-        title: {
-          meta: "Title",
-          weight: "300",
-          text: "A well-breathed paragraph invites the reader in.",
+        precise: {
+          name: "Precise",
+          desc:
+            "Use the right word, not the next one. Avoid vague metaphors (\u201Camazing experience\u201D); prefer the concrete (\u201Ceditorial table with filters\u201D).",
+          tag: "exactness",
         },
-        body: {
-          meta: "Body serif",
-          weight: "400",
-          text:
-            "Atelier's typography leans on Fraunces — a modern serif with lively shapes, optical sizing and an expressive italic used only for emphasis.",
+        honest: {
+          name: "Honest",
+          desc:
+            "When something fails, say so. When it's beta, say so. Don't hide errors behind \u201Coops\u201D or disguise limits with promises.",
+          tag: "truth",
         },
-        caption: {
-          meta: "Caption",
-          weight: "500 · uppercase",
-          text: "Metadata · footer · label",
+        human: {
+          name: "Human",
+          desc:
+            "Write for a person, not a system. Use pronouns, contractions, and clear infinitive verbs. Cold is never courteous.",
+          tag: "care",
         },
-        mono: { meta: "Mono inline", weight: "400", text: "--accent: #c8361d;" },
+      },
+
+      tone: {
+        title: "Tone by context",
+        kicker: "ii. matrix",
+        desc:
+          "Voice stays constant; tone shifts. In errors, we're direct. In success, discreet. In marketing, sober. This matrix shows what changes per context.",
+        cols: {
+          context: "Context",
+          attrs: "Attributes",
+          do: "Good",
+          dont: "Avoid",
+        },
+        rows: {
+          error: {
+            label: "Error",
+            when: "something went wrong",
+            attrs: "direct · helpful · no blame",
+            good: "Couldn't save. Check your connection and try again.",
+            bad: "Oops! 😬 Something went wrong!!!",
+          },
+          success: {
+            label: "Success",
+            when: "action completed",
+            attrs: "discreet · matter-of-fact · no party",
+            good: "Changes saved.",
+            bad: "Awesome! 🎉 You nailed it — everything saved successfully!!",
+          },
+          empty: {
+            label: "Empty state",
+            when: "nothing to show yet",
+            attrs: "invitation · no blame · with exit",
+            good: "No projects here. Create the first one to get started.",
+            bad: "You haven't registered anything.",
+          },
+          destructive: {
+            label: "Destructive action",
+            when: "remove, delete, end",
+            attrs: "explicit · no hedging · with weight",
+            good: "Delete 12 items? This action cannot be undone.",
+            bad: "Are you sure you want to proceed with the operation?",
+          },
+          marketing: {
+            label: "Marketing",
+            when: "landing page, launch",
+            attrs: "sober · concrete · no superlative",
+            good: "Editorial components for small teams. In React, no dependencies.",
+            bad: "The ultimate solution! Revolutionize your workflow with the best experience!",
+          },
+          technical: {
+            label: "Technical",
+            when: "documentation, API, code",
+            attrs: "precise · pragmatic · no ornament",
+            good: "useT() returns { t, tr, raw }. tr() interpolates and formats; raw() returns the tree.",
+            bad: "This wonderful hook helps you so much with translation, just use it 😉",
+          },
+          loading: {
+            label: "Loading",
+            when: "short wait",
+            attrs: "neutral · short · no apology",
+            good: "Loading…",
+            bad: "Just hold on a sec, we're getting everything ready for you!",
+          },
+        },
+      },
+
+      vocab: {
+        title: "Vocabulary",
+        kicker: "iii. words",
+        desc:
+          "Small choices, repeated a thousand times, become voice. These tables list preferences the Atelier has already made for you. They're not law — they're the first option when doubt appears.",
+        ptTitle: "Português (BR)",
+        enTitle: "English",
+        cols: {
+          prefer: "Prefer",
+          avoid: "Avoid",
+          why: "Why",
+        },
+        pt: {
+          save: {
+            prefer: "Salvar",
+            avoid: "Gravar · Submeter",
+            why: "Salvar is the web's verb in PT-BR, direct.",
+          },
+          cancel: {
+            prefer: "Cancelar",
+            avoid: "Anular · Voltar atrás",
+            why: "Cancelar is clear and neutral.",
+          },
+          delete: {
+            prefer: "Excluir · Remover",
+            avoid: "Deletar",
+            why: "Native Portuguese; deletar is an avoidable anglicism.",
+          },
+          config: {
+            prefer: "Configurações · Preferências",
+            avoid: "Settings · Setup",
+            why: "Use full Portuguese. Setup only when installing.",
+          },
+          loading: {
+            prefer: "Carregando…",
+            avoid: "Aguarde · Só um instante",
+            why: "State, not request.",
+          },
+          submit: {
+            prefer: "Enviar · Salvar alterações",
+            avoid: "Submeter",
+            why: "Submeter feels bureaucratic and stiff.",
+          },
+          register: {
+            prefer: "Criar conta · Cadastrar",
+            avoid: "Registrar",
+            why: "Cadastrar is more common in apps; registrar pulls civic register.",
+          },
+          you: {
+            prefer: "Você",
+            avoid: "Tu · Vocês (plural)",
+            why: "Você is regionally neutral and formal enough.",
+          },
+          click: {
+            prefer: "Selecione · Toque · Escolha",
+            avoid: "Clique aqui",
+            why: "Works on mouse, touch, and keyboard.",
+          },
+          exit: {
+            prefer: "Sair",
+            avoid: "Logout · Deslogar",
+            why: "Sair is plain Portuguese.",
+          },
+        },
+        en: {
+          save: {
+            prefer: "Save",
+            avoid: "Submit changes",
+            why: "Save is the web's verb. Direct.",
+          },
+          cancel: {
+            prefer: "Cancel",
+            avoid: "Discard · Abort",
+            why: "Cancel is neutral. Discard implies loss; abort is harsh.",
+          },
+          delete: {
+            prefer: "Delete · Remove",
+            avoid: "Erase · Trash",
+            why: "Delete is unambiguous in software contexts.",
+          },
+          config: {
+            prefer: "Settings · Preferences",
+            avoid: "Setup · Configuration",
+            why: "Settings/Preferences are common; Setup means install.",
+          },
+          loading: {
+            prefer: "Loading…",
+            avoid: "Please wait · Just a moment",
+            why: "State, not request. The user is not the slow one.",
+          },
+          submit: {
+            prefer: "Save changes · Send",
+            avoid: "Submit",
+            why: "Submit feels bureaucratic. Be specific.",
+          },
+          register: {
+            prefer: "Create account · Sign up",
+            avoid: "Register",
+            why: "Register sounds civic. Sign up is the web standard.",
+          },
+          click: {
+            prefer: "Select · Choose · Tap",
+            avoid: "Click here",
+            why: "Works across mouse, touch, and keyboard.",
+          },
+          exit: {
+            prefer: "Sign out",
+            avoid: "Logout · Log off",
+            why: "Sign out is plain and complete.",
+          },
+          select: {
+            prefer: "Choose · Pick",
+            avoid: "Select an option from the dropdown",
+            why: "Choose is shorter and more human.",
+          },
+        },
+      },
+
+      cap: {
+        title: "Capitalization",
+        kicker: "iv. case",
+        desc:
+          "Sentence case by default; Title Case only for proper names and the brand. ALL CAPS only in tiny typographic labels (kicker, tags), never in paragraphs.",
+        sentenceLabel: "default",
+        sentenceTitle: "Sentence case",
+        sentenceDesc:
+          "Only the first letter is uppercase. Works for headings, buttons, labels, menus, hints, and any running text. It's the Atelier default.",
+        sentenceSample: "Account settings",
+        titleLabel: "exception",
+        titleTitle: "Title Case",
+        titleDesc:
+          "Each main word capitalized. Reserved for proper names, brands (Atelier, GitHub), and titles of works.",
+        titleSample: "Atelier · Style Manual",
+        examplesTitle: "Application",
+        examples: {
+          page: { where: "Page title", text: "Editorial principles" },
+          section: { where: "Section title", text: "Tone by context" },
+          button: { where: "Button", text: "Save changes" },
+          label: { where: "Field label", text: "Contact email" },
+          menu: { where: "Menu item", text: "About Atelier" },
+          brand: { where: "Brand", text: "Atelier" },
+          doc: { where: "Document", text: "Visual Identity Manual" },
+        },
+      },
+
+      punct: {
+        title: "Editorial punctuation",
+        kicker: "v. typography of writing",
+        desc:
+          "Correct marks aren't precious — they give breath and rhythm to text. Use the typographic forms, not the typewriter ones (straight quotes, hyphen instead of em-dash, three loose dots).",
+        cross:
+          "These marks also appear in [em]Typography · Microtypography[/em] from the mechanical side (font-feature, ligatures). Here we cover editorial usage.",
+        items: {
+          quotes: {
+            name: "Curly quotes",
+            use: "For quotation, speech, and irony. Always curly (\u201C \u201D), never straight (\").",
+            ex: "She said \u201Cquiet manual\u201D — and she meant it.",
+          },
+          apostrophe: {
+            name: "Apostrophe",
+            use: "Curly (\u2019), never straight. Used in English contractions and Portuguese elisions.",
+            ex: "It\u2019s a quiet manual. · D\u2019água.",
+          },
+          emdash: {
+            name: "Em-dash",
+            use: "For strong parentheticals or emphatic pauses. No spaces in English; spaces in Portuguese.",
+            ex: "Typography—the shape of letters—is half the work.",
+          },
+          endash: {
+            name: "En-dash",
+            use: "For numeric ranges and relations between two items. No spaces.",
+            ex: "Pages 12\u201318 · Boston\u2013NYC route",
+          },
+          ellipsis: {
+            name: "Ellipsis",
+            use: "Use the single character (\u2026), not three dots. Indicates continuation or trailing thought.",
+            ex: "Loading\u2026 · Maybe, but\u2026",
+          },
+          ampersand: {
+            name: "Ampersand",
+            use: "Only in proper names and logos (Drag & Drop, AT&T). In running text, write \u201Cand\u201D.",
+            ex: "Drag & Drop · Voice & tone",
+          },
+          nbsp: {
+            name: "Non-breaking space",
+            use: "Between number and unit, or between article and short noun, to prevent ugly line breaks.",
+            ex: "8\u00A0pt · $\u00A0120 · 24\u00A0h",
+          },
+          prime: {
+            name: "Prime · Double prime",
+            use: "For minutes/seconds and inches/feet. Don't confuse with quotes.",
+            ex: "5\u2032 9\u2033 · 24\u2032 30\u2033 N",
+          },
+        },
+      },
+
+      person: {
+        title: "Person & number",
+        kicker: "vi. who speaks, to whom",
+        desc:
+          "Three stances are at hand. Each has its moment: you for direct dialogue, we for shared agreement, neutral for system notices.",
+        whenLabel: "When to use:",
+        you: {
+          tag: "warm",
+          name: "You",
+          desc:
+            "The default stance. Works for most buttons, hints, help messages, and CTAs. Close without being intimate.",
+          when: "instructions, help, forms, button microcopy.",
+          ex: "You can edit this at any time.",
+        },
+        we: {
+          tag: "shared",
+          name: "We",
+          desc:
+            "When the Atelier (or the product) does something alongside the person. Establishes complicity without being corporate.",
+          when: "marketing, onboarding, change announcements.",
+          ex: "We've just redesigned the table. See what changed.",
+        },
+        neutral: {
+          tag: "formal",
+          name: "Neutral",
+          desc:
+            "For system messages, logs, status. No pronouns; the subject is the event. Reserve for situations where adding a person would force intimacy.",
+          when: "logs, status, automated messages, critical alerts.",
+          ex: "Connection restored. · Session expired.",
+        },
+      },
+
+      patterns: {
+        title: "Microcopy patterns",
+        kicker: "vii. living pieces",
+        desc:
+          "Patterns for the four places microcopy shows up most: buttons, placeholders, confirmations, and labels. Each pattern has a short rule — follow it unless you have strong reason not to.",
+        goodLabel: "good",
+        badLabel: "avoid",
+        items: {
+          button: {
+            name: "Buttons",
+            rule: "infinitive verb · no period",
+            desc:
+              "The button text says what's about to happen. Start with the verb, sentence case, no period. Specific beats generic.",
+            good: ["Save changes", "Create project", "Delete account", "Send invite"],
+            bad: ["OK", "Submit", "Click here", "Save changes."],
+          },
+          placeholder: {
+            name: "Placeholders",
+            rule: "example, never instruction",
+            desc:
+              "Placeholder is a format demo, not a label or a hint. Use gray text, real example, no \u201Center your\u2026\u201D.",
+            good: ["maria@atelier.studio", "+1 (555) 123-4567", "Search components…"],
+            bad: ["Enter your email here", "Please provide a phone number", "Type..."],
+          },
+          confirm: {
+            name: "Confirmations",
+            rule: "say what will change",
+            desc:
+              "Ask about the concrete action, not generic certainty. Show the impact and offer a clear way out.",
+            good: [
+              "Delete 12 items? This action cannot be undone.",
+              "Leave without saving? You'll lose this session's changes.",
+            ],
+            bad: ["Are you sure?", "Do you really want to continue?", "Confirm operation"],
+          },
+          label: {
+            name: "Field labels",
+            rule: "short noun · no colon",
+            desc:
+              "Use the data's name (\u201CEmail\u201D, not \u201CYour email here\u201D). No colon at the end. Mark optional ones with (optional).",
+            good: ["Email", "Phone (optional)", "Billing address"],
+            bad: ["Your email:", "Please enter your phone", "Email *"],
+          },
+          hint: {
+            name: "Hints (help text)",
+            rule: "one sentence · no period if fragment",
+            desc:
+              "Appears below the field. Quickly explain format or rule. Full sentence ends with period; fragment doesn't.",
+            good: ["Minimum 8 characters", "Used only for password recovery.", "Format: MM/DD/YYYY"],
+            bad: ["Please enter a strong, secure password!", "WARNING: required field"],
+          },
+          error: {
+            name: "Error messages",
+            rule: "what happened · how to fix",
+            desc:
+              "Say what failed in one sentence. Say what to do in another. Never blame the person; never use exclamation.",
+            good: [
+              "Email not found. Check that you typed it correctly.",
+              "Wrong password. Try again or reset your password.",
+            ],
+            bad: ["Error!", "Operation failed. Code: ERR_AUTH_001", "You typed it wrong!"],
+          },
+        },
+      },
+
+      ui: {
+        title: "UI messages",
+        kicker: "viii. common scenes",
+        desc:
+          "Five situations every interface faces. Each has a version written by the Atelier and one to avoid — useful for tuning your ear in a few minutes.",
+        goodLabel: "good",
+        badLabel: "avoid",
+        items: {
+          empty: {
+            name: "Empty state",
+            when: "list, table, or panel with no data yet.",
+            good: {
+              title: "No projects here",
+              body: "Create your first project to start using the Atelier.",
+              cta: "Create project",
+            },
+            bad: {
+              title: "No data",
+              body: "You haven't registered any project in the system yet.",
+              cta: "Click here",
+            },
+          },
+          notFound: {
+            name: "Page not found (404)",
+            when: "missing URL or removed content.",
+            good: {
+              title: "Page not found",
+              body: "The address may have changed, or the content was removed. Try going back to the home page.",
+              cta: "Go to home",
+            },
+            bad: {
+              title: "404 — Oops!",
+              body: "The page you're looking for doesn't exist! 😢",
+              cta: "Home",
+            },
+          },
+          loading: {
+            name: "Loading",
+            when: "short wait for data or action.",
+            good: {
+              title: "Loading…",
+              body: "Fetching the latest components.",
+              cta: "Cancel",
+            },
+            bad: {
+              title: "Please wait!",
+              body: "We're getting everything ready for you. Don't close this window!",
+              cta: "Wait",
+            },
+          },
+          success: {
+            name: "Success",
+            when: "completed action with visible effect.",
+            good: {
+              title: "Changes saved",
+              body: "Your settings have been updated.",
+              cta: "Continue",
+            },
+            bad: {
+              title: "Success!! 🎉",
+              body: "All done! You absolutely nailed it!",
+              cta: "Yay!",
+            },
+          },
+          offline: {
+            name: "Offline",
+            when: "lost connection or network error.",
+            good: {
+              title: "Offline",
+              body: "Your changes are saved locally and will sync when the connection returns.",
+              cta: "Try again",
+            },
+            bad: {
+              title: "Network error!",
+              body: "Could not connect to the server. Check your internet and try again later.",
+              cta: "Retry",
+            },
+          },
+        },
+      },
+
+      brand: {
+        title: "Brand as narrative",
+        kicker: "ix. bilingual · identity",
+        desc:
+          "The Atelier lives in two languages. The voice is the same — the inflection shifts. Here are the fine differences between PT and EN, and the metaphor that guides all writing.",
+        pt: {
+          name: "Português (BR)",
+          desc:
+            "Você as the default address; infinitive verbs in buttons; short commas; em-dash with spaces. No slang, no heavy regionalism, no institutional \u201Cwe\u201D.",
+          notes: [
+            "Use \u201Cvocê\u201D, never \u201Ctu\u201D.",
+            "Write \u201Ce-mail\u201D (with hyphen).",
+            "Em-dash with spaces: \u201Cthis — that\u201D.",
+            "Dates: 12 de abril, 2026 (long) or 12/04/2026.",
+            "Curly quotes \u201C \u201D, even in prose code.",
+          ],
+        },
+        en: {
+          name: "English",
+          desc:
+            "Plain English, US spelling. Contractions allowed (it's, don't). Em-dash without spaces. Title case for proper nouns only — sentence case everywhere else.",
+          notes: [
+            "Contractions are fine: it's, you'll, don't.",
+            "US spelling: color, organize, center.",
+            "Em-dash without spaces: \u201Cthis—that.\u201D",
+            "Dates: April 12, 2026 (long) or 04/12/2026.",
+            "Use the Oxford comma when it removes ambiguity.",
+          ],
+        },
+        metaphorTitle: "Quiet manual",
+        metaphor:
+          "[em]Good typography is like air: invisible when it works, suffocating when it fails.[/em] The same goes for voice. The Atelier doesn't want to be heard — it wants to be understood. When the interface speaks, it's only because there's something concrete to say. And when it stays silent, it's out of trust.",
+        codeTitle: "In code",
+        codeDesc:
+          "Components carry this voice by default. The lead, the intro, the microcopy — all already calibrated. Use the primitives and the voice comes along.",
+      },
+
+      dosDonts: {
+        title: "Do · don't",
+        do: "do",
+        dont: "don't",
+        items: [
+          {
+            do: "Say what happened and what to do next.",
+            dont: "Use \u201Coops\u201D, emojis, or exclamations to soften errors.",
+          },
+          {
+            do: "Start buttons with a verb, sentence case, no period.",
+            dont: "Write \u201COK\u201D, \u201CSubmit\u201D, or \u201CClick here\u201D.",
+          },
+          {
+            do: "Use placeholders as format examples.",
+            dont: "Repeat the label inside the placeholder.",
+          },
+          {
+            do: "Reserve title case for proper names and brands.",
+            dont: "Capitalize Every Word in Every Title.",
+          },
+          {
+            do: "Use \u201Csave\u201D in EN, \u201Csalvar\u201D in PT.",
+            dont: "Mix languages within the same interface.",
+          },
+        ],
       },
     },
 
     spacing: {
-      lead: "Foundation · 04",
+      lead: "Foundation · 05",
       titleA: "The ",
       titleB: "space",
       metaLabel: "Base",
@@ -552,7 +1325,7 @@ const en = {
     },
 
     icons: {
-      lead: "Foundation · 05",
+      lead: "Foundation · 06",
       titleA: "The ",
       titleB: "glyphs",
       metaLabel: "Library",
@@ -584,8 +1357,222 @@ const en = {
       },
     },
 
+    /* ------------- Elevation ------------- */
+    elevation: {
+      lead: "Foundation · 07",
+      titleA: "The ",
+      titleB: "elevation",
+      metaLabel: "Shadow",
+      meta: "Flat by default",
+      intro:
+        "Atelier is [em]flat by default[/em]. Shadow is signal — when present, it carries meaning: it separates a temporary context (open popover), reinforces an editorial surface (featured card in a listing), or communicates a drag in progress. Every shadow is tokenized; arbitrary opacity does not pass review.",
+      scaleTitle: "The scale",
+      scaleKicker: "--shadow-*",
+      scaleDesc:
+        "Four steps, from nothing to floating-card elevation. Moving from one level to the next roughly doubles the diffusion. Calibrated differently in light and dark — in dark mode, shadow needs to be more pronounced to survive the anthracite.",
+      whenTitle: "When to elevate",
+      whenKicker: "editorial decision",
+      whenDesc:
+        "Elevation only justifies its visual cost when it carries functional meaning. To divide content, prefer [em]--rule-soft[/em] — discreet border, no noise.",
+      rules: [
+        {
+          n: "I",
+          t: "Don't use",
+          b: "For any card, panel or section that IS in the page flow. The rule does the work.",
+        },
+        {
+          n: "II",
+          t: "Use --shadow-sm",
+          b: "On surfaces that [em]rest[/em] above the content: sticky header, navbar fixed on scroll.",
+        },
+        {
+          n: "III",
+          t: "Use --shadow-md",
+          b: "On popovers, dropdowns and tooltips — temporary overlays that need to detach themselves without dominating.",
+        },
+        {
+          n: "IV",
+          t: "Use --shadow-lg",
+          b: "On modals, drawers and dragged cards (drag preview). Maximum elevation is event, not state.",
+        },
+      ],
+      themeTitle: "Light vs Dark",
+      themeKicker: "comparison",
+      themeDesc:
+        "The same scene in both themes. In dark, the shadow is more opaque to overcome the reduced contrast against anthracite — the token solves this automatically.",
+    },
+
+    /* ------------- Radius ------------- */
+    radius: {
+      lead: "Foundation · 08",
+      titleA: "The ",
+      titleB: "corners",
+      metaLabel: "Border-radius",
+      meta: "Sharp corners by default",
+      intro:
+        "Atelier respects the right angle — an editorial inheritance from modernist covers and geometric typography. [em]--radius-none is the default[/em] and covers 90%+ of the DS. The scale exists not to soften, but to authorize controlled exceptions where curvature carries functional meaning, not decorative.",
+      scaleTitle: "The scale",
+      scaleKicker: "--radius-*",
+      scaleDesc:
+        "Five values, from absolute right angle to circular. The transition between adjacent levels is deliberately subtle (2px → 4px → 8px) — the big jump only happens when reaching [em]--radius-full[/em], which enters as a separate category: complete geometric form.",
+      whenTitle: "When to round",
+      whenKicker: "editorial decision",
+      whenDesc:
+        "Each exception must justify itself. These are the canonical cases where the soft corner passes review.",
+      rules: [
+        {
+          n: "I",
+          t: "--radius-sm (2px)",
+          b: "Discreet tags, kbd, very small status pills. Softens just enough so the pixel doesn't fight the text.",
+        },
+        {
+          n: "II",
+          t: "--radius-md (4px)",
+          b: "Buttons with personality, rounded badges, inputs in friendlier contexts (e.g., public forms).",
+        },
+        {
+          n: "III",
+          t: "--radius-lg (8px)",
+          b: "Cards, popovers and drawers that ask for softness — temporary overlays that want to step away from the main surface.",
+        },
+        {
+          n: "IV",
+          t: "--radius-full (9999px)",
+          b: "Avatar, Switch, dot pulse, status dots. Complete circular form — it's a category, not a gradient.",
+        },
+      ],
+    },
+
+    /* ------------- Z-Index ------------- */
+    zIndex: {
+      lead: "Foundation · 09",
+      titleA: "The ",
+      titleB: "layers",
+      metaLabel: "Stacking",
+      meta: "One fixed scale",
+      intro:
+        "Before this scale, each overlay declared its own ad-hoc z-index — Drawer 1000, Toast 9999, Combobox 100. The result: unpredictable stacking. Here we fix the official hierarchy in [em]nine named layers[/em]. If a component 'needs to fit between two levels', it's in the wrong layer.",
+      stackTitle: "The stack",
+      stackKicker: "--z-*",
+      stackDesc:
+        "From bottom to top, from background plane to absolute top. Each level is meant for a specific type of overlay — there's no no-man's-land between them.",
+      diagramTitle: "Editorial diagram",
+      diagramKicker: "the nine layers",
+      diagramDesc:
+        "Visualization of the stack as seen from the side. Skip-link always remains above — after all, it's last-resort a11y; it must survive even an open modal.",
+      rulesTitle: "Rules",
+      rulesKicker: "editorial decisions",
+      rules: [
+        {
+          n: "I",
+          t: "Don't interpolate",
+          b: "NEVER invent z-index between levels (e.g., 350). If the component 'needs to fit between', it's in the wrong layer.",
+        },
+        {
+          n: "II",
+          t: "Toaster > Modal",
+          b: "Notifications need to emerge even over dialogs. It's an editorial decision — information > temporary focus.",
+        },
+        {
+          n: "III",
+          t: "Palette > Toast",
+          b: "Command palette (⌘K) is the user's action; Toaster is system. Human action always wins.",
+        },
+        {
+          n: "IV",
+          t: "Skip-link on top",
+          b: "Always. Accessibility is function before aesthetics — it should be visible even above everything else.",
+        },
+      ],
+    },
+
+    /* ------------- Breakpoints ------------- */
+    breakpoints: {
+      lead: "Foundation · 10",
+      titleA: "The ",
+      titleB: "breakpoints",
+      metaLabel: "Responsive",
+      meta: "Five points, no drift",
+      intro:
+        "The legacy codebase contained [em]nine different values[/em] in @media queries (480, 560, 600, 700, 720, 900, 960, 1080, 1280). This scale consolidates into five editorial points covering every case. CSS Custom Properties don't yet work inside @media — the token lives parallel to the literal number, with a comment pairing the two.",
+      scaleTitle: "The scale",
+      scaleKicker: "--bp-*",
+      scaleDesc:
+        "Five points covering from phone to 2K+. Each name carries an editorial intent — it's not just screen size, it's the type of reading that happens there.",
+      visualizerTitle: "Visualizer",
+      visualizerKicker: "current viewport",
+      visualizerDesc:
+        "Resize the window and see which breakpoint is active. The bar below lights up at the current level and shows the corresponding literal number.",
+      jsTitle: "In JavaScript",
+      jsKicker: "useMediaQuery",
+      jsDesc:
+        "The [em]useMediaQuery[/em] hook from Phase 10 reads these tokens via [em]matchMedia[/em] and exposes a reactive boolean. In CSS, we keep the literal number paired with a comment of the token — pragmatic solution until CSSWG approves @media with vars.",
+    },
+
+    /* ------------- Density ------------- */
+    density: {
+      lead: "Foundation · 11",
+      titleA: "The ",
+      titleB: "density",
+      metaLabel: "Compactness",
+      meta: "Cascades via CSS vars",
+      intro:
+        "Components don't need a new prop to vary density. The DS exposes [em]four variables[/em] (padding-x, padding-y, gap, text) with default value = comfortable. Apply [em].is-density-compact[/em] or [em].is-density-spacious[/em] on any ancestor — variables cascade, and each component that consumes them reacts automatically.",
+      scaleTitle: "The three levels",
+      scaleKicker: "compact / comfortable / spacious",
+      scaleDesc:
+        "The same component in three densities, side by side. Compact for tables with lots of content, dense dashboards, dev tools. Spacious for landing, onboarding, discovery contexts.",
+      tokensTitle: "The tokens",
+      tokensKicker: "--density-*",
+      tokensDesc:
+        "Four variables that components consume. The default at :root is [em]comfortable[/em] — without a class prefix, any component comes in comfortable mode.",
+      howTitle: "How to apply",
+      howKicker: "scoping",
+      howDesc:
+        "Apply the class on a common ancestor — from an isolated <section> to the entire <main>. CSS Custom Properties cascade by default; no component needs to be aware of the change.",
+    },
+
+    /* ------------- Motion ------------- */
+    motion: {
+      lead: "Foundation · 12",
+      titleA: "The ",
+      titleB: "motion",
+      metaLabel: "Animation",
+      meta: "Formal layer · zero-deps",
+      intro:
+        "Before Phase 4, the DS used ad-hoc transitions — each component decided its own duration and curve. Now there's a shared vocabulary: five primitives ([em]Transition / Fade / Slide / Scale / Collapse[/em]), a scroll wrapper ([em]ScrollReveal[/em]), and page transitions. Everything respects prefers-reduced-motion automatically.",
+      durTitle: "Durations",
+      durKicker: "--dur-*",
+      durDesc: "Four points: micro-feedback, default, editorial transitions, page-level. Curate the time, not the opinion.",
+      easeTitle: "Easings",
+      easeKicker: "--ease-*",
+      easeDesc:
+        "Six named curves. [em]--ease[/em] is the default (smooth in-out); use [em]--ease-out[/em] for entry, [em]--ease-in[/em] for exit. The rest are exceptions — discuss before adding a seventh.",
+      primTitle: "Primitives",
+      primKicker: "<Fade> · <Slide> · <Scale>",
+      primDesc:
+        "Shortcuts over <Transition>. Take a single child and inject className + style — no extra DOM wrapper. Toggle to see entry/exit.",
+      collapseTitle: "Collapse",
+      collapseKicker: "height: auto",
+      collapseDesc:
+        "Animates height correctly — measures with getBoundingClientRect, transitions, restores auto. Useful for accordions, disclosure, generic expand/collapse.",
+      collapseOpen: "open",
+      collapseClose: "close",
+      revealTitle: "ScrollReveal",
+      revealKicker: "IntersectionObserver",
+      revealDesc:
+        "Wrapper that animates entry as the element appears in the viewport. Direction (up/down/left/right), delay, threshold. Once=true disconnects after first entry (default).",
+      pageTitle: "Page transitions",
+      pageKicker: "usePageTransition",
+      pageDesc:
+        "Lightweight hook consumed by the router — instead of a complex state machine, uses the React strategy: [em]key={current}[/em] forces remount, CSS animates entry. Scroll persistence opt-in via flag.",
+      rulesTitle: "When NOT to animate",
+      rulesKicker: "editorial decisions",
+      rulesDesc: "Every animation costs attention. These are the rules that filter exception from excess.",
+    },
+
     buttons: {
-      lead: "Component · 06",
+      lead: "Component · 13",
       titleA: "The ",
       titleB: "buttons",
       metaLabel: "Variants",
@@ -637,7 +1624,7 @@ const en = {
     },
 
     inputs: {
-      lead: "Component · 07",
+      lead: "Component · 14",
       titleA: "The ",
       titleB: "fields",
       metaLabel: "Types",
@@ -666,7 +1653,7 @@ const en = {
     },
 
     controls: {
-      lead: "Component · 08",
+      lead: "Component · 15",
       titleA: "The ",
       titleB: "controls",
       metaLabel: "Binary",
@@ -692,7 +1679,7 @@ const en = {
     },
 
     badges: {
-      lead: "Component · 09",
+      lead: "Component · 16",
       titleA: "The ",
       titleB: "badges",
       metaLabel: "Small",
@@ -722,7 +1709,7 @@ const en = {
     },
 
     avatars: {
-      lead: "Component · 10",
+      lead: "Component · 17",
       titleA: "The ",
       titleB: "avatars",
       metaLabel: "Identity",
@@ -779,7 +1766,7 @@ const en = {
     },
 
     alerts: {
-      lead: "Component · 11",
+      lead: "Component · 18",
       titleA: "The ",
       titleB: "alerts",
       metaLabel: "Variants",
@@ -821,7 +1808,7 @@ const en = {
     },
 
     cards: {
-      lead: "Component · 12",
+      lead: "Component · 19",
       titleA: "The ",
       titleB: "cards",
       metaLabel: "Blocks",
@@ -892,7 +1879,7 @@ const en = {
     },
 
     tabs: {
-      lead: "Component · 13",
+      lead: "Component · 20",
       titleA: "The ",
       titleB: "tabs",
       metaLabel: "Navigation",
@@ -970,7 +1957,7 @@ const en = {
     },
 
     tables: {
-      lead: "Component · 14",
+      lead: "Component · 21",
       titleA: "The ",
       titleB: "tables",
       metaLabel: "Data",
@@ -992,7 +1979,7 @@ const en = {
     },
 
     charts: {
-      lead: "Component · 15",
+      lead: "Component · 22",
       titleA: "The ",
       titleB: "charts",
       metaLabel: "Visualization",
@@ -1079,7 +2066,7 @@ const en = {
     },
 
     overlays: {
-      lead: "Component · 16",
+      lead: "Component · 23",
       titleA: "The ",
       titleB: "overlays",
       metaLabel: "Focus",
@@ -1111,7 +2098,7 @@ const en = {
     },
 
     feedback: {
-      lead: "Component · 17",
+      lead: "Component · 24",
       titleA: "The ",
       titleB: "return",
       metaLabel: "Progress · Toast",
@@ -1140,7 +2127,7 @@ const en = {
     },
 
     dropzone: {
-      lead: "Component · 18",
+      lead: "Component · 25",
       titleA: "The ",
       titleB: "dropzone",
       metaLabel: "Files",
@@ -1170,7 +2157,7 @@ const en = {
     },
 
     pagination: {
-      lead: "Component · 19",
+      lead: "Component · 26",
       titleA: "The ",
       titleB: "pagination",
       metaLabel: "Long list",
@@ -1213,7 +2200,7 @@ const en = {
     },
 
     breadcrumbs: {
-      lead: "Component · 20",
+      lead: "Component · 27",
       titleA: "The ",
       titleB: "breadcrumbs",
       metaLabel: "Location",
@@ -1253,7 +2240,7 @@ const en = {
     },
 
     skeleton: {
-      lead: "Component · 21",
+      lead: "Component · 28",
       titleA: "The ",
       titleB: "skeletons",
       metaLabel: "Wait",
@@ -1292,7 +2279,7 @@ const en = {
 
     /* ------------- Popover ------------- */
     popover: {
-      lead: "Advanced · 22",
+      lead: "Advanced · 32",
       titleA: "The ",
       titleB: "popover",
       metaLabel: "Overlay",
@@ -1354,7 +2341,7 @@ const en = {
 
     /* ------------- DropdownMenu ------------- */
     dropdownMenu: {
-      lead: "Advanced · 23",
+      lead: "Advanced · 33",
       titleA: "The ",
       titleB: "menus",
       metaLabel: "Actions",
@@ -1418,7 +2405,7 @@ const en = {
 
     /* ------------- ContextMenu ------------- */
     contextMenu: {
-      lead: "Advanced · 24",
+      lead: "Advanced · 34",
       titleA: "The ",
       titleB: "context menu",
       metaLabel: "Right-click",
@@ -1464,7 +2451,7 @@ const en = {
 
     /* ------------- Drawer ------------- */
     drawer: {
-      lead: "Advanced · 25",
+      lead: "Advanced · 35",
       titleA: "The ",
       titleB: "drawer",
       metaLabel: "Side modal",
@@ -1531,7 +2518,7 @@ const en = {
 
     /* ------------- Toaster ------------- */
     toaster: {
-      lead: "Advanced · 26",
+      lead: "Advanced · 36",
       titleA: "The ",
       titleB: "toaster",
       metaLabel: "Notifications",
@@ -1608,7 +2595,7 @@ const en = {
 
     /* ------------- Combobox ------------- */
     combobox: {
-      lead: "Advanced · 27",
+      lead: "Advanced · 37",
       titleA: "The ",
       titleB: "combobox",
       metaLabel: "Searchable select",
@@ -1674,7 +2661,7 @@ const en = {
 
     /* ------------- RangeSlider ------------- */
     slider: {
-      lead: "Advanced · 28",
+      lead: "Advanced · 38",
       titleA: "The ",
       titleB: "range slider",
       metaLabel: "Numeric",
@@ -1741,7 +2728,7 @@ const en = {
 
     /* ------------- Calendar ------------- */
     calendar: {
-      lead: "Advanced · 29",
+      lead: "Advanced · 39",
       titleA: "The ",
       titleB: "calendar",
       metaLabel: "Dates",
@@ -1799,7 +2786,7 @@ const en = {
 
     /* ------------- DatePicker ------------- */
     datePicker: {
-      lead: "Advanced · 30",
+      lead: "Advanced · 40",
       titleA: "The ",
       titleB: "date picker",
       metaLabel: "Date input",
@@ -1859,7 +2846,7 @@ const en = {
 
     /* ------------- Carousel ------------- */
     carousel: {
-      lead: "Advanced · 31",
+      lead: "Advanced · 41",
       titleA: "The ",
       titleB: "carousel",
       metaLabel: "Slides",
@@ -1921,7 +2908,7 @@ const en = {
 
     /* ------------- TreeView ------------- */
     tree: {
-      lead: "Advanced · 32",
+      lead: "Advanced · 42",
       titleA: "The ",
       titleB: "tree view",
       metaLabel: "Hierarchy",
@@ -1971,7 +2958,7 @@ const en = {
 
     /* ------------- ResizablePanels ------------- */
     resizable: {
-      lead: "Advanced · 33",
+      lead: "Advanced · 43",
       titleA: "The ",
       titleB: "resizable panels",
       metaLabel: "Layout",
@@ -2046,7 +3033,7 @@ const en = {
 
     /* ------------- ColorPicker ------------- */
     colorPicker: {
-      lead: "Advanced · 34",
+      lead: "Advanced · 44",
       titleA: "The ",
       titleB: "color picker",
       metaLabel: "Color",
@@ -2097,7 +3084,7 @@ const en = {
 
     /* ------------- Markdown ------------- */
     markdown: {
-      lead: "Advanced · 35",
+      lead: "Advanced · 45",
       titleA: "The ",
       titleB: "markdown viewer",
       metaLabel: "Text",
@@ -2136,7 +3123,7 @@ const en = {
 
     /* ------------- Shortcuts ------------- */
     shortcuts: {
-      lead: "Advanced · 36",
+      lead: "Advanced · 46",
       titleA: "The ",
       titleB: "shortcuts",
       metaLabel: "Keyboard",
@@ -2191,7 +3178,7 @@ const en = {
 
     /* ------------- VirtualList ------------- */
     virtualList: {
-      lead: "Advanced · 37",
+      lead: "Advanced · 47",
       titleA: "The ",
       titleB: "virtual list",
       metaLabel: "Performance",
@@ -2238,7 +3225,7 @@ const en = {
 
     /* ------------- DragDrop ------------- */
     dragDrop: {
-      lead: "Advanced · 38",
+      lead: "Advanced · 48",
       titleA: "The ",
       titleB: "drag & drop",
       metaLabel: "Interaction",
@@ -2285,7 +3272,7 @@ const en = {
     },
 
     forms: {
-      lead: "Pattern · 39",
+      lead: "Pattern · 49",
       titleA: "The ",
       titleB: "forms",
       metaLabel: "Composition",
@@ -2325,7 +3312,7 @@ const en = {
     },
 
     stepper: {
-      lead: "Pattern · 40",
+      lead: "Pattern · 50",
       titleA: "The ",
       titleB: "stepper",
       metaLabel: "Multi-step",
@@ -2369,7 +3356,7 @@ const en = {
     },
 
     emptyStates: {
-      lead: "Pattern · 41",
+      lead: "Pattern · 51",
       titleA: "The ",
       titleB: "emptiness",
       metaLabel: "No content",
@@ -2419,7 +3406,7 @@ const en = {
     },
 
     sidebar: {
-      lead: "Pattern · 42",
+      lead: "Pattern · 52",
       titleA: "The ",
       titleB: "sidebar",
       metaLabel: "Navigation",
@@ -2518,7 +3505,7 @@ const en = {
     },
 
     navbar: {
-      lead: "Pattern · 43",
+      lead: "Pattern · 53",
       titleA: "The ",
       titleB: "navbar",
       metaLabel: "Navigation",
@@ -2750,7 +3737,7 @@ const en = {
     },
 
     accessibility: {
-      lead: "Reference · 44",
+      lead: "Reference · 54",
       titleA: "On ",
       titleB: "accessibility",
       metaLabel: "Conformance",
@@ -2815,6 +3802,33 @@ const en = {
         desc: "The default theme's color combinations pass WCAG AA (4.5:1 for text). Use the [em]Studio[/em] to audit custom themes.",
         caption: "Default light theme contrast ratios.",
       },
+      focusHooks: {
+        title: "Focus hooks",
+        kicker: "useFocusTrap · useFocusReturn · useRovingTabIndex",
+        desc: "Focus logic that lived scattered across Drawer/Popover/Calendar/TreeView is now public in [em]src/lib/hooks[/em]. Same signature, same cleanup — any new overlay can reuse.",
+        caption: "The three public focus hooks.",
+        thHook: "Hook",
+        thPurpose: "Purpose",
+        items: [
+          { hook: "useFocusTrap(ref, active?)", purpose: "Traps Tab/Shift+Tab inside the ref. Wraps at the edges. Use in modals, drawers, popovers." },
+          { hook: "useFocusReturn(active?)", purpose: "Captures focus before mount and restores on unmount — pair with useFocusTrap." },
+          { hook: "useRovingTabIndex(count, options?)", purpose: "Arrow-key navigation in lists/grids — only one item gets tabIndex=0 at a time." },
+        ],
+      },
+      rtl: {
+        title: "RTL · Right-to-left",
+        kicker: "dir=rtl ready",
+        desc: "[em]LocaleProvider[/em] applies dir=rtl on <html> automatically for locales that require it (ar/he/fa/ur), and exposes a manual override at [em]Settings → Direction[/em] for preview. Directional glyphs (chevrons, breadcrumbs) and Drawer.left/right are mirrored via CSS. A full audit of the legacy CSS is progressive debt — replace [em]padding-left[/em] with [em]padding-inline-start[/em], etc.",
+        tipTitle: "How to test now",
+        tipBody: "Open the settings menu (⋯) and switch [em]Direction[/em] to [em]RTL[/em]. The shell layout adapts; navigate a few pages and report regressions — they'll come in as progressive improvements.",
+      },
+      tests: {
+        title: "Automated tests",
+        kicker: "vitest + testing-library",
+        desc: "Setup ready: [em]vitest[/em] (jsdom) + [em]@testing-library/react[/em] + [em]user-event[/em]. Commands: [em]npm run test[/em] (CI), [em]npm run test:watch[/em] (dev). Initial coverage in [em]src/lib[/em] (hooks, contrast). Adding tests per component is ongoing — every new interactive component lands with at least one keyboard smoke.",
+        tipTitle: "jsdom polyfills already configured",
+        tipBody: "[em]matchMedia[/em], [em]IntersectionObserver[/em] and [em]ResizeObserver[/em] are polyfilled in [em]src/test/setup.ts[/em] — Phase 10 environment hooks work in tests with no ad-hoc mocks.",
+      },
       aria: {
         title: "ARIA & screen readers",
         kicker: "semantic html first",
@@ -2861,16 +3875,43 @@ const en = {
       },
       export: {
         intro:
-          "Paste the block below into the [em]:root[/em] of your CSS to reproduce this combination in your project.",
+          "Pick the format that fits your pipeline. [em]theme.css[/em] pastes straight into [em]:root[/em]; [em]tokens.json[/em] follows the W3C DTCG format; [em]theme.ts[/em] exposes a typed object for consuming apps.",
+        formatLabel: "Format",
         copy: "Copy",
         copied: "Copied",
-        download: "Download .css",
+        download: "Download file",
       },
       actions: {
         shuffle: "Shuffle",
         reset: "Reset",
         export: "Export tokens",
         hideExport: "Hide tokens",
+        a11y: "Accessibility",
+        hideA11y: "Hide accessibility",
+        import: "Import",
+        hideImport: "Hide import",
+      },
+      import: {
+        label: "Import external tokens",
+        intro:
+          "Paste, drag or pick a [em].css[/em] file ([em]:root { --token: ... }[/em]) or [em].json[/em] (W3C DTCG or flat format). Studio detects the format, shows preview, and warns on unknown tokens. Applying overrides any preset.",
+        dropHint: "Drag a .css or .json file here",
+        dropping: "Drop to import",
+        choose: "Or pick a file",
+        placeholder: "Paste content here:\n\n:root {\n  --ink: #1a1a1a;\n  --accent: #c8361d;\n}\n\nor JSON DTCG:\n\n{\n  \"color\": {\n    \"ink\": { \"$value\": \"#1a1a1a\", \"$type\": \"color\" }\n  }\n}",
+        more: "more tokens",
+        showWarnings: "Show warnings",
+        apply: "Apply",
+        clear: "Clear import",
+      },
+      a11y: {
+        label: "WCAG contrast check",
+        intro:
+          "Each pair is the real contrast of the current theme against the [em]WCAG 2.x[/em] threshold. Red indicates failure at [em]AA[/em] (4.5:1 for normal text, 3:1 for large text).",
+        sizeNormal: "normal text",
+        sizeLarge: "large text",
+        aaLarge: "AA large",
+        fail: "Fail",
       },
       preview: {
         typeKicker: "01 · Typography",
@@ -2993,6 +4034,1004 @@ const en = {
         tx3: "Shipping (print)",
         tx4: "Monthly sponsorship",
         tx5: "Postal surcharge",
+      },
+    },
+
+    /* ============================================================ */
+    roadmap: {
+      lead: "A living manual",
+      titleA: "The road",
+      titleB: "ahead",
+      metaLabel: "Updated",
+      intro:
+        "This document is the single source of truth for what has shipped and what's coming. Each [em]phase[/em] carries its scope, internal dependencies and acceptance criteria. Filter, search, and click any shipped component to jump straight to its docs.",
+
+      progress: {
+        label: "shipped",
+      },
+      search: {
+        label: "Search the roadmap",
+        placeholder: "Search phase, component, dependency…",
+      },
+      filters: {
+        all: "All",
+        statusLabel: "Status",
+        priorityLabel: "Priority",
+        pendingOnly: "Only what's left",
+      },
+      status: {
+        done: "Shipped",
+        next: "Next",
+        ongoing: "Ongoing",
+      },
+      priority: {
+        high: "High priority",
+        medium: "Medium priority",
+        ongoing: "Ongoing",
+        none: "—",
+      },
+      principles: {
+        kicker: "Pillars",
+        titleA: "Non-negotiable",
+        titleB: "principles",
+        desc: "Every roadmap task must respect these pillars — any trade-off that breaks one becomes a discussion before becoming a PR.",
+      },
+      phases: {
+        kicker: "Timeline",
+        titleA: "Phases",
+        titleB: "& items",
+        singular: "Phase",
+        empty: "No phases match the current filters.",
+        count: "{n} phase(s) visible with the current filters.",
+      },
+      delivered: {
+        openDoc: "Open documentation",
+      },
+      task: {
+        scope: "Scope",
+        deps: "Internal dependencies",
+        acceptance: "Acceptance criteria",
+      },
+      conventions: {
+        kicker: "How to contribute",
+        titleA: "PR",
+        titleB: "conventions",
+        desc: "Practical rules that prevent future technical debt. Every PR for a new component must follow the checklist below.",
+      },
+      sequence: {
+        kicker: "Suggested order",
+        titleA: "Recommended",
+        titleB: "sequence",
+        desc: "The order in which each phase delivers the most value. Adjustable based on product priority.",
+      },
+    },
+
+    /* ============================================================ */
+    dataTable: {
+      lead: "Component · 29",
+      titleA: "The ",
+      titleB: "table",
+      metaLabel: "Data Display",
+      meta: "Composable DataTable",
+      intro:
+        "The densest piece in the DS. Header with visual sort, typed per-column filters ([em]text · select · multi · range · date-range[/em]), single or multi selection, integrated pagination and [em]opt-in virtualization[/em] for thousand-row lists. 100% composable API: declare columns once, mount freely.",
+      basic: {
+        title: "Basic table",
+        kicker: "default",
+        caption:
+          "Sort by column (click on header). Mono-sort by default; hold [em]Shift[/em] and click to stack.",
+      },
+      filters: {
+        title: "Per-column filters",
+        kicker: "<DataTableFilters />",
+        caption:
+          "Each column declares its own [em]filter[/em]. The [em]<DataTableFilters />[/em] component collects them all in a toolbar above the table. Supported types: text, select, multi (Combobox), range (RangeSlider) and date-range (DateRangePicker).",
+      },
+      select: {
+        title: "Selection & density",
+        kicker: "selectionMode + density",
+        caption:
+          "Currently {count} row(s) selected. Header checkbox toggles all visible. [em]compact[/em] density for content-heavy tables.",
+      },
+      multisort: {
+        title: "Multi-sort",
+        kicker: "Shift+click",
+        caption:
+          "Click while holding [em]Shift[/em] to stack criteria. The number next to the arrow indicates the criterion's order.",
+      },
+      virtual: {
+        title: "Virtualization",
+        kicker: "virtualize",
+        caption:
+          "5,000 rows — only visible ones render. Div-based layout with ARIA (role=table/row/cell): keeps accessibility without the display:block hacks on <table>.",
+      },
+      composition: {
+        title: "Composition",
+        titleB: "tree",
+        kicker: "structure",
+        caption:
+          "DataTable is a Provider. You compose freely — replace [em]DataTableHeader[/em] with your own thead for full custom.",
+      },
+    },
+
+    /* ============================================================ */
+    timeline: {
+      lead: "Component · 30",
+      titleA: "The ",
+      titleB: "timeline",
+      metaLabel: "Data Display",
+      meta: "Vertical and horizontal",
+      intro:
+        "Events in time, told as chapters. Vertical for dense history (changelog, activity); horizontal for short flows (onboarding, steps). Markers vary from [em]dot[/em] to [em]glyph[/em], and the [em]now[/em] separator divides past from future.",
+      vertical: {
+        title: "Vertical (default)",
+        kicker: "orientation='vertical'",
+        caption:
+          "The editorial orientation: each item takes one row, with date on top and free description below.",
+        demo: {
+          nowLabel: "Now",
+          items: [
+            {
+              date: "May 12, 2025",
+              title: "Wave 1 — Foundations",
+              body: "Pagination, Breadcrumbs, Skeleton, Stepper and the Accessibility page.",
+            },
+            {
+              date: "Jun 03, 2025",
+              title: "Wave 2 — Wishlist",
+              body: "Popover, DropdownMenu, ContextMenu, Drawer, Combobox, RangeSlider, Calendar.",
+            },
+            {
+              date: "Today",
+              title: "Wave 3 — Data display",
+              body: "DataTable, Timeline, TagInput, KBD.",
+            },
+            {
+              date: "Next",
+              title: "Wave 4 — Motion",
+              body: "FadeIn, SlideIn, Page transitions via Motion library.",
+            },
+          ],
+        },
+      },
+      markers: {
+        title: "Markers",
+        kicker: "visual variants",
+        caption:
+          "Four ready variants — dot, hollow, number, glyph. For SVG or own icons, use [em]variant='glyph'[/em] and pass via children.",
+        demo: {
+          items: [
+            { title: "dot", body: "Default marker — filled circle." },
+            { title: "hollow", body: "Future or pending item." },
+            {
+              title: "number",
+              body: "Numbered sequence — good for ordered steps.",
+            },
+            {
+              title: "glyph",
+              body: "Arbitrary glyph — emoji, symbol, inline SVG.",
+            },
+          ],
+        },
+      },
+      horizontal: {
+        title: "Horizontal",
+        kicker: "orientation='horizontal'",
+        caption:
+          "For short sequences — onboarding, checkout, process steps. Scrolls horizontally when needed.",
+        demo: {
+          toggleVertical: "Vertical",
+          toggleHorizontal: "Horizontal",
+          items: [
+            {
+              date: "Start",
+              title: "Briefing",
+              body: "Scope definition.",
+            },
+            {
+              date: "Wk 2",
+              title: "Design",
+              body: "Wireframes and mockups.",
+            },
+            {
+              date: "Wk 4",
+              title: "Build",
+              body: "Implementation in code.",
+            },
+            {
+              date: "Wk 8",
+              title: "Launch",
+              body: "Deploy and communication.",
+            },
+          ],
+        },
+      },
+      composition: {
+        title: "Composition",
+        titleB: "tree",
+        kicker: "structure",
+        caption:
+          "Each item is a chapter: marker + content. Use [em]TimelineNow[/em] as a divider between past and future.",
+        freeChildren: "(free children)",
+      },
+    },
+
+    /* ============================================================ */
+    tagInput: {
+      lead: "Component · 31",
+      titleA: "Tag ",
+      titleB: "collector",
+      metaLabel: "Data Display",
+      meta: "TagInput · MultiInput",
+      intro:
+        "When the reader needs to add [em]several free entries[/em] — keywords, emails, hashtags. Each tag becomes a removable chip. Supports synchronous validation, custom separators (comma, semicolon, space), max limit and read-only mode.",
+      default: {
+        title: "Default",
+        kicker: "default",
+        caption:
+          "Enter or comma commit. Backspace on empty field removes the last tag.",
+      },
+      validate: {
+        title: "Validation",
+        kicker: "validate",
+        caption:
+          "The [em]validate[/em] function returns [em]true[/em], [em]false[/em] or an inline error message.",
+      },
+      max: {
+        title: "Max limit",
+        kicker: "maxTags",
+        caption:
+          "[em]maxTags={3}[/em] disables the input when the limit is reached. [em]unique[/em] blocks duplicates (case-insensitive).",
+      },
+      readonly: {
+        title: "Read-only",
+        kicker: "readOnly",
+        caption: "Shows tags without allowing edits — useful in read views.",
+      },
+      tag: {
+        title: "Standalone Tag",
+        kicker: "<Tag />",
+        caption:
+          "The Tag component is exported separately — useful for filter lists, search chips, etc.",
+      },
+      composition: {
+        title: "Composition",
+        titleB: "tree",
+        kicker: "structure",
+        caption:
+          "TagInput wraps Tags + input. Each Tag carries its own remove button.",
+      },
+    },
+
+    /* ============================================================ */
+    kbd: {
+      lead: "Reference · 56",
+      titleA: "Keys & ",
+      titleB: "inline code",
+      metaLabel: "Primitives",
+      meta: "KBD · KbdCombo · InlineCode",
+      intro:
+        "Two thin primitives to [em]render keys[/em] in the middle of a sentence or [em]short code snippets[/em] inline. They're typographic formatters — reusable in docs, Shortcuts mappings, contextual help.",
+      variants: {
+        title: "Variants",
+        kicker: "boxed · outline · subtle",
+        caption:
+          "Three visual weights. [em]Boxed[/em] (default) has more body, [em]subtle[/em] is the most discreet.",
+      },
+      sizes: {
+        title: "Sizes",
+        kicker: "size='sm' | 'md'",
+        caption: "Use [em]sm[/em] for dense areas; [em]md[/em] for paragraphs.",
+      },
+      combo: {
+        title: "Combinations",
+        kicker: "<KbdCombo />",
+        caption:
+          "Helper to join multiple keys. On Mac use without separator (⌘K); on Windows pass [em]separator='+'[/em] (Ctrl+K).",
+      },
+      inline: {
+        title: "In paragraph",
+        kicker: "prose",
+        caption:
+          "Components align to the baseline and respect the surrounding text size.",
+        paragraph:
+          "Press {cmd} to open the search palette, or {esc} to cancel.",
+      },
+      code: {
+        title: "InlineCode",
+        kicker: "code snippet",
+        caption:
+          "For function calls, terminal commands and flags inside the text.",
+        paragraph:
+          "Use the {hook} hook for local state, or run {cmd} to install dependencies. Also accepts {flag} to enable strict types.",
+      },
+      composition: {
+        title: "Composition",
+        titleB: "tree",
+        kicker: "structure",
+        caption:
+          "Three simple, independent pieces — each one is a decorated HTML tag.",
+      },
+    },
+
+    /* ============================================================ */
+    hooks: {
+      lead: "Reference · 57",
+      titleA: "The ",
+      titleB: "hooks",
+      metaLabel: "Utilities",
+      meta: "14 hooks · zero deps",
+      intro:
+        "Low-level logic that used to be scattered — click-outside in five overlays, scroll-lock in three modals, controllable-state copied from Radix ad-hoc — now lives in [em]public hooks[/em] imported from a single path. SSR-safe, with proper cleanup, and zero external dependencies.",
+
+      env: {
+        title: "Environment hooks",
+        kicker: "10.1 · matchMedia · observers",
+        desc: "React to viewport, OS and DOM properties around the component.",
+      },
+      dom: {
+        title: "DOM hooks",
+        kicker: "10.2 · listeners · interaction",
+        desc: "Encapsulate interaction patterns — click outside, scroll lock, local shortcuts — with automatic cleanup.",
+      },
+      state: {
+        title: "State hooks",
+        kicker: "10.3 · storage · controllable",
+        desc: "Composition of useState for recurring patterns — persistence, debounce, controllable prop, previous value.",
+      },
+
+      sample: {
+        signature: "signature",
+        example: "example",
+      },
+
+      discovery: {
+        title: "Which hook to use when",
+        kicker: "decision matrix",
+        desc: "Discovery table: the problem on the left, the recommended hook on the right.",
+        rows: [
+          { p: "React to a breakpoint",                    h: "useMediaQuery" },
+          { p: "Disable an animation if the user asked",   h: "usePrefersReducedMotion" },
+          { p: "Know the window size",                     h: "useWindowSize" },
+          { p: "Trigger when an element enters the viewport", h: "useIntersectionObserver" },
+          { p: "React to a container's size",              h: "useResizeObserver" },
+          { p: "Close a popover on outside click",         h: "useClickOutside" },
+          { p: "Lock the body scroll",                     h: "useScrollLock" },
+          { p: "Add a typed event listener",               h: "useEventListener" },
+          { p: "Local keyboard shortcut (Esc, Enter)",     h: "useKeyPress" },
+          { p: "Persist state across reloads",             h: "useLocalStorage" },
+          { p: "Delay a value's propagation",              h: "useDebounce" },
+          { p: "Limit a value's frequency",                h: "useThrottle" },
+          { p: "Accept controlled OR uncontrolled prop",   h: "useControllableState" },
+          { p: "Compare with the previous value",          h: "usePrevious" },
+          { p: "Effect that skips the first run",          h: "useUpdateEffect" },
+        ],
+      },
+
+      domain: {
+        title: "Domain hooks",
+        kicker: "live next to their components",
+        desc: "These hooks do NOT enter the barrel — they live in their respective modules by proximity to the component that exports them. Listed here only for editorial discovery.",
+        rows: [
+          { name: "useT",            from: "src/lib/i18n.tsx",        purpose: "i18n · resolve a translation key" },
+          { name: "useLocale",       from: "src/lib/i18n.tsx",        purpose: "i18n · current locale + setter" },
+          { name: "useTheme",        from: "src/lib/theme.tsx",       purpose: "current theme (light/dark) + setter" },
+          { name: "useHashRoute",    from: "src/lib/useHashRoute.ts", purpose: "in-house router · current slug + navigate" },
+          { name: "useCopy",         from: "src/lib/useCopy.ts",      purpose: "clipboard · transient 'copied' state" },
+          { name: "useShortcut",     from: "src/ds/Shortcuts.tsx",    purpose: "discoverable global shortcut (Shift+? lists)" },
+          { name: "useSearchHotkey", from: "src/ds/SearchPalette.tsx",purpose: "opens the palette with ⌘K" },
+          { name: "usePopover",      from: "src/ds/Popover.tsx",      purpose: "controls open state + positioning" },
+          { name: "useToast",        from: "src/ds/Toaster.tsx",      purpose: "publishes a toast on the global queue" },
+          { name: "useDataTable",    from: "src/ds/DataTable.tsx",    purpose: "internal context of the composable DataTable" },
+        ],
+      },
+    },
+
+    /* ============================================================ */
+    changelog: {
+      lead: "Reference · 58",
+      titleA: "The ",
+      titleB: "log",
+      metaLabel: "History",
+      meta: "Keep a Changelog · SemVer",
+      intro:
+        "Every notable change in Atelier — new phases, components, decisions. Official debut of the [em]MarkdownViewer[/em] in production: the content is the repo's own [em]CHANGELOG.md[/em], imported via [em]?raw[/em] from Vite and rendered by the DS's zero-dep parser.",
+    },
+
+    /* ============================================================ */
+    tokens: {
+      lead: "Reference · 59",
+      titleA: "The ",
+      titleB: "tokens",
+      metaLabel: "Inventory",
+      meta: "{count} tokens · light + dark",
+      intro:
+        "Atelier's full vocabulary in a single page. Every scale gets a swatch/preview next to its name, [em]light[/em] and [em]dark[/em] values where applicable, and per-row [em]copy[/em]. Filter by category, search by name, or export the visible subset as CSS, JSON (W3C DTCG) or TypeScript.",
+
+      searchLabel: "Search tokens",
+      searchPlaceholder: "Search by name, value, note…",
+      categoryLabel: "Filter by category",
+      exportLabel: "Export visible:",
+      all: "All",
+      empty: "No tokens match the current filters.",
+      tokenCount: "{count} token(s)",
+      copy: "Copy",
+      copied: "Copied",
+      copyAria: "Copy {name}",
+
+      col: {
+        token: "token",
+        preview: "preview",
+        light: "light",
+        dark: "dark",
+        actions: "action",
+      },
+    },
+
+    /* ============================================================ */
+    loadingStates: {
+      lead: "Reference · 60",
+      titleA: "The ",
+      titleB: "loading states",
+      metaLabel: "Pattern",
+      meta: "5 choices, 1 decision tree",
+      intro:
+        "Each wait calls for a different editorial answer. [em]Skeleton[/em] preserves the layout of a list that's about to arrive; [em]Spinner[/em] honors short actions; [em]Progress[/em] is honesty when there's a real percentage; [em]Toast[/em] is response to user action; [em]Empty[/em] is when nothing is coming. Mixing all five becomes noise — pick one per context.",
+      decision: {
+        title: "Which to use when",
+        kicker: "decision matrix",
+        desc: "Left column: the pattern. Right: canonical use cases vs. cases where picking it is wrong.",
+        thPattern: "pattern", thUse: "use when…", thAvoid: "avoid when…",
+        rows: [
+          { pattern: "Skeleton",   use: "Lists/cards whose shape is predictable and content arrives in < 2s.", avoid: "Silent error, long wait (> 5s) or empty state. Use empty/error in those cases." },
+          { pattern: "Spinner",    use: "Punctual action in a specific spot (button click, refresh).",         avoid: "Whole-page loads — Skeleton keeps the layout stable." },
+          { pattern: "Progress",   use: "Operation with a KNOWN real progress (upload, install).",             avoid: "When you don't know — fake bars are dishonesty." },
+          { pattern: "Toast",      use: "Ephemeral confirmation after action (saved, copied, sent).",          avoid: "Errors that need user action — use inline Alert." },
+          { pattern: "EmptyState", use: "List arrived and is genuinely empty — guide the next action.",        avoid: "Loading. If you're waiting, it's Skeleton; if it arrived empty, it's Empty." },
+        ],
+      },
+      rules: {
+        title: "Rules",
+        kicker: "editorial decisions",
+        desc: "Four rules that filter exception from excess. Every noisy wait costs reader attention.",
+        items: [
+          { n: "I",   body: "[em]Wait < 100ms[/em]: nothing. Showing loading triggers anxiety where there was none." },
+          { n: "II",  body: "[em]100–500ms[/em]: small spinner only if a click triggered an action. Page stays interactive." },
+          { n: "III", body: "[em]500ms–2s[/em]: Skeleton. The reader noticed — now respect the layout that's coming." },
+          { n: "IV",  body: "[em]> 5s[/em]: Progress when possible, or 'this may take a while'. Honesty beats illusion." },
+        ],
+      },
+    },
+
+    /* ============================================================ */
+    errorHandling: {
+      lead: "Reference · 61",
+      titleA: "The ",
+      titleB: "error",
+      metaLabel: "Pattern",
+      meta: "Four layers, one strategy",
+      intro:
+        "Errors are information. Handled well, they restore trust; handled poorly, they destroy it. Atelier separates handling into [em]four layers[/em]: inline validation (field), operation feedback (toast/alert), section boundary (ErrorBoundary), and global fallback (crash page). Each level has its own visual vocabulary.",
+      layers: {
+        title: "The four layers",
+        kicker: "from granular to global",
+        desc: "Each layer captures a different class of error — confusing the layers becomes noise, or worse, silent loss.",
+        items: [
+          { n: "I",   body: "[em]Inline validation[/em] (field) — user typed invalid. Feedback below the input, warning icon, NOT toast (the input is itself the locus of information)." },
+          { n: "II",  body: "[em]Operation[/em] — submit that failed, fetch that returned 500. Toast when the action was punctual; inline Alert when the reader needs to decide what to do." },
+          { n: "III", body: "[em]Section boundary[/em] (ErrorBoundary) — component crashed. Shows empty state with 'try again' and contains the damage to the section, doesn't bring down the app." },
+          { n: "IV",  body: "[em]Global[/em] — root crashed. Editorial crash page with reload instructions and contact. Logged in Sentry/Datadog." },
+        ],
+      },
+      boundary: {
+        title: "ErrorBoundary",
+        kicker: "React 18 pattern",
+        desc: "React 18 still requires a class component for ErrorBoundary (hooks don't cover it). Implement once in the app shell, reuse per critical section.",
+      },
+      messages: {
+        title: "Anatomy of the message",
+        kicker: "vocabulary",
+        desc: "Every Atelier error message has three parts: WHAT broke, WHY when it helps, and the next ACTION possible.",
+        items: [
+          { kicker: "i · WHAT", title: "Short sentence, first-person plural", body: "[em]'We couldn't send your message'[/em] — direct, human. Avoid passive voice ('Message could not be sent') or jargon ('Error 500')." },
+          { kicker: "ii · WHY", title: "Only when it helps the user", body: "[em]'Your session expired'[/em] explains and implies the action (log in again). [em]'Validation error'[/em] doesn't — speaks of the machine, not the user." },
+          { kicker: "iii · ACTION", title: "Verb in infinitive, clear action", body: "Button [em]'Try again'[/em], link [em]'Log in again'[/em], hint [em]'Check your connection'[/em]. With no action possible, the message becomes lament." },
+        ],
+      },
+      dosDonts: {
+        title: "Dos and don'ts",
+        kicker: "do · don't",
+        doLabel: "Do",
+        dontLabel: "Don't",
+        dos: [
+          "Log every exception in telemetry — silent errors are invisible bugs.",
+          "Differentiate [em]network[/em] errors from [em]validation[/em] — different voice, different action.",
+          "Restore usable state after error — a form can't stay 'frozen' without saying so.",
+          "Allow [em]retry[/em] whenever it makes sense (idempotent).",
+        ],
+        donts: [
+          "[em]'Unexpected error'[/em] — every message should carry at least the category.",
+          "Toast for an error that needs action — toast disappears, action gets lost.",
+          "Stack trace for the end user — useful in DEV, noise in production.",
+          "Hide errors to 'avoid worrying' — if it affected the user, they have the right to know.",
+        ],
+      },
+    },
+
+    /* ============================================================ */
+    formsPatterns: {
+      lead: "Reference · 62",
+      titleA: "The ",
+      titleB: "forms",
+      metaLabel: "Pattern",
+      meta: "Validation · async · multi-step",
+      intro:
+        "A form is where the user TRUSTS data to you. Atelier treats forms as conversation: validation at the right moment (not on every keystroke), honest operation feedback, async with [em]optimistic disable[/em] without freezing layout, and messages in human tone.",
+      validation: {
+        title: "When to validate",
+        kicker: "decision matrix",
+        desc: "Validating too early is mistrust; too late is frustration. The editorial rule: each field has its moment.",
+        thPattern: "pattern", thUse: "use when…", thAvoid: "avoid when…",
+        rows: [
+          { pattern: "onChange",    use: "NEVER. Unless it's autocomplete-like (password strength meter) — that one IS incremental.", avoid: "Email, ID, any field whose invalidity only makes sense complete." },
+          { pattern: "onBlur",      use: "Default for most fields. User finished that input, now validate.",            avoid: "Empty optional field — validating onBlur on empty creates a phantom error." },
+          { pattern: "onSubmit",    use: "Last layer ALWAYS. Even with onBlur, validate everything on submit (bypass protection).", avoid: "As the only validation — user gets no feedback until submit." },
+          { pattern: "Server-side", use: "Anything with business rules (coupon, unique email, slug). Client only for UX, never security.", avoid: "Purely formal validation (ID format, email) — wastes round-trip for nothing." },
+        ],
+      },
+      states: {
+        title: "Field states",
+        kicker: "default · disabled · error",
+        desc: "Each state carries distinct meaning. Mixing disabled with error is the most common mistake.",
+        items: [
+          { kicker: "i", title: "default", body: "Free field. Optional hint below ('Minimum 8 characters')." },
+          { kicker: "ii", title: "focus", body: "Accent border, no message. Visual focus = 'I'm here'." },
+          { kicker: "iii", title: "error", body: "Red border + specific message below. NEVER color alone — screen readers read text." },
+          { kicker: "iv", title: "disabled", body: "Gray, [em]non-interactive[/em]. State != error. Use hint to explain WHY it's disabled (depends on another field, requires permission)." },
+          { kicker: "v", title: "loading (on submit)", body: "Don't disable the fields — only the button. The user may want to go back to edit mid-flight." },
+        ],
+      },
+      async: {
+        title: "Asynchronous submit",
+        kicker: "optimistic disable",
+        desc: "Editorial pattern: [em]submitting[/em] state disables only the button (and shows changed label). On success, positive toast. On validation error, populate errors in state. On network error, red toast with implicit retry.",
+      },
+      dosDonts: {
+        title: "Dos and don'ts",
+        kicker: "do · don't",
+        doLabel: "Do",
+        dontLabel: "Don't",
+        dos: [
+          "Messages in [em]first person[/em] and specific: 'That email is already in use' > 'Invalid'.",
+          "[em]Autocomplete attributes[/em] (autocomplete='email', etc) — kindness with password managers.",
+          "Persist draft in [em]localStorage[/em] in long forms — losing a form is invisible bug.",
+          "Correct [em]inputmode[/em] on mobile (numeric, tel, email) — opens the right keyboard.",
+        ],
+        donts: [
+          "Disable the button [em]until everything validates[/em] — the user doesn't know what's missing. Let them submit; show the errors.",
+          "[em]Generic red asterisk[/em] in required field without saying why.",
+          "Multi-step without [em]visible progress[/em] — Stepper exists for this.",
+          "Clear the form on error — user loses everything. [em]Keep[/em] what they typed.",
+        ],
+      },
+    },
+
+    /* ============================================================ */
+    destructive: {
+      lead: "Reference · 63",
+      titleA: "The ",
+      titleB: "destructive actions",
+      metaLabel: "Pattern",
+      meta: "Three levels of ceremony",
+      intro:
+        "Delete, undo, cancel, banish — every action that creates loss deserves proportional ceremony. Atelier defines [em]three levels[/em]: immediate action with undo, simple confirmation, and typed confirmation. Excess ceremony treats the user as a child; lack becomes silent loss.",
+      tiers: {
+        title: "Three levels",
+        kicker: "from lightest to gravest",
+        desc: "Each level answers the question: how much does it cost to be wrong?",
+        items: [
+          { kicker: "i · UNDO", title: "Immediate action + toast with Undo (5–10s)", body: "For [em]reversible-in-seconds[/em] actions: discard draft, archive email, remove item from list. Deletes immediately, toast offers undo. UX like Gmail." },
+          { kicker: "ii · CONFIRM", title: "Simple 'Are you sure?' modal", body: "For [em]irreversible but common[/em] actions: delete comment, exit without saving. Modal with explicit danger button. Text: what will happen + clear action button." },
+          { kicker: "iii · TYPED", title: "Typed confirmation (type the name)", body: "For [em]catastrophic[/em] actions: delete account, wipe entire project, transfer ownership. User must TYPE the resource name to unlock the button. GitHub, Stripe use this." },
+        ],
+      },
+      undo: {
+        title: "Undo pattern",
+        kicker: "immediate action + toast",
+        desc: "Immediate action + toast with Undo button. State is restored if the user clicks; otherwise it's committed after the toast disappears. Atelier Toaster supports this natively via [em]actions[/em].",
+      },
+      confirm: {
+        title: "Typed confirmation pattern",
+        kicker: "typed confirmation",
+        desc: "Modal requires the user to type the resource name to unlock the button. Pattern inherited from GitHub/Stripe — forces active reading, prevents reflex clicks.",
+      },
+      dosDonts: {
+        title: "Dos and don'ts",
+        kicker: "do · don't",
+        doLabel: "Do",
+        dontLabel: "Don't",
+        dos: [
+          "[em]Red color[/em] on the destructive action button — universal inherited visual language.",
+          "[em]Cancel[/em] button on the left, destructive on the right. Reduces accidental click.",
+          "Show [em]what will be lost[/em] in the dialog (list of items, hours of work).",
+          "Log every destructive action in telemetry — useful for audit and reverting via backend if needed.",
+        ],
+        donts: [
+          "Native browser modal ([em]confirm()[/em]) — ugly, decontextualized, breaks editorial tone.",
+          "Ask for confirmation on [em]every[/em] action — devalues the ceremony. Reserve for real damage.",
+          "Destructive button as [em]autofocus[/em] in modal — invites accidental Enter.",
+          "[em]Auto-close[/em] confirmation modal after N seconds — user needs to decide, not be rushed.",
+        ],
+      },
+    },
+
+    /* ============================================================ */
+    onboarding: {
+      lead: "Reference · 64",
+      titleA: "The ",
+      titleB: "onboarding",
+      metaLabel: "Pattern",
+      meta: "Tour · Coachmark · Empty",
+      intro:
+        "Onboarding is the [em]lasting first impression[/em]. Done poorly, becomes a boring tutorial the user skips. Done well, teaches without interrupting. Atelier offers three patterns — [em]Tour[/em] (guided step-by-step), [em]Coachmark[/em] (single contextual hint), [em]Guided Empty State[/em] (empty that teaches). The choice depends on what's being taught.",
+      decision: {
+        title: "Which to use when",
+        kicker: "decision matrix",
+        desc: "Left column: the pattern. Right: contexts where it shines vs. where it frustrates.",
+        thPattern: "pattern", thUse: "use when…", thAvoid: "avoid when…",
+        rows: [
+          { pattern: "Tour", use: "App with complex FLOW (kanban, editor) where user needs to grasp 3-5 concepts before producing.", avoid: "Discovery app (gallery, dashboard). Tour forces sequence where user should explore." },
+          { pattern: "Coachmark", use: "NEW feature in already-known app. Appears once, in context, and dismisses on user interaction.", avoid: "Several coachmarks at once — they become noise. Limit to one per session." },
+          { pattern: "Guided Empty State", use: "Naturally empty state (inbox, project list). Empty becomes invitation with clear CTA.", avoid: "Hide complex functionality behind a button — user doesn't know it exists." },
+        ],
+      },
+      principles: {
+        title: "Principles",
+        kicker: "editorial rules",
+        desc: "Five rules that filter good onboarding from patience-testing tutorial.",
+        items: [
+          { n: "I",   body: "[em]Skippable ALWAYS[/em]. 'Skip' button visible, not hidden in tiny text. Trust before ceremony." },
+          { n: "II",  body: "[em]Show, don't tell[/em]. Visual highlight + a click > explanatory paragraph." },
+          { n: "III", body: "[em]One idea per step[/em]. Tour with 3 steps beats 8 — users tire." },
+          { n: "IV",  body: "[em]Persist 'already saw'[/em] in localStorage. Showing onboarding on every visit destroys earned trust." },
+          { n: "V",   body: "[em]Actionable[/em]. Each step ends in something the user DOES — not just reads." },
+        ],
+      },
+    },
+
+    /* ============================================================ */
+    darkMode: {
+      lead: "Reference · 65",
+      titleA: "The ",
+      titleB: "dark mode",
+      metaLabel: "Pattern",
+      meta: "Dual tokens · zero shift",
+      intro:
+        "Dark mode in Atelier is the [em]editorial twin[/em] of light, not auto-inversion. Each chromatic token has a manually calibrated variant — [em]--ink[/em] in light is graphite (#1a1a1a), in dark it's luminous cream (#ede8dc). Bootstrap is blocking (no flash on reload) and respects OS preference.",
+      principles: {
+        title: "Principles",
+        kicker: "editorial decisions",
+        desc: "Four rules separating editorial dark mode from generic ('invert everything') dark mode.",
+        items: [
+          { n: "I",   body: "[em]Calibrate, don't invert[/em]. Inverting colors breaks hierarchy (anti-aliasing, perceived contrast, brightness). Each light/dark pair is decided by hand." },
+          { n: "II",  body: "[em]1:1 tokens[/em]. Every variable in light has a dark variant, same name. Components consume [em]var(--ink)[/em] — automatic." },
+          { n: "III", body: "[em]Heavier shadows in dark[/em]. Shadow RGBA jumps from 0.04 (light) to 0.4–0.6 (dark) — without that, shadow becomes invisible against anthracite." },
+          { n: "IV",  body: "[em]Blocking bootstrap[/em]. Inline script before any render applies data-theme — prevents light→dark flash on reload." },
+        ],
+      },
+      bootstrap: {
+        title: "Flash-free bootstrap",
+        kicker: "inline script",
+        desc: "Blocking script inside <head> applies [em]data-theme[/em] BEFORE React mounts. Reads localStorage, falls back to prefers-color-scheme. Milliseconds matter — flash is a UX bug.",
+      },
+      edges: {
+        title: "Edge cases",
+        kicker: "special care",
+        desc: "Three areas that typically break in poorly-done dark mode.",
+        items: [
+          { kicker: "i · CHARTS", title: "Series colors need their own calibration", body: "Red that works on cream disappears on anthracite. Atelier defines separate [em]chart palettes[/em] per theme." },
+          { kicker: "ii · CODE", title: "Code blocks are INVARIANT", body: "Code block is always dark, in both themes. It's a 'typographic island' — code reading has destacaded syntax and zebra-ing with the page becomes noise." },
+          { kicker: "iii · IMAGES", title: "UI light vs dark screenshots", body: "Image with white background becomes harsh in dark. Use [em]filter: brightness(0.85)[/em] on non-essential images, or dual versions (-light/-dark)." },
+        ],
+      },
+      dosDonts: {
+        title: "Dos and don'ts",
+        kicker: "do · don't",
+        doLabel: "Do",
+        dontLabel: "Don't",
+        dos: [
+          "Audit [em]WCAG contrast[/em] in both themes — Atelier Studio shows it live.",
+          "Use [em]color-mix()[/em] to derive variants — fewer tokens, more cohesion.",
+          "Document [em]'editorial-decision'[/em] in comments (why ink-soft is #b8b1a2 in dark, not #aaa).",
+          "Respect [em]prefers-color-scheme[/em] as default; allow manual override.",
+        ],
+        donts: [
+          "Generic dark mode via [em]filter: invert()[/em] — breaks images, code, everything.",
+          "[em]Pure black[/em] as background — tires the eye. Anthracite (#0b0a09 to #1a1917) is more editorial.",
+          "[em]Pure white[/em] as ink — too bright. Cream (#ede8dc) is more readable.",
+          "Forget [em]border-color[/em] in dark — black border on anthracite vanishes, white shines.",
+        ],
+      },
+    },
+
+    /* ============================================================ */
+    print: {
+      lead: "Reference · 66",
+      titleA: "The ",
+      titleB: "print",
+      metaLabel: "Pattern",
+      meta: "B&W · no chrome",
+      intro:
+        "Printing a web app is rare — but when it happens, it defines the lasting impression. Atelier forces [em]strong B&W contrast[/em], hides app chrome (navbar, sidebar, back-to-top), and adds URLs after links. All in [em]@media print[/em] — zero screen impact.",
+      principles: {
+        title: "Principles",
+        kicker: "editorial decisions",
+        desc: "Four print rules — like a well-made technical manual.",
+        items: [
+          { n: "I",   body: "[em]Hide what isn't content[/em]. Navbar, sidebar, footer, back-to-top, skip-link, pagination — none of that belongs on paper." },
+          { n: "II",  body: "[em]Strong B&W contrast[/em]. Override [em]--ink[/em] to pure black and [em]--bg[/em] to white. Intermediate colors become legible grays." },
+          { n: "III", body: "[em]Visible URLs[/em]. Links with [em]a[href]::after[/em] show the URL after the text — paper has no hover." },
+          { n: "IV",  body: "[em]Smart page breaks[/em]. [em]page-break-inside: avoid[/em] on sections; [em]page-break-after: avoid[/em] on headings — prevents orphan title at page end." },
+        ],
+      },
+      css: {
+        title: "Print stylesheet",
+        kicker: "@media print",
+        desc: "Add at the end of the main CSS. No need for separate file — [em]@media print[/em] is zero-cost in normal rendering.",
+      },
+    },
+
+    /* ============================================================ */
+    i18nPatterns: {
+      lead: "Reference · 67",
+      titleA: "The ",
+      titleB: "internationalization",
+      metaLabel: "Pattern",
+      meta: "Native Intl · zero deps",
+      intro:
+        "i18n in Atelier is [em]zero deps[/em]. We don't use i18next, react-intl or format.js — everything comes from the browser's native [em]Intl[/em], covering 95% of cases without 50 KB extras. Pluralization, number/date/currency formatting, relative time, lists — all standard web API.",
+      principles: {
+        title: "Principles",
+        kicker: "editorial decisions",
+        desc: "Four rules that keep Atelier's i18n light and correct.",
+        items: [
+          { n: "I",   body: "[em]Native Intl always[/em]. Before adding a lib, check if Intl solves it. Usually does." },
+          { n: "II",  body: "[em]Locale as prop, not global[/em]. Formatting functions accept explicit locale — eases testing and sub-tree with different locale (preview email in another language, e.g.)." },
+          { n: "III", body: "[em]Never concatenate translated strings[/em]. Use interpolation ([em]{n} items[/em]) — word order varies per language." },
+          { n: "IV",  body: "[em]Plurals use Intl.PluralRules[/em]. Don't invent your own rule — Arabic has 6 categories, Polish 4, Japanese 1. The browser knows." },
+        ],
+      },
+      plurals: {
+        title: "Pluralization",
+        kicker: "Intl.PluralRules",
+        desc: "Helper hook over Intl.PluralRules. Covers all 6 possible categories (zero/one/two/few/many/other) with automatic fallback.",
+      },
+      formats: {
+        title: "Formatting",
+        kicker: "Intl.* APIs",
+        desc: "DateTimeFormat, NumberFormat, ListFormat, RelativeTimeFormat. All native, all locale-aware, all zero-dep.",
+      },
+      rtl: {
+        title: "RTL",
+        kicker: "right-to-left",
+        desc: "Covered in phase 6.1 — [em]LocaleProvider[/em] applies [em]dir=rtl[/em] on <html> automatically for ar/he/fa/ur locales. Manual override at Settings → Direction. Full docs at [em]/accessibility[/em].",
+      },
+    },
+
+    /* ============================================================ */
+    install: {
+      lead: "Reference · 68",
+      titleA: "The ",
+      titleB: "install",
+      metaLabel: "Setup",
+      meta: "Zero build · zero PostCSS",
+      intro:
+        "Before any line of consumption code, it's worth understanding the [em]philosophy[/em] of what you're installing. Atelier is a singular package — a CSS file with all tokens + pure React components. No PostCSS, no Tailwind config, no JIT. Paste the CSS, import what you need.",
+      philosophy: {
+        title: "Philosophy",
+        kicker: "before starting",
+        desc: "Four editorial decisions that affect how much Atelier takes up in your app.",
+        items: [
+          { n: "I",   body: "[em]Zero runtime deps[/em]. You install react/react-dom (peer); the rest is the package. No framer-motion, no date-fns, no radix underneath." },
+          { n: "II",  body: "[em]Single CSS, no JIT[/em]. Import [em]@atelier/ds/styles.css[/em] once at the entry. Zero PostCSS, zero Tailwind config, zero extra build." },
+          { n: "III", body: "[em]Tree-shakeable[/em]. Import only what you use — [em]import { Button } from '@atelier/ds'[/em]. Modern bundlers eliminate the rest." },
+          { n: "IV",  body: "[em]Composable[/em]. Components have nominally exported subcomponents (Card / CardHeader / CardBody). You assemble the hierarchy that makes sense." },
+        ],
+      },
+      npm: {
+        title: "NPM install",
+        kicker: "phase 14 · planned",
+        desc: "When the package ships on NPM (Phase 14 of the roadmap). For now, copy-paste from the repo — shadcn-style model also works.",
+      },
+      bootstrap: {
+        title: "Bootstrap",
+        kicker: "required providers",
+        desc: "Three providers at the entry — [em]LocaleProvider[/em] (i18n + RTL dir), [em]Toaster[/em] (global notifications), [em]ShortcutsProvider[/em] (discoverable shortcuts via Shift+?).",
+      },
+      first: {
+        title: "First component",
+        kicker: "hello world",
+        desc: "Import directly from the main barrel. Zero config — works in the entry of any React 18+ app.",
+      },
+    },
+
+    /* ============================================================ */
+    apiReference: {
+      lead: "Reference · 69",
+      titleA: "The ",
+      titleB: "API map",
+      metaLabel: "Index",
+      meta: "Where to find what",
+      intro:
+        "The detailed doc for each component lives in its own page (props, examples, composition). This page is [em]the editorial index[/em] — where to find what inside the source. Useful for contributing and for understanding what is [em]NOT[/em] publicly exported.",
+      principles: {
+        title: "Conventions",
+        kicker: "how the code is organized",
+        desc: "Four organization rules that apply to all source navigation.",
+        items: [
+          { n: "I",   body: "[em]src/ds/[/em] — components. Each file exports a compound (e.g., Card + CardHeader + CardBody)." },
+          { n: "II",  body: "[em]src/lib/[/em] — utilities and public hooks. All via barrel [em]src/lib/hooks[/em]." },
+          { n: "III", body: "[em]src/pages/[/em] — documentation. Each component has a corresponding page at [em]/<slug>[/em]." },
+          { n: "IV",  body: "[em]src/ds/types.ts[/em] — centralized public types. Type imports don't bloat bundle." },
+        ],
+      },
+      table: {
+        title: "Map by family",
+        kicker: "code → doc",
+        desc: "Each row: component family, main exports, official doc.",
+        thFamily: "family", thExports: "main exports", thRoute: "doc",
+        rows: [
+          { family: "primitives.tsx",  exports: "Button · Input · Switch · Badge · Avatar · Tooltip · Section · PageHead · Code", route: "code" },
+          { family: "Card.tsx",        exports: "Card · CardHeader · CardKicker · CardTitle · CardBody · CardFooter", route: "cards" },
+          { family: "Tabs.tsx",        exports: "Tabs · TabList · Tab · TabPanels · TabPanel", route: "tabs" },
+          { family: "Drawer.tsx",      exports: "Drawer · DrawerTrigger · DrawerContent · DrawerHeader · DrawerTitle · DrawerClose · DrawerBody · DrawerFooter", route: "drawer" },
+          { family: "Toaster.tsx",     exports: "Toaster · useToast", route: "toaster" },
+          { family: "DataTable.tsx",   exports: "DataTable · DataTableToolbar · DataTableHeader · DataTableFilters · DataTableBody · DataTableEmpty · DataTablePagination · useDataTable", route: "data-table" },
+          { family: "Chart.tsx",       exports: "Chart · BarChart · LineChart · AreaChart · PieChart · DonutChart · RadarChart · RadialChart · Sparkline", route: "charts" },
+          { family: "Form.tsx",        exports: "Form · FormStep · FormRow · FormField · FormDivider · FormActions", route: "forms" },
+          { family: "Motion.tsx",      exports: "Transition · Fade · Slide · Scale · Collapse · ScrollReveal", route: "motion" },
+          { family: "lib/hooks/",      exports: "17 public hooks (useMediaQuery · useDebounce · useFocusTrap · useControllableState · …)", route: "hooks" },
+          { family: "lib/tokens.ts",   exports: "TOKENS · serializeCss · serializeJson · serializeTs · downloadText", route: "tokens" },
+          { family: "lib/contrast.ts", exports: "parseColor · relativeLuminance · contrastRatio · wcagLevel", route: "accessibility" },
+        ],
+      },
+    },
+
+    /* ============================================================ */
+    browserSupport: {
+      lead: "Reference · 70",
+      titleA: "The ",
+      titleB: "browsers",
+      metaLabel: "Support",
+      meta: "Evergreen · 2 versions",
+      intro:
+        "Atelier targets [em]evergreen browsers[/em] — Chrome, Edge, Firefox, Safari in their last two majors. No IE11, no Safari 13, no heavy polyfills. When an API isn't universally supported yet (e.g., View Transitions), we offer graceful fallback.",
+      table: {
+        title: "Minimum versions",
+        kicker: "evergreen targets",
+        desc: "Table updated at every version release (Chrome quarterly, Firefox 4–6 weeks).",
+        thBrowser: "browser", thMin: "min", thNotes: "notes",
+        rows: [
+          { name: "Chrome",         version: "≥ 110", notes: "Covers Edge (Chromium), Brave, Opera. ~95% of market." },
+          { name: "Firefox",        version: "≥ 109", notes: "Some APIs (View Transitions) haven't landed yet — we have fallbacks." },
+          { name: "Safari (macOS)", version: "≥ 16.4",notes: "[em]:has()[/em] and Container Queries arrived in 16.4 — minimum baseline." },
+          { name: "Safari (iOS)",   version: "≥ 16.4",notes: "Same baseline as macOS. iOS 15.x is not a target." },
+          { name: "IE / Edge Legacy",version: "—",    notes: "No support. EOL since 2023." },
+        ],
+      },
+      features: {
+        title: "Assumed APIs",
+        kicker: "no polyfill",
+        desc: "Modern features Atelier USES without polyfill — assumes available in the targets above.",
+        items: [
+          { n: "I",   body: "[em]ES2022[/em] — top-level await, error.cause, Array.at(), structuredClone(). Vite with target esnext generates modern code." },
+          { n: "II",  body: "[em]CSS Logical Properties[/em] — padding-inline-start, inset-inline-end, etc. Used by RTL CSS (phase 6.1)." },
+          { n: "III", body: "[em]CSS Custom Properties[/em] — backbone of the design system. Without it, nothing works." },
+          { n: "IV",  body: "[em]matchMedia / MutationObserver / IntersectionObserver / ResizeObserver[/em] — Phase 10 hooks depend on them." },
+          { n: "V",   body: "[em]Intl.PluralRules / Intl.NumberFormat / Intl.DateTimeFormat[/em] — i18n with no external deps (phase 11.4)." },
+          { n: "VI",  body: "[em]color-mix() in CSS[/em] — used to derive accent variants. Safari 16.2+, Firefox 113+." },
+        ],
+      },
+    },
+
+    /* ============================================================ */
+    performance: {
+      lead: "Reference · 71",
+      titleA: "The ",
+      titleB: "performance",
+      metaLabel: "Budgets",
+      meta: "Editorially obsessive · cheap first paint",
+      intro:
+        "Performance is editorial decision — not later optimization. Atelier is born light and maintains [em]verifiable budgets[/em]. After phase 8.1 (code splitting), the entry dropped from 922 KB to 24 KB minified. First paint pays ~165 KB gz; each subsequent navigation pays only the visited page's chunk (1-15 KB gz).",
+      budgets: {
+        title: "Official budgets",
+        kicker: "verifiable targets",
+        desc: "Each metric has [em]target[/em] and the [em]current measured value[/em]. Chunks above the limit trigger build warning (limit: 250 KB minified).",
+        thMetric: "metric", thTarget: "target", thCurrent: "current",
+        rows: [
+          { metric: "Entry chunk (index.js)",   target: "< 50 KB min",  current: "24 KB" },
+          { metric: "First-paint payload (gz)", target: "< 200 KB",     current: "~165 KB" },
+          { metric: "Largest chunk (vendor)",   target: "< 200 KB min", current: "138 KB (react)" },
+          { metric: "Average page (lazy)",      target: "< 15 KB min",  current: "~5 KB" },
+          { metric: "Total CSS (gz)",           target: "< 30 KB",      current: "~26 KB" },
+          { metric: "Bundle warning (vite)",    target: "≤ 250 KB min", current: "0 warnings" },
+        ],
+      },
+      wins: {
+        title: "Editorial wins",
+        kicker: "decisions > optimization",
+        desc: "Five structural choices that resulted in real performance. All decided at the architecture phase — not retrofit.",
+        items: [
+          { n: "I",   body: "[em]Zero runtime deps[/em]. No framer-motion (~30 KB), no date-fns (~70 KB), no react-dnd (~50 KB). All in-house." },
+          { n: "II",  body: "[em]Aggressive code splitting[/em] (8.1 ✓). Each page is a chunk via [em]React.lazy()[/em]. Entry dropped 97%." },
+          { n: "III", body: "[em]Lazy i18n per locale[/em]. pt-BR dictionary (~130 KB) only loads if user switches to Portuguese. EN is the default." },
+          { n: "IV",  body: "[em]Separate ds-* chunks[/em] (Charts, DataTable, DragDrop, Markdown). Whoever never opens /charts doesn't pay for the 13 KB." },
+          { n: "V",   body: "[em]Single CSS[/em] without PostCSS/JIT. Faster build, less complexity, easier debug." },
+        ],
+      },
+      howto: {
+        title: "How to measure",
+        kicker: "tools",
+        desc: "Bundle analyzer comes in roadmap phase 8.8. For now, [em]npm run build[/em] already shows all chunks with minified and gzipped sizes.",
+      },
+    },
+
+    /* ============================================================ */
+    recipes: {
+      lead: "Reference · 72",
+      titleA: "The ",
+      titleB: "recipes",
+      metaLabel: "Gallery",
+      meta: "{count} compositions · live",
+      intro:
+        "Curated compositions showing Atelier in action. Every recipe renders [em]live[/em] (not a screenshot), has [em]editable inline[/em] snippet and opens in [em]StackBlitz/CodeSandbox[/em] with one click. All zero-deps — sandbox template fetches @atelier/ds directly from NPM (Phase 14).",
+
+      filterLabel: "Filter by category",
+      categories: {
+        all: "All",
+        form: "Form",
+        layout: "Layout",
+        data: "Data",
+        marketing: "Marketing",
+      },
+
+      items: {
+        login: {
+          title: "Login",
+          kicker: "Form · auth",
+          desc: "Minimal form with correct [em]autocomplete[/em], 'Forgot password' link and primary CTA. Async submit pattern is left as exercise — add [em]submitting[/em] state via [em]useState[/em].",
+          caption: "Login form · 360px",
+        },
+        settings: {
+          title: "Settings",
+          kicker: "Form · preferences",
+          desc: "Preferences card with [em]Switch[/em] per row. Notifications as two independent toggles — each persistent via [em]useLocalStorage[/em] in real apps.",
+          caption: "Settings card · 480px",
+        },
+        pricing: {
+          title: "Pricing",
+          kicker: "Marketing · 3 tiers",
+          desc: "Three cards side by side, middle tier with [em]primary[/em] CTA. Feature list without icons — each bullet is an editorial decision.",
+          caption: "Pricing tiers · 720px",
+        },
+        comments: {
+          title: "Comment thread",
+          kicker: "Data · social",
+          desc: "Comment list with [em]Avatar[/em] + meta (author + time) + body, followed by reply Textarea. Button [em]disabled[/em] while empty — first-person UX.",
+          caption: "Thread · 480px",
+        },
+        onboarding: {
+          title: "Onboarding stepper",
+          kicker: "Layout · multi-step",
+          desc: "Editorial Stepper + contextual Alert + prev/next navigation. Pattern for flows where the sequence is REQUIRED — for free exploration, prefer side navigation.",
+          caption: "3-step onboarding · 560px",
+        },
+        subscribe: {
+          title: "Newsletter",
+          kicker: "Marketing · capture",
+          desc: "Editorial capture with [em]Card[/em] + Form + consent Checkbox. Button [em]disabled[/em] until agreed — LGPD and GDPR friendly.",
+          caption: "Subscribe card",
+        },
       },
     },
   },

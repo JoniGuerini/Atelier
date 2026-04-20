@@ -732,9 +732,10 @@ export function Code({ children, lang = "jsx", copy = true }: CodeProps) {
 }
 
 /* ---------- Composition tree ----------
-   Renderiza uma árvore de subcomponentes (estilo "tree command")
-   usando box-drawing chars. Reaproveita o wrapper do Code para
-   ganhar fonte mono, padding e botão de copiar no canto.
+   Renderiza uma árvore de subcomponentes com linhas pixel-perfect
+   desenhadas via CSS (border-left + pseudoelementos), em vez de
+   box-drawing chars unicode que dependem da fonte.
+
      <CompositionTree
        root="Sidebar"
        nodes={[
@@ -744,6 +745,7 @@ export function Code({ children, lang = "jsx", copy = true }: CodeProps) {
      />
 */
 function buildTreeLines(nodes: any[], prefix = "", out: string[] = []): string[] {
+  // mantida só pra gerar a versão de texto pro botão de copiar.
   nodes.forEach((node: any, i: number) => {
     const isLast = i === nodes.length - 1;
     const connector = isLast ? "└── " : "├── ";
@@ -756,12 +758,34 @@ function buildTreeLines(nodes: any[], prefix = "", out: string[] = []): string[]
   return out;
 }
 
-export function CompositionTree({ root, nodes = [], copy = true }: CompositionTreeProps & { copy?: boolean }) {
-  const lines = [root, ...buildTreeLines(nodes)];
-  const text = lines.join("\n");
+function renderNodes(nodes: any[]): ReactNode {
+  if (!nodes || nodes.length === 0) return null;
+  return (
+    <ul className="ds-comp-list">
+      {nodes.map((node: any, i: number) => (
+        <li key={i} className="ds-comp-item">
+          <span className="ds-comp-name">{node.name}</span>
+          {node.children && node.children.length > 0
+            ? renderNodes(node.children)
+            : null}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+export function CompositionTree({
+  root,
+  nodes = [],
+  copy = true,
+}: CompositionTreeProps & { copy?: boolean }) {
+  const text = [root, ...buildTreeLines(nodes)].join("\n");
   return (
     <div className="code-wrap">
-      <pre className="ds-code ds-tree">{text}</pre>
+      <div className="ds-comp-tree" role="tree" aria-label={String(root)}>
+        <div className="ds-comp-root">{root}</div>
+        {renderNodes(nodes)}
+      </div>
       {copy && (
         <div className="code-toolbar">
           <CopyButton text={text} />
@@ -836,12 +860,33 @@ export function Example({
   center,
   code,
   lang = "jsx",
+  editable = false,
+  sandbox = false,
+  sandboxTitle = "Atelier example",
 }: ExampleProps) {
   const [open, setOpen] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState<string>(code ?? "");
   const { t } = useT();
+  const { copy, copied } = useCopy();
+
+  /* Re-sincroniza o draft quando o code prop muda externamente */
+  useEffect(() => {
+    setDraft(code ?? "");
+  }, [code]);
+
   const cls = ["example-preview"];
   if (stack) cls.push("stack");
   if (center) cls.push("center");
+
+  const onOpenStackBlitz = async () => {
+    const { openInStackBlitz } = await import("../lib/sandbox.ts");
+    openInStackBlitz(draft, sandboxTitle);
+  };
+  const onOpenCodeSandbox = async () => {
+    const { openInCodeSandbox } = await import("../lib/sandbox.ts");
+    openInCodeSandbox(draft, sandboxTitle);
+  };
 
   return (
     <div className="example">
@@ -868,7 +913,70 @@ export function Example({
       )}
       {code && open && (
         <div className="example-code">
-          <Code lang={lang as any}>{code}</Code>
+          {editing ? (
+            <textarea
+              className="example-editor"
+              value={draft}
+              onChange={(e) => setDraft(e.target.value)}
+              spellCheck={false}
+              aria-label={t("ds.example.editorLabel")}
+            />
+          ) : (
+            <Code lang={lang as any}>{draft}</Code>
+          )}
+          {(editable || sandbox) && (
+            <div className="example-actions">
+              {editable && (
+                <button
+                  type="button"
+                  className="example-action"
+                  onClick={() => setEditing((v) => !v)}
+                >
+                  {editing
+                    ? t("ds.example.previewLabel")
+                    : t("ds.example.editLabel")}
+                </button>
+              )}
+              {editable && (
+                <button
+                  type="button"
+                  className="example-action"
+                  onClick={() => copy(draft)}
+                >
+                  {copied ? t("common.copied") : t("common.copy")}
+                </button>
+              )}
+              {editable && draft !== code && (
+                <button
+                  type="button"
+                  className="example-action example-action--ghost"
+                  onClick={() => setDraft(code ?? "")}
+                >
+                  {t("ds.example.resetLabel")}
+                </button>
+              )}
+              {sandbox && (
+                <>
+                  <button
+                    type="button"
+                    className="example-action example-action--external"
+                    onClick={onOpenStackBlitz}
+                    title="Abrir em StackBlitz"
+                  >
+                    StackBlitz <span aria-hidden>↗</span>
+                  </button>
+                  <button
+                    type="button"
+                    className="example-action example-action--external"
+                    onClick={onOpenCodeSandbox}
+                    title="Abrir em CodeSandbox"
+                  >
+                    CodeSandbox <span aria-hidden>↗</span>
+                  </button>
+                </>
+              )}
+            </div>
+          )}
         </div>
       )}
     </div>

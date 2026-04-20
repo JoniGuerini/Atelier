@@ -2,14 +2,30 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
   type ReactNode,
 } from "react";
-import { LOCALES, LOCALE_LIST, DEFAULT_LOCALE } from "../i18n/index.ts";
+import {
+  LOCALE_LIST,
+  DEFAULT_LOCALE,
+  loadLocale,
+  getCachedLocale,
+  type LocaleId,
+} from "../i18n/index.ts";
 import type { Locale } from "../ds/types.ts";
 
 const STORAGE_KEY = "atelier.locale";
+const DIR_KEY = "atelier.dir";
+const VALID_LOCALES = new Set<string>(LOCALE_LIST.map((l) => l.id));
+
+/* Locales que naturalmente exigem RTL — preparado mesmo sem traduzir.
+   Quando algum desses for adicionado em LOCALE_LIST, dir=rtl é
+   aplicado automaticamente. */
+const RTL_LOCALES = new Set<string>(["ar", "he", "fa", "ur"]);
+
+export type Direction = "ltr" | "rtl";
 
 export type TranslationVars = Record<string, string | number>;
 
@@ -18,33 +34,88 @@ export interface LocaleContextValue {
   setLocale: (next: Locale) => void;
   dict: Record<string, any>;
   locales: typeof LOCALE_LIST;
+  /** Direção do texto resolvida — derivada do locale + override manual. */
+  dir: Direction;
+  /** Override manual do dir (debug/dev/preview RTL com locale LTR). */
+  setDir: (next: Direction | "auto") => void;
+  /** "auto" segue o locale; "rtl"/"ltr" trava manualmente. */
+  dirMode: Direction | "auto";
 }
+
+const FALLBACK_DICT: Record<string, any> = {};
 
 const LocaleCtx = createContext<LocaleContextValue>({
   locale: DEFAULT_LOCALE as Locale,
   setLocale: () => {},
-  dict: (LOCALES as any)[DEFAULT_LOCALE],
+  dict: FALLBACK_DICT,
   locales: LOCALE_LIST,
+  dir: "ltr",
+  setDir: () => {},
+  dirMode: "auto",
 });
 
-function readInitialLocale(): Locale {
+function readInitialLocale(): LocaleId {
   try {
     const saved = window.localStorage.getItem(STORAGE_KEY);
-    if (saved && (LOCALES as any)[saved]) return saved as Locale;
+    if (saved && VALID_LOCALES.has(saved)) return saved as LocaleId;
   } catch {
     /* ignore */
   }
   // Sem preferência salva → inglês por padrão (independente do navegador).
   // Assim Atelier nasce internacional; pt-BR fica como escolha explícita.
-  return DEFAULT_LOCALE as Locale;
+  return DEFAULT_LOCALE as LocaleId;
+}
+
+function readInitialDirMode(): Direction | "auto" {
+  if (typeof window === "undefined") return "auto";
+  try {
+    const v = window.localStorage.getItem(DIR_KEY);
+    if (v === "rtl" || v === "ltr" || v === "auto") return v;
+  } catch {
+    /* ignore */
+  }
+  return "auto";
 }
 
 export function LocaleProvider({ children }: { children?: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>(readInitialLocale);
+  const [locale, setLocaleState] = useState<LocaleId>(readInitialLocale);
+  const [dirMode, setDirMode] = useState<Direction | "auto">(readInitialDirMode);
+  /* Pode existir já no cache se o usuário voltou pra um locale visto;
+     senão começa null e o useEffect baixa. */
+  const [dict, setDict] = useState<Record<string, any> | null>(() =>
+    getCachedLocale(locale) ?? null
+  );
+
+  useEffect(() => {
+    let active = true;
+    const cached = getCachedLocale(locale);
+    if (cached) {
+      setDict(cached);
+      return;
+    }
+    loadLocale(locale).then((d) => {
+      if (active) setDict(d);
+    });
+    return () => {
+      active = false;
+    };
+  }, [locale]);
+
+  /* Resolve direção: override manual vence; senão deriva do locale */
+  const dir: Direction =
+    dirMode === "rtl" ? "rtl" : dirMode === "ltr" ? "ltr" : RTL_LOCALES.has(locale) ? "rtl" : "ltr";
+
+  /* Sincroniza com <html dir="..." lang="..."> — o CSS reage e
+     leitores de tela / IME se comportam corretamente. */
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    document.documentElement.setAttribute("dir", dir);
+    document.documentElement.setAttribute("lang", locale);
+  }, [dir, locale]);
 
   const setLocale = useCallback((next: Locale) => {
-    if (!(LOCALES as any)[next]) return;
-    setLocaleState(next);
+    if (!VALID_LOCALES.has(next as string)) return;
+    setLocaleState(next as LocaleId);
     try {
       window.localStorage.setItem(STORAGE_KEY, next);
     } catch {
@@ -52,15 +123,33 @@ export function LocaleProvider({ children }: { children?: ReactNode }) {
     }
   }, []);
 
+  const setDir = useCallback((next: Direction | "auto") => {
+    setDirMode(next);
+    try {
+      window.localStorage.setItem(DIR_KEY, next);
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
   const value = useMemo<LocaleContextValue>(
     () => ({
-      locale,
+      locale: locale as Locale,
       setLocale,
-      dict: (LOCALES as any)[locale] || (LOCALES as any)[DEFAULT_LOCALE],
+      dict: dict ?? FALLBACK_DICT,
       locales: LOCALE_LIST,
+      dir,
+      setDir,
+      dirMode,
     }),
-    [locale, setLocale]
+    [locale, setLocale, dict, dir, setDir, dirMode]
   );
+
+  /* Bloqueia o render do app até o primeiro dict chegar — assim
+     nenhum componente filho vê dict vazio (que faria todas as
+     traduções aparecerem como suas próprias chaves). Tipicamente
+     resolve em um tick (chunk preloaded pelo Vite). */
+  if (!dict) return null;
 
   return <LocaleCtx.Provider value={value}>{children}</LocaleCtx.Provider>;
 }

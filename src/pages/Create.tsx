@@ -26,7 +26,11 @@ import {
   DEFAULT_THEME,
   themeToStyle,
   themeToCss,
+  themeToJson,
+  themeToTs,
 } from "../ds/studioTokens.ts";
+import { downloadText, parseTokens, type ParseResult } from "../lib/tokens.ts";
+import { contrastRatio, wcagLevel, type WcagLevel } from "../lib/contrast.ts";
 import { STUDIO_PRESETS, shuffleTheme } from "../ds/studioPresets.ts";
 
 /* ================================================================
@@ -75,10 +79,15 @@ function readInitial() {
   return { ...DEFAULT_THEME, theme: readAppTheme() };
 }
 
+type ExportFormat = "css" | "json" | "ts";
+
 export default function Create() {
   const { t, tr } = useT();
   const [theme, setTheme] = useState(readInitial);
   const [exportOpen, setExportOpen] = useState(false);
+  const [exportFormat, setExportFormat] = useState<ExportFormat>("css");
+  const [a11yOpen, setA11yOpen] = useState(false);
+  const [importOpen, setImportOpen] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -98,6 +107,23 @@ export default function Create() {
 
   const previewStyle = useMemo(() => themeToStyle(theme), [theme]);
   const css = useMemo(() => themeToCss(theme), [theme]);
+  const json = useMemo(() => themeToJson(theme), [theme]);
+  const ts = useMemo(() => themeToTs(theme), [theme]);
+
+  const exportContent =
+    exportFormat === "json" ? json : exportFormat === "ts" ? ts : css;
+  const exportFilename =
+    exportFormat === "json"
+      ? "atelier-tokens.json"
+      : exportFormat === "ts"
+      ? "atelier-theme.ts"
+      : "atelier-theme.css";
+  const exportMime =
+    exportFormat === "json"
+      ? "application/json"
+      : exportFormat === "ts"
+      ? "text/typescript"
+      : "text/css";
 
   const accentLabel =
     ACCENT_PRESETS.find((p: any) => p.id === theme.accent)?.label || "—";
@@ -282,6 +308,24 @@ export default function Create() {
               {t("pages.create.actions.reset")}
             </Button>
             <Button
+              onClick={() => setA11yOpen((v) => !v)}
+              variant="ghost"
+              size="sm"
+            >
+              {a11yOpen
+                ? t("pages.create.actions.hideA11y")
+                : t("pages.create.actions.a11y")}
+            </Button>
+            <Button
+              onClick={() => setImportOpen((v) => !v)}
+              variant="ghost"
+              size="sm"
+            >
+              {importOpen
+                ? t("pages.create.actions.hideImport")
+                : t("pages.create.actions.import")}
+            </Button>
+            <Button
               onClick={() => setExportOpen((v) => !v)}
               variant="primary"
               size="sm"
@@ -292,20 +336,52 @@ export default function Create() {
             </Button>
           </div>
 
+          {a11yOpen && <StudioContrast theme={theme} t={t} tr={tr} />}
+          {importOpen && (
+            <StudioImport
+              t={t}
+              tr={tr}
+              onApply={(values) => {
+                setTheme((p: any) => ({ ...p, overrides: values }));
+                setImportOpen(false);
+              }}
+              hasOverrides={Object.keys(theme.overrides ?? {}).length > 0}
+              onClear={() => setTheme((p: any) => ({ ...p, overrides: {} }))}
+            />
+          )}
+
           {exportOpen && (
             <div className="studio-export">
               <p className="studio-export-intro">
                 {tr("pages.create.export.intro")}
               </p>
-              <pre className="studio-export-code">{css}</pre>
+              <div className="studio-export-tabs" role="tablist" aria-label={t("pages.create.export.formatLabel")}>
+                {(["css", "json", "ts"] as ExportFormat[]).map((fmt) => (
+                  <button
+                    key={fmt}
+                    type="button"
+                    role="tab"
+                    aria-selected={exportFormat === fmt}
+                    className={`studio-export-tab ${exportFormat === fmt ? "is-active" : ""}`}
+                    onClick={() => setExportFormat(fmt)}
+                  >
+                    {fmt === "css"
+                      ? "theme.css"
+                      : fmt === "json"
+                      ? "tokens.json"
+                      : "theme.ts"}
+                  </button>
+                ))}
+              </div>
+              <pre className="studio-export-code">{exportContent}</pre>
               <div className="studio-export-actions">
                 <CopyButton
-                  text={css}
+                  text={exportContent}
                   label={t("pages.create.export.copy")}
                   copiedLabel={t("pages.create.export.copied")}
                 />
                 <Button
-                  onClick={() => downloadCss(css)}
+                  onClick={() => downloadText(exportFilename, exportContent, exportMime)}
                   variant="ghost"
                   size="sm"
                 >
@@ -637,19 +713,6 @@ function PreviewTabs({ t }: any) {
   );
 }
 
-function downloadCss(css: string) {
-  if (typeof window === "undefined") return;
-  const blob = new Blob([css], { type: "text/css" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "atelier-theme.css";
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-}
-
 /* ================================================================
    Painel — subcomponentes (idem versão anterior)
    ================================================================ */
@@ -742,4 +805,252 @@ function FontList({ options, value, onChange }: any) {
       ))}
     </div>
   );
+}
+
+/* ================================================================
+   StudioImport — drop area + paste para importar tokens
+   (Roadmap · fase 7.2)
+   ----------------------------------------------------------------
+   Aceita CSS (`:root { --ink: #...; }`) ou JSON DTCG. Parser ao
+   vivo mostra preview dos tokens detectados, warnings (token
+   desconhecido), erros (sintaxe inválida). Ao aplicar, popula
+   theme.overrides, que sobrescreve qualquer preset no themeToStyle.
+   ================================================================ */
+interface StudioImportProps {
+  t: (k: string) => string;
+  tr: (k: string) => any;
+  onApply: (values: Record<string, string>) => void;
+  hasOverrides: boolean;
+  onClear: () => void;
+}
+
+function StudioImport({ t, tr, onApply, hasOverrides, onClear }: StudioImportProps) {
+  const [text, setText] = useState("");
+  const [dragOver, setDragOver] = useState(false);
+
+  const result: ParseResult | null = text.trim() ? parseTokens(text) : null;
+  const valueCount = result ? Object.keys(result.values).length : 0;
+
+  const onDropFile = async (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setDragOver(false);
+    const file = e.dataTransfer.files[0];
+    if (!file) return;
+    const content = await file.text();
+    setText(content);
+  };
+
+  return (
+    <div className="studio-import" role="region" aria-label={t("pages.create.import.label")}>
+      <p className="studio-import-intro">{tr("pages.create.import.intro")}</p>
+
+      <div
+        className={`studio-import-drop ${dragOver ? "is-over" : ""}`}
+        onDragOver={(e) => {
+          e.preventDefault();
+          setDragOver(true);
+        }}
+        onDragLeave={() => setDragOver(false)}
+        onDrop={onDropFile}
+      >
+        <span className="studio-import-drop-label">
+          {dragOver
+            ? t("pages.create.import.dropping")
+            : t("pages.create.import.dropHint")}
+        </span>
+        <label className="studio-import-file">
+          <input
+            type="file"
+            accept=".css,.json,.txt,text/css,application/json"
+            onChange={async (e) => {
+              const file = e.target.files?.[0];
+              if (!file) return;
+              const content = await file.text();
+              setText(content);
+            }}
+          />
+          <span>{t("pages.create.import.choose")}</span>
+        </label>
+      </div>
+
+      <textarea
+        className="studio-import-textarea"
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        placeholder={t("pages.create.import.placeholder")}
+        spellCheck={false}
+        rows={6}
+      />
+
+      {/* Resultado do parser */}
+      {result && (
+        <div className="studio-import-result">
+          {result.errors.length > 0 ? (
+            <ul className="studio-import-errors">
+              {result.errors.map((err, i) => (
+                <li key={i}>✗ {err}</li>
+              ))}
+            </ul>
+          ) : (
+            <>
+              <div className="studio-import-stats">
+                <span className="studio-import-count">
+                  {valueCount} {valueCount === 1 ? "token" : "tokens"}
+                </span>
+                {result.warnings.length > 0 && (
+                  <span className="studio-import-warnings-count">
+                    · {result.warnings.length}{" "}
+                    {result.warnings.length === 1 ? "aviso" : "avisos"}
+                  </span>
+                )}
+              </div>
+              {/* Mostra os primeiros 6 tokens como preview */}
+              <ul className="studio-import-preview">
+                {Object.entries(result.values)
+                  .slice(0, 6)
+                  .map(([name, value]) => (
+                    <li key={name}>
+                      <code className="studio-import-name">{name}</code>
+                      <span className="studio-import-arrow" aria-hidden>
+                        →
+                      </span>
+                      <code className="studio-import-value">{value}</code>
+                    </li>
+                  ))}
+                {valueCount > 6 && (
+                  <li className="studio-import-more">
+                    + {valueCount - 6} {t("pages.create.import.more")}
+                  </li>
+                )}
+              </ul>
+              {result.warnings.length > 0 && (
+                <details className="studio-import-warnings">
+                  <summary>{t("pages.create.import.showWarnings")}</summary>
+                  <ul>
+                    {result.warnings.slice(0, 12).map((w, i) => (
+                      <li key={i}>! {w}</li>
+                    ))}
+                    {result.warnings.length > 12 && (
+                      <li>+ {result.warnings.length - 12}…</li>
+                    )}
+                  </ul>
+                </details>
+              )}
+            </>
+          )}
+        </div>
+      )}
+
+      <div className="studio-import-actions">
+        {hasOverrides && (
+          <Button variant="ghost" size="sm" onClick={onClear}>
+            {t("pages.create.import.clear")}
+          </Button>
+        )}
+        <Button
+          variant="primary"
+          size="sm"
+          disabled={!result || valueCount === 0 || result.errors.length > 0}
+          onClick={() => result && onApply(result.values)}
+        >
+          {t("pages.create.import.apply")}
+        </Button>
+      </div>
+    </div>
+  );
+}
+
+/* ================================================================
+   StudioContrast — checker WCAG do tema ativo (Roadmap · fase 6.3)
+   ----------------------------------------------------------------
+   Lê as cores resolvidas do theme do Studio e calcula a relação
+   de contraste WCAG 2.x para os pares editorialmente relevantes.
+   Marca em vermelho quando algum falha em AA — ajuda o usuário a
+   evitar paletas inacessíveis ao customizar.
+   ================================================================ */
+interface ContrastPair {
+  fgKey: string;
+  bgKey: string;
+  fgLabel: string;
+  bgLabel: string;
+  /** "normal" → AA exige 4.5; "large" → AA exige 3 (texto grande/bold). */
+  size: "normal" | "large";
+}
+
+const CONTRAST_PAIRS: ContrastPair[] = [
+  { fgKey: "ink",         bgKey: "bg",          fgLabel: "ink",         bgLabel: "bg",          size: "normal" },
+  { fgKey: "ink-soft",    bgKey: "bg",          fgLabel: "ink-soft",    bgLabel: "bg",          size: "normal" },
+  { fgKey: "ink-faint",   bgKey: "bg",          fgLabel: "ink-faint",   bgLabel: "bg",          size: "large" },
+  { fgKey: "ink",         bgKey: "bg-panel",    fgLabel: "ink",         bgLabel: "bg-panel",    size: "normal" },
+  { fgKey: "accent",      bgKey: "bg",          fgLabel: "accent",      bgLabel: "bg",          size: "normal" },
+  { fgKey: "accent-ink",  bgKey: "accent-soft", fgLabel: "accent-ink",  bgLabel: "accent-soft", size: "normal" },
+  { fgKey: "ink-inverse", bgKey: "bg-inverse",  fgLabel: "ink-inverse", bgLabel: "bg-inverse",  size: "normal" },
+];
+
+function StudioContrast({ theme, t, tr }: any) {
+  const style = themeToStyle(theme);
+  const colorOf = (k: string): string => style[`--${k}`] as string;
+
+  return (
+    <div className="studio-a11y" role="region" aria-label={t("pages.create.a11y.label")}>
+      <p className="studio-a11y-intro">{tr("pages.create.a11y.intro")}</p>
+      <div className="studio-a11y-list">
+        {CONTRAST_PAIRS.map((pair) => {
+          const fg = colorOf(pair.fgKey);
+          const bg = colorOf(pair.bgKey);
+          const ratio = contrastRatio(fg, bg);
+          const level = wcagLevel(ratio);
+          /* Para texto grande, AA-large já é AA suficiente */
+          const passes =
+            pair.size === "large"
+              ? level !== "fail"
+              : level === "AA" || level === "AAA";
+          return (
+            <div
+              key={`${pair.fgKey}-${pair.bgKey}`}
+              className={`studio-a11y-row ${passes ? "is-pass" : "is-fail"}`}
+            >
+              <div
+                className="studio-a11y-swatch"
+                style={{ background: bg, color: fg }}
+                aria-hidden="true"
+              >
+                Aa
+              </div>
+              <div className="studio-a11y-meta">
+                <code className="studio-a11y-pair">
+                  {pair.fgLabel} <span aria-hidden="true">/</span> {pair.bgLabel}
+                </code>
+                <span className="studio-a11y-size">
+                  {pair.size === "large"
+                    ? t("pages.create.a11y.sizeLarge")
+                    : t("pages.create.a11y.sizeNormal")}
+                </span>
+              </div>
+              <div className="studio-a11y-result">
+                <span className="studio-a11y-ratio">{ratio.toFixed(2)}</span>
+                <span className={`studio-a11y-level studio-a11y-level--${badgeFor(level)}`}>
+                  {labelFor(level, t)}
+                </span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function badgeFor(level: WcagLevel): string {
+  if (level === "AAA") return "aaa";
+  if (level === "AA") return "aa";
+  if (level === "AA-large") return "aa-large";
+  return "fail";
+}
+
+function labelFor(level: WcagLevel, t: any): string {
+  if (level === "AAA") return "AAA";
+  if (level === "AA") return "AA";
+  if (level === "AA-large") return t("pages.create.a11y.aaLarge");
+  return t("pages.create.a11y.fail");
 }

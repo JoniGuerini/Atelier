@@ -231,7 +231,7 @@ export function Sortable<T>({
         const style: CSSProperties = isDragging
           ? {
               transform: `translate(${drag.currentX - drag.startX}px, ${drag.currentY - drag.startY}px)`,
-              zIndex: 100,
+              zIndex: "var(--z-raised)" as unknown as CSSProperties["zIndex"],
               opacity: 0.95,
               cursor: "grabbing",
             }
@@ -564,7 +564,7 @@ export function DragGhost() {
         top: ctx.pointer.y - grabOffset.y,
         width: rect.width,
         pointerEvents: "none",
-        zIndex: 9999,
+        zIndex: "var(--z-toast)" as unknown as CSSProperties["zIndex"],
       }}
       aria-hidden="true"
     >

@@ -57,14 +57,22 @@ const ptBR = {
       patterns: "Padrões",
       reference: "Referência",
       studio: "Studio",
+      tools: "Ferramentas",
     },
     items: {
       overview: "Visão geral",
       principles: "Princípios",
       colors: "Cores",
       typography: "Tipografia",
+      voice: "Tom de voz",
       spacing: "Espaçamento",
       icons: "Glifos",
+      elevation: "Elevação",
+      radius: "Cantos",
+      zIndex: "Camadas",
+      breakpoints: "Breakpoints",
+      density: "Densidade",
+      motion: "Movimento",
       buttons: "Botões",
       inputs: "Campos",
       controls: "Controles",
@@ -105,15 +113,43 @@ const ptBR = {
       navbar: "Navbar",
       accessibility: "Acessibilidade",
       code: "Para devs · código",
+      kbd: "Teclas · KBD",
+      hooks: "Hooks",
+      changelog: "Changelog",
+      tokens: "Tokens",
+      loadingStates: "Estados de espera",
+      errorHandling: "Tratamento de erro",
+      formsPatterns: "Padrões de formulário",
+      destructive: "Ações destrutivas",
+      onboarding: "Onboarding",
+      darkMode: "Modo escuro",
+      print: "Impressão",
+      i18nPatterns: "Padrões de i18n",
+      install: "Instalação",
+      apiReference: "Referência da API",
+      browserSupport: "Suporte de navegadores",
+      performance: "Performance",
+      recipes: "Receitas",
+      dataTable: "Data Table",
+      timeline: "Timeline",
+      tagInput: "Tag Input",
       create: "Create · personalizar",
+      roadmap: "Roadmap",
     },
     descriptions: {
       overview: "A capa do manual — o que vem pela frente.",
       principles: "As seis regras que regem o estilo editorial.",
       colors: "Quatro famílias: superfícies, tinta, acento, semânticas.",
       typography: "Voz editorial em Fraunces e JetBrains Mono.",
+      voice: "Como o Atelier escreve — princípios, tom por contexto, vocabulário e microcopy.",
       spacing: "Escala 8pt e o grid de doze colunas.",
       icons: "Doze glifos tipográficos — não ícones de UI.",
+      elevation: "Sombra como sinal — escala flat-by-default e quando elevar.",
+      radius: "Ângulos retos por padrão — escala de exceção controlada.",
+      zIndex: "Camadas de empilhamento — uma escala fixa para overlays.",
+      breakpoints: "Cinco pontos de quebra que substituem nove valores ad-hoc.",
+      density: "Compact, comfortable, spacious — densidade que cascateia.",
+      motion: "Camada formal de animação — primitivos, easings e regras editoriais.",
       buttons: "Primário, ghost, link e variantes.",
       inputs: "Campos, textareas e selects com hint e erro.",
       controls: "Checkbox, radio e switch.",
@@ -154,7 +190,28 @@ const ptBR = {
       navbar: "Cabeçalho horizontal com dropdowns por hover.",
       accessibility: "Atalhos, foco, contraste e ARIA.",
       code: "Tokens, primitivas e API para desenvolvedores.",
+      kbd: "Teclas e código inline — primitivos editoriais para atalhos e snippets.",
+      hooks: "Hooks utilitários públicos — ambiente, DOM e estado, todos zero-deps.",
+      changelog: "Histórico de versões — formato Keep a Changelog, renderizado pelo MarkdownViewer.",
+      tokens: "Inventory completo — todas as escalas vivas em :root, com swatch, valores e export.",
+      loadingStates: "Skeleton, Spinner, Progress, Empty — qual usar quando.",
+      errorHandling: "ErrorBoundary, mensagens inline, retry e fallback UI.",
+      formsPatterns: "Validação inline, async submit, multi-step, mensagens.",
+      destructive: "Confirmação, undo, modais de risco, double-confirm.",
+      onboarding: "Tour, Coachmark, Empty State guiado — quando usar cada.",
+      darkMode: "Paleta editorial, contraste, edge cases de charts e código.",
+      print: "Print styles, esconder cromo, contraste P&B forte.",
+      i18nPatterns: "Pluralização, datas, números, currency com Intl nativo.",
+      install: "Setup, peer deps, primeiro componente — com filosofia.",
+      apiReference: "Mapa do que vive em cada módulo — onde achar o quê.",
+      browserSupport: "Targets oficiais, APIs assumidas, fallbacks.",
+      performance: "Bundle budgets, code-splitting, ganhos da Fase 8.1.",
+      recipes: "Composições prontas — ao vivo, editáveis, abrem em sandbox externo.",
+      dataTable: "Tabela editorial composable: sort, filtros, seleção, paginação e virtualização.",
+      timeline: "Linha do tempo vertical ou horizontal, com markers, estados e separador 'agora'.",
+      tagInput: "Coletor de tags livres com chips removíveis, validação e separadores customizáveis.",
       create: "Construa seu tema ao vivo e exporte os tokens.",
+      roadmap: "O que já foi feito e o que vem pela frente — fases, prioridades e dependências.",
     },
     footer: {
       study: "Um estudo silencioso",
@@ -171,6 +228,12 @@ const ptBR = {
       label: "Configurações",
       kicker: "preferências",
       title: "Configurações",
+      dir: {
+        label: "Direção",
+        auto: "Auto",
+        ltr: "LTR",
+        rtl: "RTL",
+      },
     },
     layout: {
       toWide: "Expandir para largura total",
@@ -183,6 +246,12 @@ const ptBR = {
   /* ============================================================ */
   /* Labels usados internamente por componentes do DS (aria-label, etc.) */
   ds: {
+    example: {
+      editLabel: "Editar",
+      previewLabel: "Visualizar",
+      resetLabel: "Restaurar",
+      editorLabel: "Editor de código do exemplo",
+    },
     pagination: {
       label: "Paginação",
       previous: "Anterior",
@@ -190,6 +259,9 @@ const ptBR = {
     },
     breadcrumbs: {
       label: "Trilha de navegação",
+    },
+    timeline: {
+      nowLabel: "Agora",
     },
     calendar: {
       prev: "Mês anterior",
@@ -257,32 +329,9 @@ const ptBR = {
     groups: {
       foundations: "Fundamentos",
       components: "Componentes",
+      advanced: "Avançados",
       patterns: "Padrões",
       atelier: "Ateliê",
-    },
-    links: {
-      /* foundations */
-      principles: "Princípios",
-      colors: "Cores",
-      typography: "Tipografia",
-      spacing: "Espaçamento",
-      icons: "Glifos",
-      /* components */
-      buttons: "Botões",
-      inputs: "Campos",
-      avatars: "Avatares",
-      badges: "Badges",
-      cards: "Cards",
-      tables: "Tabelas",
-      /* patterns */
-      forms: "Formulários",
-      empty_states: "Estados vazios",
-      sidebar: "Sidebar",
-      navbar: "Navbar",
-      dropzone: "Dropzone",
-      /* atelier */
-      overview: "Visão geral",
-      code: "Para devs · código",
     },
     social: {
       github: "https://github.com/",
@@ -482,51 +531,771 @@ const ptBR = {
       metaLabel: "Famílias",
       meta: "Fraunces · JetBrains Mono",
       intro:
-        "Duas famílias fazem todo o trabalho. [em]Fraunces[/em] para leitura e ênfase, [em]JetBrains Mono[/em] para metadados e código. O itálico é a única decoração permitida.",
+        "Duas famílias fazem todo o trabalho. [em]Fraunces[/em] para leitura e ênfase, [em]JetBrains Mono[/em] para metadados e código. O itálico é a única decoração permitida — e a escala, modular em razão [em]perfect fourth[/em] (1.333), oferece exatamente nove tamanhos.",
+
+      /* ---------- i. Famílias ---------- */
+      families: {
+        title: "Famílias",
+        kicker: "two voices",
+        desc:
+          "Duas vozes, papéis distintos. A serifada conduz a leitura e ergue os títulos; a monoespaçada anota, identifica e marca o código. [em]Nada mais[/em] é necessário.",
+        weights: "Pesos",
+        stack: "Stack",
+        serif: {
+          name: "Fraunces",
+          role: "Voz editorial · leitura e títulos",
+          rationale:
+            "Serifa contemporânea com optical sizing — formas vivas em tamanhos grandes, formas calmas em corpo de texto. Itálico expressivo, usado apenas em ênfase.",
+          weights: "300 · 400 · 500 · 600 · italic",
+          stack: '"Fraunces", Georgia, serif',
+        },
+        mono: {
+          name: "JetBrains Mono",
+          role: "Voz técnica · metadados e código",
+          rationale:
+            "Monoespaçada calibrada para leitura longa de código. Glifos diferenciados (zero cortado, l versus 1) e ligaduras opcionais. Aqui é usada também em caps para kickers e captions.",
+          weights: "400 · 500 · 600",
+          stack: '"JetBrains Mono", ui-monospace, monospace',
+        },
+      },
+
+      /* ---------- ii. Specimens (tabela) ---------- */
       specimensTitle: "Especimens",
       specimensKicker: "hierarchy",
-      scaleTitle: "Escala",
-      scaleKicker: "ratios",
-      scaleDesc:
-        "Proporção perfect-fifth (1.5) para a serifada, reduzida para passos discretos na monoespaçada. Nunca mais de seis níveis por tela.",
+      specimensDesc:
+        "Cada linha é um token — o tamanho real, a line-height e o peso aplicados ao próprio texto-amostra. A coluna [em]Uso[/em] orienta quando recorrer a cada um.",
+      cols: {
+        name: "Nome",
+        token: "Token",
+        size: "Tam.",
+        lh: "LH",
+        weight: "Peso",
+        use: "Uso",
+        preview: "Amostra",
+      },
       specimens: {
-        display: {
-          meta: "Display",
-          weight: "300 · italic optional",
-          textA: "A ",
-          textB: "manhã",
-          textC: " começa no título.",
+        display: { name: "Display", use: "Aberturas, capas, marca", preview: "Atelier." },
+        h3xl:    { name: "3XL",     use: "Heros internos, page titles", preview: "Manhã clara" },
+        h2xl:    { name: "2XL",     use: "Headlines de seção", preview: "Tipografia editorial" },
+        hxl:     { name: "XL",      use: "Títulos de seção (Section)", preview: "O ritmo do texto" },
+        hlg:     { name: "LG",      use: "Sub-títulos UI, leads", preview: "Sub-título de exemplo" },
+        body:    { name: "MD · body", use: "Leitura longa, parágrafos", preview: "O corpo respira em 16/1.65." },
+        ui:      { name: "SM · UI", use: "Inputs, labels, links UI", preview: "Texto de interface" },
+        small:   { name: "XS · small", use: "Captions longas, ajuda", preview: "Texto pequeno auxiliar" },
+        micro:   { name: "Micro", use: "Status, metadados densos", preview: "STATUS · ATIVO" },
+        meta:    { name: "Meta", use: "Overlines, kickers, captions caps", preview: "FUNDAMENTO · 03" },
+      },
+
+      /* ---------- iii. Escala ---------- */
+      scale: {
+        title: "Escala como sistema",
+        kicker: "modular · 1.333",
+        desc:
+          "Uma escala modular ancorada em 16px e expandida em razão [em]perfect fourth[/em] (1.333). Nove tamanhos cobrem desde captions monoespaçadas até displays editoriais — qualquer valor fora dela deve ser justificado caso a caso.",
+        usageTitle: "Uso em CSS",
+        fluidTitle: "Tipografia fluida",
+        fluidDesc:
+          "O token [em]--text-display[/em] é o único que escala com a viewport via [em]clamp(...)[/em]. O resto é fixo de propósito: previsibilidade tipográfica vence flexibilidade em telas extremas.",
+      },
+
+      /* ---------- iv. Ritmo & leitura ---------- */
+      rhythm: {
+        title: "Ritmo & leitura",
+        kicker: "measure · line-height",
+        desc:
+          "Tipografia legível é ritmo: a relação entre tamanho, altura de linha e largura da medida. Aqui controlamos os três como um único sistema.",
+        measureTitle: "Medida (largura ideal)",
+        measureDesc:
+          "Linhas longas demais cansam — o olho perde o início da próxima linha. Linhas curtas demais quebram o pensamento. O ideal vive entre [em]45 e 75 caracteres[/em]; nosso default é 65ch.",
+        measureSample:
+          "A boa tipografia não se vê — sente-se. Quando a medida está certa, o leitor avança sem esforço; quando está errada, ele reclama da fonte sem saber por quê.",
+        measure: {
+          narrow: { label: "30ch · estreito", note: "Apertado, atritos a cada linha" },
+          ideal:  { label: "65ch · ideal",    note: "Conforto editorial — nosso default" },
+          wide:   { label: "100ch · largo",   note: "Olho se perde de uma linha à outra" },
         },
-        headline: {
-          meta: "Headline",
-          weight: "300",
-          textA: "Os silêncios também ",
-          textB: "têm",
-          textC: " voz.",
+        lhTitle: "Line-heights pareadas",
+        lhDesc:
+          "Display fica apertado (0.95–1.1), corpo respira (1.65), UI dança no meio (1.5–1.55). Nada de line-height universal.",
+      },
+
+      /* ---------- v. Estilos textuais ---------- */
+      styles: {
+        title: "Estilos textuais",
+        kicker: "long-form prose",
+        desc:
+          "Os blocos canônicos da prosa editorial: kicker, título, lead, capitular, parágrafos, citação, listas, links e captions. Tudo construído sobre os mesmos tokens.",
+        kickerSample: "ENSAIO · 03",
+        h1: "Sobre a quietude tipográfica",
+        h2: "Hierarquia sem hierarquismo",
+        h3: "O peso da pausa",
+        h4: "Pequenos detalhes que somam",
+        lead:
+          "Há tipografias que gritam, e há tipografias que sussurram. As segundas envelhecem melhor — porque convidam o leitor em vez de exigi-lo.",
+        dropcap:
+          " boa página de texto começa em silêncio e termina em silêncio. O que acontece no meio é leitura — e leitura é, antes de tudo, uma negociação delicada entre o olho e o ritmo.",
+        body1:
+          "Cada parágrafo é uma respiração. A altura da linha decide o quanto o leitor pode segurar essa respiração antes de precisar do próximo gole de ar — e a medida decide quantas palavras cabem em cada bocada.",
+        body2:
+          "Quando um título grita, o corpo emudece. Quando o corpo se afirma com clareza, o título pode falar baixo. É essa a economia da hierarquia: contraste suficiente, nem mais.",
+        quote:
+          "A boa tipografia é como o ar — ninguém percebe, até faltar.",
+        quoteAttr: "— um tipógrafo qualquer, em algum momento",
+        ulItems: [
+          "Itálico para ênfase, nunca para decoração.",
+          "Negrito para instrumentos de busca visual, com parcimônia.",
+          "Maiúsculas só em monoespaçada e com tracking generoso.",
+        ],
+        olItems: [
+          "Estabeleça o corpo (16px / 1.65).",
+          "Defina a medida (45–75 caracteres).",
+          "Calibre o título a partir do corpo, não o contrário.",
+        ],
+        linksLead: "Links são parte do texto — não devem ",
+        linkText: "interromper o ritmo da leitura",
+        linksTrail: ". Sublinhado discreto, cor estável, foco visível.",
+        caption:
+          "Composto em Fraunces · Atelier · primeira edição",
+      },
+
+      /* ---------- vi. Microtipografia ---------- */
+      micro: {
+        title: "Microtipografia",
+        kicker: "details that breathe",
+        desc:
+          "O que separa um texto bom de um texto bonito está nos detalhes que [em]ninguém vê[/em] — e que todos sentem. Aqui ficam os controles finos.",
+        numTitle: "Numerais: tabular vs proporcional",
+        numDesc:
+          "Em tabelas, números devem [em]alinhar verticalmente[/em] — use [em]tabular-nums[/em]. Em prosa corrida, números proporcionais respiram melhor.",
+        numProportional: "Proporcional · em prosa",
+        numTabular: "Tabular · em tabelas",
+        pairsTitle: "Pares editoriais",
+        avoid: "Evite",
+        use: "Use",
+        pairs: [
+          { label: "Aspas",      bad: "\"manhã\"", good: "“manhã”", note: "Aspas curvas (curly) em prosa. Retas só em código." },
+          { label: "Travessão",  bad: "Atelier - manual",  good: "Atelier — manual", note: "Em-dash (—) separa pensamento. Hífen (-) só une palavras." },
+          { label: "Reticências", bad: "...", good: "…", note: "Caractere único (…), não três pontos seguidos." },
+          { label: "Apóstrofo",  bad: "d'água", good: "d’água", note: "Apóstrofo curvo (’), nunca o reto (')." },
+        ],
+        wrapTitle: "Quebra de linha (text-wrap)",
+        wrapDesc:
+          "[em]balance[/em] equilibra títulos curtos em duas linhas; [em]pretty[/em] evita órfãos no fim do parágrafo. [em]normal[/em] é o padrão histórico.",
+        wrapSample: "Um título editorial que ocuparia exatamente duas linhas",
+      },
+
+      /* ---------- vii. Acessibilidade ---------- */
+      a11y: {
+        title: "Acessibilidade tipográfica",
+        kicker: "legibility for everyone",
+        desc:
+          "Tipografia editorial não é só estética — é leitura. E leitura é direito. Estas regras não são negociáveis.",
+        rules: [
+          { t: "Tamanho mínimo legível", b: "Body nunca abaixo de 14px (var(--text-sm)). Texto crítico em 16px. Captions caps podem ir a 10px graças ao tracking generoso." },
+          { t: "Hierarquia por tamanho + peso", b: "Nunca diferencie níveis só por peso (400 vs 500). Sempre combine tamanho + peso + cor." },
+          { t: "Contraste é tipografia", b: "Texto principal > 7:1 (ink sobre bg). Texto auxiliar > 4.5:1. Validado em ambos os temas." },
+          { t: "Não sintetize itálico ou bold", b: "Use sempre os pesos reais da fonte. Sintetização produz formas distorcidas e ruim para leitura." },
+          { t: "Respeite o zoom do navegador", b: "Use rem em layouts críticos. Não trave font-size em px sem ter pensado no zoom." },
+          { t: "Animações tipográficas", b: "Honre prefers-reduced-motion. Texto não deve dançar — texto deve estar lá." },
+        ],
+        darkTitle: "Tipografia em modo escuro",
+        darkDesc:
+          "No tema escuro, o texto pede ligeiramente menos peso — fontes serif claras sobre fundo escuro [em]engordam visualmente[/em]. Mantemos os mesmos tokens, mas as cores do ink (mais quentes, menos saturadas) compensam o efeito sem precisar mexer no peso.",
+      },
+
+      /* ---------- viii. Do's & Don'ts ---------- */
+      dosDonts: {
+        title: "Faça · não faça",
+        kicker: "editorial hygiene",
+        desc:
+          "Quatro armadilhas comuns — e o caminho editorial pra cada uma. Tipografia limpa é, principalmente, [em]disciplina de remoção[/em].",
+        do: "Faça",
+        dont: "Não faça",
+        items: [
+          {
+            sample:
+              "A tipografia editorial pede ritmo. Linhas alinhadas à esquerda dão ao olho um ponto fixo de retorno; centralizar parágrafos longos rouba esse ponto e cansa o leitor.",
+            align: "left",
+            badStyle: { textAlign: "center" },
+            goodStyle: { textAlign: "left" },
+            note: "Não centralize parágrafos longos. Centralizar é para títulos curtos e legendas.",
+          },
+          {
+            sample:
+              "Justificar texto sem hifenização produz buracos de espaço entre as palavras — \"rios\" verticais que rasgam a página. Se for justificar, ative [em]hyphens: auto[/em].",
+            align: "justify",
+            badStyle: { textAlign: "justify", hyphens: "manual" },
+            goodStyle: { textAlign: "left", hyphens: "auto" },
+            note: "Não justifique sem hifenizar. Em geral, prefira alinhamento à esquerda.",
+          },
+          {
+            sample:
+              "Mais de duas famílias na mesma frase é tipografia em crise de identidade. Use serifada para leitura, mono para técnica — e nada mais.",
+            align: "left",
+            badStyle: { fontFamily: "var(--font-mono)", fontSize: "var(--text-sm)" },
+            goodStyle: { fontFamily: "var(--font-serif)" },
+            note: "Não misture famílias por decoração. Cada família tem um papel funcional.",
+          },
+          {
+            sample:
+              "Hierarquia tipográfica é uma escada de até três degraus. Quatro níveis ou mais e o leitor deixa de subir — abandona a página.",
+            align: "left",
+            badStyle: { fontWeight: 700, fontSize: "var(--text-xs)", textTransform: "uppercase", letterSpacing: "0.1em" },
+            goodStyle: { fontWeight: 400 },
+            note: "Não invente um quarto nível de hierarquia. Se precisa, simplifique a estrutura.",
+          },
+        ],
+      },
+    },
+
+    /* ------------- Voice & tone ------------- */
+    voice: {
+      lead: "Fundamento · 04",
+      titleA: "O ",
+      titleB: "tom",
+      metaLabel: "Base",
+      meta: "Voz · escrita",
+      intro:
+        "Tipografia é a forma das letras. [em]Voz[/em] é o que essas letras dizem — e como se comportam quando o leitor está distraído, com pressa ou em apuros. O Atelier escreve como um manual silencioso: contido, preciso, honesto e humano.",
+
+      principles: {
+        title: "Princípios",
+        kicker: "i. base",
+        desc:
+          "Quatro pilares antes de qualquer regra. Tudo o que vem depois — vocabulário, microcopy, pontuação — é consequência destes.",
+        quiet: {
+          name: "Silenciosa",
+          desc:
+            "Diga o necessário e pare. Sem entusiasmo de marketing, sem exclamações, sem emojis. Se a frase pode encolher, encolha.",
+          tag: "calma",
         },
-        title: {
-          meta: "Title",
-          weight: "300",
-          text: "Um parágrafo bem respirado convida o leitor.",
+        precise: {
+          name: "Precisa",
+          desc:
+            "Use a palavra certa, não a próxima. Evite metáforas vagas (\"experiência incrível\") e prefira o concreto (\"tabela editorial com filtros\").",
+          tag: "exatidão",
         },
-        body: {
-          meta: "Body serif",
-          weight: "400",
-          text:
-            "A tipografia do Atelier apoia-se em Fraunces — um serif moderno com formas vivas, optical sizing e um itálico expressivo usado apenas em ênfase.",
+        honest: {
+          name: "Honesta",
+          desc:
+            "Quando algo falha, reconheça. Quando é beta, diga. Não esconda erros atrás de \"ops\" nem disfarce limites com promessas.",
+          tag: "verdade",
         },
-        caption: {
-          meta: "Caption",
-          weight: "500 · uppercase",
-          text: "Metadado · rodapé · etiqueta",
+        human: {
+          name: "Humana",
+          desc:
+            "Escreva para uma pessoa, não para um sistema. Use pronomes, contrações e verbos no infinitivo claro. Frio nunca é cortês.",
+          tag: "cuidado",
         },
-        mono: { meta: "Mono inline", weight: "400", text: "--accent: #c8361d;" },
+      },
+
+      tone: {
+        title: "Tom por contexto",
+        kicker: "ii. matriz",
+        desc:
+          "A voz é constante; o tom varia. Em erro, somos diretos. Em sucesso, discretos. Em marketing, sóbrios. Esta matriz mostra o que muda em cada contexto.",
+        cols: {
+          context: "Contexto",
+          attrs: "Atributos",
+          do: "Bom",
+          dont: "Evitar",
+        },
+        rows: {
+          error: {
+            label: "Erro",
+            when: "algo deu errado",
+            attrs: "direto · útil · sem culpa",
+            good: "Não foi possível salvar. Verifique sua conexão e tente novamente.",
+            bad: "Ops! 😬 Algo deu errado!!!",
+          },
+          success: {
+            label: "Sucesso",
+            when: "ação concluída",
+            attrs: "discreto · objetivo · sem festa",
+            good: "Alterações salvas.",
+            bad: "Show! 🎉 Você arrasou — tudo salvo com sucesso!!",
+          },
+          empty: {
+            label: "Estado vazio",
+            when: "nada para mostrar ainda",
+            attrs: "convite · sem culpa · com saída",
+            good: "Nenhum projeto aqui. Crie o primeiro para começar.",
+            bad: "Você não tem nada cadastrado.",
+          },
+          destructive: {
+            label: "Ação destrutiva",
+            when: "remover, excluir, encerrar",
+            attrs: "explícito · sem rodeio · com peso",
+            good: "Excluir 12 itens? Esta ação não pode ser desfeita.",
+            bad: "Tem certeza que deseja prosseguir com a operação?",
+          },
+          marketing: {
+            label: "Marketing",
+            when: "página de venda, lançamento",
+            attrs: "sóbrio · concreto · sem superlativo",
+            good: "Componentes editoriais para times pequenos. Em React, sem dependências.",
+            bad: "A solução definitiva! Revolucione seu workflow com a melhor experiência!",
+          },
+          technical: {
+            label: "Técnico",
+            when: "documentação, API, código",
+            attrs: "preciso · pragmático · sem ornamento",
+            good: "useT() retorna { t, tr, raw }. tr() interpola e formata; raw() devolve a árvore.",
+            bad: "Esse hook maravilhoso te ajuda demais com tradução, é só usar 😉",
+          },
+          loading: {
+            label: "Carregando",
+            when: "espera curta",
+            attrs: "neutro · curto · sem descul­pa",
+            good: "Carregando…",
+            bad: "Aguarde só um instantinho, estamos preparando tudo para você!",
+          },
+        },
+      },
+
+      vocab: {
+        title: "Vocabulário",
+        kicker: "iii. palavras",
+        desc:
+          "Pequenas escolhas, repetidas mil vezes, dão voz. Estas tabelas listam preferências que o Atelier já fez por você. Não são lei — são a primeira opção quando a dúvida aparece.",
+        ptTitle: "Português (BR)",
+        enTitle: "English",
+        cols: {
+          prefer: "Preferimos",
+          avoid: "Evitamos",
+          why: "Porquê",
+        },
+        pt: {
+          save: {
+            prefer: "Salvar",
+            avoid: "Gravar · Submeter",
+            why: "Salvar é o verbo da web, e direto.",
+          },
+          cancel: {
+            prefer: "Cancelar",
+            avoid: "Anular · Voltar atrás",
+            why: "Cancelar é claro e neutro.",
+          },
+          delete: {
+            prefer: "Excluir · Remover",
+            avoid: "Deletar",
+            why: "Excluir/Remover são portugueses; deletar é anglicismo evitável.",
+          },
+          config: {
+            prefer: "Configurações · Preferências",
+            avoid: "Settings · Setup",
+            why: "Português completo. Setup só para instalar.",
+          },
+          loading: {
+            prefer: "Carregando…",
+            avoid: "Aguarde · Só um instante",
+            why: "Estado, não pedido.",
+          },
+          submit: {
+            prefer: "Enviar · Salvar alterações",
+            avoid: "Submeter",
+            why: "Submeter soa burocrático e formal.",
+          },
+          register: {
+            prefer: "Criar conta · Cadastrar",
+            avoid: "Registrar",
+            why: "Cadastrar é mais comum em apps; registrar puxa cartório.",
+          },
+          you: {
+            prefer: "Você",
+            avoid: "Tu · Vocês (plural)",
+            why: "Você é neutro entre regiões e formal o bastante.",
+          },
+          click: {
+            prefer: "Selecione · Toque · Escolha",
+            avoid: "Clique aqui",
+            why: "Funciona em mouse, toque e teclado.",
+          },
+          exit: {
+            prefer: "Sair",
+            avoid: "Logout · Deslogar",
+            why: "Sair é português e direto.",
+          },
+        },
+        en: {
+          save: {
+            prefer: "Save",
+            avoid: "Submit changes",
+            why: "Save is the web's verb. Direct.",
+          },
+          cancel: {
+            prefer: "Cancel",
+            avoid: "Discard · Abort",
+            why: "Cancel is neutral. Discard implies loss; abort is harsh.",
+          },
+          delete: {
+            prefer: "Delete · Remove",
+            avoid: "Erase · Trash",
+            why: "Delete is unambiguous in software contexts.",
+          },
+          config: {
+            prefer: "Settings · Preferences",
+            avoid: "Setup · Configuration",
+            why: "Settings/Preferences are common; Setup means install.",
+          },
+          loading: {
+            prefer: "Loading…",
+            avoid: "Please wait · Just a moment",
+            why: "State, not request. The user is not the slow one.",
+          },
+          submit: {
+            prefer: "Save changes · Send",
+            avoid: "Submit",
+            why: "Submit feels bureaucratic. Be specific.",
+          },
+          register: {
+            prefer: "Create account · Sign up",
+            avoid: "Register",
+            why: "Register sounds civic. Sign up is the web standard.",
+          },
+          click: {
+            prefer: "Select · Choose · Tap",
+            avoid: "Click here",
+            why: "Works across mouse, touch, and keyboard.",
+          },
+          exit: {
+            prefer: "Sign out",
+            avoid: "Logout · Log off",
+            why: "Sign out is plain and complete.",
+          },
+          select: {
+            prefer: "Choose · Pick",
+            avoid: "Select an option from the dropdown",
+            why: "Choose is shorter and more human.",
+          },
+        },
+      },
+
+      cap: {
+        title: "Capitalização",
+        kicker: "iv. caixa",
+        desc:
+          "Sentence case por padrão; Title Case só para nomes próprios e a marca. Caixa-alta apenas em micro-rótulos tipográficos (kicker, etiquetas), nunca em parágrafos.",
+        sentenceLabel: "padrão",
+        sentenceTitle: "Sentence case",
+        sentenceDesc:
+          "Apenas a primeira letra é maiúscula. Funciona em títulos, botões, rótulos, menus, hints e qualquer texto corrido. É o default do Atelier.",
+        sentenceSample: "Configurações de conta",
+        titleLabel: "exceção",
+        titleTitle: "Title Case",
+        titleDesc:
+          "Cada palavra principal capitalizada. Reservado para nomes próprios, marcas (Atelier, GitHub) e títulos de obras.",
+        titleSample: "Atelier · Manual de Estilo",
+        examplesTitle: "Aplicação",
+        examples: {
+          page: { where: "Título de página", text: "Princípios editoriais" },
+          section: { where: "Título de seção", text: "Tom por contexto" },
+          button: { where: "Botão", text: "Salvar alterações" },
+          label: { where: "Label de campo", text: "E-mail de contato" },
+          menu: { where: "Item de menu", text: "Sobre o Atelier" },
+          brand: { where: "Marca", text: "Atelier" },
+          doc: { where: "Documento", text: "Manual de Identidade Visual" },
+        },
+      },
+
+      punct: {
+        title: "Pontuação editorial",
+        kicker: "v. tipografia da escrita",
+        desc:
+          "Sinais corretos não são preciosismo — eles dão respiração e ritmo ao texto. Use as formas tipográficas, não as datilográficas (aspas retas, hífen no lugar de em-dash, três pontos soltos).",
+        cross:
+          "Estes sinais aparecem também em [em]Tipografia · Microtipografia[/em], pelo lado mecânico (font-feature, ligatures). Aqui tratamos do uso editorial.",
+        items: {
+          quotes: {
+            name: "Aspas curvas",
+            use: "Para citação, fala e ironia. Sempre as curvas (\u201C \u201D), nunca retas (\").",
+            ex: "Ela disse \u201Cmanual silencioso\u201D — e foi.",
+          },
+          apostrophe: {
+            name: "Apóstrofo",
+            use: "Curvo (\u2019), nunca reto. Usado em contrações em inglês e elisões em português.",
+            ex: "It\u2019s a quiet manual. · D\u2019água.",
+          },
+          emdash: {
+            name: "Em-dash",
+            use: "Para parênteses fortes ou pausa enfática. Sem espaços no inglês, com espaços no português.",
+            ex: "Tipografia — a forma das letras — é metade do trabalho.",
+          },
+          endash: {
+            name: "En-dash",
+            use: "Para intervalos numéricos e relações entre dois itens. Sem espaços.",
+            ex: "Páginas 12\u201318 · Conexão SP\u2013RJ",
+          },
+          ellipsis: {
+            name: "Reticências",
+            use: "Use o caractere único (\u2026), não três pontos. Indica continuação ou pensamento suspenso.",
+            ex: "Carregando\u2026 · Talvez, mas\u2026",
+          },
+          ampersand: {
+            name: "E-comercial",
+            use: "Apenas em nomes próprios e logos (Drag & Drop, AT&T). No texto corrido, escreva \u201Ce\u201D.",
+            ex: "Drag & Drop · Tom & voz",
+          },
+          nbsp: {
+            name: "Espaço não-quebrável",
+            use: "Entre número e unidade, ou entre artigo e substantivo curto, para evitar quebra feia.",
+            ex: "8\u00A0pt · R$\u00A0120 · 24\u00A0h",
+          },
+          prime: {
+            name: "Prime · Double prime",
+            use: "Para minutos/segundos e polegadas/pés. Não confunda com aspas.",
+            ex: "5\u2032 9\u2033 · 24\u2032 30\u2033 N",
+          },
+        },
+      },
+
+      person: {
+        title: "Pessoa & número",
+        kicker: "vi. de quem se fala, com quem",
+        desc:
+          "Três posturas estão à disposição. Cada uma tem hora certa: você no diálogo direto, nós no acordo compartilhado, impessoal nos avisos do sistema.",
+        whenLabel: "Quando usar:",
+        you: {
+          tag: "calorosa",
+          name: "Você",
+          desc:
+            "A postura padrão. Funciona para a maioria dos botões, hints, mensagens de ajuda e CTA. É próxima sem ser íntima.",
+          when: "instruções, ajuda, formulários, microcopy de botão.",
+          ex: "Você pode editar isto a qualquer momento.",
+        },
+        we: {
+          tag: "compartilhada",
+          name: "Nós",
+          desc:
+            "Quando o Atelier (ou o produto) faz algo junto com a pessoa. Estabelece cumplicidade sem ser corporativo.",
+          when: "marketing, onboarding, comunicados de mudança.",
+          ex: "Acabamos de redesenhar a tabela. Veja o que mudou.",
+        },
+        neutral: {
+          tag: "formal",
+          name: "Impessoal",
+          desc:
+            "Para mensagens do sistema, registros, status. Sem pronomes; o sujeito é o evento. Reserve-o para situações em que adicionar pessoa seria forçar intimidade.",
+          when: "logs, status, mensagens automáticas, alertas críticos.",
+          ex: "Conexão restabelecida. · Sessão expirada.",
+        },
+      },
+
+      patterns: {
+        title: "Microcopy patterns",
+        kicker: "vii. peças vivas",
+        desc:
+          "Padrões para os quatro lugares em que microcopy mais aparece: botões, placeholders, confirmações e labels. Cada padrão tem uma regra curta — siga-a salvo motivo forte.",
+        goodLabel: "bom",
+        badLabel: "evite",
+        items: {
+          button: {
+            name: "Botões",
+            rule: "verbo no infinitivo · sem ponto final",
+            desc:
+              "O texto do botão diz o que vai acontecer. Comece com o verbo, em sentence case, sem ponto final. Específico vence genérico.",
+            good: ["Salvar alterações", "Criar projeto", "Excluir conta", "Enviar convite"],
+            bad: ["OK", "Submit", "Click here", "Salvar alterações."],
+          },
+          placeholder: {
+            name: "Placeholders",
+            rule: "exemplo, nunca instrução",
+            desc:
+              "Placeholder é demonstração de formato, não label nem ajuda. Use texto cinza, exemplo real, sem \u201Cdigite seu\u2026\u201D.",
+            good: ["maria@atelier.studio", "(11) 98765-4321", "Buscar componentes…"],
+            bad: ["Digite seu e-mail aqui", "Por favor, informe o telefone", "Escreva..."],
+          },
+          confirm: {
+            name: "Confirmações",
+            rule: "diga o que vai mudar",
+            desc:
+              "Pergunte sobre a ação concreta, não sobre certeza genérica. Mostre o impacto e ofereça saída clara.",
+            good: [
+              "Excluir 12 itens? Esta ação não pode ser desfeita.",
+              "Sair sem salvar? Você perderá as alterações desta sessão.",
+            ],
+            bad: ["Tem certeza?", "Deseja realmente continuar?", "Confirmar operação"],
+          },
+          label: {
+            name: "Labels de campo",
+            rule: "substantivo curto · sem dois-pontos",
+            desc:
+              "Use o nome do dado (\u201CE-mail\u201D, não \u201CSeu e-mail aqui\u201D). Sem dois-pontos no fim. Marque obrigatórios com (opcional) nos demais.",
+            good: ["E-mail", "Telefone (opcional)", "Endereço de cobrança"],
+            bad: ["Seu e-mail:", "Por favor, informe o telefone", "Email *"],
+          },
+          hint: {
+            name: "Hints (texto de ajuda)",
+            rule: "uma frase · sem ponto se for fragmento",
+            desc:
+              "Aparece sob o campo. Explique formato ou regra rapidamente. Se for frase completa, termine com ponto; se for fragmento, não.",
+            good: ["Mínimo de 8 caracteres", "Usado apenas para recuperar a senha.", "Formato: DD/MM/AAAA"],
+            bad: ["Por favor, digite uma senha forte e segura!", "ATENÇÃO: campo obrigatório"],
+          },
+          error: {
+            name: "Mensagens de erro",
+            rule: "o que aconteceu · como resolver",
+            desc:
+              "Diga em uma frase o que falhou. Em outra, diga o que fazer. Nunca culpe a pessoa nem use exclamação.",
+            good: [
+              "E-mail não encontrado. Verifique se digitou corretamente.",
+              "Senha incorreta. Tente de novo ou redefina sua senha.",
+            ],
+            bad: ["Erro!", "Falha na operação. Código: ERR_AUTH_001", "Você digitou errado!"],
+          },
+        },
+      },
+
+      ui: {
+        title: "Mensagens de UI",
+        kicker: "viii. cenas comuns",
+        desc:
+          "Cinco situações que toda interface enfrenta. Cada uma tem uma versão escrita pelo Atelier e uma versão a evitar — útil pra calibrar o ouvido em poucos minutos.",
+        goodLabel: "bom",
+        badLabel: "evite",
+        items: {
+          empty: {
+            name: "Estado vazio",
+            when: "lista, tabela ou painel sem dados ainda.",
+            good: {
+              title: "Nenhum projeto aqui",
+              body: "Crie o primeiro projeto para começar a usar o Atelier.",
+              cta: "Criar projeto",
+            },
+            bad: {
+              title: "Sem dados",
+              body: "Você ainda não cadastrou nenhum projeto no sistema.",
+              cta: "Clique aqui",
+            },
+          },
+          notFound: {
+            name: "Página não encontrada (404)",
+            when: "URL inexistente ou conteúdo removido.",
+            good: {
+              title: "Página não encontrada",
+              body: "O endereço pode ter mudado, ou o conteúdo foi removido. Tente voltar à página inicial.",
+              cta: "Ir para o início",
+            },
+            bad: {
+              title: "404 — Oops!",
+              body: "A página que você procura não existe! 😢",
+              cta: "Home",
+            },
+          },
+          loading: {
+            name: "Carregando",
+            when: "espera curta de dados ou ação.",
+            good: {
+              title: "Carregando…",
+              body: "Buscando os componentes mais recentes.",
+              cta: "Cancelar",
+            },
+            bad: {
+              title: "Por favor, aguarde!",
+              body: "Estamos preparando tudo para você. Não feche esta janela!",
+              cta: "Aguardar",
+            },
+          },
+          success: {
+            name: "Sucesso",
+            when: "ação concluída com efeito visível.",
+            good: {
+              title: "Alterações salvas",
+              body: "Suas configurações foram atualizadas.",
+              cta: "Continuar",
+            },
+            bad: {
+              title: "Sucesso!! 🎉",
+              body: "Tudo certo! Você arrasou demais!",
+              cta: "Eba!",
+            },
+          },
+          offline: {
+            name: "Sem conexão",
+            when: "perda de internet ou erro de rede.",
+            good: {
+              title: "Sem conexão",
+              body: "Suas alterações ficam guardadas localmente e sincronizam quando a conexão voltar.",
+              cta: "Tentar novamente",
+            },
+            bad: {
+              title: "Erro de rede!",
+              body: "Não foi possível conectar ao servidor. Verifique sua internet e tente novamente mais tarde.",
+              cta: "Retry",
+            },
+          },
+        },
+      },
+
+      brand: {
+        title: "Marca como narrativa",
+        kicker: "ix. bilíngue · identidade",
+        desc:
+          "O Atelier vive em dois idiomas. A voz é a mesma — a inflexão muda. Aqui ficam as diferenças finas entre PT e EN, e a metáfora que orienta toda a escrita.",
+        pt: {
+          name: "Português (BR)",
+          desc:
+            "Você como tratamento padrão; verbos no infinitivo nos botões; vírgulas curtas; em-dash com espaços. Sem gírias, sem regionalismos pesados, sem \u201cnós\u201d institucional.",
+          notes: [
+            "Use \u201cvocê\u201d, nunca \u201ctu\u201d.",
+            "Escreva \u201ce-mail\u201d (com hífen).",
+            "Em-dash com espaços: \u201cisto — aquilo\u201d.",
+            "Datas: 12 de abril, 2026 (extenso) ou 12/04/2026.",
+            "Aspas curvas \u201C \u201D, mesmo em código de prosa.",
+          ],
+        },
+        en: {
+          name: "English",
+          desc:
+            "Plain English, US spelling. Contractions allowed (it's, don't). Em-dash without spaces. Title case for proper nouns only — sentence case everywhere else.",
+          notes: [
+            "Contractions are fine: it's, you'll, don't.",
+            "US spelling: color, organize, center.",
+            "Em-dash without spaces: \u201Cthis—that.\u201D",
+            "Dates: April 12, 2026 (long) or 04/12/2026.",
+            "Use the Oxford comma when it removes ambiguity.",
+          ],
+        },
+        metaphorTitle: "Manual silencioso",
+        metaphor:
+          "[em]A boa tipografia é como o ar: invisível quando funciona, sufocante quando falha.[/em] O mesmo vale para a voz. O Atelier não quer ser ouvido — quer ser entendido. Quando a interface fala, é só porque há algo concreto a dizer. E quando se cala, é por confiança.",
+        codeTitle: "Em código",
+        codeDesc:
+          "Os componentes carregam essa voz por padrão. O lead, o intro, o microcopy — tudo já vem calibrado. Use as primitivas e a voz vem junto.",
+      },
+
+      dosDonts: {
+        title: "Faça · não faça",
+        do: "faça",
+        dont: "não faça",
+        items: [
+          {
+            do: "Diga o que aconteceu e o que fazer em seguida.",
+            dont: "Use \u201Cops\u201D, emojis ou exclamações para amenizar erros.",
+          },
+          {
+            do: "Comece botões com verbo, em sentence case, sem ponto.",
+            dont: "Escreva \u201COK\u201D, \u201CSubmit\u201D ou \u201CClique aqui\u201D.",
+          },
+          {
+            do: "Use placeholders como exemplo de formato.",
+            dont: "Repita o label dentro do placeholder.",
+          },
+          {
+            do: "Reserve title case para nomes próprios e marcas.",
+            dont: "Capitalize Toda Palavra de Todo Título.",
+          },
+          {
+            do: "Use \u201Csalvar\u201D em PT, \u201Csave\u201D em EN.",
+            dont: "Misture idiomas em uma mesma interface.",
+          },
+        ],
       },
     },
 
     /* ------------- Spacing ------------- */
     spacing: {
-      lead: "Fundamento · 04",
+      lead: "Fundamento · 05",
       titleA: "O ",
       titleB: "espaço",
       metaLabel: "Base",
@@ -564,7 +1333,7 @@ const ptBR = {
 
     /* ------------- Icons ------------- */
     icons: {
-      lead: "Fundamento · 05",
+      lead: "Fundamento · 06",
       titleA: "Os ",
       titleB: "glifos",
       metaLabel: "Biblioteca",
@@ -596,9 +1365,223 @@ const ptBR = {
       },
     },
 
+    /* ------------- Elevation ------------- */
+    elevation: {
+      lead: "Fundamento · 07",
+      titleA: "A ",
+      titleB: "elevação",
+      metaLabel: "Sombra",
+      meta: "Flat por padrão",
+      intro:
+        "Atelier é [em]flat por padrão[/em]. Sombra é sinal — se está presente, carrega significado: separa contexto temporário (popover aberto), reforça uma superfície editorial (card destacado em listing) ou comunica drag em curso. Toda sombra é tokenizada; opacidade arbitrária não passa em revisão.",
+      scaleTitle: "A escala",
+      scaleKicker: "--shadow-*",
+      scaleDesc:
+        "Quatro degraus, do nada à elevação de cartão flutuante. A passagem de um nível ao próximo dobra (aproximadamente) a difusão. Calibradas diferentes em light e dark — no escuro a sombra precisa ser mais marcada para sobreviver ao antracite.",
+      whenTitle: "Quando elevar",
+      whenKicker: "decisão editorial",
+      whenDesc:
+        "A elevação só justifica seu custo visual quando carrega significado funcional. Para dividir conteúdo, prefira [em]--rule-soft[/em] — borda discreta, sem ruído.",
+      rules: [
+        {
+          n: "I",
+          t: "Não use",
+          b: "Para qualquer card, painel ou seção que ESTÁ no fluxo da página. A régua faz o trabalho.",
+        },
+        {
+          n: "II",
+          t: "Use --shadow-sm",
+          b: "Em surfaces que [em]repousam[/em] sobre o conteúdo: header sticky, navbar fixa em scroll.",
+        },
+        {
+          n: "III",
+          t: "Use --shadow-md",
+          b: "Em popovers, dropdowns e tooltips — overlays temporários que precisam separar-se sem dominar.",
+        },
+        {
+          n: "IV",
+          t: "Use --shadow-lg",
+          b: "Em modais, drawers e cards arrastados (drag preview). Elevação máxima é evento, não estado.",
+        },
+      ],
+      themeTitle: "Light vs Dark",
+      themeKicker: "comparativo",
+      themeDesc:
+        "A mesma cena em ambos os temas. No dark, a sombra é mais opaca para vencer o contraste reduzido contra o antracite — o token resolve isso automaticamente.",
+    },
+
+    /* ------------- Radius ------------- */
+    radius: {
+      lead: "Fundamento · 08",
+      titleA: "Os ",
+      titleB: "cantos",
+      metaLabel: "Border-radius",
+      meta: "Ângulos retos por padrão",
+      intro:
+        "Atelier respeita o ângulo reto — herança editorial de capas modernistas e tipografia geométrica. [em]--radius-none é o default[/em] e cobre 90%+ do DS. A escala existe não para suavizar, mas para autorizar exceções controladas onde a curvatura carrega significado funcional, não decorativo.",
+      scaleTitle: "A escala",
+      scaleKicker: "--radius-*",
+      scaleDesc:
+        "Cinco valores, do reto absoluto ao circular. A passagem entre níveis vizinhos é deliberadamente sutil (2px → 4px → 8px) — o salto grande é só ao chegar em [em]--radius-full[/em], que entra como categoria à parte: forma geométrica completa.",
+      whenTitle: "Quando arredondar",
+      whenKicker: "decisão editorial",
+      whenDesc:
+        "Cada exceção precisa justificar-se. Estes são os casos canônicos onde o canto suave passa em revisão.",
+      rules: [
+        {
+          n: "I",
+          t: "--radius-sm (2px)",
+          b: "Tags discretas, kbd, status pills muito pequenas. Suaviza só o suficiente para o pixel não brigar com o texto.",
+        },
+        {
+          n: "II",
+          t: "--radius-md (4px)",
+          b: "Botões com personalidade, badges arredondados, inputs em contextos friendlier (ex: forms públicos).",
+        },
+        {
+          n: "III",
+          t: "--radius-lg (8px)",
+          b: "Cards, popovers e drawers que pedem suavidade — sobreposições temporárias que querem afastar-se da superfície principal.",
+        },
+        {
+          n: "IV",
+          t: "--radius-full (9999px)",
+          b: "Avatar, Switch, dot pulse, status dots. Forma circular completa — é categoria, não gradiente.",
+        },
+      ],
+    },
+
+    /* ------------- Z-Index ------------- */
+    zIndex: {
+      lead: "Fundamento · 09",
+      titleA: "As ",
+      titleB: "camadas",
+      metaLabel: "Stacking",
+      meta: "Uma escala fixa",
+      intro:
+        "Antes desta escala, cada overlay declarava seu próprio z-index ad-hoc — Drawer 1000, Toast 9999, Combobox 100. O resultado: empilhamento imprevisível. Aqui fixamos a hierarquia oficial em [em]nove camadas nomeadas[/em]. Se um componente 'precisa ficar entre dois níveis', a camada está errada.",
+      stackTitle: "A pilha",
+      stackKicker: "--z-*",
+      stackDesc:
+        "De baixo para cima, do plano de fundo ao topo absoluto. Cada nível é destinado a um tipo específico de overlay — não há terra de ninguém entre eles.",
+      diagramTitle: "Diagrama editorial",
+      diagramKicker: "as nove camadas",
+      diagramDesc:
+        "Visualização da pilha como vista de lado. Skip-link permanece sempre acima — afinal, é a11y de último recurso, deve sobreviver até a um modal aberto.",
+      rulesTitle: "Regras",
+      rulesKicker: "decisões editoriais",
+      rules: [
+        {
+          n: "I",
+          t: "Não interpole",
+          b: "NUNCA invente z-index entre níveis (ex: 350). Se o componente 'precisa ficar entre', está em camada errada.",
+        },
+        {
+          n: "II",
+          t: "Toaster > Modal",
+          b: "Notificações precisam emergir mesmo sobre diálogos. É decisão editorial — informação > foco temporário.",
+        },
+        {
+          n: "III",
+          t: "Palette > Toast",
+          b: "Command palette (⌘K) é a ação do usuário; Toaster é sistema. Ação humana sempre vence.",
+        },
+        {
+          n: "IV",
+          t: "Skip-link no topo",
+          b: "Sempre. Acessibilidade é função antes de estética — deve ser visível até por cima de tudo.",
+        },
+      ],
+    },
+
+    /* ------------- Breakpoints ------------- */
+    breakpoints: {
+      lead: "Fundamento · 10",
+      titleA: "Os ",
+      titleB: "breakpoints",
+      metaLabel: "Responsivo",
+      meta: "Cinco pontos, nada de drift",
+      intro:
+        "A codebase legada continha [em]nove valores diferentes[/em] em @media queries (480, 560, 600, 700, 720, 900, 960, 1080, 1280). Esta escala consolida em cinco pontos editoriais que cobrem todos os casos. CSS Custom Properties ainda não funcionam dentro de @media — o token vive paralelo ao número literal, com comentário pareando os dois.",
+      scaleTitle: "A escala",
+      scaleKicker: "--bp-*",
+      scaleDesc:
+        "Cinco pontos cobrindo do phone ao 2K+. Cada nome carrega uma intenção editorial — não é só tamanho de tela, é o tipo de leitura que ali acontece.",
+      visualizerTitle: "Visualizador",
+      visualizerKicker: "viewport atual",
+      visualizerDesc:
+        "Redimensione a janela e veja qual breakpoint está ativo. A barra abaixo se acende no nível atual e mostra o número literal correspondente.",
+      jsTitle: "Em JavaScript",
+      jsKicker: "useMediaQuery",
+      jsDesc:
+        "O hook [em]useMediaQuery[/em] da Fase 10 lê estes tokens via [em]matchMedia[/em] e expõe um booleano reativo. Em CSS, mantemos número literal pareado com comentário do token — solução pragmática até a CSSWG aprovar @media com vars.",
+    },
+
+    /* ------------- Density ------------- */
+    density: {
+      lead: "Fundamento · 11",
+      titleA: "A ",
+      titleB: "densidade",
+      metaLabel: "Compactação",
+      meta: "Cascata via CSS vars",
+      intro:
+        "Componentes não precisam ganhar prop nova para variar densidade. O DS expõe [em]quatro variáveis[/em] (padding-x, padding-y, gap, text) com valor padrão = comfortable. Aplique [em].is-density-compact[/em] ou [em].is-density-spacious[/em] em qualquer ancestral — as variáveis cascateiam, e cada componente que as consome reage automaticamente.",
+      scaleTitle: "Os três níveis",
+      scaleKicker: "compact / comfortable / spacious",
+      scaleDesc:
+        "O mesmo componente em três densidades, lado a lado. Compact para tabelas com muito conteúdo, dashboards densos, dev tools. Spacious para landing, onboarding, contextos de descoberta.",
+      tokensTitle: "Os tokens",
+      tokensKicker: "--density-*",
+      tokensDesc:
+        "Quatro variáveis que componentes consomem. O default no :root é [em]comfortable[/em] — sem prefixo de classe, qualquer componente vem em modo confortável.",
+      howTitle: "Como aplicar",
+      howKicker: "scoping",
+      howDesc:
+        "Aplique a classe num ancestral comum — desde uma <section> isolada até o <main> inteiro. As CSS Custom Properties cascateiam por padrão; nenhum componente precisa ser ciente da troca.",
+    },
+
+    /* ------------- Motion ------------- */
+    motion: {
+      lead: "Fundamento · 12",
+      titleA: "O ",
+      titleB: "movimento",
+      metaLabel: "Animação",
+      meta: "Camada formal · zero-deps",
+      intro:
+        "Antes da Fase 4, o DS usava transition ad-hoc — cada componente decidia sua duração e curva. Agora há vocabulário comum: cinco primitivos ([em]Transition / Fade / Slide / Scale / Collapse[/em]), um wrapper de scroll ([em]ScrollReveal[/em]) e transições de página. Tudo respeita prefers-reduced-motion automaticamente.",
+      durTitle: "Durações",
+      durKicker: "--dur-*",
+      durDesc: "Quatro pontos: micro-feedback, default, transições editoriais, page-level. Curva o tempo, não a opinião.",
+      easeTitle: "Easings",
+      easeKicker: "--ease-*",
+      easeDesc:
+        "Seis curvas nomeadas. [em]--ease[/em] é o default (in-out suave); use [em]--ease-out[/em] pra entrada, [em]--ease-in[/em] pra saída. As demais são exceções — discuta antes de adicionar uma sétima.",
+      primTitle: "Primitivos",
+      primKicker: "<Fade> · <Slide> · <Scale>",
+      primDesc:
+        "Atalhos sobre <Transition>. Aceitam um filho único e injetam className + style — sem wrapper extra no DOM. Toggle para ver entrada/saída.",
+      collapseTitle: "Collapse",
+      collapseKicker: "height: auto",
+      collapseDesc:
+        "Anima altura corretamente — mede com getBoundingClientRect, transiciona, restaura auto. Útil pra accordions, disclosure, expand/collapse genérico.",
+      collapseOpen: "abrir",
+      collapseClose: "fechar",
+      revealTitle: "ScrollReveal",
+      revealKicker: "IntersectionObserver",
+      revealDesc:
+        "Wrapper que anima entrada quando o elemento aparece na tela. Direção (up/down/left/right), delay, threshold. Once=true desconecta após primeira entrada (default).",
+      pageTitle: "Page transitions",
+      pageKicker: "usePageTransition",
+      pageDesc:
+        "Hook leve consumido pelo router — em vez de máquina de estado complexa, usa a estratégia React: [em]key={current}[/em] força remount, CSS anima entrada. Persistência de scroll opt-in via flag.",
+      rulesTitle: "Quando NÃO animar",
+      rulesKicker: "decisões editoriais",
+      rulesDesc: "Toda animação custa atenção. Estas são as regras que filtram exceção de excesso.",
+    },
+
     /* ------------- Buttons ------------- */
     buttons: {
-      lead: "Componente · 06",
+      lead: "Componente · 13",
       titleA: "Os ",
       titleB: "botões",
       metaLabel: "Variantes",
@@ -655,7 +1638,7 @@ const ptBR = {
 
     /* ------------- Inputs ------------- */
     inputs: {
-      lead: "Componente · 07",
+      lead: "Componente · 14",
       titleA: "Os ",
       titleB: "campos",
       metaLabel: "Tipos",
@@ -689,7 +1672,7 @@ const ptBR = {
 
     /* ------------- Controls ------------- */
     controls: {
-      lead: "Componente · 08",
+      lead: "Componente · 15",
       titleA: "Os ",
       titleB: "controles",
       metaLabel: "Binários",
@@ -728,7 +1711,7 @@ const ptBR = {
 
     /* ------------- Badges ------------- */
     badges: {
-      lead: "Componente · 09",
+      lead: "Componente · 16",
       titleA: "Os ",
       titleB: "badges",
       metaLabel: "Pequeno",
@@ -772,7 +1755,7 @@ const ptBR = {
 
     /* ------------- Avatars ------------- */
     avatars: {
-      lead: "Componente · 10",
+      lead: "Componente · 17",
       titleA: "Os ",
       titleB: "avatares",
       metaLabel: "Identidade",
@@ -830,7 +1813,7 @@ const ptBR = {
 
     /* ------------- Alerts ------------- */
     alerts: {
-      lead: "Componente · 11",
+      lead: "Componente · 18",
       titleA: "Os ",
       titleB: "alertas",
       metaLabel: "Variantes",
@@ -873,7 +1856,7 @@ const ptBR = {
 
     /* ------------- Cards ------------- */
     cards: {
-      lead: "Componente · 12",
+      lead: "Componente · 19",
       titleA: "Os ",
       titleB: "cartões",
       metaLabel: "Blocos",
@@ -945,7 +1928,7 @@ const ptBR = {
 
     /* ------------- Tabs ------------- */
     tabs: {
-      lead: "Componente · 13",
+      lead: "Componente · 20",
       titleA: "As ",
       titleB: "abas",
       metaLabel: "Navegação",
@@ -1024,7 +2007,7 @@ const ptBR = {
 
     /* ------------- Tables ------------- */
     tables: {
-      lead: "Componente · 14",
+      lead: "Componente · 21",
       titleA: "As ",
       titleB: "tabelas",
       metaLabel: "Dados",
@@ -1047,7 +2030,7 @@ const ptBR = {
 
     /* ------------- Charts ------------- */
     charts: {
-      lead: "Componente · 15",
+      lead: "Componente · 22",
       titleA: "Os ",
       titleB: "gráficos",
       metaLabel: "Visualização",
@@ -1135,7 +2118,7 @@ const ptBR = {
 
     /* ------------- Overlays ------------- */
     overlays: {
-      lead: "Componente · 16",
+      lead: "Componente · 23",
       titleA: "As ",
       titleB: "sobreposições",
       metaLabel: "Foco",
@@ -1168,7 +2151,7 @@ const ptBR = {
 
     /* ------------- Feedback ------------- */
     feedback: {
-      lead: "Componente · 17",
+      lead: "Componente · 24",
       titleA: "O ",
       titleB: "retorno",
       metaLabel: "Progresso · Toast",
@@ -1198,7 +2181,7 @@ const ptBR = {
 
     /* ------------- Dropzone ------------- */
     dropzone: {
-      lead: "Componente · 18",
+      lead: "Componente · 25",
       titleA: "O ",
       titleB: "dropzone",
       metaLabel: "Arquivos",
@@ -1229,7 +2212,7 @@ const ptBR = {
 
     /* ------------- Pagination ------------- */
     pagination: {
-      lead: "Componente · 19",
+      lead: "Componente · 26",
       titleA: "A ",
       titleB: "paginação",
       metaLabel: "Lista longa",
@@ -1273,7 +2256,7 @@ const ptBR = {
 
     /* ------------- Breadcrumbs ------------- */
     breadcrumbs: {
-      lead: "Componente · 20",
+      lead: "Componente · 27",
       titleA: "Os ",
       titleB: "breadcrumbs",
       metaLabel: "Localização",
@@ -1314,7 +2297,7 @@ const ptBR = {
 
     /* ------------- Skeleton ------------- */
     skeleton: {
-      lead: "Componente · 21",
+      lead: "Componente · 28",
       titleA: "Os ",
       titleB: "skeletons",
       metaLabel: "Espera",
@@ -1353,7 +2336,7 @@ const ptBR = {
 
     /* ------------- Popover ------------- */
     popover: {
-      lead: "Avançado · 22",
+      lead: "Avançado · 32",
       titleA: "O ",
       titleB: "popover",
       metaLabel: "Overlay",
@@ -1415,7 +2398,7 @@ const ptBR = {
 
     /* ------------- DropdownMenu ------------- */
     dropdownMenu: {
-      lead: "Avançado · 23",
+      lead: "Avançado · 33",
       titleA: "Os ",
       titleB: "menus",
       metaLabel: "Ações",
@@ -1479,7 +2462,7 @@ const ptBR = {
 
     /* ------------- ContextMenu ------------- */
     contextMenu: {
-      lead: "Avançado · 24",
+      lead: "Avançado · 34",
       titleA: "O ",
       titleB: "context menu",
       metaLabel: "Right-click",
@@ -1525,7 +2508,7 @@ const ptBR = {
 
     /* ------------- Drawer ------------- */
     drawer: {
-      lead: "Avançado · 25",
+      lead: "Avançado · 35",
       titleA: "O ",
       titleB: "drawer",
       metaLabel: "Modal lateral",
@@ -1592,7 +2575,7 @@ const ptBR = {
 
     /* ------------- Toaster ------------- */
     toaster: {
-      lead: "Avançado · 26",
+      lead: "Avançado · 36",
       titleA: "O ",
       titleB: "toaster",
       metaLabel: "Notificações",
@@ -1669,7 +2652,7 @@ const ptBR = {
 
     /* ------------- Combobox ------------- */
     combobox: {
-      lead: "Avançado · 27",
+      lead: "Avançado · 37",
       titleA: "O ",
       titleB: "combobox",
       metaLabel: "Select com busca",
@@ -1735,7 +2718,7 @@ const ptBR = {
 
     /* ------------- RangeSlider ------------- */
     slider: {
-      lead: "Avançado · 28",
+      lead: "Avançado · 38",
       titleA: "O ",
       titleB: "range slider",
       metaLabel: "Numérico",
@@ -1802,7 +2785,7 @@ const ptBR = {
 
     /* ------------- Calendar ------------- */
     calendar: {
-      lead: "Avançado · 29",
+      lead: "Avançado · 39",
       titleA: "O ",
       titleB: "calendar",
       metaLabel: "Datas",
@@ -1860,7 +2843,7 @@ const ptBR = {
 
     /* ------------- DatePicker ------------- */
     datePicker: {
-      lead: "Avançado · 30",
+      lead: "Avançado · 40",
       titleA: "O ",
       titleB: "date picker",
       metaLabel: "Date input",
@@ -1920,7 +2903,7 @@ const ptBR = {
 
     /* ------------- Carousel ------------- */
     carousel: {
-      lead: "Avançado · 31",
+      lead: "Avançado · 41",
       titleA: "O ",
       titleB: "carousel",
       metaLabel: "Slides",
@@ -1982,7 +2965,7 @@ const ptBR = {
 
     /* ------------- TreeView ------------- */
     tree: {
-      lead: "Avançado · 32",
+      lead: "Avançado · 42",
       titleA: "A ",
       titleB: "tree view",
       metaLabel: "Hierarquia",
@@ -2032,7 +3015,7 @@ const ptBR = {
 
     /* ------------- ResizablePanels ------------- */
     resizable: {
-      lead: "Avançado · 33",
+      lead: "Avançado · 43",
       titleA: "Os ",
       titleB: "resizable panels",
       metaLabel: "Layout",
@@ -2107,7 +3090,7 @@ const ptBR = {
 
     /* ------------- ColorPicker ------------- */
     colorPicker: {
-      lead: "Avançado · 34",
+      lead: "Avançado · 44",
       titleA: "O ",
       titleB: "color picker",
       metaLabel: "Cor",
@@ -2158,7 +3141,7 @@ const ptBR = {
 
     /* ------------- Markdown ------------- */
     markdown: {
-      lead: "Avançado · 35",
+      lead: "Avançado · 45",
       titleA: "O ",
       titleB: "markdown viewer",
       metaLabel: "Texto",
@@ -2197,7 +3180,7 @@ const ptBR = {
 
     /* ------------- Shortcuts ------------- */
     shortcuts: {
-      lead: "Avançado · 36",
+      lead: "Avançado · 46",
       titleA: "Os ",
       titleB: "atalhos",
       metaLabel: "Teclado",
@@ -2252,7 +3235,7 @@ const ptBR = {
 
     /* ------------- VirtualList ------------- */
     virtualList: {
-      lead: "Avançado · 37",
+      lead: "Avançado · 47",
       titleA: "A ",
       titleB: "lista virtualizada",
       metaLabel: "Performance",
@@ -2299,7 +3282,7 @@ const ptBR = {
 
     /* ------------- DragDrop ------------- */
     dragDrop: {
-      lead: "Avançado · 38",
+      lead: "Avançado · 48",
       titleA: "O ",
       titleB: "drag & drop",
       metaLabel: "Interação",
@@ -2347,7 +3330,7 @@ const ptBR = {
 
     /* ------------- Forms ------------- */
     forms: {
-      lead: "Padrão · 39",
+      lead: "Padrão · 49",
       titleA: "Os ",
       titleB: "formulários",
       metaLabel: "Composição",
@@ -2388,7 +3371,7 @@ const ptBR = {
 
     /* ------------- Stepper ------------- */
     stepper: {
-      lead: "Padrão · 40",
+      lead: "Padrão · 50",
       titleA: "O ",
       titleB: "stepper",
       metaLabel: "Multi-etapa",
@@ -2433,7 +3416,7 @@ const ptBR = {
 
     /* ------------- Empty States ------------- */
     emptyStates: {
-      lead: "Padrão · 41",
+      lead: "Padrão · 51",
       titleA: "Os ",
       titleB: "vazios",
       metaLabel: "Sem conteúdo",
@@ -2484,7 +3467,7 @@ const ptBR = {
 
     /* ------------- Sidebar (pattern) ------------- */
     sidebar: {
-      lead: "Padrão · 42",
+      lead: "Padrão · 52",
       titleA: "A ",
       titleB: "sidebar",
       metaLabel: "Navegação",
@@ -2584,7 +3567,7 @@ const ptBR = {
 
     /* ------------- Navbar (pattern) ------------- */
     navbar: {
-      lead: "Padrão · 43",
+      lead: "Padrão · 53",
       titleA: "A ",
       titleB: "navbar",
       metaLabel: "Navegação",
@@ -2818,7 +3801,7 @@ const ptBR = {
 
     /* ------------- Accessibility ------------- */
     accessibility: {
-      lead: "Referência · 44",
+      lead: "Referência · 54",
       titleA: "A ",
       titleB: "acessibilidade",
       metaLabel: "Conformidade",
@@ -2883,6 +3866,33 @@ const ptBR = {
         desc: "As combinações de cor do tema padrão passam pelo critério WCAG AA (4.5:1 para texto). Use o [em]Studio[/em] para auditar temas customizados.",
         caption: "Razões de contraste do tema light · padrão.",
       },
+      focusHooks: {
+        title: "Hooks de foco",
+        kicker: "useFocusTrap · useFocusReturn · useRovingTabIndex",
+        desc: "Lógica de foco que vivia espalhada em Drawer/Popover/Calendar/TreeView agora é pública em [em]src/lib/hooks[/em]. Mesma assinatura, mesmo cleanup, qualquer overlay novo pode reusar.",
+        caption: "Os três hooks de foco públicos.",
+        thHook: "Hook",
+        thPurpose: "Função",
+        items: [
+          { hook: "useFocusTrap(ref, active?)", purpose: "Prende Tab/Shift+Tab dentro do ref. Wrap nas pontas. Use em modais, drawers, popovers." },
+          { hook: "useFocusReturn(active?)", purpose: "Captura o foco antes de montar e restaura ao desmontar — combine com useFocusTrap." },
+          { hook: "useRovingTabIndex(count, options?)", purpose: "Navegação por arrow keys em listas/grids — apenas um item recebe tabIndex=0 por vez." },
+        ],
+      },
+      rtl: {
+        title: "RTL · Right-to-left",
+        kicker: "dir=rtl preparado",
+        desc: "O [em]LocaleProvider[/em] aplica dir=rtl no <html> automaticamente para locales que exigem (ar/he/fa/ur), e expõe um override manual em [em]Settings → Direção[/em] para preview. Glifos direcionais (chevrons, breadcrumbs) e Drawer.left/right são espelhados via CSS. Auditoria completa do CSS legado é dívida progressiva — substituir [em]padding-left[/em] por [em]padding-inline-start[/em], etc.",
+        tipTitle: "Como testar agora",
+        tipBody: "Abra o menu de configurações (⋯) e troque [em]Direção[/em] para [em]RTL[/em]. O layout do shell se adapta; navegue por algumas páginas e reporte regressões — vão entrar como melhoria progressiva.",
+      },
+      tests: {
+        title: "Testes automatizados",
+        kicker: "vitest + testing-library",
+        desc: "Setup pronto: [em]vitest[/em] (jsdom) + [em]@testing-library/react[/em] + [em]user-event[/em]. Comandos: [em]npm run test[/em] (CI), [em]npm run test:watch[/em] (dev). Cobertura inicial em [em]src/lib[/em] (hooks, contrast). Adicionar testes por componente é tarefa contínua — cada novo componente interativo entra com pelo menos um smoke de teclado.",
+        tipTitle: "Polyfills de jsdom já configurados",
+        tipBody: "[em]matchMedia[/em], [em]IntersectionObserver[/em] e [em]ResizeObserver[/em] são polyfilados em [em]src/test/setup.ts[/em] — os hooks de ambiente da Fase 10 funcionam em testes sem mocks ad-hoc.",
+      },
       aria: {
         title: "ARIA & screen readers",
         kicker: "semantic html first",
@@ -2929,16 +3939,43 @@ const ptBR = {
       },
       export: {
         intro:
-          "Cole o bloco abaixo no [em]:root[/em] do seu CSS para reproduzir esta combinação no seu projeto.",
+          "Use o formato que melhor encaixa no seu pipeline. [em]theme.css[/em] cola direto no [em]:root[/em]; [em]tokens.json[/em] segue o formato W3C DTCG; [em]theme.ts[/em] expõe um objeto tipado pra apps consumidoras.",
+        formatLabel: "Formato",
         copy: "Copiar",
         copied: "Copiado",
-        download: "Baixar .css",
+        download: "Baixar arquivo",
       },
       actions: {
         shuffle: "Embaralhar",
         reset: "Restaurar",
         export: "Exportar tokens",
         hideExport: "Ocultar tokens",
+        a11y: "Acessibilidade",
+        hideA11y: "Ocultar acessibilidade",
+        import: "Importar",
+        hideImport: "Ocultar importar",
+      },
+      import: {
+        label: "Importar tokens externos",
+        intro:
+          "Cole, arraste ou escolha um arquivo [em].css[/em] ([em]:root { --token: ... }[/em]) ou [em].json[/em] (formato W3C DTCG ou flat). O Studio detecta o formato, mostra preview e avisa sobre tokens desconhecidos. Aplicar sobrescreve qualquer preset.",
+        dropHint: "Arraste um arquivo .css ou .json aqui",
+        dropping: "Solte para importar",
+        choose: "Ou escolha um arquivo",
+        placeholder: "Cole o conteúdo aqui:\n\n:root {\n  --ink: #1a1a1a;\n  --accent: #c8361d;\n}\n\nou JSON DTCG:\n\n{\n  \"color\": {\n    \"ink\": { \"$value\": \"#1a1a1a\", \"$type\": \"color\" }\n  }\n}",
+        more: "outros tokens",
+        showWarnings: "Ver avisos",
+        apply: "Aplicar",
+        clear: "Limpar import",
+      },
+      a11y: {
+        label: "Verificação de contraste WCAG",
+        intro:
+          "Cada par é o contraste real do tema atual contra o limite [em]WCAG 2.x[/em]. Vermelho indica falha em [em]AA[/em] (4.5:1 para texto normal, 3:1 para texto grande).",
+        sizeNormal: "texto normal",
+        sizeLarge: "texto grande",
+        aaLarge: "AA grande",
+        fail: "Falha",
       },
       preview: {
         typeKicker: "01 · Tipografia",
@@ -3061,6 +4098,1003 @@ const ptBR = {
         tx3: "Frete (impresso)",
         tx4: "Patrocínio mensal",
         tx5: "Adicional postal",
+      },
+    },
+
+    /* ============================================================ */
+    roadmap: {
+      lead: "Manual vivo",
+      titleA: "O caminho",
+      titleB: "à frente",
+      metaLabel: "Atualizado",
+      intro:
+        "Este documento é a fonte única de verdade do que já entregamos e o que vem pela frente. Cada [em]fase[/em] traz seu escopo, dependências internas e critérios de aceite. Filtre, busque, e clique em qualquer componente entregue para ir direto à doc.",
+
+      progress: {
+        label: "entregue",
+      },
+      search: {
+        label: "Buscar no roadmap",
+        placeholder: "Buscar fase, componente, dependência…",
+      },
+      filters: {
+        all: "Tudo",
+        statusLabel: "Status",
+        priorityLabel: "Prioridade",
+        pendingOnly: "Só o que falta",
+      },
+      status: {
+        done: "Entregue",
+        next: "Próximo",
+        ongoing: "Contínuo",
+      },
+      priority: {
+        high: "Prioridade alta",
+        medium: "Prioridade média",
+        ongoing: "Contínuo",
+        none: "—",
+      },
+      principles: {
+        kicker: "Pilares",
+        titleA: "Princípios",
+        titleB: "não-negociáveis",
+        desc: "Toda tarefa do roadmap precisa respeitar estes pilares — qualquer trade-off que quebre um deles vira discussão antes de virar PR.",
+      },
+      phases: {
+        kicker: "Linha do tempo",
+        titleA: "Fases",
+        titleB: "& itens",
+        singular: "Fase",
+        empty: "Nenhuma fase corresponde aos filtros atuais.",
+        count: "{n} fase(s) visíveis com os filtros atuais.",
+      },
+      delivered: {
+        openDoc: "Abrir documentação",
+      },
+      task: {
+        scope: "Escopo",
+        deps: "Dependências internas",
+        acceptance: "Critérios de aceite",
+      },
+      conventions: {
+        kicker: "Como contribuir",
+        titleA: "Convenções",
+        titleB: "de PR",
+        desc: "Regras práticas que evitam dívida técnica futura. Toda PR de componente novo precisa cumprir o checklist abaixo.",
+      },
+      sequence: {
+        kicker: "Ordem sugerida",
+        titleA: "Sequência",
+        titleB: "recomendada",
+        desc: "Ordem em que cada fase entrega o maior valor. Ajustável conforme prioridade do produto.",
+      },
+    },
+
+    /* ============================================================ */
+    dataTable: {
+      lead: "Componente · 29",
+      titleA: "A ",
+      titleB: "tabela",
+      metaLabel: "Data Display",
+      meta: "DataTable composable",
+      intro:
+        "A peça mais densa do DS. Header com sort visual, filtros tipados por coluna ([em]text · select · multi · range · date-range[/em]), seleção single ou multi, paginação integrada e [em]virtualização opt-in[/em] para listas com milhares de linhas. API 100% composable: declare as colunas uma vez, monte livremente.",
+      basic: {
+        title: "Tabela básica",
+        kicker: "default",
+        caption:
+          "Sort por coluna (clique no header). Mono-sort por padrão; segure [em]Shift[/em] e clique para empilhar.",
+      },
+      filters: {
+        title: "Filtros por coluna",
+        kicker: "<DataTableFilters />",
+        caption:
+          "Cada coluna declara seu próprio [em]filter[/em]. O componente [em]<DataTableFilters />[/em] coleta todos eles em uma toolbar acima da tabela. Tipos suportados: text, select, multi (Combobox), range (RangeSlider) e date-range (DateRangePicker).",
+      },
+      select: {
+        title: "Seleção & densidade",
+        kicker: "selectionMode + density",
+        caption:
+          "Atualmente {count} linha(s) selecionada(s). Checkbox no header alterna todas as visíveis. Densidade [em]compact[/em] para tabelas com muito conteúdo.",
+      },
+      multisort: {
+        title: "Multi-sort",
+        kicker: "Shift+click",
+        caption:
+          "Clique segurando [em]Shift[/em] para empilhar critérios. O número ao lado da seta indica a ordem do critério.",
+      },
+      virtual: {
+        title: "Virtualização",
+        kicker: "virtualize",
+        caption:
+          "5.000 linhas — só as visíveis renderizam. Layout em divs com ARIA (role=table/row/cell): mantém acessibilidade sem os hacks de display:block em <table>.",
+      },
+      composition: {
+        title: "Composição",
+        titleB: "árvore",
+        kicker: "estrutura",
+        caption:
+          "DataTable é um Provider. Você compõe livremente: pode trocar [em]DataTableHeader[/em] por seu próprio thead se quiser custom total.",
+      },
+    },
+
+    /* ============================================================ */
+    timeline: {
+      lead: "Componente · 30",
+      titleA: "A ",
+      titleB: "linha do tempo",
+      metaLabel: "Data Display",
+      meta: "Vertical e horizontal",
+      intro:
+        "Eventos no tempo, contados como capítulos. Verticalmente para histórico denso (changelog, atividade); horizontalmente para fluxos curtos (onboarding, etapas). Marcadores variam de [em]dot[/em] a [em]glyph[/em], e o separador [em]agora[/em] divide passado de futuro.",
+      vertical: {
+        title: "Vertical (default)",
+        kicker: "orientation='vertical'",
+        caption:
+          "A orientação editorial: cada item ocupa uma linha, com data no topo e descrição livre embaixo.",
+        demo: {
+          nowLabel: "Agora",
+          items: [
+            {
+              date: "12 Mai 2025",
+              title: "Onda 1 — Foundations",
+              body: "Pagination, Breadcrumbs, Skeleton, Stepper e a página de Acessibilidade.",
+            },
+            {
+              date: "03 Jun 2025",
+              title: "Onda 2 — Wishlist",
+              body: "Popover, DropdownMenu, ContextMenu, Drawer, Combobox, RangeSlider, Calendar.",
+            },
+            {
+              date: "Hoje",
+              title: "Onda 3 — Data display",
+              body: "DataTable, Timeline, TagInput, KBD.",
+            },
+            {
+              date: "Próximo",
+              title: "Onda 4 — Motion",
+              body: "FadeIn, SlideIn, Page transitions com Motion library.",
+            },
+          ],
+        },
+      },
+      markers: {
+        title: "Markers",
+        kicker: "variantes visuais",
+        caption:
+          "Quatro variantes prontas — dot, hollow, number, glyph. Para SVG ou ícones próprios, use [em]variant='glyph'[/em] e passe via children.",
+        demo: {
+          items: [
+            { title: "dot", body: "Marcador padrão — círculo cheio." },
+            { title: "hollow", body: "Item futuro ou pendente." },
+            {
+              title: "number",
+              body: "Sequência numerada — bom pra etapas ordenadas.",
+            },
+            {
+              title: "glyph",
+              body: "Glifo arbitrário — emoji, símbolo, SVG inline.",
+            },
+          ],
+        },
+      },
+      horizontal: {
+        title: "Horizontal",
+        kicker: "orientation='horizontal'",
+        caption:
+          "Para sequências curtas — onboarding, checkout, etapas de processo. Rola horizontalmente quando necessário.",
+        demo: {
+          toggleVertical: "Vertical",
+          toggleHorizontal: "Horizontal",
+          items: [
+            {
+              date: "Início",
+              title: "Briefing",
+              body: "Definição de escopo.",
+            },
+            {
+              date: "Sem 2",
+              title: "Design",
+              body: "Wireframes e mockups.",
+            },
+            {
+              date: "Sem 4",
+              title: "Build",
+              body: "Implementação em código.",
+            },
+            {
+              date: "Sem 8",
+              title: "Launch",
+              body: "Deploy e comunicação.",
+            },
+          ],
+        },
+      },
+      composition: {
+        title: "Composição",
+        titleB: "árvore",
+        kicker: "estrutura",
+        caption:
+          "Cada item é um capítulo: marker + content. Use [em]TimelineNow[/em] como divisor entre passado e futuro.",
+        freeChildren: "(children livres)",
+      },
+    },
+
+    /* ============================================================ */
+    tagInput: {
+      lead: "Componente · 31",
+      titleA: "Coletor de ",
+      titleB: "tags",
+      metaLabel: "Data Display",
+      meta: "TagInput · MultiInput",
+      intro:
+        "Quando o leitor precisa adicionar [em]várias entradas livres[/em] — palavras-chave, emails, hashtags. Cada tag vira um chip removível. Suporta validação síncrona, separadores customizáveis (vírgula, ponto-e-vírgula, espaço), limite máximo e modo readonly.",
+      default: {
+        title: "Padrão",
+        kicker: "default",
+        caption:
+          "Enter ou vírgula commitam. Backspace no campo vazio remove a última tag.",
+      },
+      validate: {
+        title: "Validação",
+        kicker: "validate",
+        caption:
+          "A função [em]validate[/em] retorna [em]true[/em], [em]false[/em] ou uma mensagem de erro inline.",
+      },
+      max: {
+        title: "Limite máximo",
+        kicker: "maxTags",
+        caption:
+          "[em]maxTags={3}[/em] desativa o input quando atinge o limite. [em]unique[/em] bloqueia duplicatas (case-insensitive).",
+      },
+      readonly: {
+        title: "Read-only",
+        kicker: "readOnly",
+        caption: "Mostra as tags sem permitir edição — útil em visualizações.",
+      },
+      tag: {
+        title: "Tag isolada",
+        kicker: "<Tag />",
+        caption:
+          "O componente Tag é exportado separadamente — útil para listas de filtros, chips de busca, etc.",
+      },
+      composition: {
+        title: "Composição",
+        titleB: "árvore",
+        kicker: "estrutura",
+        caption:
+          "TagInput envelopa Tags + input. Cada Tag carrega seu próprio botão de remover.",
+      },
+    },
+
+    /* ============================================================ */
+    kbd: {
+      lead: "Referência · 56",
+      titleA: "Teclas & ",
+      titleB: "código inline",
+      metaLabel: "Primitivos",
+      meta: "KBD · KbdCombo · InlineCode",
+      intro:
+        "Dois primitivos finos para [em]renderizar teclas[/em] no meio de uma frase ou [em]trechos curtos de código[/em] inline. São formatadores tipográficos — reutilizáveis em docs, atalhos do Shortcuts, ajuda contextual.",
+      variants: {
+        title: "Variantes",
+        kicker: "boxed · outline · subtle",
+        caption:
+          "Três pesos visuais. [em]Boxed[/em] (default) tem mais corpo, [em]subtle[/em] é o mais discreto.",
+      },
+      sizes: {
+        title: "Tamanhos",
+        kicker: "size='sm' | 'md'",
+        caption: "Use [em]sm[/em] para áreas densas; [em]md[/em] para parágrafos.",
+      },
+      combo: {
+        title: "Combinações",
+        kicker: "<KbdCombo />",
+        caption:
+          "Helper para juntar várias teclas. No Mac use sem separador (⌘K); no Windows passe [em]separator='+'[/em] (Ctrl+K).",
+      },
+      inline: {
+        title: "Em parágrafo",
+        kicker: "prose",
+        caption:
+          "Os componentes alinham na linha de base e respeitam o tamanho do texto vizinho.",
+        paragraph:
+          "Aperte {cmd} para abrir a paleta de busca, ou {esc} para cancelar.",
+      },
+      code: {
+        title: "InlineCode",
+        kicker: "trecho de código",
+        caption:
+          "Para chamadas de função, comandos de terminal e flags no meio do texto.",
+        paragraph:
+          "Use o hook {hook} para estado local, ou rode {cmd} para instalar dependências. Aceita também {flag} para ativar tipos rigorosos.",
+      },
+      composition: {
+        title: "Composição",
+        titleB: "árvore",
+        kicker: "estrutura",
+        caption: "Três peças simples e independentes — cada uma é uma tag HTML decorada.",
+      },
+    },
+
+    /* ============================================================ */
+    hooks: {
+      lead: "Referência · 57",
+      titleA: "Os ",
+      titleB: "hooks",
+      metaLabel: "Utilitários",
+      meta: "14 hooks · zero deps",
+      intro:
+        "Lógica de baixo nível que estava espalhada — click-outside em cinco overlays, scroll-lock em três modais, controllable-state copiado de Radix ad-hoc — agora vive em [em]hooks públicos[/em] importados de um único caminho. SSR-safe, com cleanup correto e zero dependências externas.",
+
+      env: {
+        title: "Hooks de ambiente",
+        kicker: "10.1 · matchMedia · observers",
+        desc: "Reagem a propriedades do viewport, do SO e do DOM em torno do componente.",
+      },
+      dom: {
+        title: "Hooks de DOM",
+        kicker: "10.2 · listeners · interação",
+        desc: "Encapsulam padrões de interação — clique fora, trava de scroll, atalhos locais — com cleanup automático.",
+      },
+      state: {
+        title: "Hooks de estado",
+        kicker: "10.3 · storage · controllable",
+        desc: "Composição de useState para padrões recorrentes — persistência, debounce, prop controlável, valor anterior.",
+      },
+
+      sample: {
+        signature: "assinatura",
+        example: "exemplo",
+      },
+
+      discovery: {
+        title: "Qual hook usar quando",
+        kicker: "decision matrix",
+        desc: "Tabela de descoberta: o problema na coluna esquerda, o hook recomendado na direita.",
+        rows: [
+          { p: "Reagir a um breakpoint",                   h: "useMediaQuery" },
+          { p: "Desligar uma animação se o usuário pediu", h: "usePrefersReducedMotion" },
+          { p: "Saber o tamanho da janela",                h: "useWindowSize" },
+          { p: "Disparar quando elemento entra na tela",   h: "useIntersectionObserver" },
+          { p: "Reagir ao tamanho de um container",        h: "useResizeObserver" },
+          { p: "Fechar um popover ao clicar fora",         h: "useClickOutside" },
+          { p: "Travar o scroll do body",                  h: "useScrollLock" },
+          { p: "Adicionar um event listener tipado",       h: "useEventListener" },
+          { p: "Atalho de teclado local (Esc, Enter)",     h: "useKeyPress" },
+          { p: "Persistir estado entre reloads",           h: "useLocalStorage" },
+          { p: "Atrasar a propagação de um valor",         h: "useDebounce" },
+          { p: "Limitar a frequência de um valor",         h: "useThrottle" },
+          { p: "Aceitar prop controlled OU uncontrolled",  h: "useControllableState" },
+          { p: "Comparar com o valor anterior",            h: "usePrevious" },
+          { p: "Effect que pula a primeira execução",      h: "useUpdateEffect" },
+        ],
+      },
+
+      domain: {
+        title: "Hooks de domínio",
+        kicker: "vivem ao lado dos componentes",
+        desc: "Estes hooks NÃO entram no barrel — vivem nos seus respectivos módulos por proximidade ao componente que os exporta. Listados aqui só para descoberta editorial.",
+        rows: [
+          { name: "useT",            from: "src/lib/i18n.tsx",        purpose: "i18n · resolve chave de tradução" },
+          { name: "useLocale",       from: "src/lib/i18n.tsx",        purpose: "i18n · locale atual + setter" },
+          { name: "useTheme",        from: "src/lib/theme.tsx",       purpose: "tema atual (light/dark) + setter" },
+          { name: "useHashRoute",    from: "src/lib/useHashRoute.ts", purpose: "router caseiro · slug atual + navigate" },
+          { name: "useCopy",         from: "src/lib/useCopy.ts",      purpose: "clipboard · estado 'copiado' temporário" },
+          { name: "useShortcut",     from: "src/ds/Shortcuts.tsx",    purpose: "atalho global descobrível (Shift+? lista)" },
+          { name: "useSearchHotkey", from: "src/ds/SearchPalette.tsx",purpose: "abre a palette com ⌘K" },
+          { name: "usePopover",      from: "src/ds/Popover.tsx",      purpose: "controla open state + posicionamento" },
+          { name: "useToast",        from: "src/ds/Toaster.tsx",      purpose: "publica toast na fila global" },
+          { name: "useDataTable",    from: "src/ds/DataTable.tsx",    purpose: "context interno do DataTable composable" },
+        ],
+      },
+    },
+
+    /* ============================================================ */
+    changelog: {
+      lead: "Referência · 58",
+      titleA: "O ",
+      titleB: "registro",
+      metaLabel: "Histórico",
+      meta: "Keep a Changelog · SemVer",
+      intro:
+        "Toda mudança notável do Atelier — novas fases, componentes, decisões. Estréia oficial do [em]MarkdownViewer[/em] em produção: o conteúdo é o próprio [em]CHANGELOG.md[/em] do repositório, importado via [em]?raw[/em] do Vite e renderizado pelo parser zero-dep do DS.",
+    },
+
+    /* ============================================================ */
+    tokens: {
+      lead: "Referência · 59",
+      titleA: "Os ",
+      titleB: "tokens",
+      metaLabel: "Inventário",
+      meta: "{count} tokens · light + dark",
+      intro:
+        "O vocabulário completo do Atelier em uma página só. Cada escala tem swatch/preview ao lado do nome, valores [em]light[/em] e [em]dark[/em] quando aplicável, e [em]copy[/em] individual. Filtre por categoria, busque por nome, ou exporte o subset ativo em CSS, JSON (W3C DTCG) ou TypeScript.",
+
+      searchLabel: "Buscar tokens",
+      searchPlaceholder: "Buscar por nome, valor, nota…",
+      categoryLabel: "Filtrar por categoria",
+      exportLabel: "Exportar visíveis:",
+      all: "Todos",
+      empty: "Nenhum token corresponde aos filtros atuais.",
+      tokenCount: "{count} token(s)",
+      copy: "Copiar",
+      copied: "Copiado",
+      copyAria: "Copiar {name}",
+
+      col: {
+        token: "token",
+        preview: "preview",
+        light: "light",
+        dark: "dark",
+        actions: "ação",
+      },
+    },
+
+    /* ============================================================ */
+    loadingStates: {
+      lead: "Referência · 60",
+      titleA: "Os ",
+      titleB: "estados de espera",
+      metaLabel: "Padrão",
+      meta: "5 escolhas, 1 árvore de decisão",
+      intro:
+        "Cada espera tem uma resposta editorial diferente. [em]Skeleton[/em] preserva o layout de uma lista que vai chegar; [em]Spinner[/em] honra ações curtas; [em]Progress[/em] é honestidade quando há percentual; [em]Toast[/em] é resposta a ação do usuário; [em]Empty[/em] é quando NÃO vai chegar nada. Misturar os cinco vira ruído — escolha um por contexto.",
+      decision: {
+        title: "Qual usar quando",
+        kicker: "decision matrix",
+        desc: "Coluna esquerda: o padrão. Direita: cenários canônicos de uso e cenários onde escolher esse padrão é erro.",
+        thPattern: "padrão", thUse: "use quando…", thAvoid: "evite quando…",
+        rows: [
+          { pattern: "Skeleton",  use: "Lista/cartões cuja forma é previsível e o conteúdo chega em < 2s.", avoid: "Erro silencioso, espera longa (> 5s) ou estado vazio. Use empty/error nesses casos." },
+          { pattern: "Spinner",   use: "Ação pontual em local específico (botão clicado, refresh).",          avoid: "Carregamento da página inteira — Skeleton mantém o layout estável." },
+          { pattern: "Progress",  use: "Operação com progresso REAL conhecido (upload, instalação).",        avoid: "Quando você não sabe — barra fake é desonestidade." },
+          { pattern: "Toast",     use: "Confirmação efêmera após ação (salvo, copiado, enviado).",           avoid: "Erros que precisam de ação do usuário — use Alert inline." },
+          { pattern: "EmptyState",use: "Lista chegou e está realmente vazia — guie a próxima ação.",         avoid: "Loading. Se está esperando, é Skeleton; se chegou vazio, é Empty." },
+        ],
+      },
+      rules: {
+        title: "Regras",
+        kicker: "decisões editoriais",
+        desc: "Quatro regras que filtram exceção de excesso. Cada espera ruidosa custa atenção do leitor.",
+        items: [
+          { n: "I",   body: "[em]Espera < 100ms[/em]: nada. Mostrar loading dispara ansiedade onde não havia." },
+          { n: "II",  body: "[em]100–500ms[/em]: spinner pequeno só se for clicada uma ação. Página continua interativa." },
+          { n: "III", body: "[em]500ms–2s[/em]: Skeleton. O leitor já notou — agora respeita o layout que vai chegar." },
+          { n: "IV",  body: "[em]> 5s[/em]: Progress se possível, ou mensagem 'isso pode demorar'. Honestidade vence ilusão." },
+        ],
+      },
+    },
+
+    /* ============================================================ */
+    errorHandling: {
+      lead: "Referência · 61",
+      titleA: "O ",
+      titleB: "erro",
+      metaLabel: "Padrão",
+      meta: "Quatro camadas, uma estratégia",
+      intro:
+        "Erro é informação. Bem tratado, restaura confiança; mal tratado, destrói. O Atelier separa em [em]quatro camadas[/em]: validação inline (campo), feedback de operação (toast/alert), boundary de seção (ErrorBoundary), e fallback global (página de crash). Cada nível tem seu vocabulário visual.",
+      layers: {
+        title: "As quatro camadas",
+        kicker: "do mais granular ao global",
+        desc: "Cada camada captura uma classe diferente de erro — confundir as camadas vira ruído, ou pior, perda silenciosa.",
+        items: [
+          { n: "I",   body: "[em]Validação inline[/em] (campo) — usuário digita inválido. Feedback abaixo do input, ícone de aviso, NÃO toast (o input já é o local da informação)." },
+          { n: "II",  body: "[em]Operação[/em] — submit que falhou, fetch que voltou 500. Toast quando a ação foi pontual; Alert inline quando o leitor precisa decidir o que fazer." },
+          { n: "III", body: "[em]Boundary de seção[/em] (ErrorBoundary) — componente quebrou. Mostra empty state com 'tentar de novo' e contém o dano à seção, não derruba a app." },
+          { n: "IV",  body: "[em]Global[/em] — root quebrou. Página de crash editorial com instruções de reload e contato. Logado em Sentry/Datadog." },
+        ],
+      },
+      boundary: {
+        title: "ErrorBoundary",
+        kicker: "padrão React 18",
+        desc: "React 18 ainda exige class component pra ErrorBoundary (hook não cobre). Implemente uma vez no app shell, reutilize por seção crítica.",
+      },
+      messages: {
+        title: "Anatomia da mensagem",
+        kicker: "vocabulário",
+        desc: "Toda mensagem de erro do Atelier tem três partes: o QUE quebrou, o PORQUÊ quando ajuda, e a PRÓXIMA AÇÃO possível.",
+        items: [
+          { kicker: "i · O QUE", title: "Frase curta, primeira pessoa do plural", body: "[em]'Não conseguimos enviar sua mensagem'[/em] — direto, humano. Evite voz passiva ('Mensagem não pôde ser enviada') ou jargão ('Erro 500')." },
+          { kicker: "ii · POR QUE", title: "Só quando ajuda o usuário", body: "[em]'Sua sessão expirou'[/em] explica e implica a ação (refazer login). [em]'Erro de validação'[/em] não — fala da máquina, não do usuário." },
+          { kicker: "iii · AÇÃO", title: "Verbo no infinitivo, ação clara", body: "Botão [em]'Tentar de novo'[/em], link [em]'Entrar de novo'[/em], dica [em]'Verifique sua conexão'[/em]. Sem ação possível, mensagem vira lamentação." },
+        ],
+      },
+      dosDonts: {
+        title: "Boas e más práticas",
+        kicker: "do · don't",
+        doLabel: "Faça",
+        dontLabel: "Evite",
+        dos: [
+          "Logue toda exceção em telemetria — erros silenciosos são bugs invisíveis.",
+          "Diferencie erro de [em]rede[/em] de erro de [em]validação[/em] — voz diferente, ação diferente.",
+          "Restaure estado utilizável após erro — formulário não pode ficar 'travado' sem dizer.",
+          "Permita [em]retry[/em] sempre que faz sentido (idempotente).",
+        ],
+        donts: [
+          "[em]'Erro inesperado'[/em] — toda mensagem deve carregar pelo menos a categoria.",
+          "Toast pra erro que precisa de ação — toast some, ação fica perdida.",
+          "Stack trace pro usuário final — útil em DEV, ruído em produção.",
+          "Esconder erros pra 'não preocupar' — se afetou o usuário, é direito dele saber.",
+        ],
+      },
+    },
+
+    /* ============================================================ */
+    formsPatterns: {
+      lead: "Referência · 62",
+      titleA: "Os ",
+      titleB: "formulários",
+      metaLabel: "Padrão",
+      meta: "Validação · async · multi-step",
+      intro:
+        "Formulário é onde o usuário CONFIA dado pra você. O Atelier trata formulários como conversa: validação no momento certo (não a cada tecla), feedback honesto de operação, async com [em]optimistic disable[/em] sem travar layout, e mensagens em tom humano.",
+      validation: {
+        title: "Quando validar",
+        kicker: "decision matrix",
+        desc: "Validar cedo demais é desconfiar; tarde demais é frustrar. A regra editorial: cada campo tem o seu momento.",
+        thPattern: "padrão", thUse: "use quando…", thAvoid: "evite quando…",
+        rows: [
+          { pattern: "onChange",  use: "NUNCA. A não ser que seja autocomplete tipo password strength meter — esse SIM é incremental.", avoid: "Email, CPF, qualquer campo cuja invalidade só faz sentido completo." },
+          { pattern: "onBlur",    use: "Padrão pra a maioria dos campos. Usuário terminou aquele input, agora valide.", avoid: "Campo opcional vazio — validar onBlur do vazio cria erro fantasma." },
+          { pattern: "onSubmit",  use: "Última camada SEMPRE. Mesmo com onBlur, valide tudo no submit (proteção contra bypass)." , avoid: "Como única validação — usuário fica sem feedback até o submit." },
+          { pattern: "Server-side", use: "Tudo que tem regra de negócio (cupom, e-mail único, slug). Cliente apenas para UX, nunca segurança.", avoid: "Validação puramente formal (formato CPF, e-mail) — gasta round-trip pra nada." },
+        ],
+      },
+      states: {
+        title: "Estados de campo",
+        kicker: "default · disabled · error",
+        desc: "Cada estado carrega significado distinto. Misturar disabled com error é o erro mais comum.",
+        items: [
+          { kicker: "i", title: "default", body: "Campo livre. Hint embaixo opcional ('Mínimo 8 caracteres')." },
+          { kicker: "ii", title: "focus", body: "Borda accent, sem mensagem. Foco visual = 'estou aqui'." },
+          { kicker: "iii", title: "error", body: "Borda vermelha + mensagem específica embaixo. NUNCA só cor — leitores de tela leem texto." },
+          { kicker: "iv", title: "disabled", body: "Cinza, [em]não-interativo[/em]. Estado != error. Use hint pra explicar PORQUE está disabled (depende de outro campo, requer permissão)." },
+          { kicker: "v", title: "loading (no submit)", body: "Não desabilite os campos — só o botão. O usuário pode querer voltar a editar mid-flight." },
+        ],
+      },
+      async: {
+        title: "Submit assíncrono",
+        kicker: "optimistic disable",
+        desc: "Padrão editorial: [em]submitting[/em] state desabilita só o botão (e mostra label trocada). Em sucesso, toast positivo. Em erro de validação, popula errors no estado. Em erro de rede, toast vermelho com retry implícito.",
+      },
+      dosDonts: {
+        title: "Boas e más práticas",
+        kicker: "do · don't",
+        doLabel: "Faça",
+        dontLabel: "Evite",
+        dos: [
+          "Mensagens em [em]primeira pessoa[/em] e específicas: 'Esse e-mail já está em uso' > 'Inválido'.",
+          "[em]Autocomplete attributes[/em] (autocomplete='email', etc) — gentileza com password managers.",
+          "Persista rascunho em [em]localStorage[/em] em formulários longos — perda de form é bug invisível.",
+          "[em]Inputmode[/em] correto em mobile (numeric, tel, email) — abre teclado certo.",
+        ],
+        donts: [
+          "Disable o botão [em]até validar tudo[/em] — usuário não sabe o que falta. Deixe submeter; mostre erros.",
+          "[em]Asterisco vermelho[/em] genérico em campo obrigatório sem dizer o porquê.",
+          "Multi-step sem [em]progresso visível[/em] — Stepper existe pra isso.",
+          "Limpar form em erro — usuário perde tudo. [em]Mantenha[/em] o que digitou.",
+        ],
+      },
+    },
+
+    /* ============================================================ */
+    destructive: {
+      lead: "Referência · 63",
+      titleA: "As ",
+      titleB: "ações destrutivas",
+      metaLabel: "Padrão",
+      meta: "Três níveis de cerimônia",
+      intro:
+        "Apagar, desfazer, cancelar, expulsar — toda ação que gera perda merece cerimônia proporcional. O Atelier define [em]três níveis[/em]: ação imediata com undo, confirmação simples, e confirmação tipada. Excesso de cerimônia trata o usuário como criança; falta vira perda silenciosa.",
+      tiers: {
+        title: "Três níveis",
+        kicker: "do mais leve ao mais sério",
+        desc: "Cada nível responde à pergunta: o quanto custa errar?",
+        items: [
+          { kicker: "i · UNDO", title: "Ação imediata + toast com Desfazer (5–10s)", body: "Para ações [em]reversíveis em segundos[/em]: descartar rascunho, arquivar e-mail, remover item de lista. Apaga imediato, toast oferece desfazer. UX como Gmail." },
+          { kicker: "ii · CONFIRM", title: "Modal simples 'Tem certeza?'", body: "Para ações [em]irreversíveis mas comuns[/em]: deletar comentário, sair sem salvar. Modal com botão danger explícito. Texto: o que vai acontecer + botão de ação clara." },
+          { kicker: "iii · TYPED", title: "Confirmação tipada (digite o nome)", body: "Para ações [em]catastróficas[/em]: deletar conta, apagar projeto inteiro, transferir ownership. Usuário precisa DIGITAR o nome do recurso pra liberar o botão. GitHub, Stripe usam." },
+        ],
+      },
+      undo: {
+        title: "Padrão de undo",
+        kicker: "ação imediata + toast",
+        desc: "Ação imediata + toast com botão Desfazer. Estado é restaurado se o usuário clicar; senão é commitado depois do toast sumir. Atelier Toaster suporta nativamente via [em]actions[/em].",
+      },
+      confirm: {
+        title: "Padrão de confirmação tipada",
+        kicker: "typed confirmation",
+        desc: "Modal exige que o usuário digite o nome do recurso pra liberar o botão. Padrão herdado de GitHub/Stripe — força leitura ativa, evita clique reflexo.",
+      },
+      dosDonts: {
+        title: "Boas e más práticas",
+        kicker: "do · don't",
+        doLabel: "Faça",
+        dontLabel: "Evite",
+        dos: [
+          "[em]Cor vermelha[/em] no botão de ação destrutiva — linguagem visual herdada universal.",
+          "Botão [em]Cancelar[/em] em primeiro lugar (left), destrutivo em último (right). Reduz clique acidental.",
+          "Mostre [em]o que será perdido[/em] no diálogo (lista de itens, número de horas de trabalho).",
+          "Logue toda ação destrutiva em telemetria — útil pra auditoria e reverter via backend se necessário.",
+        ],
+        donts: [
+          "Modal nativo do browser ([em]confirm()[/em]) — feio, descontextualizado, viola o tom editorial.",
+          "Pedir confirmação pra [em]toda[/em] ação — devalua a cerimônia. Reserve pra dano real.",
+          "Botão destrutivo como [em]autofocus[/em] no modal — convida Enter acidental.",
+          "[em]Auto-fechar[/em] modal de confirmação após N segundos — usuário precisa decidir, não ser cobrado.",
+        ],
+      },
+    },
+
+    /* ============================================================ */
+    onboarding: {
+      lead: "Referência · 64",
+      titleA: "O ",
+      titleB: "onboarding",
+      metaLabel: "Padrão",
+      meta: "Tour · Coachmark · Empty",
+      intro:
+        "Onboarding é a [em]primeira impressão duradoura[/em]. Mal feito, vira tutorial chato que o usuário pula. Bem feito, ensina sem interromper. O Atelier oferece três padrões — [em]Tour[/em] (passo-a-passo guiado), [em]Coachmark[/em] (dica contextual única), [em]Empty State guiado[/em] (vazio que ensina). A escolha entre eles depende do que está sendo ensinado.",
+      decision: {
+        title: "Qual usar quando",
+        kicker: "decision matrix",
+        desc: "Coluna esquerda: o padrão. Direita: contextos onde brilha vs. onde frustra.",
+        thPattern: "padrão", thUse: "use quando…", thAvoid: "evite quando…",
+        rows: [
+          { pattern: "Tour", use: "App com FLUXO complexo (kanban, editor) onde usuário precisa entender 3-5 conceitos antes de produzir.", avoid: "App de descoberta (galeria, dashboard). Tour força sequência onde o usuário deveria explorar." },
+          { pattern: "Coachmark", use: "Feature NOVA em app já conhecido. Aparece uma vez, no contexto, e some quando o usuário interage.", avoid: "Várias coachmarks ao mesmo tempo — viram ruído. Limite a uma por sessão." },
+          { pattern: "Empty State guiado", use: "Estado natural vazio (caixa de entrada, lista de projetos). Vazio vira convite com CTA claro.", avoid: "Esconder funcionalidade complexa atrás de um botão — usuário não sabe que existe." },
+        ],
+      },
+      principles: {
+        title: "Princípios",
+        kicker: "regras editoriais",
+        desc: "Cinco regras que filtram bom onboarding de tutorial enchedor de paciência.",
+        items: [
+          { n: "I",   body: "[em]Pulável SEMPRE[/em]. Botão 'Pular' visível, não escondido em texto pequeno. Confiança antes de cerimônia." },
+          { n: "II",  body: "[em]Mostre, não diga[/em]. Highlight visual + um clique > parágrafo explicativo." },
+          { n: "III", body: "[em]Uma ideia por step[/em]. Tour com 3 passos é melhor que com 8 — usuário cansa." },
+          { n: "IV",  body: "[em]Persista o 'já viu'[/em] em localStorage. Mostrar onboarding em toda visita destrói a confiança ganha." },
+          { n: "V",   body: "[em]Acionável[/em]. Cada step termina em algo que o usuário FAZ — não só lê." },
+        ],
+      },
+    },
+
+    /* ============================================================ */
+    darkMode: {
+      lead: "Referência · 65",
+      titleA: "O ",
+      titleB: "modo escuro",
+      metaLabel: "Padrão",
+      meta: "Tokens dual · zero shift",
+      intro:
+        "Dark mode no Atelier é [em]gêmeo editorial[/em] do light, não inversão automática. Cada token cromático tem variante calibrada manualmente — [em]--ink[/em] no light é grafite (#1a1a1a), no dark é creme luminoso (#ede8dc). O bootstrap é blocking (sem flash em reload) e respeita preferência do SO.",
+      principles: {
+        title: "Princípios",
+        kicker: "decisões editoriais",
+        desc: "Quatro regras que separam dark mode editorial de dark mode genérico (a la 'inverte tudo').",
+        items: [
+          { n: "I",   body: "[em]Calibre, não inverta[/em]. Inverter cores quebra hierarquia (anti-aliasing, contraste percebido, brilho). Cada par light/dark é decidido à mão." },
+          { n: "II",  body: "[em]Tokens 1:1[/em]. Toda variável que existe no light tem variante no dark, mesmo nome. Componentes consomem [em]var(--ink)[/em] — automático." },
+          { n: "III", body: "[em]Sombras mais opacas no dark[/em]. RGBA de sombra pula de 0.04 (light) pra 0.4–0.6 (dark) — sem isso, sombra vira invisível sobre antracite." },
+          { n: "IV",  body: "[em]Bootstrap blocking[/em]. Script inline antes de qualquer render aplica data-theme — evita flash claro→escuro em reload." },
+        ],
+      },
+      bootstrap: {
+        title: "Bootstrap sem flash",
+        kicker: "script inline",
+        desc: "Script blocking dentro do <head> aplica [em]data-theme[/em] ANTES do React montar. Lê localStorage, fallback pra prefers-color-scheme. Ms importam — flash é UX bug.",
+      },
+      edges: {
+        title: "Edge cases",
+        kicker: "cuidados especiais",
+        desc: "Três áreas que tipicamente quebram em dark mode mal feito.",
+        items: [
+          { kicker: "i · CHARTS", title: "Cores de série precisam de calibração própria", body: "Vermelho que funciona sobre creme some sobre antracite. Atelier define [em]chart palettes[/em] separadas por tema." },
+          { kicker: "ii · CODE", title: "Code blocks são INVARIANTE", body: "Bloco de código é sempre escuro, em ambos os temas. É 'ilha tipográfica' — leitura de código tem sintaxe destacada e zebrar com a página vira ruído." },
+          { kicker: "iii · IMAGENS", title: "Screenshots de UI light vs dark", body: "Imagem com fundo branco fica gritante no dark. Use [em]filter: brightness(0.85)[/em] em imagens não-essenciais, ou versões duplas (-light/-dark)." },
+        ],
+      },
+      dosDonts: {
+        title: "Boas e más práticas",
+        kicker: "do · don't",
+        doLabel: "Faça",
+        dontLabel: "Evite",
+        dos: [
+          "Audite [em]contraste WCAG[/em] em ambos os temas — Studio do Atelier mostra na hora.",
+          "Use [em]color-mix()[/em] pra derivar variantes — menos tokens, mais coesão.",
+          "Documente [em]'editorial-decision'[/em] em comentários (porque ink-soft é #b8b1a2 no dark, não #aaa).",
+          "Respeite [em]prefers-color-scheme[/em] como default; permita override manual.",
+        ],
+        donts: [
+          "Dark mode genérico via [em]filter: invert()[/em] — quebra imagens, código, tudo.",
+          "[em]Pure black[/em] como background — cansa olho. Antracite (#0b0a09 a #1a1917) é mais editorial.",
+          "[em]Pure white[/em] como ink — brilha demais. Creme (#ede8dc) é mais leitura.",
+          "Esquecer [em]border-color[/em] no dark — borda preta sobre antracite some, branco brilha.",
+        ],
+      },
+    },
+
+    /* ============================================================ */
+    print: {
+      lead: "Referência · 66",
+      titleA: "A ",
+      titleB: "impressão",
+      metaLabel: "Padrão",
+      meta: "P&B · sem cromo",
+      intro:
+        "Imprimir um app web é raro — mas quando acontece, define a impressão (sem trocadilho) que fica. O Atelier força [em]contraste P&B forte[/em], esconde cromo da app (navbar, sidebar, back-to-top), e adiciona URLs após links. Tudo em [em]@media print[/em] — zero impacto na tela.",
+      principles: {
+        title: "Princípios",
+        kicker: "decisões editoriais",
+        desc: "Quatro regras de impressão editorial — como um manual técnico bem feito.",
+        items: [
+          { n: "I",   body: "[em]Esconda o que não é conteúdo[/em]. Navbar, sidebar, footer, back-to-top, skip-link, paginação — nada disso pertence ao papel." },
+          { n: "II",  body: "[em]Contraste P&B forte[/em]. Override [em]--ink[/em] pra preto puro e [em]--bg[/em] pra branco. Cores intermediárias viram cinzas legíveis." },
+          { n: "III", body: "[em]URLs visíveis[/em]. Links com [em]a[href]::after[/em] mostram a URL após o texto — papel não tem hover." },
+          { n: "IV",  body: "[em]Quebra de página inteligente[/em]. [em]page-break-inside: avoid[/em] em sections; [em]page-break-after: avoid[/em] em headings — evita título órfão no fim da página." },
+        ],
+      },
+      css: {
+        title: "Print stylesheet",
+        kicker: "@media print",
+        desc: "Adicione no fim do CSS principal. Sem necessidade de arquivo separado — [em]@media print[/em] é zero-cost na renderização normal.",
+      },
+    },
+
+    /* ============================================================ */
+    i18nPatterns: {
+      lead: "Referência · 67",
+      titleA: "A ",
+      titleB: "internacionalização",
+      metaLabel: "Padrão",
+      meta: "Intl nativo · zero deps",
+      intro:
+        "i18n no Atelier é [em]zero deps[/em]. Não usamos i18next, react-intl ou format.js — tudo vem do [em]Intl[/em] nativo do browser, que cobre 95% dos casos sem 50 KB extras. Pluralização, formatação de números/datas/moeda, tempo relativo, listas — tudo é API web padrão.",
+      principles: {
+        title: "Princípios",
+        kicker: "decisões editoriais",
+        desc: "Quatro regras que mantêm a i18n do Atelier leve e correta.",
+        items: [
+          { n: "I",   body: "[em]Intl nativo sempre[/em]. Antes de adicionar lib, cheque se Intl resolve. Geralmente resolve." },
+          { n: "II",  body: "[em]Locale como prop, não global[/em]. Funções de formatação aceitam locale explícito — facilita teste e sub-árvore com locale diferente (preview de e-mail em outro idioma, p.ex.)." },
+          { n: "III", body: "[em]Nunca concatene strings traduzidas[/em]. Use interpolação ([em]{n} itens[/em]) — ordem de palavras varia por idioma." },
+          { n: "IV",  body: "[em]Plurais usam Intl.PluralRules[/em]. Não invente regra própria — árabe tem 6 categorias, polonês 4, japonês 1. Browser sabe." },
+        ],
+      },
+      plurals: {
+        title: "Pluralização",
+        kicker: "Intl.PluralRules",
+        desc: "Hook helper sobre Intl.PluralRules. Cobre todas as 6 categorias possíveis (zero/one/two/few/many/other) com fallback automático.",
+      },
+      formats: {
+        title: "Formatação",
+        kicker: "Intl.* APIs",
+        desc: "DateTimeFormat, NumberFormat, ListFormat, RelativeTimeFormat. Tudo nativo, tudo locale-aware, tudo zero-dep.",
+      },
+      rtl: {
+        title: "RTL",
+        kicker: "right-to-left",
+        desc: "Coberto na fase 6.1 — [em]LocaleProvider[/em] aplica [em]dir=rtl[/em] em <html> automaticamente para locales ar/he/fa/ur. Override manual em Settings → Direção. Documentação completa em [em]/accessibility[/em].",
+      },
+    },
+
+    /* ============================================================ */
+    install: {
+      lead: "Referência · 68",
+      titleA: "A ",
+      titleB: "instalação",
+      metaLabel: "Setup",
+      meta: "Zero build · zero PostCSS",
+      intro:
+        "Antes de qualquer linha de código de consumo, vale entender a [em]filosofia[/em] do que você está instalando. O Atelier é um pacote singular — um arquivo CSS com todos os tokens + componentes React puros. Sem PostCSS, sem Tailwind config, sem JIT. Cole o CSS, importe o que precisa.",
+      philosophy: {
+        title: "Filosofia",
+        kicker: "antes de começar",
+        desc: "Quatro decisões editoriais que afetam o quanto o Atelier ocupa do seu app.",
+        items: [
+          { n: "I",   body: "[em]Zero deps de runtime[/em]. Você instala react/react-dom (peer); o resto é o pacote. Sem framer-motion, sem date-fns, sem radix por baixo." },
+          { n: "II",  body: "[em]CSS único, sem JIT[/em]. Importe [em]@atelier/ds/styles.css[/em] uma vez no entry. Zero PostCSS, zero Tailwind config, zero build extra." },
+          { n: "III", body: "[em]Tree-shakeable[/em]. Importe só o que usa — [em]import { Button } from '@atelier/ds'[/em]. Bundlers modernos eliminam o resto." },
+          { n: "IV",  body: "[em]Composable[/em]. Componentes têm subcomponentes exportados nominalmente (Card / CardHeader / CardBody). Você monta a hierarquia que faz sentido." },
+        ],
+      },
+      npm: {
+        title: "Instalação NPM",
+        kicker: "fase 14 · planejado",
+        desc: "Quando o pacote sair no NPM (Fase 14 do roadmap). Por enquanto, copy-paste a partir do repo — modelo shadcn-style também funciona.",
+      },
+      bootstrap: {
+        title: "Bootstrap",
+        kicker: "providers obrigatórios",
+        desc: "Três providers no entry — [em]LocaleProvider[/em] (i18n + dir RTL), [em]Toaster[/em] (notificações globais), [em]ShortcutsProvider[/em] (atalhos descobríveis com Shift+?).",
+      },
+      first: {
+        title: "Primeiro componente",
+        kicker: "olá mundo",
+        desc: "Importe diretamente do barrel principal. Zero config — funciona no entry de qualquer app React 18+.",
+      },
+    },
+
+    /* ============================================================ */
+    apiReference: {
+      lead: "Referência · 69",
+      titleA: "O ",
+      titleB: "mapa da API",
+      metaLabel: "Index",
+      meta: "Onde achar o quê",
+      intro:
+        "A doc detalhada de cada componente vive na sua própria página (props, exemplos, composição). Esta página é [em]o índice editorial[/em] — onde encontrar o quê dentro do código-fonte. Útil pra contribuir e pra entender o que [em]NÃO[/em] é exportado publicamente.",
+      principles: {
+        title: "Convenções",
+        kicker: "como o código está organizado",
+        desc: "Quatro regras de organização que valem pra toda navegação no source.",
+        items: [
+          { n: "I",   body: "[em]src/ds/[/em] — componentes. Cada arquivo exporta um composto (ex: Card + CardHeader + CardBody)." },
+          { n: "II",  body: "[em]src/lib/[/em] — utilitários e hooks públicos. Tudo via barrel [em]src/lib/hooks[/em]." },
+          { n: "III", body: "[em]src/pages/[/em] — documentação. Cada componente tem página correspondente em [em]/<slug>[/em]." },
+          { n: "IV",  body: "[em]src/ds/types.ts[/em] — tipos públicos centralizados. Importações de tipos não inflam bundle." },
+        ],
+      },
+      table: {
+        title: "Mapa por família",
+        kicker: "código → doc",
+        desc: "Cada linha: família de componente, exports principais, doc oficial.",
+        thFamily: "família", thExports: "exports principais", thRoute: "doc",
+        rows: [
+          { family: "primitives.tsx",  exports: "Button · Input · Switch · Badge · Avatar · Tooltip · Section · PageHead · Code", route: "code" },
+          { family: "Card.tsx",        exports: "Card · CardHeader · CardKicker · CardTitle · CardBody · CardFooter", route: "cards" },
+          { family: "Tabs.tsx",        exports: "Tabs · TabList · Tab · TabPanels · TabPanel", route: "tabs" },
+          { family: "Drawer.tsx",      exports: "Drawer · DrawerTrigger · DrawerContent · DrawerHeader · DrawerTitle · DrawerClose · DrawerBody · DrawerFooter", route: "drawer" },
+          { family: "Toaster.tsx",     exports: "Toaster · useToast", route: "toaster" },
+          { family: "DataTable.tsx",   exports: "DataTable · DataTableToolbar · DataTableHeader · DataTableFilters · DataTableBody · DataTableEmpty · DataTablePagination · useDataTable", route: "data-table" },
+          { family: "Chart.tsx",       exports: "Chart · BarChart · LineChart · AreaChart · PieChart · DonutChart · RadarChart · RadialChart · Sparkline", route: "charts" },
+          { family: "Form.tsx",        exports: "Form · FormStep · FormRow · FormField · FormDivider · FormActions", route: "forms" },
+          { family: "Motion.tsx",      exports: "Transition · Fade · Slide · Scale · Collapse · ScrollReveal", route: "motion" },
+          { family: "lib/hooks/",      exports: "17 hooks públicos (useMediaQuery · useDebounce · useFocusTrap · useControllableState · …)", route: "hooks" },
+          { family: "lib/tokens.ts",   exports: "TOKENS · serializeCss · serializeJson · serializeTs · downloadText", route: "tokens" },
+          { family: "lib/contrast.ts", exports: "parseColor · relativeLuminance · contrastRatio · wcagLevel", route: "accessibility" },
+        ],
+      },
+    },
+
+    /* ============================================================ */
+    browserSupport: {
+      lead: "Referência · 70",
+      titleA: "Os ",
+      titleB: "navegadores",
+      metaLabel: "Suporte",
+      meta: "Evergreen · 2 versões",
+      intro:
+        "O Atelier mira [em]evergreen browsers[/em] — Chrome, Edge, Firefox, Safari nas duas últimas versões majors. Sem IE11, sem Safari 13, sem polyfills pesados. Quando uma API ainda não tem suporte universal (ex: View Transitions), oferecemos fallback graceful.",
+      table: {
+        title: "Versões mínimas",
+        kicker: "evergreen targets",
+        desc: "Tabela atualizada a cada release de versão (Chrome trimestral, Firefox 4–6 semanas).",
+        thBrowser: "navegador", thMin: "min", thNotes: "notas",
+        rows: [
+          { name: "Chrome",        version: "≥ 110",  notes: "Cobre Edge (Chromium), Brave, Opera. ~95% do mercado." },
+          { name: "Firefox",       version: "≥ 109",  notes: "Algumas APIs (View Transitions) ainda não chegaram — temos fallback." },
+          { name: "Safari (macOS)",version: "≥ 16.4", notes: "[em]:has()[/em] e Container Queries chegaram em 16.4 — base mínima." },
+          { name: "Safari (iOS)",  version: "≥ 16.4", notes: "Mesma base do macOS. iOS 15.x não é alvo." },
+          { name: "IE / Edge Legacy",version: "—",    notes: "Sem suporte. EOL desde 2023." },
+        ],
+      },
+      features: {
+        title: "APIs assumidas",
+        kicker: "sem polyfill",
+        desc: "Features modernas que o Atelier USA sem polyfill — assume disponíveis nos targets acima.",
+        items: [
+          { n: "I",   body: "[em]ES2022[/em] — top-level await, error.cause, Array.at(), structuredClone(). Vite com target esnext gera código moderno." },
+          { n: "II",  body: "[em]CSS Logical Properties[/em] — padding-inline-start, inset-inline-end, etc. Usadas pelo CSS de RTL (fase 6.1)." },
+          { n: "III", body: "[em]CSS Custom Properties[/em] — backbone do design system. Sem isso, nada funciona." },
+          { n: "IV",  body: "[em]matchMedia / MutationObserver / IntersectionObserver / ResizeObserver[/em] — hooks da Fase 10 dependem." },
+          { n: "V",   body: "[em]Intl.PluralRules / Intl.NumberFormat / Intl.DateTimeFormat[/em] — i18n sem deps externas (fase 11.4)." },
+          { n: "VI",  body: "[em]color-mix() em CSS[/em] — usado pra derivar variantes de accent. Safari 16.2+, Firefox 113+." },
+        ],
+      },
+    },
+
+    /* ============================================================ */
+    performance: {
+      lead: "Referência · 71",
+      titleA: "A ",
+      titleB: "performance",
+      metaLabel: "Budgets",
+      meta: "Edit. obsessivo · 1ª paint barata",
+      intro:
+        "Performance é decisão editorial — não otimização posterior. O Atelier nasce leve e mantém [em]budgets verificáveis[/em]. Após a fase 8.1 (code splitting), o entry caiu de 922 KB para 24 KB minificados. A primeira paint paga ~165 KB gz; cada navegação subsequente paga apenas o chunk da página visitada (1-15 KB gz).",
+      budgets: {
+        title: "Budgets oficiais",
+        kicker: "alvos verificáveis",
+        desc: "Cada métrica tem [em]target[/em] e o [em]valor atual[/em] medido. Chunks acima do limite disparam warning no build (limite: 250 KB minificado).",
+        thMetric: "métrica", thTarget: "target", thCurrent: "atual",
+        rows: [
+          { metric: "Entry chunk (index.js)",  target: "< 50 KB min",  current: "24 KB" },
+          { metric: "First-paint payload (gz)",target: "< 200 KB",     current: "~165 KB" },
+          { metric: "Maior chunk (vendor)",    target: "< 200 KB min", current: "138 KB (react)" },
+          { metric: "Página média (lazy)",     target: "< 15 KB min",  current: "~5 KB" },
+          { metric: "CSS total (gz)",          target: "< 30 KB",      current: "~26 KB" },
+          { metric: "Bundle warning (vite)",   target: "≤ 250 KB min", current: "0 warnings" },
+        ],
+      },
+      wins: {
+        title: "Ganhos editoriais",
+        kicker: "decisões > otimização",
+        desc: "Cinco escolhas estruturais que resultaram em performance real. Tudo decidido na fase de arquitetura — não como retrofit.",
+        items: [
+          { n: "I",   body: "[em]Zero deps de runtime[/em]. Sem framer-motion (~30 KB), sem date-fns (~70 KB), sem react-dnd (~50 KB). Tudo in-house." },
+          { n: "II",  body: "[em]Code splitting agressivo[/em] (8.1 ✓). Cada página é um chunk via [em]React.lazy()[/em]. Entry caiu 97%." },
+          { n: "III", body: "[em]i18n lazy por locale[/em]. Dicionário pt-BR (~130 KB) só baixa se o usuário trocar pra português. EN é o default." },
+          { n: "IV",  body: "[em]ds-* chunks separados[/em] (Charts, DataTable, DragDrop, Markdown). Quem nunca abre /charts não paga pelos 13 KB." },
+          { n: "V",   body: "[em]CSS único[/em] sem PostCSS/JIT. Build mais rápido, less complexity, easier debug." },
+        ],
+      },
+      howto: {
+        title: "Como medir",
+        kicker: "ferramentas",
+        desc: "Bundle analyzer entra na fase 8.8 do roadmap. Por enquanto, [em]npm run build[/em] já mostra todos os chunks com tamanhos minified e gzipped.",
+      },
+    },
+
+    /* ============================================================ */
+    recipes: {
+      lead: "Referência · 72",
+      titleA: "As ",
+      titleB: "receitas",
+      metaLabel: "Galeria",
+      meta: "{count} composições · ao vivo",
+      intro:
+        "Composições curadas mostrando o Atelier em ação. Cada receita renderiza [em]ao vivo[/em] (não é screenshot), tem snippet [em]editável inline[/em] e abre em [em]StackBlitz/CodeSandbox[/em] com um clique. Tudo zero-deps — o template do sandbox baixa @atelier/ds direto do NPM (Fase 14).",
+
+      filterLabel: "Filtrar por categoria",
+      categories: {
+        all: "Todas",
+        form: "Formulário",
+        layout: "Layout",
+        data: "Dados",
+        marketing: "Marketing",
+      },
+
+      items: {
+        login: {
+          title: "Login",
+          kicker: "Form · auth",
+          desc: "Form mínimo com [em]autocomplete[/em] correto, link 'Esqueci a senha' e CTA primário. Padrão de submit assíncrono fica como exercício — adicione [em]submitting[/em] state via [em]useState[/em].",
+          caption: "Login form · 360px",
+        },
+        settings: {
+          title: "Settings",
+          kicker: "Form · preferences",
+          desc: "Card de preferências com [em]Switch[/em] por linha. Notificações como dois toggles independentes — cada um persistente em [em]useLocalStorage[/em] no app real.",
+          caption: "Settings card · 480px",
+        },
+        pricing: {
+          title: "Pricing",
+          kicker: "Marketing · 3 tiers",
+          desc: "Três cards lado a lado, tier do meio com CTA [em]primary[/em]. Lista de features sem ícones — cada bullet é uma decisão editorial.",
+          caption: "Pricing tiers · 720px",
+        },
+        comments: {
+          title: "Comment thread",
+          kicker: "Data · social",
+          desc: "Lista de comentários com [em]Avatar[/em] + meta (autor + tempo) + corpo, seguida de Textarea de resposta. Botão [em]disabled[/em] enquanto vazio — UX primeira-pessoa.",
+          caption: "Thread · 480px",
+        },
+        onboarding: {
+          title: "Onboarding stepper",
+          kicker: "Layout · multi-step",
+          desc: "Stepper editorial + Alert contextual + navegação prev/next. Padrão para fluxos onde a sequência é OBRIGATÓRIA — pra exploração livre, prefira navegação lateral.",
+          caption: "3-step onboarding · 560px",
+        },
+        subscribe: {
+          title: "Newsletter",
+          kicker: "Marketing · capture",
+          desc: "Capture editorial com [em]Card[/em] + Form + Checkbox de consentimento. Botão [em]disabled[/em] até consentir — LGPD e GDPR friendly.",
+          caption: "Subscribe card",
+        },
       },
     },
   },

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { useT } from "../lib/i18n.tsx";
+import { useT, useLocale } from "../lib/i18n.tsx";
 import { ThemeToggle, NavModeToggle } from "./primitives.tsx";
 import type { SettingsMenuProps } from "./types.ts";
 
@@ -29,6 +29,7 @@ export function SettingsMenu({
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
   const { t, locale, setLocale, locales } = useT();
+  const { dirMode, setDir } = useLocale();
 
   // Fecha ao clicar fora ou apertar Esc
   useEffect(() => {
@@ -105,6 +106,27 @@ export function SettingsMenu({
               <NavModeToggle mode={navMode} onChange={onToggleNavMode} />
             </Row>
           )}
+
+          <Row label={t("nav.settings.dir.label")}>
+            <div
+              className="locale-switch"
+              role="group"
+              aria-label={t("nav.settings.dir.label")}
+            >
+              {(["auto", "ltr", "rtl"] as const).map((m) => (
+                <button
+                  key={m}
+                  type="button"
+                  className={`locale-btn ${dirMode === m ? "active" : ""}`}
+                  onClick={() => setDir(m)}
+                  aria-pressed={dirMode === m}
+                  title={t(`nav.settings.dir.${m}`)}
+                >
+                  {t(`nav.settings.dir.${m}`)}
+                </button>
+              ))}
+            </div>
+          </Row>
         </div>
       )}
     </div>

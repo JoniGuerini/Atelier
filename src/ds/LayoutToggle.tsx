@@ -9,8 +9,10 @@ import { useT } from "../lib/i18n.tsx";
    Aplica-se SOMENTE quando navMode === "navbar"; no modo sidebar
    o conceito não faz sentido (a sidebar já come a coluna esquerda).
 
-   Glifo: dois retângulos lado a lado representando a janela —
-   no estado "wide" o segundo retângulo abre, sugerindo expansão.
+   Glifo: traços verticais nas duas laterais (as bordas do viewport)
+   com um retângulo central representando o conteúdo. No estado
+   "boxed" o retângulo é estreito (longe das bordas); em "wide"
+   ele se alarga, sugerindo a expansão até as margens.
    ================================================================ */
 
 interface LayoutToggleProps {
@@ -37,27 +39,35 @@ export function LayoutToggle({ wide = false, onToggle }: LayoutToggleProps) {
         aria-hidden="true"
         focusable="false"
       >
-        {/* Dois painéis verticais lado a lado, com pequeno gap entre
-           eles. É o glifo "split view" — universalmente reconhecido
-           como "alterna o layout em dois", sem se confundir com o
-           ícone de toggle de sidebar (chevron). */}
+        {/* Traço vertical esquerdo — borda do viewport */}
+        <line
+          x1="1.5"
+          y1="3"
+          x2="1.5"
+          y2="13"
+          stroke="currentColor"
+          strokeWidth="1.25"
+          strokeLinecap="round"
+        />
+        {/* Retângulo central — o conteúdo. */}
         <rect
-          x="1.5"
-          y="3"
-          width="5.5"
-          height="10"
+          x="5"
+          y="4.5"
+          width="6"
+          height="7"
           fill="none"
           stroke="currentColor"
           strokeWidth="1.25"
         />
-        <rect
-          x="9"
-          y="3"
-          width="5.5"
-          height="10"
-          fill="none"
+        {/* Traço vertical direito — borda do viewport */}
+        <line
+          x1="14.5"
+          y1="3"
+          x2="14.5"
+          y2="13"
           stroke="currentColor"
           strokeWidth="1.25"
+          strokeLinecap="round"
         />
       </svg>
     </button>

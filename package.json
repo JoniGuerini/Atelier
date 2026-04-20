@@ -1,25 +1,43 @@
 {
   "name": "atelier-design-system",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.9.0",
   "type": "module",
   "description": "Atelier — a quiet, editorial design system built with React + Vite.",
+  "bin": {
+    "atelier": "./bin/atelier-cli.js"
+  },
+  "files": [
+    "bin",
+    "registry.json",
+    "src/ds",
+    "src/lib"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui",
+    "cli": "node bin/atelier-cli.js"
   },
   "dependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
     "@types/node": "^25.6.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^4.3.4",
+    "jsdom": "^29.0.2",
     "typescript": "^6.0.3",
-    "vite": "^5.4.10"
+    "vite": "^5.4.10",
+    "vitest": "^4.1.4"
   }
 }

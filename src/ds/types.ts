@@ -376,6 +376,14 @@ export interface ExampleProps {
   stack?: boolean;
   center?: boolean;
   children?: ReactNode;
+  /** Edição inline do snippet (textarea + copy). Roadmap · 13.1.
+      Sem live preview real (zero-deps); o snippet editado é
+      copiável e abre em sandbox externo se sandbox=true. */
+  editable?: boolean;
+  /** Botões "Open in StackBlitz" e "Open in CodeSandbox". Roadmap · 13.2. */
+  sandbox?: boolean;
+  /** Título usado pelo sandbox externo. Default: "Atelier example". */
+  sandboxTitle?: string;
 }
 export interface CodeProps {
   lang?: "jsx" | "css" | "shell" | "html" | "ts" | "tsx";
@@ -677,4 +685,62 @@ export interface SettingsMenuProps {
   navMode?: NavMode;
   onToggleNavMode?: (mode: NavMode) => void;
   placement?: SettingsPlacement;
+}
+
+/* ----------------- KBD / InlineCode ----------------- */
+export type KbdVariant = "subtle" | "boxed" | "outline";
+export type InlineCodeVariant = "subtle" | "boxed" | "outline";
+
+/* ----------------- TagInput ----------------- */
+export interface TagInputProps {
+  value: string[];
+  onChange: (next: string[]) => void;
+  placeholder?: string;
+  separators?: string[];
+  validate?: (value: string, current: string[]) => boolean | string;
+  unique?: boolean;
+  maxTags?: number;
+  readOnly?: boolean;
+  size?: "sm" | "md";
+  ariaLabel?: string;
+  id?: string;
+  className?: string;
+}
+
+/* ----------------- Timeline ----------------- */
+export type TimelineOrientation = "vertical" | "horizontal";
+export type TimelineMarkerVariant = "dot" | "hollow" | "number" | "glyph";
+export type TimelineItemState = "past" | "present" | "future";
+
+/* ----------------- DataTable ----------------- */
+export type DataTableSortDir = "asc" | "desc";
+export interface DataTableSortState {
+  id: string;
+  dir: DataTableSortDir;
+}
+export type DataTableFilterState = Record<string, any>;
+export type DataTableDensity = "comfortable" | "regular" | "compact";
+export type DataTableSelectionMode = "none" | "single" | "multi";
+export type DataTableRowId = string | number;
+export type DataTableColumnFilter =
+  | { type: "text"; placeholder?: string }
+  | { type: "select"; options: { value: string; label: string }[] }
+  | { type: "multi"; options: { value: string; label: string }[] }
+  | { type: "range"; min: number; max: number; step?: number }
+  | { type: "date-range" };
+export interface DataTableColumn<T = any> {
+  id: string;
+  header: ReactNode;
+  accessor?: (row: T) => any;
+  cell?: (row: T, value: any, rowIndex: number) => ReactNode;
+  sortable?: boolean;
+  sortFn?: (a: any, b: any) => number;
+  filter?: DataTableColumnFilter;
+  filterFn?: (rowValue: any, filterValue: any, row: T) => boolean;
+  width?: number | string;
+  minWidth?: number;
+  align?: "start" | "center" | "end";
+  sticky?: "start" | "end";
+  className?: string;
+  meta?: boolean;
 }

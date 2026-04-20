@@ -129,6 +129,10 @@ export const DEFAULT_THEME = {
   spacing: "regular",
   theme: "light",
   radius: 0,
+  /* Overrides arbitrários — reservado pra import de tokens (fase 7.2).
+     Aplicado no fim do themeToStyle, sobrescrevendo qualquer preset.
+     Vazio por padrão. */
+  overrides: {} as Record<string, string>,
 };
 
 function lookup<T extends { id: string }>(list: T[], id: string): T {
@@ -145,7 +149,7 @@ export function themeToStyle(theme: any): any {
   const spacing = lookup(SPACING_PRESETS, theme.spacing);
   const palette = base[theme.theme === "dark" ? "dark" : "light"];
 
-  const style = {
+  const style: Record<string, any> = {
     // Cromáticos (palette)
     "--bg": palette.bg,
     "--bg-panel": palette.bgPanel,
@@ -169,10 +173,22 @@ export function themeToStyle(theme: any): any {
     ...spacingVars(spacing.multiplier),
     // Advanced — injeta apenas se o usuário tocou
     ...(theme.radius > 0 ? { "--studio-radius": `${theme.radius}px` } : {}),
-    // Pinta o background do scope para refletir o tema
-    background: palette.bg,
-    color: palette.ink,
   };
+
+  /* Overrides do import (fase 7.2) — aplicados POR ÚLTIMO,
+     sobrescrevendo qualquer preset. Permite importar valores
+     arbitrários sem precisar mapear pra um preset existente. */
+  if (theme.overrides && typeof theme.overrides === "object") {
+    for (const [name, value] of Object.entries(theme.overrides)) {
+      if (typeof name === "string" && name.startsWith("--") && typeof value === "string") {
+        style[name] = value;
+      }
+    }
+  }
+
+  /* Pinta o background do scope para refletir o tema (após overrides) */
+  style.background = style["--bg"] ?? palette.bg;
+  style.color = style["--ink"] ?? palette.ink;
 
   return style;
 }
@@ -190,4 +206,81 @@ export function themeToCss(theme: any): string {
   }
   lines.push("}");
   return lines.join("\n");
+}
+
+/* ================================================================
+   Exporters — CSS, JSON DTCG, TS (Roadmap · fase 7.1)
+   ----------------------------------------------------------------
+   Cada exporter consome o objeto theme do Studio e devolve uma
+   string pronta pra clipboard ou download. Todos zero-deps.
+   ================================================================ */
+
+const CATEGORY_FOR_VAR: Record<string, string> = {
+  /* superficies/ink/rule — todos cromaticos */
+  "--bg": "color", "--bg-panel": "color", "--bg-sunken": "color", "--bg-inverse": "color",
+  "--ink": "ink", "--ink-soft": "ink", "--ink-faint": "ink", "--ink-inverse": "ink",
+  "--rule": "rule", "--rule-soft": "rule", "--rule-faint": "rule",
+  "--accent": "accent", "--accent-soft": "accent", "--accent-ink": "accent",
+  "--font-serif": "type", "--font-mono": "type",
+  /* spacing-1 a 9 — categorizado dinâmico abaixo */
+  "--studio-radius": "radius",
+};
+
+function inferCategory(varName: string): string {
+  if (CATEGORY_FOR_VAR[varName]) return CATEGORY_FOR_VAR[varName];
+  if (varName.startsWith("--space-")) return "spacing";
+  return "other";
+}
+
+function inferType(varName: string): string {
+  if (varName === "--font-serif" || varName === "--font-mono") return "fontFamily";
+  if (varName.startsWith("--space-") || varName === "--studio-radius") return "dimension";
+  return "color";
+}
+
+/** JSON no formato W3C Design Tokens (DTCG). */
+export function themeToJson(theme: any): string {
+  const style = themeToStyle(theme);
+  const root: any = {};
+  Object.entries(style).forEach(([k, v]) => {
+    if (!k.startsWith("--")) return;
+    const cat = inferCategory(k);
+    const key = k.replace(/^--/, "");
+    if (!root[cat]) root[cat] = {};
+    root[cat][key] = {
+      $value: String(v),
+      $type: inferType(k),
+    };
+  });
+  return JSON.stringify(root, null, 2) + "\n";
+}
+
+/** TypeScript — objeto tipado pronto pra import. */
+export function themeToTs(theme: any): string {
+  const style = themeToStyle(theme);
+  const grouped: Record<string, [string, string][]> = {};
+  Object.entries(style).forEach(([k, v]) => {
+    if (!k.startsWith("--")) return;
+    const cat = inferCategory(k);
+    const key = k.replace(/^--/, "").replace(/-/g, "_");
+    if (!grouped[cat]) grouped[cat] = [];
+    grouped[cat].push([key, String(v)]);
+  });
+
+  const lines: string[] = [
+    "/* Atelier — generated from Studio (zero-deps export) */",
+    "",
+    "export const theme = {",
+  ];
+  for (const cat of Object.keys(grouped)) {
+    lines.push(`  ${cat}: {`);
+    for (const [key, value] of grouped[cat]) {
+      lines.push(`    ${key}: ${JSON.stringify(value)},`);
+    }
+    lines.push(`  },`);
+  }
+  lines.push("} as const;");
+  lines.push("");
+  lines.push("export type Theme = typeof theme;");
+  return lines.join("\n") + "\n";
 }

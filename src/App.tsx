@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { lazy, Suspense, useCallback, useEffect, useState } from "react";
 import {
   Sidebar,
   SidebarHead,
@@ -20,7 +20,8 @@ import {
 import Footer from "./components/Footer.tsx";
 import { useT } from "./lib/i18n.tsx";
 import { useHashRoute } from "./lib/useHashRoute.ts";
-import { ALL_ROUTE_IDS, ROUTES, TOOL_ROUTE_IDS } from "./lib/routes.ts";
+import { usePageTransition } from "./lib/usePageTransition.ts";
+import { ALL_ROUTE_IDS, ROUTES, TOOL_ROUTE_IDS, FLUID_ROUTE_IDS } from "./lib/routes.ts";
 import { SidebarToggle, BackToTop } from "./ds/primitives.tsx";
 import { PageNav } from "./ds/PageNav.tsx";
 import { SettingsMenu } from "./ds/SettingsMenu.tsx";
@@ -30,54 +31,99 @@ import {
   SearchTrigger,
   useSearchHotkey,
 } from "./ds/SearchPalette.tsx";
+import { SkeletonText } from "./ds/Skeleton.tsx";
 
+/* ================================================================
+   Pages — lazy-loaded (Roadmap · fase 8.1, Code splitting)
+   ----------------------------------------------------------------
+   Cada página vira um chunk independente carregado on-demand.
+   Com 50+ páginas, isso troca um único bundle de ~270 KB gz por
+   um shell pequeno + chunks de 5-20 KB cada.
+
+   Critério de aceite: nenhum chunk > 200 KB minified.
+   Vite gera nomes "stable" baseados no path importado.
+
+   Não há lazy "Overview" intencional — é a página inicial e a
+   mais comum; queremos ela já no entry. Se essa decisão mudar,
+   troque a linha de Overview por lazy.
+   ================================================================ */
 import Overview from "./pages/Overview.tsx";
-import Principles from "./pages/Principles.tsx";
-import Colors from "./pages/Colors.tsx";
-import Typography from "./pages/Typography.tsx";
-import Spacing from "./pages/Spacing.tsx";
-import Icons from "./pages/Icons.tsx";
-import Buttons from "./pages/Buttons.tsx";
-import Inputs from "./pages/Inputs.tsx";
-import Controls from "./pages/Controls.tsx";
-import Badges from "./pages/Badges.tsx";
-import Avatars from "./pages/Avatars.tsx";
-import Alerts from "./pages/Alerts.tsx";
-import Cards from "./pages/Cards.tsx";
-import TabsPage from "./pages/TabsPage.tsx";
-import Tables from "./pages/Tables.tsx";
-import Charts from "./pages/Charts.tsx";
-import PaginationPage from "./pages/Pagination.tsx";
-import BreadcrumbsPage from "./pages/BreadcrumbsPage.tsx";
-import SkeletonPage from "./pages/SkeletonPage.tsx";
-import StepperPage from "./pages/StepperPage.tsx";
-import AccessibilityPage from "./pages/Accessibility.tsx";
-import Overlays from "./pages/Overlays.tsx";
-import Feedback from "./pages/Feedback.tsx";
-import DropzonePage from "./pages/DropzonePage.tsx";
-import Forms from "./pages/Forms.tsx";
-import EmptyStates from "./pages/EmptyStates.tsx";
-import SidebarPage from "./pages/SidebarPage.tsx";
-import NavbarPage from "./pages/NavbarPage.tsx";
-import CodePage from "./pages/Code.tsx";
-import Create from "./pages/Create.tsx";
-import PopoverPage from "./pages/PopoverPage.tsx";
-import DropdownMenuPage from "./pages/DropdownMenuPage.tsx";
-import ContextMenuPage from "./pages/ContextMenuPage.tsx";
-import DrawerPage from "./pages/DrawerPage.tsx";
-import ToasterPage from "./pages/ToasterPage.tsx";
-import ComboboxPage from "./pages/ComboboxPage.tsx";
-import RangeSliderPage from "./pages/RangeSliderPage.tsx";
-import CalendarPage from "./pages/CalendarPage.tsx";
-import DatePickerPage from "./pages/DatePickerPage.tsx";
-import CarouselPage from "./pages/CarouselPage.tsx";
-import TreeViewPage from "./pages/TreeViewPage.tsx";
-import ResizablePage from "./pages/ResizablePage.tsx";
-import ColorPickerPage from "./pages/ColorPickerPage.tsx";
-import MarkdownPage from "./pages/MarkdownPage.tsx";
-import ShortcutsPage from "./pages/ShortcutsPage.tsx";
-import VirtualListPage from "./pages/VirtualListPage.tsx";
-import DragDropPage from "./pages/DragDropPage.tsx";
+
+const Principles      = lazy(() => import("./pages/Principles.tsx"));
+const Colors          = lazy(() => import("./pages/Colors.tsx"));
+const Typography      = lazy(() => import("./pages/Typography.tsx"));
+const Voice           = lazy(() => import("./pages/Voice.tsx"));
+const Spacing         = lazy(() => import("./pages/Spacing.tsx"));
+const Icons           = lazy(() => import("./pages/Icons.tsx"));
+const Elevation       = lazy(() => import("./pages/Elevation.tsx"));
+const Radius          = lazy(() => import("./pages/Radius.tsx"));
+const ZIndex          = lazy(() => import("./pages/ZIndex.tsx"));
+const Breakpoints     = lazy(() => import("./pages/Breakpoints.tsx"));
+const Density         = lazy(() => import("./pages/Density.tsx"));
+const Motion          = lazy(() => import("./pages/Motion.tsx"));
+const Buttons         = lazy(() => import("./pages/Buttons.tsx"));
+const Inputs          = lazy(() => import("./pages/Inputs.tsx"));
+const Controls        = lazy(() => import("./pages/Controls.tsx"));
+const Badges          = lazy(() => import("./pages/Badges.tsx"));
+const Avatars         = lazy(() => import("./pages/Avatars.tsx"));
+const Alerts          = lazy(() => import("./pages/Alerts.tsx"));
+const Cards           = lazy(() => import("./pages/Cards.tsx"));
+const TabsPage        = lazy(() => import("./pages/TabsPage.tsx"));
+const Tables          = lazy(() => import("./pages/Tables.tsx"));
+const Charts          = lazy(() => import("./pages/Charts.tsx"));
+const PaginationPage  = lazy(() => import("./pages/Pagination.tsx"));
+const BreadcrumbsPage = lazy(() => import("./pages/BreadcrumbsPage.tsx"));
+const SkeletonPage    = lazy(() => import("./pages/SkeletonPage.tsx"));
+const StepperPage     = lazy(() => import("./pages/StepperPage.tsx"));
+const AccessibilityPage = lazy(() => import("./pages/Accessibility.tsx"));
+const Overlays        = lazy(() => import("./pages/Overlays.tsx"));
+const Feedback        = lazy(() => import("./pages/Feedback.tsx"));
+const DropzonePage    = lazy(() => import("./pages/DropzonePage.tsx"));
+const Forms           = lazy(() => import("./pages/Forms.tsx"));
+const EmptyStates     = lazy(() => import("./pages/EmptyStates.tsx"));
+const SidebarPage     = lazy(() => import("./pages/SidebarPage.tsx"));
+const NavbarPage      = lazy(() => import("./pages/NavbarPage.tsx"));
+const CodePage        = lazy(() => import("./pages/Code.tsx"));
+const Create          = lazy(() => import("./pages/Create.tsx"));
+const PopoverPage     = lazy(() => import("./pages/PopoverPage.tsx"));
+const DropdownMenuPage = lazy(() => import("./pages/DropdownMenuPage.tsx"));
+const ContextMenuPage = lazy(() => import("./pages/ContextMenuPage.tsx"));
+const DrawerPage      = lazy(() => import("./pages/DrawerPage.tsx"));
+const ToasterPage     = lazy(() => import("./pages/ToasterPage.tsx"));
+const ComboboxPage    = lazy(() => import("./pages/ComboboxPage.tsx"));
+const RangeSliderPage = lazy(() => import("./pages/RangeSliderPage.tsx"));
+const CalendarPage    = lazy(() => import("./pages/CalendarPage.tsx"));
+const DatePickerPage  = lazy(() => import("./pages/DatePickerPage.tsx"));
+const CarouselPage    = lazy(() => import("./pages/CarouselPage.tsx"));
+const TreeViewPage    = lazy(() => import("./pages/TreeViewPage.tsx"));
+const ResizablePage   = lazy(() => import("./pages/ResizablePage.tsx"));
+const ColorPickerPage = lazy(() => import("./pages/ColorPickerPage.tsx"));
+const MarkdownPage    = lazy(() => import("./pages/MarkdownPage.tsx"));
+const ShortcutsPage   = lazy(() => import("./pages/ShortcutsPage.tsx"));
+const VirtualListPage = lazy(() => import("./pages/VirtualListPage.tsx"));
+const DragDropPage    = lazy(() => import("./pages/DragDropPage.tsx"));
+const RoadmapPage     = lazy(() => import("./pages/RoadmapPage.tsx"));
+const DataTablePage   = lazy(() => import("./pages/DataTablePage.tsx"));
+const TimelinePage    = lazy(() => import("./pages/TimelinePage.tsx"));
+const TagInputPage    = lazy(() => import("./pages/TagInputPage.tsx"));
+const KBDPage         = lazy(() => import("./pages/KBDPage.tsx"));
+const Hooks           = lazy(() => import("./pages/Hooks.tsx"));
+const Changelog       = lazy(() => import("./pages/Changelog.tsx"));
+const TokensPage      = lazy(() => import("./pages/Tokens.tsx"));
+const LoadingStates   = lazy(() => import("./pages/LoadingStates.tsx"));
+const ErrorHandling   = lazy(() => import("./pages/ErrorHandling.tsx"));
+const FormsPatterns   = lazy(() => import("./pages/FormsPatterns.tsx"));
+const DestructiveActions = lazy(() => import("./pages/DestructiveActions.tsx"));
+const Onboarding      = lazy(() => import("./pages/Onboarding.tsx"));
+const DarkMode        = lazy(() => import("./pages/DarkMode.tsx"));
+const Print           = lazy(() => import("./pages/Print.tsx"));
+const I18nPatterns    = lazy(() => import("./pages/I18nPatterns.tsx"));
+const Install         = lazy(() => import("./pages/Install.tsx"));
+const ApiReference    = lazy(() => import("./pages/ApiReference.tsx"));
+const BrowserSupport  = lazy(() => import("./pages/BrowserSupport.tsx"));
+const Performance     = lazy(() => import("./pages/Performance.tsx"));
+const Recipes         = lazy(() => import("./pages/Recipes.tsx"));
+
 import { Toaster } from "./ds/Toaster.tsx";
 import { ShortcutsProvider } from "./ds/Shortcuts.tsx";
 
@@ -86,8 +132,15 @@ const PAGES = {
   principles: Principles,
   colors: Colors,
   typography: Typography,
+  voice: Voice,
   spacing: Spacing,
   icons: Icons,
+  elevation: Elevation,
+  radius: Radius,
+  "z-index": ZIndex,
+  breakpoints: Breakpoints,
+  density: Density,
+  motion: Motion,
   buttons: Buttons,
   inputs: Inputs,
   controls: Controls,
@@ -129,6 +182,27 @@ const PAGES = {
   shortcuts: ShortcutsPage,
   "virtual-list": VirtualListPage,
   "drag-drop": DragDropPage,
+  roadmap: RoadmapPage,
+  "data-table": DataTablePage,
+  timeline: TimelinePage,
+  "tag-input": TagInputPage,
+  kbd: KBDPage,
+  hooks: Hooks,
+  changelog: Changelog,
+  tokens: TokensPage,
+  "loading-states": LoadingStates,
+  "error-handling": ErrorHandling,
+  "forms-patterns": FormsPatterns,
+  "destructive-actions": DestructiveActions,
+  onboarding: Onboarding,
+  "dark-mode": DarkMode,
+  print: Print,
+  "i18n-patterns": I18nPatterns,
+  install: Install,
+  "api-reference": ApiReference,
+  "browser-support": BrowserSupport,
+  performance: Performance,
+  recipes: Recipes,
 };
 
 const SIDEBAR_KEY = "atelier.sidebarCollapsed";
@@ -140,6 +214,10 @@ export default function App() {
   const [route, navigate] = useHashRoute();
   const current = ALL_ROUTE_IDS.includes(route) ? route : "overview";
   const Page = (PAGES as any)[current] || Overview;
+  /* Page transitions (fase 4.3) — fade editorial em cada troca de rota.
+     Persistência de scroll fica off por padrão (manual editorial = topo
+     em cada visita). */
+  const transition = usePageTransition(current, { variant: "fade" });
 
   const [collapsed, setCollapsed] = useState(() => {
     if (typeof window === "undefined") return false;
@@ -248,7 +326,8 @@ export default function App() {
       <main
         id="main-content"
         tabIndex={-1}
-        className={`content ${TOOL_ROUTE_IDS.has(current) ? "content--tool" : ""}`}
+        className={`content ${FLUID_ROUTE_IDS.has(current) ? "content--tool" : ""}`}
+        data-page-transition={transition.variant}
       >
         {!isTopbar && collapsed && (
           <SidebarToggle
@@ -257,7 +336,12 @@ export default function App() {
             className="sidebar-toggle-floating"
           />
         )}
-        <Page onNavigate={navigate} />
+        <Suspense fallback={<PageFallback />}>
+          {/* key força remount em cada troca de rota — anima entrada via CSS */}
+          <div key={transition.key} className="page-transition-frame">
+            <Page onNavigate={navigate} />
+          </div>
+        </Suspense>
         {!TOOL_ROUTE_IDS.has(current) && (
           <PageNav current={current} onNavigate={navigate} />
         )}
@@ -415,5 +499,24 @@ function AppSidebar({
         </div>
       </SidebarFooter>
     </Sidebar>
+  );
+}
+
+/* ----------------------------------------------------------------
+   PageFallback — Suspense boundary para chunks de página.
+   Mostra um esqueleto editorial discreto enquanto o JS chega.
+   Replica a estrutura de PageHead (lead curto + título largo +
+   intro de 3 linhas) pra evitar layout shift quando a página real
+   monta.
+---------------------------------------------------------------- */
+function PageFallback() {
+  return (
+    <div className="page-fallback" aria-busy="true" aria-live="polite">
+      <SkeletonText lines={1} pulse />
+      <div className="page-fallback-title">
+        <SkeletonText lines={1} pulse />
+      </div>
+      <SkeletonText lines={3} pulse />
+    </div>
   );
 }

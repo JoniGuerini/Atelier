@@ -210,9 +210,64 @@ export default function AccessibilityPage() {
         </Example>
       </Section>
 
-      {/* vi · ARIA & screen readers */}
+      {/* vi · Hooks de foco (Roadmap · 6.2) */}
       <Section
         num="vi"
+        title={<>{t("pages.accessibility.focusHooks.title")}</>}
+        kicker={t("pages.accessibility.focusHooks.kicker")}
+      >
+        <p className="section-desc">{tr("pages.accessibility.focusHooks.desc")}</p>
+        <Example
+          caption={t("pages.accessibility.focusHooks.caption")}
+          tech="src/lib/hooks · 6.2"
+          stack
+        >
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableHeader width={220}>{t("pages.accessibility.focusHooks.thHook")}</TableHeader>
+                <TableHeader>{t("pages.accessibility.focusHooks.thPurpose")}</TableHeader>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {(raw("pages.accessibility.focusHooks.items") || []).map((row: any, i: any) => (
+                <TableRow key={i}>
+                  <TableCell mono>{row.hook}</TableCell>
+                  <TableCell>{row.purpose}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Example>
+      </Section>
+
+      {/* vii · RTL (Roadmap · 6.1) */}
+      <Section
+        num="vii"
+        title={<>{t("pages.accessibility.rtl.title")}</>}
+        kicker={t("pages.accessibility.rtl.kicker")}
+      >
+        <p className="section-desc">{tr("pages.accessibility.rtl.desc")}</p>
+        <Alert variant="info" title={t("pages.accessibility.rtl.tipTitle")}>
+          {tr("pages.accessibility.rtl.tipBody")}
+        </Alert>
+      </Section>
+
+      {/* viii · Testes (Roadmap · 6.4) */}
+      <Section
+        num="viii"
+        title={<>{t("pages.accessibility.tests.title")}</>}
+        kicker={t("pages.accessibility.tests.kicker")}
+      >
+        <p className="section-desc">{tr("pages.accessibility.tests.desc")}</p>
+        <Alert variant="ok" title={t("pages.accessibility.tests.tipTitle")}>
+          {tr("pages.accessibility.tests.tipBody")}
+        </Alert>
+      </Section>
+
+      {/* ix · ARIA & screen readers */}
+      <Section
+        num="ix"
         title={<>{t("pages.accessibility.aria.title")}</>}
         kicker={t("pages.accessibility.aria.kicker")}
       >
