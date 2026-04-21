@@ -1,4 +1,5 @@
 import {
+  forwardRef,
   useEffect,
   useState,
   type ButtonHTMLAttributes,
@@ -57,23 +58,29 @@ interface BackToTopProps {
 }
 
 /* ---------- Button ---------- */
-export function Button({
-  variant = "default",
-  size = "md",
-  children,
-  className = "",
-  ...rest
-}: ButtonProps) {
-  const classes = ["ds-btn"];
-  if (variant !== "default") classes.push(variant);
-  if (size !== "md") classes.push(size);
-  if (className) classes.push(className);
-  return (
-    <button className={classes.join(" ")} {...rest}>
-      {children}
-    </button>
-  );
-}
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  function Button(
+    {
+      variant = "default",
+      size = "md",
+      children,
+      className = "",
+      ...rest
+    },
+    ref,
+  ) {
+    const classes = ["ds-btn"];
+    if (variant !== "default") classes.push(variant);
+    if (size !== "md") classes.push(size);
+    if (className) classes.push(className);
+    return (
+      <button ref={ref} className={classes.join(" ")} {...rest}>
+        {children}
+      </button>
+    );
+  },
+);
+Button.displayName = "Button";
 
 /* ---------- SidebarToggle ----------
    Botão dedicado para retrair/expandir a sidebar. Faz rotação do

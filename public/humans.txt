@@ -1,0 +1,32 @@
+/* Atelier — design system editorial silencioso e refinado.
+   Inspirado em humanstxt.org — uma carta breve para quem
+   chega via crawler humano (e quase nunca chega, mas tudo bem). */
+
+/* TEAM */
+Maintainer: Jonathan Guerini
+
+/* PHILOSOPHY */
+Editorial-first.       — Tipografia, ritmo e voz antes de UI chrome.
+Zero deps de runtime.  — Toda lib aqui é seu código, não um pacote.
+Acessível por padrão.  — A11y é fundação, não plugin.
+i18n sem dívida.       — Tudo passa pelo dicionário, em duas línguas.
+Tokens > hardcode.     — Cada decisão visual vira uma variável.
+Composable.            — Componentes pequenos, encaixáveis, previsíveis.
+
+/* STACK */
+Build:        Vite 6 + React 18 + TypeScript 5.4
+Editor fonts: Fraunces (display), JetBrains Mono (code), Inter (UI)
+Color theory: paleta neutral inspirada em papel envelhecido
+Tooling:      Vitest, ESLint, sem framework de UI externo
+
+/* CITATIONS */
+Inspired by: Vercel · Stripe · Linear · Nielsen Norman Group ·
+             Emil Ruder · Josef Müller-Brockmann · Jan Tschichold ·
+             Manuais editoriais de revistas modernistas
+
+/* THANKS */
+A toda comunidade open-source que escreve e documenta sem cobrar
+por isso. Atelier é um estudo, e estudos só existem porque alguém
+ensinou.
+
+Last update: Abril 2026

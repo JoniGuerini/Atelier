@@ -1,0 +1,53 @@
+{
+  "name": "@atelier/cli",
+  "version": "0.1.0",
+  "description": "Atelier — shadcn-style CLI: copy components into your project. Zero deps.",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "author": {
+    "name": "Atelier"
+  },
+  "homepage": "https://atelier-ds.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/atelier-ds/atelier",
+    "directory": "packages/cli"
+  },
+  "keywords": [
+    "atelier",
+    "design-system",
+    "cli",
+    "shadcn",
+    "react",
+    "scaffold",
+    "copy-paste"
+  ],
+  "bin": {
+    "atelier": "./bin/atelier.js"
+  },
+  "files": [
+    "bin",
+    "components",
+    "hooks",
+    "lib",
+    "styles",
+    "registry.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "sync": "node scripts/sync-sources.mjs",
+    "build": "npm run sync",
+    "prepack": "npm run sync",
+    "pack": "npm pack",
+    "smoke": "node scripts/smoke.mjs",
+    "clean": "node -e \"require('node:fs').rmSync('components',{recursive:true,force:true});require('node:fs').rmSync('hooks',{recursive:true,force:true});require('node:fs').rmSync('lib',{recursive:true,force:true});require('node:fs').rmSync('styles',{recursive:true,force:true});require('node:fs').rmSync('registry.json',{force:true})\""
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}

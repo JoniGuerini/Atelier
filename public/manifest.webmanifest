@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json.schemastore.org/web-manifest-combined.json",
+  "name": "Atelier — Design System editorial",
+  "short_name": "Atelier",
+  "description": "Design system editorial silencioso e refinado. React + Vite, zero dependências de runtime.",
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "categories": ["education", "developer", "design", "reference"],
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "browser"],
+  "orientation": "any",
+  "theme_color": "#f4f1ea",
+  "background_color": "#f4f1ea",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-touch-icon.svg",
+      "sizes": "180x180 192x192 256x256 384x384 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/og-image.svg",
+      "sizes": "1200x630",
+      "type": "image/svg+xml",
+      "form_factor": "wide",
+      "label": "Atelier wordmark com tagline editorial"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Início",
+      "short_name": "Home",
+      "description": "Showcase — entrada do Atelier",
+      "url": "/#/"
+    },
+    {
+      "name": "Visão geral",
+      "short_name": "Overview",
+      "description": "Índice editorial do manual",
+      "url": "/#/overview"
+    },
+    {
+      "name": "Componentes",
+      "short_name": "Componentes",
+      "description": "Catálogo de componentes",
+      "url": "/#/buttons"
+    },
+    {
+      "name": "Tokens",
+      "short_name": "Tokens",
+      "description": "Inventário de design tokens",
+      "url": "/#/tokens"
+    },
+    {
+      "name": "Studio",
+      "short_name": "Studio",
+      "description": "Customização de tema ao vivo",
+      "url": "/#/create"
+    }
+  ]
+}

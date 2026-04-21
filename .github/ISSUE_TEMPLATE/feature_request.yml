@@ -1,0 +1,32 @@
+name: Feature request
+description: Ideia de melhoria, nova página de docs ou refinamento do DS
+title: "[feat] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Atelier mantém superfície pequena de propósito — nem toda ideia cabe. Mesmo assim, queremos ouvir.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problema ou lacuna
+      description: Que fricção você sente hoje? Quem mais se beneficia?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposta
+      description: O que mudaria (componente, página, token, CLI, i18n…)?
+    validations:
+      required: true
+  - type: checkboxes
+    id: alignment
+    attributes:
+      label: Alinhamento
+      description: Marque o que se aplica.
+      options:
+        - label: Li `/principles` e `/voice` — a ideia respeita tom e ângulos retos.
+        - label: Estou disposto a abrir um PR (ou prefiro só sugerir).
+        - label: Não adiciona dependência de runtime (só react/react-dom).

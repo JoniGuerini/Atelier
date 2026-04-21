@@ -64,12 +64,14 @@ function useNavbar() {
 interface MenuStateValue {
   activeKey: string | null;
   open: (key: string) => void;
+  close: () => void;
   scheduleClose: () => void;
   cancelClose: () => void;
 }
 const MenuStateContext = createContext<MenuStateValue>({
   activeKey: null,
   open: () => {},
+  close: () => {},
   scheduleClose: () => {},
   cancelClose: () => {},
 });
@@ -92,6 +94,11 @@ function MenuStateProvider({ children }: SlotProps) {
   const open = (key: string) => {
     cancelClose();
     setActiveKey(key);
+  };
+
+  const close = () => {
+    cancelClose();
+    setActiveKey(null);
   };
 
   const scheduleClose = () => {
@@ -131,7 +138,7 @@ function MenuStateProvider({ children }: SlotProps) {
   }, [activeKey]);
 
   return (
-    <MenuStateContext.Provider value={{ activeKey, open, scheduleClose, cancelClose }}>
+    <MenuStateContext.Provider value={{ activeKey, open, close, scheduleClose, cancelClose }}>
       {children}
     </MenuStateContext.Provider>
   );
@@ -158,7 +165,7 @@ export function Navbar({
   );
 }
 
-export function NavbarBrand({ target = "overview", children }: NavbarBrandProps) {
+export function NavbarBrand({ target = "home", children }: NavbarBrandProps) {
   const { t } = useT();
   const { onNavigate } = useNavbar();
   return (
@@ -255,6 +262,7 @@ export function NavbarDropdownItem({
   children,
 }: NavbarDropdownItemPropsExt) {
   const { onNavigate } = useNavbar();
+  const { close } = useMenuState();
   const { t } = useT();
   const url = href ?? (slug ? `#/${slug}` : "#");
   const rich = !!description;
@@ -269,6 +277,11 @@ export function NavbarDropdownItem({
           if (slug) {
             e.preventDefault();
             onNavigate?.(slug);
+            close();
+          } else if (href) {
+            // Item com href absoluto (ex.: #/route raw) — fecha mesmo
+            // assim para que o painel não fique pendurado.
+            close();
           }
         }}
       >

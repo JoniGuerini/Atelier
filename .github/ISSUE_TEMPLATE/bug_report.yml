@@ -1,0 +1,50 @@
+name: Bug report
+description: Algo quebrou, está errado ou inconsistente com a documentação
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Obrigado por relatar. Quanto mais contexto, mais rápido reproduzimos.
+  - type: textarea
+    id: summary
+    attributes:
+      label: Resumo
+      description: Uma linha do que acontece vs. o que esperava.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Passos para reproduzir
+      description: Lista numerada. Inclua rota (`#/…`) se for na app de docs.
+      placeholder: |
+        1. Abrir …
+        2. Clicar em …
+        3. …
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Ambiente
+      description: SO, navegador e versão, tema (light/dark), idioma (pt-BR/en), modo de navegação (sidebar/navbar).
+      placeholder: |
+        - macOS 14 / Chrome 120
+        - Tema dark, pt-BR, sidebar
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Onde ocorre
+      description: App de docs (`src/`), pacote `@atelier/ds`, pacote `@atelier/cli`, ou build.
+      placeholder: App de docs — página #/buttons
+    validations:
+      required: true
+  - type: textarea
+    id: extra
+    attributes:
+      label: Screenshots / logs (opcional)
+      description: Cole imagens ou trechos de console. Evite dados sensíveis.

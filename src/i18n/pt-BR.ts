@@ -56,10 +56,12 @@ const ptBR = {
       advanced: "Avançados",
       patterns: "Padrões",
       reference: "Referência",
+      about: "Sobre",
       studio: "Studio",
       tools: "Ferramentas",
     },
     items: {
+      home: "Início",
       overview: "Visão geral",
       principles: "Princípios",
       colors: "Cores",
@@ -111,6 +113,13 @@ const ptBR = {
       emptyStates: "Estados vazios",
       sidebar: "Sidebar",
       navbar: "Navbar",
+      disclosure: "Disclosure & navegação",
+      advancedInputs: "Inputs avançados",
+      "advanced-inputs": "Inputs avançados",
+      dataDisplay: "Data display avançado",
+      "data-display": "Data display avançado",
+      appShell: "App shell",
+      "app-shell": "App shell",
       accessibility: "Acessibilidade",
       code: "Para devs · código",
       kbd: "Teclas · KBD",
@@ -126,10 +135,17 @@ const ptBR = {
       print: "Impressão",
       i18nPatterns: "Padrões de i18n",
       install: "Instalação",
+      cli: "CLI",
       apiReference: "Referência da API",
       browserSupport: "Suporte de navegadores",
       performance: "Performance",
       recipes: "Receitas",
+      about: "Sobre",
+      colophon: "Colophon",
+      credits: "Créditos",
+      license: "Licença",
+      pressKit: "Press kit",
+      favicon: "Favicon",
       dataTable: "Data Table",
       timeline: "Timeline",
       tagInput: "Tag Input",
@@ -137,7 +153,8 @@ const ptBR = {
       roadmap: "Roadmap",
     },
     descriptions: {
-      overview: "A capa do manual — o que vem pela frente.",
+      home: "Vitrine — peças vivas do sistema; depois mergulhe no manual.",
+      overview: "Índice do manual — mapas, cartões e para onde ir a seguir.",
       principles: "As seis regras que regem o estilo editorial.",
       colors: "Quatro famílias: superfícies, tinta, acento, semânticas.",
       typography: "Voz editorial em Fraunces e JetBrains Mono.",
@@ -188,6 +205,19 @@ const ptBR = {
       emptyStates: "Convites, não derrotas — espaço com intenção.",
       sidebar: "Sumário vertical para sites com muitas páginas.",
       navbar: "Cabeçalho horizontal com dropdowns por hover.",
+      disclosure: "Accordion, Collapsible, HoverCard, Banner, lista de definições, Mark — fase 15.1.",
+      advancedInputs:
+        "NumberInput, PinInput, PasswordInput, PhoneInput, TimePicker, EditableText, MentionInput — fase 15.2.",
+      "advanced-inputs":
+        "NumberInput, PinInput, PasswordInput, PhoneInput, TimePicker, EditableText, MentionInput — fase 15.2.",
+      dataDisplay:
+        "Stat, tabela de preços, DiffViewer, Lightbox, CircularProgress — fase 15.3.",
+      "data-display":
+        "Stat, tabela de preços, DiffViewer, Lightbox, CircularProgress — fase 15.3.",
+      appShell:
+        "NotificationBell + inbox, CommentThread, Snackbar ancorado, FileUploadQueue — fase 15.4.",
+      "app-shell":
+        "NotificationBell + inbox, CommentThread, Snackbar ancorado, FileUploadQueue — fase 15.4.",
       accessibility: "Atalhos, foco, contraste e ARIA.",
       code: "Tokens, primitivas e API para desenvolvedores.",
       kbd: "Teclas e código inline — primitivos editoriais para atalhos e snippets.",
@@ -198,15 +228,22 @@ const ptBR = {
       errorHandling: "ErrorBoundary, mensagens inline, retry e fallback UI.",
       formsPatterns: "Validação inline, async submit, multi-step, mensagens.",
       destructive: "Confirmação, undo, modais de risco, double-confirm.",
-      onboarding: "Tour, Coachmark, Empty State guiado — quando usar cada.",
+      onboarding: "Tour, destaque contextual, Empty State guiado — quando usar cada.",
       darkMode: "Paleta editorial, contraste, edge cases de charts e código.",
       print: "Print styles, esconder cromo, contraste P&B forte.",
       i18nPatterns: "Pluralização, datas, números, currency com Intl nativo.",
       install: "Setup, peer deps, primeiro componente — com filosofia.",
+      cli: "atelier — CLI shadcn-style: copia componentes pro seu projeto. Zero deps.",
       apiReference: "Mapa do que vive em cada módulo — onde achar o quê.",
       browserSupport: "Targets oficiais, APIs assumidas, fallbacks.",
       performance: "Bundle budgets, code-splitting, ganhos da Fase 8.1.",
       recipes: "Composições prontas — ao vivo, editáveis, abrem em sandbox externo.",
+      about: "Manifesto, princípios, história curta — por que o Atelier existe.",
+      colophon: "Como foi feito — stack, fontes, paleta editorial e métricas.",
+      credits: "Inspirações declaradas, bibliotecas estudadas, pessoas e livros.",
+      license: "MIT com anotações editoriais — o que pode, o que não pode.",
+      pressKit: "Logo SVG, paleta hex copiável, boilerplates de descrição.",
+      favicon: "O monograma At. — decisão editorial, encoding e theme-aware via SVG.",
       dataTable: "Tabela editorial composable: sort, filtros, seleção, paginação e virtualização.",
       timeline: "Linha do tempo vertical ou horizontal, com markers, estados e separador 'agora'.",
       tagInput: "Coletor de tags livres com chips removíveis, validação e separadores customizáveis.",
@@ -270,6 +307,19 @@ const ptBR = {
       openPicker: "Abrir calendário",
       rangeStart: "Início do intervalo",
       rangeEnd: "Fim do intervalo",
+    },
+    password: {
+      showPassword: "Mostrar senha",
+      hidePassword: "Ocultar senha",
+      strengthMeter: "Força estimada da senha",
+      strength0: "Muito fraca",
+      strength1: "Fraca",
+      strength2: "Média",
+      strength3: "Forte",
+      strength4: "Muito forte",
+    },
+    lightbox: {
+      close: "Fechar visualização",
     },
     carousel: {
       label: "Carrossel",
@@ -341,6 +391,197 @@ const ptBR = {
 
   /* ============================================================ */
   pages: {
+    /* ------------- Início (showcase) ------------- */
+    home: {
+      badge: "React 18 · Vite · zero dependências de runtime",
+      titleA: "Uma camada [em]editorial[/em] silenciosa para produto,",
+      titleB: "montada à vista de todos.",
+      lead:
+        "[em]Atelier[/em] não é um kit de widgets anónimos — é Fraunces calmo, mono preciso, tokens que se rastreiam e componentes que se leem. Abaixo, um recorte vivo; o manual começa quando quiseres.",
+      ctaManual: "Abrir o manual",
+      ctaComponents: "Ver componentes",
+      bentoAria: "Vitrine de componentes",
+      bento: {
+        formKicker: "Amostra · formulário",
+        formTitle: "Campos que se mantêm legíveis",
+        fieldName: "Rótulo",
+        placeholderName: "Codinome do projeto",
+        fieldNote: "Nota",
+        placeholderNote: "Contexto curto para revisores…",
+        submit: "Guardar",
+        cancel: "Cancelar",
+        badgesKicker: "Amostra · estado",
+        badgesTitle: "Badges e tom",
+        badgeLive: "Ao vivo",
+        badgeStable: "Estável",
+        badgeAccent: "Acento",
+        switchLabel: "Notificar no deploy",
+        tabsKicker: "Amostra · abas",
+        tabsTitle: "Duas superfícies",
+        tab1: "Pré-visualização",
+        tab2: "Detalhes",
+        tabPanel1: "A aba ativa mantém a tipografia suave — sem painéis agressivos.",
+        tabPanel2: "Use abas quando o utilizador compara duas vistas coerentes, não para navegação.",
+        alertTitle: "Perfil sincronizado",
+        alertBody: "Tokens e rampas tipográficas alinhadas com a última publicação.",
+        progressKicker: "Amostra · progresso",
+        progressTitle: "Feedback discreto",
+        progressLabel: "Orçamento de bundle",
+        checkboxLabel: "Aceito os defaults editoriais de espaçamento",
+        teamKicker: "Amostra · pessoas",
+        teamTitle: "Colaboradores",
+        teamBody: "Avatares empilham com contenção — iniciais quando não há foto.",
+        teamCta: "Docs de Avatar",
+        paletteKicker: "Amostra · comando",
+        paletteTitle: "Pesquisar no manual",
+        paletteBody: "Saltar para qualquer rota ou componente sem largar o teclado.",
+        paletteInputValue: "Paleta ⌘K…",
+        paletteInputAria: "Dica de atalho",
+        paletteLink: "Abrir Studio →",
+      },
+      showcase: {
+        table: {
+          kicker: "Amostra · tabela",
+          title: "Linha de dados editorial",
+          col1: "Token",
+          col2: "Papel",
+          col3: "Valor",
+          r1a: "--ink",
+          r1b: "Texto principal",
+          r1c: "Grafite",
+          r2a: "--rule-soft",
+          r2b: "Traço discreto",
+          r2c: "Fio",
+          link: "Paleta completa →",
+        },
+        select: {
+          kicker: "Amostra · select",
+          title: "Escolher um plano",
+          label: "Plano",
+          opt1: "Starter",
+          opt2: "Studio",
+          opt3: "Enterprise",
+        },
+        radio: {
+          kicker: "Amostra · radio",
+          title: "Ritmo de faturação",
+          opt1: "Mensal",
+          opt2: "Anual",
+          opt3: "À medida",
+        },
+        tooltip: {
+          kicker: "Amostra · tooltip",
+          title: "Pairar sobre o rótulo",
+          trigger: "Token de densidade",
+          tip: "Mapeia para --density-* em :root. Cascata via .is-density-*.",
+        },
+        copy: {
+          kicker: "Amostra · copiar",
+          title: "Entrega de snippet",
+          btn: "Copiar",
+          snippet: "import { Button } from \"@atelier/ds/components\";",
+        },
+        theme: {
+          kicker: "Amostra · tema",
+          title: "Claro · escuro · sistema",
+        },
+        stepper: {
+          kicker: "Amostra · stepper",
+          title: "Cadência de checkout",
+          n1: "01",
+          l1: "Cesto",
+          d1: "Linhas",
+          n2: "02",
+          l2: "Envio",
+          d2: "Morada",
+          n3: "03",
+          l3: "Rever",
+          d3: "Confirmar",
+        },
+        stepperV: {
+          kicker: "Amostra · vertical",
+          title: "Coluna de onboarding",
+          n1: "I",
+          l1: "Princípios",
+          d1: "Ler uma vez",
+          n2: "II",
+          l2: "Tokens",
+          d2: "Colar e scope",
+          n3: "III",
+          l3: "Entregar",
+          d3: "Compor",
+        },
+        stat: {
+          kicker: "Amostra · stat + spark",
+          title: "Ritmo semanal",
+          label: "PRs merged",
+          value: "128",
+          delta: "+12% vs semana anterior",
+        },
+        circular: {
+          kicker: "Amostra · anel",
+          title: "Quota em disco",
+          dataLink: "Métricas e gráficos →",
+        },
+        skeleton: {
+          kicker: "Amostra · skeleton",
+          title: "Estado de espera",
+          body: "Pulso editorial — sem arco-íris genérico.",
+        },
+        code: {
+          kicker: "Amostra · código",
+          title: "Bloco + copiar",
+        },
+        crumbs: {
+          kicker: "Amostra · breadcrumbs",
+          title: "Onde estás",
+          root: "Atelier",
+          mid: "Referência",
+          current: "Hooks",
+        },
+        divider: "Mais exemplos",
+        alertInfo: {
+          title: "Atenção",
+          body: "Ações destrutivas vêm sempre com anular ou confirmação tipada.",
+        },
+        toolbar: {
+          kicker: "Amostra · ações",
+          title: "Barra de linha",
+          archive: "Arquivar",
+          report: "Reportar",
+          snooze: "Adiar",
+          toast: "Disparar toast",
+          toastTitle: "Em fila",
+          toastBody: "A alteração fica aguardando a próxima janela de publicação.",
+        },
+        tabs2: {
+          kicker: "Amostra · sublinhado",
+          title: "Navegação discreta",
+          t1: "Tokens",
+          t2: "Componentes",
+          t3: "Padrões",
+          p1: "Superfície, tinta, acento — cada escala vive em :root.",
+          p2: "De botões a drag-drop — cada página é um capítulo.",
+          p3: "Formulários, fluxos destrutivos, filosofia de onboarding.",
+        },
+        badges2: {
+          kicker: "Amostra · semântica",
+          title: "Chips de estado",
+          ok: "Aprovado",
+          warn: "Rever",
+          info: "Rascunho",
+        },
+        pagination: {
+          kicker: "Amostra · paginação",
+          title: "Controlo de lista",
+        },
+        kbd: {
+          kicker: "Amostra · KBD",
+          title: "Atalhos",
+          body: "Alternar a sidebar sem sair do fluxo.",
+        },
+      },
+    },
     /* ------------- Overview ------------- */
     overview: {
       lead: "Atelier · Um manual silencioso",
@@ -3657,6 +3898,287 @@ const ptBR = {
       },
     },
 
+    /* ------------- Disclosure & navegação (fase 15.1) ------------- */
+    disclosure: {
+      lead: "Padrão · 80",
+      titleA: "Disclosure ",
+      titleB: "& navegação auxiliar",
+      metaLabel: "Componentes",
+      meta: "Fase 15.1",
+      intro:
+        "Seis famílias novas que completam o manual: [em]accordion[/em] sobre [em]Collapse[/em], [em]disclosure[/em] de um bloco, [em]preview ao hover[/em], [em]faixa institucional[/em], [em]controle segmentado[/em] fora de Tabs, [em]lista de definições[/em] editorial e [em]mark[/em] inline.",
+      accordion: {
+        title: "Accordion",
+        kicker: "single · multiple",
+        desc: "Vários itens com cabeçalho clicável. O corpo usa a mesma animação de altura que a página de Motion — sem libs.",
+        caption: "Modo single com collapsible — o leitor pode fechar todos os painéis.",
+        q1: "O que é o Atelier?",
+        a1: "Um design system editorial em React — tipografia serif/mono, ângulos retos, zero dependências de runtime.",
+        q2: "Por que hash routing?",
+        a2: "Deploy estático simples: GitHub Pages, S3 ou qualquer CDN sem configurar servidor de SPA.",
+      },
+      collapsible: {
+        title: "Collapsible / Disclosure",
+        kicker: "um bloco",
+        desc: "O mesmo padrão WAI de um botão que expande uma região. Exportamos também Disclosure* como alias.",
+        caption: "Útil para notas técnicas, filtros avançados e FAQs com um único painel.",
+        trigger: "Mostrar nota editorial",
+        body: "O conteúdo permanece no DOM; só a altura é animada. Screen readers ouvem aria-expanded no trigger.",
+      },
+      hover: {
+        title: "HoverCard",
+        kicker: "hover · delays",
+        desc: "Painel posicionado como Popover, mas aberto por pointerenter com atrasos — evita piscar ao cruzar o espaço entre trigger e card.",
+        caption: "Passe o mouse no botão e aguarde ~200 ms.",
+        trigger: "Ver resumo",
+        panel: "Texto curto, links opcionais, pequena tabela — o mesmo vocabulário visual de Popover, sem click trap.",
+      },
+      banner: {
+        title: "Banner",
+        kicker: "full-width",
+        desc: "Distinto de Alert: faixa horizontal para comunicados globais (release, manutenção, consentimento). Pode ser sticky e ter dismiss.",
+        caption: "Variante accent com ação e botão fechar.",
+        message: "Versão 0.14 — novos componentes de disclosure estão documentados.",
+        action: "Changelog",
+        dismiss: "Fechar aviso",
+        region: "Comunicado global",
+        reset: "Mostrar banner de novo",
+      },
+      segmented: {
+        title: "SegmentedControl",
+        kicker: "fora de Tabs",
+        desc: "Mesma gramática visual da variante segmented de Tabs — mas sem TabPanels: só alterna estado (vista de lista, board, etc.).",
+        caption: "role radiogroup + radio por item.",
+        aria: "Modo de vista",
+        list: "Lista",
+        board: "Board",
+        timeline: "Linha",
+      },
+      dl: {
+        title: "DescriptionList",
+        kicker: "dl · dt · dd",
+        desc: "Pares termo/definição em grid editorial — ideal para specs, tokens e metadados.",
+        caption: "Cada linha é um grupo HTML5 válido (div.ds-dl-row > dt + dd).",
+        row1t: "Serif",
+        row1d: "Fraunces 300–600 — títulos e prosa.",
+        row2t: "Mono",
+        row2d: "JetBrains Mono — rótulos, dados e código.",
+        row3t: "Acento",
+        row3d: "Vermelho de margem — usado com parcimônia.",
+      },
+      mark: {
+        title: "Mark / Highlight",
+        kicker: "inline",
+        desc: "Wrapper em [em]mark[/em] com duas variantes de fundo — destaque citacional ou acento.",
+        caption: "Não substitui ênfase semântica strong/em; use para passagens citadas ou busca.",
+        line1: "O editor pediu silêncio — a palavra",
+        word1: "silêncio",
+        line2: "ganha fundo; o alerta aparece como",
+        word2: "atenção",
+      },
+      composition: {
+        title: "Composição",
+        titleB: "imports",
+        kicker: "módulos",
+      },
+    },
+
+    /* ------------- Inputs avançados (fase 15.2) ------------- */
+    advancedInputs: {
+      lead: "Padrão · 81",
+      titleA: "Inputs ",
+      titleB: "avançados",
+      metaLabel: "Componentes",
+      meta: "Fase 15.2",
+      intro:
+        "Sete campos especializados para formulários densos: [em]número com stepper[/em], [em]PIN/OTP[/em], [em]senha com medidor[/em], [em]telefone mascarado[/em], [em]hora em grade[/em], [em]texto editável inline[/em] e [em]menções @[/em] com painel — tudo sem dependências.",
+      number: {
+        title: "NumberInput",
+        kicker: "stepper",
+        desc: "Valor numérico com botões − / +, limites opcionais e passo configurável. Enter ou blur confirmam; entrada inválida reverte.",
+        caption: "min 0 · max 10 · step 1.",
+        aria: "Quantidade",
+      },
+      pin: {
+        title: "PinInput",
+        kicker: "OTP",
+        desc: "Quatro a oito dígitos, colagem de código completo, setas entre células. onComplete dispara quando o comprimento fecha.",
+        caption: "Modo 4 dígitos — experimente colar um código.",
+        aria: "Código PIN",
+        done: "Último código completo: {code}",
+      },
+      password: {
+        title: "PasswordInput",
+        kicker: "reveal · força",
+        desc: "Alterna visibilidade e mostra barras heurísticas (comprimento, maiúsculas, dígitos, símbolo). Não substitui validação no servidor.",
+        caption: "Medidor aparece só quando há texto.",
+      },
+      phone: {
+        title: "PhoneInput",
+        kicker: "país · máscara",
+        desc: "Presets BR / US / PT com máscara fixa no campo nacional. Digits-only por baixo; phoneToE164 ajuda a serializar.",
+        caption: "Troque o país e veja o E.164 abaixo.",
+      },
+      time: {
+        title: "TimePicker",
+        kicker: "HH:MM",
+        desc: "Mesmo arranjo que DatePicker: input + botão de grade em Popover. Slots a cada N minutos.",
+        caption: "Passo de 15 minutos na lista.",
+      },
+      editable: {
+        title: "EditableText",
+        kicker: "inline",
+        desc: "Em leitura vira botão; em edição vira input. Enter ou blur gravam, Esc cancela.",
+        caption: "Clique no título para alterar.",
+        initial: "Título editável",
+      },
+      mention: {
+        title: "MentionInput",
+        kicker: "@ · painel",
+        desc: "Textarea controlada: ao digitar @token, abre sugestões filtradas; seleção insere @rótulo e fecha o painel.",
+        caption: "Digite @ para convidar alguém do time fictício.",
+        placeholder: "Escreva uma mensagem…",
+        optA: "ana",
+        optB: "bruno",
+        optC: "carla",
+        optD: "design-system",
+      },
+      composition: {
+        title: "Composição",
+        titleB: "módulos",
+        kicker: "imports",
+      },
+    },
+
+    /* ------------- Data display avançado (fase 15.3) ------------- */
+    dataDisplay: {
+      lead: "Padrão · 82",
+      titleA: "Data display ",
+      titleB: "avançado",
+      metaLabel: "Componentes",
+      meta: "Fase 15.3",
+      intro:
+        "Cinco famílias para métricas, comparação de planos, revisão de texto, mídia ampliada e progresso circular — tudo [em]sem dependências[/em], alinhado a tokens e tipografia editorial.",
+      stat: {
+        title: "Stat",
+        kicker: "KPI · sparkline",
+        desc: "Cartão com kicker, rótulo, valor grande, delta semântico (up / down / neutral) e Sparkline reutilizada do Chart.",
+        caption: "Exemplo com tendência positiva e micro-tendência nos últimos pontos.",
+        kickerLabel: "Tráfego",
+        metric: "Sessões / 7 dias",
+        delta: "+12,4% vs. semana anterior",
+      },
+      pricing: {
+        title: "PricingTable",
+        kicker: "comparação",
+        desc: "Tabela responsiva com scroll horizontal: rótulos em serif, valores em mono, coluna de destaque contínua (th + td), glifos de check mais fortes, regras internas mais leves.",
+        caption: "Três planos fictícios — a API editorial é composição de linhas e células.",
+        colFeature: "Inclui",
+        colStarter: "Starter",
+        colPro: "Pro",
+        colTeam: "Team",
+        rowUsers: "Utilizadores",
+        rowApi: "API",
+        rowSupport: "Suporte",
+        supportCommunity: "Comunidade",
+        supportEmail: "E-mail",
+        supportSlack: "Slack",
+      },
+      diff: {
+        title: "DiffViewer",
+        kicker: "LCS · linhas",
+        desc: "Diff unificado linha a linha: algoritmo LCS sobre arrays separados por quebra de linha. Exporta diffLines para testes ou UI própria.",
+        caption: "Remoções e adições com gutter + e −.",
+        captionBox: "Trecho de configuração fictício",
+        before: "theme:\n  accent: '#c42'\n  radius: 0\nreturn theme",
+        after: "theme:\n  accent: '#c42'\n  radius: 2\n  motion: true\nreturn theme",
+      },
+      lightbox: {
+        title: "Lightbox",
+        kicker: "overlay · foco",
+        desc: "Imagem centrada ampliada até ocupar a maior parte do viewport (portal em document.body); backdrop clicável, Escape, focus trap e scroll lock — mesmo contrato de segurança que Drawer.",
+        caption: "Abre o SVG editorial do site no maior tamanho que o viewport permitir.",
+        open: "Abrir imagem",
+        imgAlt: "Open Graph do Atelier — wordmark editorial",
+        imgCaption: "SVG 1200×630 — arte clara no tema claro, variante escura no tema escuro.",
+        dialogLabel: "Visualização ampliada da imagem",
+      },
+      circular: {
+        title: "CircularProgress",
+        kicker: "anel SVG",
+        desc: "Progresso 0–100 com stroke-dasharray; label central opcional ou percentagem automática.",
+        caption: "Arraste o slider para ver o anel acompanhar o valor.",
+        slider: "Valor (0–100)",
+        aria: "Progresso circular de exemplo",
+      },
+      composition: {
+        title: "Composição",
+        titleB: "módulos",
+        kicker: "imports",
+      },
+    },
+
+    /* ------------- App shell (fase 15.4) ------------- */
+    appShell: {
+      lead: "Padrão · 83",
+      titleA: "App ",
+      titleB: "shell",
+      metaLabel: "Componentes",
+      meta: "Fase 15.4",
+      intro:
+        "Padrões de produto em volta do cromo: [em]centro de notificações[/em], [em]layout de discussão[/em], [em]snackbar ancorado[/em] (não é a fila de toasts) e uma [em]lista controlada de uploads[/em] com retry — tudo sem deps, alinhado a tokens.",
+      inbox: {
+        title: "Sino + inbox",
+        kicker: "Popover",
+        desc: "Montar com Popover: o sino mostra contagem de não lidas; o painel lista linhas compactas com título + meta e rodapé opcional.",
+        caption: "Duas não lidas — o padrão escala para listas com scroll.",
+        bellAria: "Notificações, 2 não lidas",
+        panelAria: "Inbox",
+        header: "Inbox",
+        item1Title: "Comentário em “Tokens”",
+        item1Meta: "há 2 min",
+        item2Title: "Build concluído",
+        item2Meta: "Ontem",
+        markAll: "Marcar todas como lidas",
+      },
+      comments: {
+        title: "Fio de comentários",
+        kicker: "anotações",
+        desc: "Layout tipo feed: cabeçalho com autor + hora, corpo em serif. Para revisões, notas de margem ou atividade sem puxar um chat completo.",
+        caption: "Dois comentários — profundidade de threading fica no app; o DS permanece presentacional.",
+        threadAria: "Discussão",
+        a1: "Mara",
+        t1: "09:12",
+        body1: "A coluna de acento lê melhor se mantivermos zebra fora do plano em destaque.",
+        a2: "Jon",
+        t2: "09:40",
+        body2: "Concordo — espelho a mesma regra na receita de pricing de marketing.",
+      },
+      snackbar: {
+        title: "Snackbar (ancorado)",
+        kicker: "≠ Toaster",
+        desc: "Camada fixa posicionada a partir de anchorRef — ideal para “guardado junto a este bloco”. Ação opcional, auto-dismiss, Escape fecha.",
+        caption: "Ancorado por baixo da linha do gatilho — não é a fila global de toasts.",
+        show: "Guardar bloco",
+        message: "Secção guardada neste parágrafo.",
+        action: "Anular",
+        dismiss: "Fechar snackbar",
+      },
+      upload: {
+        title: "Fila de upload",
+        kicker: "depois do Dropzone",
+        desc: "Linhas controladas com slot de preview, barra de progresso, estado semântico, retry em erro e remover. Junta ao Dropzone: escolher → fila → enviar.",
+        caption: "Estados concluído, a carregar e erro — a demo avança o progresso com um temporizador.",
+        retry: "Tentar outra vez",
+        remove: "Remover",
+      },
+      composition: {
+        title: "Composição",
+        titleB: "módulos",
+        kicker: "imports",
+      },
+    },
+
     /* ------------- Code page ------------- */
     code: {
       lead: "Manual · para desenvolvedores",
@@ -4734,9 +5256,9 @@ const ptBR = {
       titleA: "O ",
       titleB: "onboarding",
       metaLabel: "Padrão",
-      meta: "Tour · Coachmark · Empty",
+      meta: "Tour · destaque · Empty",
       intro:
-        "Onboarding é a [em]primeira impressão duradoura[/em]. Mal feito, vira tutorial chato que o usuário pula. Bem feito, ensina sem interromper. O Atelier oferece três padrões — [em]Tour[/em] (passo-a-passo guiado), [em]Coachmark[/em] (dica contextual única), [em]Empty State guiado[/em] (vazio que ensina). A escolha entre eles depende do que está sendo ensinado.",
+        "Onboarding é a [em]primeira impressão duradoura[/em]. Mal feito, vira tutorial chato que o usuário pula. Bem feito, ensina sem interromper. O Atelier oferece três padrões — [em]Tour[/em] (passo-a-passo guiado), [em]destaque contextual[/em] (dica ancorada única), [em]Empty State guiado[/em] (vazio que ensina). A escolha entre eles depende do que está sendo ensinado.",
       decision: {
         title: "Qual usar quando",
         kicker: "decision matrix",
@@ -4744,7 +5266,7 @@ const ptBR = {
         thPattern: "padrão", thUse: "use quando…", thAvoid: "evite quando…",
         rows: [
           { pattern: "Tour", use: "App com FLUXO complexo (kanban, editor) onde usuário precisa entender 3-5 conceitos antes de produzir.", avoid: "App de descoberta (galeria, dashboard). Tour força sequência onde o usuário deveria explorar." },
-          { pattern: "Coachmark", use: "Feature NOVA em app já conhecido. Aparece uma vez, no contexto, e some quando o usuário interage.", avoid: "Várias coachmarks ao mesmo tempo — viram ruído. Limite a uma por sessão." },
+          { pattern: "Destaque contextual", use: "Feature NOVA num app já conhecido — uma dica ancorada, some quando o utilizador interage.", avoid: "Vários ao mesmo tempo — viram ruído. Limite a uma por sessão." },
           { pattern: "Empty State guiado", use: "Estado natural vazio (caixa de entrada, lista de projetos). Vazio vira convite com CTA claro.", avoid: "Esconder funcionalidade complexa atrás de um botão — usuário não sabe que existe." },
         ],
       },
@@ -4916,11 +5438,118 @@ const ptBR = {
         kicker: "olá mundo",
         desc: "Importe diretamente do barrel principal. Zero config — funciona no entry de qualquer app React 18+.",
       },
+      cliBridge: {
+        title: "Ou: o atalho via CLI",
+        kicker: "shadcn-style · copia o código",
+        desc: "Se preferir [em]ser dona do código[/em] em vez de importar do pacote, o [em]@atelier/cli[/em] copia componentes direto pro seu repo. Edite à vontade — sem fork, sem dependência permanente.",
+        linkLabel: "Ver todos os comandos do CLI",
+      },
+    },
+
+    /* ============================================================ */
+    cli: {
+      lead: "Referência · 69",
+      titleA: "A ",
+      titleB: "linha de comando",
+      metaLabel: "CLI",
+      meta: "Zero deps · Node ≥ 18",
+      intro:
+        "O [em]@atelier/cli[/em] é um utilitário shadcn-style: copia componentes do registry direto pro seu projeto. Sua app fica [em]dona do código[/em] — versiona, customiza, aceita updates opcionais re-rodando o comando. Não é runtime, não é dependência permanente: instalou, scaffoldou, pode desinstalar.",
+      philosophy: {
+        title: "Filosofia",
+        kicker: "por que copy-paste",
+        desc: "Quatro decisões editoriais herdadas do shadcn/ui — adaptadas ao tom do Atelier.",
+        items: [
+          { n: "I",   body: "[em]Você é dona do código[/em]. Os arquivos copiados viram parte do seu repo. Sem [em]node_modules[/em] misterioso, sem version-pinning frustrante." },
+          { n: "II",  body: "[em]Customize sem fork[/em]. Edite o arquivo. Tipografia, cor, lógica — tudo. O CLI nunca volta sem você pedir (e quando pede, vê o diff)." },
+          { n: "III", body: "[em]Sem dep de runtime[/em]. Depois do scaffold, [em]npm uninstall @atelier/cli[/em] e seu projeto não sente. O Atelier é o código que mora no [em]src/ds/[/em]." },
+          { n: "IV",  body: "[em]Sem build extra[/em]. Os arquivos copiados são [em].tsx[/em] puros. Vite, Next, Webpack — qualquer um que entenda JSX compila." },
+        ],
+      },
+      requirements: {
+        title: "Pré-requisitos",
+        kicker: "o que você precisa",
+        desc: "Mínimo absoluto. Sem PostCSS, sem Tailwind, sem polyfill.",
+        items: [
+          { label: "Node.js",  value: ">= 18" },
+          { label: "Gerenciador", value: "npm, pnpm ou yarn (qualquer um)" },
+          { label: "Framework",  value: "React 18+ (peer)" },
+          { label: "Build tool", value: "Vite, Next, Remix, CRA — indiferente" },
+        ],
+      },
+      init: {
+        title: "atelier init",
+        kicker: "scaffold inicial",
+        desc: "Cria a estrutura mínima dentro do [em]cwd[/em]: pastas para componentes, pastas para hooks e o CSS base com todos os tokens. Idempotente — re-rode quando quiser, arquivos existentes são preservados.",
+        outputLabel: "Saída esperada:",
+        flagsLabel: "Flags:",
+        flags: [
+          { name: "--dry-run", body: "imprime o que seria criado, sem tocar no disco." },
+        ],
+      },
+      add: {
+        title: "atelier add",
+        kicker: "copia componente + dependências",
+        desc: "Resolve o grafo de dependências [em]transitivas[/em] (componentes que dependem de outros componentes ou de hooks) e copia tudo de uma vez. Você pode passar vários nomes na mesma chamada.",
+        transitiveLabel: "Exemplo de transitividade:",
+        transitiveDesc: "Pedir [em]Dialog[/em] traz junto três hooks de acessibilidade — sem você precisar saber quais.",
+        outputLabel: "Saída esperada:",
+        flagsLabel: "Flags:",
+        flags: [
+          { name: "--force",   body: "sobrescreve arquivos existentes (default: pula com marcador [em]·[/em])." },
+          { name: "--dry-run", body: "imprime o que seria copiado, sem tocar no disco." },
+        ],
+      },
+      list: {
+        title: "atelier list",
+        kicker: "explore o registry",
+        desc: "Lista os componentes do registry com categoria, descrição curta e dependências. Filtre por [em]--category[/em] para ver apenas overlays, formulários etc.",
+        categoriesLabel: "Categorias disponíveis:",
+        categories: ["primitive", "form", "layout", "navigation", "overlay", "data", "feedback"],
+        aliasNote: "Alias: [em]atelier ls[/em] funciona igual.",
+      },
+      meta2: {
+        title: "Versão & ajuda",
+        kicker: "atelier --version / --help",
+        desc: "Comandos meta — sempre disponíveis, sem subcomando. O [em]--help[/em] também roda quando você chama [em]atelier[/em] sem nada (ou com [em]help[/em]).",
+      },
+      vsLibrary: {
+        title: "CLI ou @atelier/ds?",
+        kicker: "duas modalidades, escolha consciente",
+        desc: "As duas formas de consumir o Atelier coexistem por design. Não é 'uma é melhor que a outra' — são respostas a perguntas diferentes.",
+        rows: [
+          { topic: "Filosofia",         cli: "Copy-paste, app é dona", lib: "Pacote NPM tradicional" },
+          { topic: "Updates",           cli: "Re-rodar [em]atelier add[/em]", lib: "[em]npm update @atelier/ds[/em]" },
+          { topic: "Customização",      cli: "Edite o arquivo direto", lib: "Tokens via CSS vars + className" },
+          { topic: "Bundle",            cli: "Apenas o que você copiou", lib: "Tree-shake aggressive (sideEffects: false)" },
+          { topic: "TypeScript",        cli: "Tipos vivem nos próprios arquivos", lib: ".d.ts publicados ao lado" },
+          { topic: "Quando escolher",   cli: "Vai customizar visualmente / forkar", lib: "Quer atualizar de um lugar só" },
+        ],
+      },
+      troubleshooting: {
+        title: "Troubleshooting",
+        kicker: "quando dá ruim",
+        desc: "Os erros mais comuns e como sair deles.",
+        items: [
+          { problem: "[em]registry.json não encontrado[/em]", solution: "O pacote @atelier/cli foi instalado de forma incompleta. Reinstale: [em]npm install -D @atelier/cli[/em]." },
+          { problem: "[em]nao encontrado: <Nome>[/em]",       solution: "Componente fora do registry. Rode [em]atelier list[/em] para conferir o nome (case-insensitive)." },
+          { problem: "[em]src/ não existe no cwd[/em]",       solution: "Você está em um diretório vazio. Rode [em]atelier init[/em] primeiro." },
+          { problem: "Arquivo copiado anteriormente quero atualizar", solution: "Use [em]--force[/em] para sobrescrever. Recomendo commitar antes pra ver o diff." },
+        ],
+      },
+      seeAlso: {
+        title: "Veja também",
+        kicker: "próximos passos",
+        installLabel: "Instalação como pacote",
+        installDesc: "Se preferir o modelo NPM tradicional com tipos publicados, vá para a página de instalação.",
+        registryLabel: "API reference",
+        registryDesc: "Mapa do que vive em cada módulo — útil pra entender o que o CLI está copiando.",
+      },
     },
 
     /* ============================================================ */
     apiReference: {
-      lead: "Referência · 69",
+      lead: "Referência · 70",
       titleA: "O ",
       titleB: "mapa da API",
       metaLabel: "Index",
@@ -4953,7 +5582,11 @@ const ptBR = {
           { family: "Chart.tsx",       exports: "Chart · BarChart · LineChart · AreaChart · PieChart · DonutChart · RadarChart · RadialChart · Sparkline", route: "charts" },
           { family: "Form.tsx",        exports: "Form · FormStep · FormRow · FormField · FormDivider · FormActions", route: "forms" },
           { family: "Motion.tsx",      exports: "Transition · Fade · Slide · Scale · Collapse · ScrollReveal", route: "motion" },
-          { family: "lib/hooks/",      exports: "17 hooks públicos (useMediaQuery · useDebounce · useFocusTrap · useControllableState · …)", route: "hooks" },
+          { family: "Accordion.tsx · HoverCard.tsx · …", exports: "Accordion · Collapsible · HoverCard · Banner · SegmentedControl · DescriptionList · Mark", route: "disclosure" },
+          { family: "NumberInput.tsx · … · MentionInput.tsx", exports: "NumberInput · PinInput · PasswordInput · PhoneInput · TimePicker · EditableText · MentionInput", route: "advanced-inputs" },
+          { family: "Stat.tsx · … · CircularProgress.tsx", exports: "Stat · PricingTable · DiffViewer · Lightbox · CircularProgress", route: "data-display" },
+          { family: "NotificationInbox.tsx · … · FileUploadQueue.tsx", exports: "NotificationBell · InboxPanel · InboxHeader · InboxItem · InboxFooter · CommentThread · Comment · Snackbar · FileUploadQueue · FileUploadQueueItemRow", route: "app-shell" },
+          { family: "lib/hooks/",      exports: "18 hooks públicos (useMediaQuery · useDebounce · useFocusTrap · useControllableState · …)", route: "hooks" },
           { family: "lib/tokens.ts",   exports: "TOKENS · serializeCss · serializeJson · serializeTs · downloadText", route: "tokens" },
           { family: "lib/contrast.ts", exports: "parseColor · relativeLuminance · contrastRatio · wcagLevel", route: "accessibility" },
         ],
@@ -4962,7 +5595,7 @@ const ptBR = {
 
     /* ============================================================ */
     browserSupport: {
-      lead: "Referência · 70",
+      lead: "Referência · 71",
       titleA: "Os ",
       titleB: "navegadores",
       metaLabel: "Suporte",
@@ -4999,7 +5632,7 @@ const ptBR = {
 
     /* ============================================================ */
     performance: {
-      lead: "Referência · 71",
+      lead: "Referência · 72",
       titleA: "A ",
       titleB: "performance",
       metaLabel: "Budgets",
@@ -5041,7 +5674,7 @@ const ptBR = {
 
     /* ============================================================ */
     recipes: {
-      lead: "Referência · 72",
+      lead: "Referência · 73",
       titleA: "As ",
       titleB: "receitas",
       metaLabel: "Galeria",
@@ -5095,6 +5728,381 @@ const ptBR = {
           desc: "Capture editorial com [em]Card[/em] + Form + Checkbox de consentimento. Botão [em]disabled[/em] até consentir — LGPD e GDPR friendly.",
           caption: "Subscribe card",
         },
+      },
+    },
+
+    /* ============================================================ */
+    about: {
+      lead: "Sobre · 73",
+      titleA: "Por que ",
+      titleB: "Atelier",
+      metaLabel: "Manifesto",
+      meta: "Editorial-first · zero deps",
+      intro:
+        "Atelier nasceu como uma reação. A maioria dos design systems que conhecemos resolve a [em]escala[/em] do produto — fala a linguagem do enterprise, dos componentes de UI prontos, dos dashboards densos. São excelentes nisso. Mas o silêncio se perdeu pelo caminho. Aqui apostamos no oposto: tipografia [em]editorial[/em], ângulos retos, cor usada com economia, e uma promessa de [em]zero dependências de runtime[/em] que se mantém em cada componente.",
+
+      why: {
+        title: "Por que existe",
+        kicker: "razão de ser",
+        p1: "Construir uma aplicação com tom editorial — não enterprise, não SaaS genérico — é difícil hoje. As bibliotecas dominantes assumem que você quer Tailwind no esqueleto, framer-motion na pele, radix por baixo do capô. Cada uma é boa, mas o conjunto traz um vocabulário visual de [em]produto que tenta vender[/em] — e às vezes você só quer fazer um manual.",
+        p2: "Atelier responde a essa lacuna. É um sistema com [em]opinião editorial forte[/em]: tipografia serif para corpo, mono para metadados; ângulos retos por padrão; cor de acento usada [em]uma vez[/em] em cada cena; régua como divisor; sombra como [em]exceção[/em], não decoração. Tudo construído à mão em React puro — você consegue ler o código fonte de qualquer componente sem abrir uma issue de framework.",
+        p3: "É um manual antes de ser uma biblioteca. Cada página de doc carrega tanto o componente quanto a [em]decisão editorial[/em] por trás dele. Essa parte importa: usar bem o Atelier exige aceitar suas escolhas — e ele não esconde nenhuma delas.",
+        quote: "O design system mais útil é aquele que tem coragem de dizer não.",
+        quoteAttr: "Princípio editorial",
+      },
+
+      principles: {
+        title: "Princípios",
+        kicker: "não-negociáveis",
+        desc: "Os mesmos oito princípios que regem o roadmap regem todas as decisões de implementação. Quando há conflito, princípio vence preferência pessoal.",
+        items: [
+          { label: "Zero deps de runtime", body: "React + ReactDOM. Nada mais. Sem framer-motion, sem date-fns, sem radix por baixo. Se precisamos do recurso, escrevemos in-house. [em]Mais código, menos magia.[/em]" },
+          { label: "Editorial-first", body: "Tipografia serif/mono, ângulos retos por padrão, três pesos de régua codificados como [em]vocabulário[/em]. Visual de manual de arquitetura, não de SaaS." },
+          { label: "Composable", body: "Componentes públicos são montados a partir de subcomponentes exportados nominalmente. Card → CardHeader/CardKicker/CardTitle/CardBody/CardFooter. Você monta a hierarquia que faz sentido." },
+          { label: "Acessível por padrão", body: "Roles ARIA, aria-* corretos, foco visível, Esc fecha overlays, roving tabindex em listas, prefers-reduced-motion respeitado, skip-link global. [em]A11y é critério de aceite, não item separado.[/em]" },
+          { label: "i18n sem dívida", body: "Todo texto novo entra em pt-BR.ts e en.ts na mesma PR. Nada hardcoded em JSX. Intl nativo cobre formatação." },
+          { label: "Tokens > hardcode", body: "Cores, espaçamento, raios, durações, easings, breakpoints, z-index — sempre via CSS var. Pixel solto é dívida que aparece como inconsistência fantasma." },
+          { label: "TypeScript estrito gradual", body: "Novos componentes nascem .tsx com tipos públicos em src/ds/types.ts. Migração dos legados é tarefa contínua, sem big-bang." },
+          { label: "Documentação = produto", body: "Cada componente tem página própria com lead, meta, intro, exemplos, composição. A doc não é overhead — é o produto." },
+        ],
+      },
+
+      history: {
+        title: "História curta",
+        kicker: "como chegamos aqui",
+        p1: "O primeiro componente do Atelier foi um [em]Dropzone[/em] tipográfico — quase um exercício de tipografia. A pergunta era simples: dá pra fazer um upload de arquivo que respeita a leitura, em vez de gritar 'arraste aqui!'? A resposta foi sim, e o tom ficou dado.",
+        p2: "De lá pra cá, doze fases de roadmap depois, o sistema cresceu pra cobrir foundations, componentes, padrões avançados, hooks utilitários, motion, a11y, padrões transversais e DX. Cada onda foi documentada em [em]/changelog[/em] com versão semântica e descrição editorial — não é apenas mudança de código, é decisão tomada.",
+        p3: "Hoje, na versão atual, o Atelier oferece 59 componentes, 18 hooks públicos, 88 tokens declarados, e um aplicativo de doc que [em]é[/em] o produto: cada página é renderizada com os próprios componentes que descreve. O que você lê é o que você vai usar.",
+      },
+
+      nonGoals: {
+        title: "Não-objetivos",
+        kicker: "o que ele NÃO é",
+        desc: "Tão importante quanto o que faz é o que [em]escolhemos não fazer[/em]. Esses não são problemas a resolver — são opções declaradas.",
+        items: [
+          { label: "Não competir com MUI/Radix/Mantine", body: "Eles cobrem [em]escala enterprise[/em] muito bem. Atelier responde a um nicho específico: produtos com tom editorial, manuais técnicos, blogs autorais. Se seu app é um CRM, MUI é provavelmente melhor escolha." },
+          { label: "Não ser config-driven", body: "Não vendemos 'cliente customiza tudo'. O Studio existe pra dar fim ao 'eu testaria uma cor diferente', mas o cânone editorial é forte: ângulos retos, paleta envelhecida, tipografia serif. Se você quer sair muito do cânone, faça um fork." },
+          { label: "Não ser polyfilled", body: "Atelier mira [em]evergreen browsers[/em] (Chrome 110+, FF 109+, Safari 16.4+). Sem IE11. Sem Safari 13. Quem precisa de suporte legacy precisa de outro DS." },
+          { label: "Não ter Storybook duplicado", body: "O próprio app de doc é o storybook. Adicionar Storybook real significaria duplicar conteúdo. Decisão consciente — mantemos uma fonte de verdade." },
+          { label: "Não ser uma startup", body: "Atelier é um projeto autoral. Não tem roadmap comercial, não tem SLA, não tem equipe pra suporte enterprise. Use por sua conta — o código é seu." },
+        ],
+      },
+    },
+
+    /* ============================================================ */
+    colophon: {
+      lead: "Sobre · 74",
+      titleA: "Como foi ",
+      titleB: "feito",
+      metaLabel: "Stack",
+      meta: "React 18 · Vite · zero runtime deps",
+      intro:
+        "Tradição editorial: o [em]colophon[/em] vai no fim do livro, registrando como a obra foi produzida. Aqui ele vai no manual digital — stack, tipografia, paleta editorial e métricas verificáveis no momento desta versão.",
+
+      stack: {
+        title: "Stack",
+        kicker: "ferramentas",
+        desc: "Pequena, intencional, [em]nada decorativa[/em]. Cada ferramenta resolve um problema específico — nada está aqui por ser popular.",
+        items: [
+          { label: "React 18", body: "Núcleo da UI. Suspense + lazy + concurrent features são consumidos onde fazem sentido (page transitions, code splitting). Sem RSC — Atelier é app web puro, no browser." },
+          { label: "Vite 5", body: "Dev server e build. ESM nativo, HMR instantâneo, bundle gzipado de [em]~165 KB no first-paint[/em]. manualChunks separa vendor + ds + i18n + cada página." },
+          { label: "TypeScript 6", body: "Tipos públicos centralizados em [em]src/ds/types.ts[/em]. Estrito gradual — não-imediato, mas chegando." },
+          { label: "Vitest 4 + Testing Library", body: "Vitest com jsdom. Atualmente 42 testes (lib + hooks + contrast). Adicionar testes por componente é tarefa contínua." },
+          { label: "CSS puro", body: "Sem PostCSS, sem Tailwind, sem CSS-in-JS. Um arquivo [em]index.css[/em] com tokens em :root + classes BEM-style por componente. Build mais rápido, less complexity, easier debug." },
+          { label: "Zero runtime deps", body: "package.json em produção: react + react-dom. [em]Apenas isso.[/em] DragDrop, Charts, MarkdownViewer, Calendar, ColorPicker — tudo construído in-house." },
+        ],
+      },
+
+      type: {
+        title: "Tipografia",
+        kicker: "Fraunces + JetBrains Mono",
+        p1: "Toda decisão tipográfica do Atelier deriva de uma única tensão: [em]serif para corpo[/em] (leitura confortável, voz editorial), [em]mono para metadados[/em] (kickers, captions, código, status pills). Os dois constróem hierarquia sem precisar de mais que dois pesos cada.",
+        p2: "Foram escolhidos por motivo declarado, não por moda — descritos abaixo.",
+        fraunces: "Família serif moderna desenhada por David Jonathan Ross (2019). Recebe variações elegantes (italic alto-contraste, modulação ajustável), opcionalmente carrega o vocabulário do século XIX num corpo do século XXI. Atelier usa o peso 300 (light) como padrão — discreto, [em]quieto[/em].",
+        mono: "Open source, do JetBrains. Caracteres com altura uniforme, ligaduras ativadas por padrão, leitura confortável em pesos finos. Substituiu IBM Plex Mono por respiração ligeiramente maior nos kickers em caps.",
+      },
+
+      palette: {
+        title: "Paleta editorial",
+        kicker: "papel envelhecido · brasa",
+        p1: "Não escolhemos cores [em]frescas[/em]. A base é uma evocação de [em]papel envelhecido[/em] (#f4f1ea) — não branco puro, que cansa o olho em sessões longas. A tinta é grafite (#1a1a1a), não preto absoluto, pra herdar a textura tipográfica de manuais de arquitetura impressos.",
+        p2: "O acento [em]vermelho tijolo[/em] (#c8361d) é usado [em]uma vez[/em] em cada cena — para marcar o presente, o foco, o destaque editorial. Nunca para 'animar' a interface. Cada outra cor (semantic ok/warn/danger/info) tem o mesmo tratamento: discreta, calibrada pra contraste WCAG AA mínimo, sem saturação enterprise.",
+      },
+
+      metrics: {
+        title: "Métricas atuais",
+        kicker: "v0.17 · Abril 2026",
+        desc: "Números medidos no build da versão atual. Cada métrica é verificável via [em]npm run build[/em] ou [em]npm run cli list[/em].",
+        items: [
+          { value: "36", label: "Componentes" },
+          { value: "17", label: "Hooks públicos" },
+          { value: "88", label: "Tokens em :root" },
+          { value: "77", label: "Páginas no manual" },
+          { value: "30", label: "Testes" },
+          { value: "0", label: "Runtime deps" },
+          { value: "165 KB", label: "First-paint (gz)" },
+          { value: "24 KB", label: "Entry (min)" },
+        ],
+      },
+    },
+
+    /* ============================================================ */
+    credits: {
+      lead: "Sobre · 75",
+      titleA: "Os ",
+      titleB: "créditos",
+      metaLabel: "Inspirações",
+      meta: "Quem ensinou o quê",
+      intro:
+        "Nenhum design system nasce do nada. Atelier carrega herança consciente de duas linhagens: [em]produtos digitais[/em] que provaram que tom editorial é possível em escala, e [em]manuais editoriais impressos[/em] que ensinaram o vocabulário visual antes do digital existir.",
+
+      inspirations: {
+        title: "Produtos que estudamos",
+        kicker: "linhagem digital",
+        desc: "Nenhum copiado, nenhum esquecido. Cada um nos ensinou um princípio específico — listado abaixo.",
+        items: [
+          { name: "Vercel", body: "[em]Discrição visual em escala enterprise.[/em] Mostrou que dashboard de infra pode ser elegante sem virar estação espacial." },
+          { name: "Stripe", body: "[em]Tipografia como instrumento de confiança.[/em] Quando você está movendo dinheiro, a leitura precisa ser perfeita. Atelier herdou a obsessão." },
+          { name: "Linear", body: "[em]Atalhos de teclado como vocabulário.[/em] Sistema discoverable de shortcuts (Shift+? em Linear, Atelier tem o mesmo padrão) virou expectativa, não feature." },
+          { name: "Nielsen Norman Group", body: "[em]Padrões de UX são pesquisa, não opinião.[/em] Pra cada decisão de interação (loading, error, destructive), o NN/g tem 20 anos de evidência. Lemos. Citamos. Aplicamos." },
+          { name: "shadcn/ui", body: "[em]Copy-paste como modelo de distribuição.[/em] A CLI [em]atelier add[/em] é homenagem direta — apps ficam donas do código que copiam, não reféns de bump de versão." },
+          { name: "Refactoring UI (Wathan/Schoger)", body: "[em]Visual hierarchy via tipografia, não cor.[/em] O livro virou catecismo informal pra escolha de pesos, espaçamento, contraste de texto." },
+          { name: "Untitled UI / TailwindUI", body: "[em]Composição de patterns reais.[/em] Não pelo visual, mas pela enciclopédia de padrões UX. As receitas em /recipes herdam o método." },
+        ],
+      },
+
+      studies: {
+        title: "Bibliotecas que estudamos sem usar",
+        kicker: "open-source pesquisa",
+        desc: "Não dependemos de nenhuma delas em runtime, mas lemos código fonte e adotamos princípios. Cada uma resolveu um problema com elegância — anotado abaixo.",
+        items: [
+          { name: "Radix UI", body: "Padrões de [em]composição[/em] (Trigger + Content + Item + Separator). Atelier adota o mesmo modelo, mas implementação 100% in-house — sem o overhead da abstração." },
+          { name: "Ariakit", body: "Modelo de [em]state machines[/em] explícito pra widgets compostos (combobox, menu). Atelier simplifica via useReducer + roving tabindex." },
+          { name: "headlessui", body: "[em]Comportamento sem estilo.[/em] Confirmou que separar lógica de visual escala melhor — embora Atelier prefira o oposto: lógica + visual fortemente acoplados, mas com primitives composáveis." },
+          { name: "framer-motion", body: "Vocabulário declarativo de transições. Atelier reescreveu in-house em ~330 linhas (src/ds/Motion.tsx) — aceita perder algumas features por não inflar bundle em ~30 KB." },
+          { name: "react-dnd / dnd-kit", body: "Princípios de drag & drop acessível. Atelier in-house cobre 95% dos casos sem pressionar bundle." },
+        ],
+      },
+
+      refs: {
+        title: "Manuais e tipografia",
+        kicker: "linhagem impressa",
+        desc: "Antes do digital existir, esses livros e autores já tinham respondido às perguntas certas.",
+        items: [
+          { name: "Müller-Brockmann · Grid Systems", body: "A bíblia do grid. O 8pt de Atelier herda o método — múltiplos consistentes, ritmo previsível, hierarquia por proporção." },
+          { name: "Emil Ruder · Typographie", body: "Demonstração de que [em]restrição editorial é generosidade[/em]. Menos opções, mais coerência. Atelier internalizou isso." },
+          { name: "Robert Bringhurst · Elements of Typographic Style", body: "Dicionário de tipografia ocidental. O peso 300 do Fraunces, a measure de 65ch, o tracking de kickers em mono caps — tudo vem daqui." },
+          { name: "Massimo Vignelli · The Vignelli Canon", body: "A coragem de [em]declarar[/em] o vocabulário e ficar fiel. Atelier copia o gesto: ângulos retos, paleta limitada, sem desvio." },
+          { name: "Edward Tufte · The Visual Display of Quantitative Information", body: "Data-ink ratio, sparklines, gráficos sem cromo desnecessário. Os Charts do Atelier herdam diretamente." },
+        ],
+      },
+
+      thanks: {
+        title: "Agradecimento",
+        kicker: "fechamento",
+        body: "Atelier é construído por uma pessoa, mas não é trabalho de uma só. Cada decisão tomada aqui dialoga com décadas de prática editorial — e com colegas, livros, tweets, design systems, e principalmente com [em]o erro que outros já cometeram pra que pudéssemos não cometer[/em]. Obrigado.",
+      },
+    },
+
+    /* ============================================================ */
+    license: {
+      lead: "Sobre · 76",
+      titleA: "A ",
+      titleB: "licença",
+      metaLabel: "MIT",
+      meta: "Liberdade com atribuição",
+      intro:
+        "Atelier é distribuído sob a [em]Licença MIT[/em] — uma das licenças open-source mais permissivas. Você pode usar comercialmente, modificar, redistribuir, e até [em]vender o resultado[/em]. Pedimos pouco em troca: que mantenha a atribuição, e que [em]o nome 'Atelier' fique para o nosso uso[/em] (forks devem renomear).",
+
+      summary: {
+        title: "Resumo informal",
+        kicker: "TL;DR",
+        body: "Use à vontade — em projetos pessoais, comerciais, em produção, em prova-de-conceito. [em]Forks são bem-vindos[/em], mas peça-os com nome próprio. Mantenha o copyright nos arquivos de origem. Sem garantia, sem suporte enterprise, sem responsabilidade nossa pelo que você fizer com o código.",
+      },
+
+      use: {
+        title: "Permitido vs. não permitido",
+        kicker: "casos práticos",
+        allowedLabel: "Permitido",
+        restrictedLabel: "Não permitido",
+        allowed: [
+          "Usar o código em [em]produtos comerciais[/em], pagos ou gratuitos.",
+          "[em]Modificar[/em] qualquer arquivo conforme sua necessidade.",
+          "[em]Redistribuir[/em] (copiar, repassar, embutir em outros pacotes).",
+          "Criar [em]forks[/em] com nome próprio (ex: 'Studio DS', 'YourCo Atelier').",
+          "Usar publicamente o nome 'Atelier' em [em]contextos descritivos[/em] (ex: 'feito com Atelier').",
+        ],
+        restricted: [
+          "Reusar o nome 'Atelier' como [em]nome do seu produto[/em] (vai confundir comunidade).",
+          "Reusar o [em]logo[/em] do Atelier em produtos derivados — crie o seu próprio.",
+          "Remover o copyright [em]nos arquivos de fonte[/em] (a MIT exige preservar).",
+          "Esperar [em]suporte enterprise, SLA, garantia[/em] — Atelier é projeto autoral, sem equipe comercial.",
+        ],
+      },
+
+      attribution: {
+        title: "Como atribuir",
+        kicker: "boas práticas",
+        body: "Em projetos open-source, mencione no [em]README[/em] ou seção de créditos: \"Construído com [Atelier Design System](https://github.com/JoniGuerini/Atelier).\" Em produtos comerciais privados, atribuição não é obrigatória — mas é apreciada. Se for falar publicamente, [em]nos avise[/em] (gostamos de saber).",
+      },
+
+      formal: {
+        title: "Texto formal",
+        kicker: "MIT 2026",
+        heading: "Licença MIT",
+        body: "O texto integral da licença, conforme aprovado pela Open Source Initiative. [em]Em caso de conflito[/em] entre as anotações editoriais acima e o texto formal abaixo, [em]o texto formal prevalece[/em].",
+      },
+    },
+
+    /* ============================================================ */
+    pressKit: {
+      lead: "Sobre · 77",
+      titleA: "O ",
+      titleB: "press kit",
+      metaLabel: "Recursos",
+      meta: "Logo · paleta · descrições",
+      intro:
+        "Recursos editoriais para terceiros — jornalistas, blogueiros, autores de listas 'top 10 design systems', podcasts de design. Tudo aqui pode ser usado livremente; [em]não pedimos aprovação prévia[/em], mas pedimos que mantenha contexto (não combine nosso nome com nada que comprometa a integridade editorial).",
+
+      logo: {
+        title: "Logo",
+        kicker: "wordmark editorial",
+        desc: "O [em]wordmark[/em] do Atelier é o nome em Fraunces 48pt peso 300 + ponto final em [em]italic accent[/em] — colado, sem ligadura customizada. Fiel ao princípio de que tipografia bem feita é identidade suficiente. Duas variantes hardcoded para uso standalone, mostradas abaixo nos seus contextos editoriais.",
+        downloadLight: "Baixar light",
+        downloadDark: "Baixar dark",
+        copy: "Copiar SVG",
+        extrasHint: "Copia a versão light por padrão.",
+      },
+
+      palette: {
+        title: "Paleta editorial",
+        kicker: "10 cores · click pra copiar",
+        desc: "As dez cores principais do tema padrão (light). Click em qualquer swatch pra copiar o hex pro clipboard. Para a versão dark e tokens estruturais (radius/shadow/z), use o [em]/tokens[/em].",
+      },
+
+      blurbs: {
+        title: "Descrições prontas",
+        kicker: "boilerplate",
+        desc: "Três tamanhos pré-aprovados. Use direto, ou adapte mantendo o tom.",
+        items: [
+          { label: "1 linha", body: "[em]Atelier — design system editorial em React, com zero dependências de runtime.[/em]" },
+          { label: "1 parágrafo", body: "[em]Atelier é um design system editorial em React, construído como um manual de arquitetura: tipografia serif para o corpo, mono para metadados, ângulos retos por padrão e cor de acento usada com economia. Zero dependências de runtime — todos os 59 componentes (incluindo Charts, DragDrop, ColorPicker, MarkdownViewer) são in-house. Manual de doc completo em pt-BR e en.[/em]" },
+          { label: "1 página", body: "[em]Atelier responde a uma lacuna específica: desenvolvedores que querem construir produtos com tom editorial — manuais técnicos, blogs autorais, dashboards densos mas elegantes — sem aderir ao vocabulário visual de SaaS genérico que domina os design systems atuais. O sistema oferece 59 componentes e 18 hooks utilitários publicamente exportados, com 88 tokens declarados em CSS Custom Properties, suporte a tema light/dark calibrados manualmente, RTL preparado em runtime, contrast checker WCAG no Studio, e CLI shadcn-style para distribuição (atelier add Button copia o componente direto pro src/ds do projeto). Mira evergreen browsers (Chrome 110+, Firefox 109+, Safari 16.4+). Licença MIT. Documentação completa em pt-BR e en, com 42 testes unitários e bundle de ~165 KB gzipped no first-paint após code splitting agressivo (cada página é chunk lazy próprio).[/em]" },
+        ],
+      },
+
+      contact: {
+        title: "Contato",
+        kicker: "como falar com o Atelier",
+        body: "[em]Atelier é um projeto autoral[/em] sem equipe comercial. Para imprensa, parcerias editoriais, ou citação em listas/livros, use os canais abaixo. Resposta em até [em]uma semana editorial[/em].",
+      },
+    },
+
+    /* ============================================================ */
+    favicon: {
+      lead: "Sobre · 78",
+      titleA: "O ",
+      titleB: "favicon",
+      metaLabel: "Identidade",
+      meta: "16×16 · SVG · theme-aware",
+      intro:
+        "O favicon é o [em]menor monograma[/em] de uma marca — 16 pixels onde cada decisão pesa. Esta página cataloga as escolhas (por que [em]At.[/em] e não [em]A[/em] ou um símbolo abstrato), a técnica (SVG único com [em]@media[/em] interno respondendo ao tema do SO), e as armadilhas que pegamos no caminho — encoding latin-1 corrompendo o XML, múltiplos [em]<link>[/em] ignorados pelo Chrome no macOS, service workers cacheando o ícone antigo até em incognito.",
+
+      decision: {
+        title: "A decisão editorial",
+        kicker: "wordmark abreviado vs alternativas",
+        desc: "Cinco caminhos foram considerados. O critério: [em]distintividade em 16px[/em] (sem confundir com Adobe/Apple/Asana), [em]continuidade visual[/em] com o wordmark do header, e [em]gesto editorial[/em] (o ponto-final que define a marca). Apenas uma combinação atende aos três.",
+        chosen: "escolhido",
+        pros: "A favor",
+        cons: "Contra",
+      },
+
+      showcase: {
+        title: "Variantes light & dark",
+        kicker: "mesmo SVG, dois temas",
+        desc: "O mesmo arquivo [em]favicon.svg[/em] adapta-se ao tema do sistema operacional do leitor. Abaixo, as duas variantes lado a lado, em três tamanhos canônicos — [em]128px[/em] (preview de aplicativo), [em]32px[/em] (pinned tab), [em]16px[/em] (tab padrão).",
+        download: "Baixar favicon.svg",
+        copy: "Copiar SVG",
+        copied: "copiado",
+      },
+
+      themeAware: {
+        title: "Como o SVG sabe o tema",
+        kicker: "<style> interno + prefers-color-scheme",
+        desc: "Em vez de usar [em]dois arquivos[/em] (favicon-light.svg + favicon-dark.svg) com [em]<link media>[/em] no HTML — abordagem que [em]Chrome e Safari no macOS ignoram silenciosamente[/em] —, embarcamos um [em]<style>[/em] dentro do próprio SVG. O browser carrega um único arquivo e o CSS interno responde a [em]prefers-color-scheme[/em] do SO em tempo real. Quando o usuário alterna entre light e dark, o favicon troca [em]sem reload[/em].",
+        note: "[em]Detalhe técnico[/em]: as cores são [em]hardcoded[/em] dentro do SVG (não usam [em]var(--color-...)[/em]). Isso é inevitável — favicons são parseados [em]fora do contexto da página[/em], então não têm acesso às CSS Custom Properties da aplicação. Os valores aqui são cópias literais de [em]--color-ink[/em] e [em]--color-accent[/em] das duas paletas.",
+      },
+
+      specs: {
+        title: "Especificações técnicas",
+        kicker: "viewBox, fonte, peso, tracking",
+        desc: "Cada atributo do SVG foi escolhido para legibilidade em [em]16px de tab favicon[/em]. Pesos menores e tracking padrão da Fraunces ficam ilegíveis nesse tamanho.",
+        attr: "Atributo",
+        value: "Valor",
+        rationale: "Por quê",
+      },
+
+      apple: {
+        title: "Apple touch icon",
+        kicker: "iOS home screen",
+        desc: "Quando o usuário [em]'Adicionar à tela inicial'[/em] no iOS Safari, o sistema usa um ícone separado (180×180px) em vez do favicon. Diferente do favicon principal, o iOS [em]não respeita prefers-color-scheme[/em] em apple-touch-icon — é estático. Por isso preparamos [em]duas variantes[/em]: uma com fundo creme papel para springboards claros, outra com fundo grafite para springboards escuros. Servimos a versão light por padrão (a mais comum), mas a dark fica disponível pra quem quer alinhar visualmente com o tema escuro do sistema.",
+        downloadLight: "Baixar light",
+        downloadDark: "Baixar dark",
+        manifestTitle: "Manifest icons",
+        manifestDesc:
+          "O [em]manifest.webmanifest[/em] declara ícones adicionais para PWA install prompts no Android, Windows e ChromeOS. Apontamos para o mesmo [em]favicon.svg[/em] (com [em]any[/em] purpose, escalável) e para o [em]apple-touch-icon[/em] como fallback maskable.",
+        manifestPoints: [
+          "favicon.svg — purpose 'any', vetorial, escala de 16px a 512px sem perda",
+          "apple-touch-icon.svg — purpose 'maskable', com 10% de safe area interna",
+          "theme_color: #c8361d (accent vermelho terra) — pinta a status bar do Chrome Android",
+          "background_color: #f4f1ea (creme papel) — splash screen do PWA antes do React montar",
+        ],
+      },
+
+      gotchas: {
+        title: "Armadilhas que pegamos",
+        kicker: "encoding · cache · service workers",
+        desc: "Quatro problemas reais que enfrentamos durante a implementação. Documentados aqui [em]exatamente porque foram demorados de diagnosticar[/em] — cada um parecia outra coisa antes de revelar a causa raiz.",
+        items: [
+          {
+            title: "Encoding latin-1 em comentários SVG",
+            body: "Comentários XML com caracteres não-ASCII (—, ç, ã, í) eram salvos em latin-1 quando o build esperava UTF-8. O parser do browser falhava silenciosamente com [em]'Encoding error on line 2 at column 3'[/em] e caía no favicon padrão (raio do Vite). Solução: [em]ASCII puro em todos os comentários[/em] dos SVGs servidos diretamente.",
+          },
+          {
+            title: "Múltiplos <link rel='icon'> com media query",
+            body: "A spec do HTML permite vários [em]<link rel='icon' media='(prefers-color-scheme: dark)'>[/em] para variantes claras/escuras. Funciona no Firefox. [em]Chrome e Safari no macOS ignoram[/em] e usam apenas o primeiro link. Solução: um único SVG com [em]<style>[/em] interno e [em]@media[/em] embutido.",
+          },
+          {
+            title: "Service Worker cacheando favicon antigo",
+            body: "Mesmo em modo incognito, o favicon antigo (raio do Vite) persistia. O culpado era um Service Worker registrado em sessão anterior, com [em]Cache API[/em] guardando o asset. Solução em [em]src/lib/registerSW.ts[/em]: em desenvolvimento, [em]agressivamente desregistrar[/em] qualquer SW Atelier ativo e limpar caches [em]atelier-*[/em] antes de qualquer outra coisa.",
+          },
+          {
+            title: "Cache de favicon do navegador",
+            body: "Browsers cacheiam favicons [em]separadamente do HTTP cache normal[/em] — clear cache não resolve. Solução: [em]query string[/em] no [em]href[/em] ([em]?v=at5[/em]) força o browser a tratar como recurso novo. Atualizamos a versão a cada deploy do favicon.",
+          },
+        ],
+      },
+
+      browsers: {
+        title: "Suporte a browsers",
+        kicker: "SVG favicon + theme-aware",
+        desc: "SVG como formato de favicon estabilizou em 2020, junto com o suporte a [em]<style>[/em] interno e [em]@media[/em] em SVGs. Hoje, cobre [em]>96% dos navegadores em uso[/em] segundo caniuse. Para browsers legados, fornecemos um fallback PNG no [em]apple-touch-icon[/em].",
+        browser: "Browser",
+        version: "Versão mínima",
+        status: "Status",
+        note: "Notas",
+        statusLabels: {
+          ok: "completo",
+          partial: "parcial",
+          no: "sem suporte",
+        },
+      },
+
+      reuse: {
+        title: "Como reusar em outro projeto",
+        kicker: "copy & paste",
+        desc: "O favicon do Atelier é [em]MIT[/em] — você pode adaptar pra seu projeto. Ajuste o glyph (substitua [em]At.[/em] pelo seu monograma) e as cores hardcoded para sua paleta. As declarações de link no [em]<head>[/em] permanecem idênticas:",
+        note: "Para alterar o esquema de cores, edite as duas declarações [em].ink[/em] e [em].accent[/em] dentro do [em]<style>[/em] do SVG. O [em]@media (prefers-color-scheme: dark)[/em] sobrescreve as duas para a variante dark. Mantenha o [em]font-weight 400[/em] e o [em]letter-spacing -0.04em[/em] — testamos exaustivamente que valores menores ficam ilegíveis em 16px.",
       },
     },
   },

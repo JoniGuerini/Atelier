@@ -18,9 +18,11 @@ import {
   NavbarActions,
 } from "./components/Navbar.tsx";
 import Footer from "./components/Footer.tsx";
-import { useT } from "./lib/i18n.tsx";
+import { useT, useLocale } from "./lib/i18n.tsx";
 import { useHashRoute } from "./lib/useHashRoute.ts";
+import { useVisitedRoutes } from "./lib/useVisitedRoutes.ts";
 import { usePageTransition } from "./lib/usePageTransition.ts";
+import { usePageMeta } from "./lib/usePageMeta.ts";
 import { ALL_ROUTE_IDS, ROUTES, TOOL_ROUTE_IDS, FLUID_ROUTE_IDS } from "./lib/routes.ts";
 import { SidebarToggle, BackToTop } from "./ds/primitives.tsx";
 import { PageNav } from "./ds/PageNav.tsx";
@@ -43,12 +45,12 @@ import { SkeletonText } from "./ds/Skeleton.tsx";
    Critério de aceite: nenhum chunk > 200 KB minified.
    Vite gera nomes "stable" baseados no path importado.
 
-   Não há lazy "Overview" intencional — é a página inicial e a
-   mais comum; queremos ela já no entry. Se essa decisão mudar,
-   troque a linha de Overview por lazy.
+   Home é eager (primeira impressão + vitrine). Overview passou a
+   lazy — quem quer o “manual” carrega o chunk sob demanda.
    ================================================================ */
-import Overview from "./pages/Overview.tsx";
+import Home from "./pages/Home.tsx";
 
+const Overview        = lazy(() => import("./pages/Overview.tsx"));
 const Principles      = lazy(() => import("./pages/Principles.tsx"));
 const Colors          = lazy(() => import("./pages/Colors.tsx"));
 const Typography      = lazy(() => import("./pages/Typography.tsx"));
@@ -83,6 +85,10 @@ const Forms           = lazy(() => import("./pages/Forms.tsx"));
 const EmptyStates     = lazy(() => import("./pages/EmptyStates.tsx"));
 const SidebarPage     = lazy(() => import("./pages/SidebarPage.tsx"));
 const NavbarPage      = lazy(() => import("./pages/NavbarPage.tsx"));
+const DisclosurePage  = lazy(() => import("./pages/Disclosure.tsx"));
+const AdvancedInputsPage = lazy(() => import("./pages/AdvancedInputs.tsx"));
+const DataDisplayPage = lazy(() => import("./pages/DataDisplay.tsx"));
+const AppShellPage    = lazy(() => import("./pages/AppShell.tsx"));
 const CodePage        = lazy(() => import("./pages/Code.tsx"));
 const Create          = lazy(() => import("./pages/Create.tsx"));
 const PopoverPage     = lazy(() => import("./pages/PopoverPage.tsx"));
@@ -123,11 +129,19 @@ const ApiReference    = lazy(() => import("./pages/ApiReference.tsx"));
 const BrowserSupport  = lazy(() => import("./pages/BrowserSupport.tsx"));
 const Performance     = lazy(() => import("./pages/Performance.tsx"));
 const Recipes         = lazy(() => import("./pages/Recipes.tsx"));
+const About           = lazy(() => import("./pages/About.tsx"));
+const Colophon        = lazy(() => import("./pages/Colophon.tsx"));
+const Credits         = lazy(() => import("./pages/Credits.tsx"));
+const License         = lazy(() => import("./pages/License.tsx"));
+const PressKit        = lazy(() => import("./pages/PressKit.tsx"));
+const FaviconPage     = lazy(() => import("./pages/Favicon.tsx"));
+const CliPage         = lazy(() => import("./pages/Cli.tsx"));
 
 import { Toaster } from "./ds/Toaster.tsx";
 import { ShortcutsProvider } from "./ds/Shortcuts.tsx";
 
 const PAGES = {
+  home: Home,
   overview: Overview,
   principles: Principles,
   colors: Colors,
@@ -163,6 +177,10 @@ const PAGES = {
   "empty-states": EmptyStates,
   sidebar: SidebarPage,
   navbar: NavbarPage,
+  disclosure: DisclosurePage,
+  "advanced-inputs": AdvancedInputsPage,
+  "data-display": DataDisplayPage,
+  "app-shell": AppShellPage,
   code: CodePage,
   create: Create,
   popover: PopoverPage,
@@ -203,6 +221,13 @@ const PAGES = {
   "browser-support": BrowserSupport,
   performance: Performance,
   recipes: Recipes,
+  about: About,
+  colophon: Colophon,
+  credits: Credits,
+  license: License,
+  "press-kit": PressKit,
+  favicon: FaviconPage,
+  cli: CliPage,
 };
 
 const SIDEBAR_KEY = "atelier.sidebarCollapsed";
@@ -211,13 +236,28 @@ const NAV_WIDE_KEY = "atelier.navWide";
 
 export default function App() {
   const { t } = useT();
+  const { dict, locale } = useLocale();
   const [route, navigate] = useHashRoute();
-  const current = ALL_ROUTE_IDS.includes(route) ? route : "overview";
-  const Page = (PAGES as any)[current] || Overview;
+  const current = ALL_ROUTE_IDS.includes(route) ? route : "home";
+  const Page = (PAGES as any)[current] || Home;
   /* Page transitions (fase 4.3) — fade editorial em cada troca de rota.
      Persistência de scroll fica off por padrão (manual editorial = topo
      em cada visita). */
   const transition = usePageTransition(current, { variant: "fade" });
+
+  /* Meta tags por rota (Roadmap · fase 14.1) — title, description,
+     OG, twitter, canonical, hreflang, theme-color. Centralizado aqui
+     pra garantir uma única fonte da verdade — páginas individuais
+     NÃO devem mexer em document.title diretamente. */
+  usePageMeta({ routeId: current, locale, dict });
+
+  /* Badge NEW por usuário (não global): rotas com isNew: true em
+     routes.ts mostram NEW até serem visitadas pela primeira vez.
+     Persistido em localStorage. */
+  const { markVisited, isNewToUser } = useVisitedRoutes();
+  useEffect(() => {
+    markVisited(current);
+  }, [current, markVisited]);
 
   const [collapsed, setCollapsed] = useState(() => {
     if (typeof window === "undefined") return false;
@@ -311,6 +351,7 @@ export default function App() {
           navWide={navWide}
           toggleNavWide={toggleNavWide}
           openSearch={() => setSearchOpen(true)}
+          isNewToUser={isNewToUser}
         />
       ) : (
         <AppSidebar
@@ -321,6 +362,7 @@ export default function App() {
           navMode={navMode}
           setNavMode={setNavMode}
           openSearch={() => setSearchOpen(true)}
+          isNewToUser={isNewToUser}
         />
       )}
       <main
@@ -371,6 +413,7 @@ function AppNavbar({
   navWide,
   toggleNavWide,
   openSearch,
+  isNewToUser,
 }: any) {
   const { t } = useT();
   return (
@@ -411,7 +454,7 @@ function AppNavbar({
                     n={it.n}
                     description={description}
                     active={current === slug}
-                    isNew={it.isNew}
+                    isNew={isNewToUser ? isNewToUser(slug, it.isNew) : it.isNew}
                   >
                     {t(`nav.items.${it.id}`)}
                   </NavbarDropdownItem>
@@ -446,6 +489,7 @@ function AppSidebar({
   navMode,
   setNavMode,
   openSearch,
+  isNewToUser,
 }: any) {
   const { t } = useT();
   return (
@@ -474,6 +518,7 @@ function AppSidebar({
                   n={it.n}
                   active={current === slug}
                   onClick={() => navigate(slug)}
+                  isNew={isNewToUser ? isNewToUser(slug, it.isNew) : it.isNew}
                 >
                   {t(`nav.items.${it.id}`)}
                 </SidebarNavItem>

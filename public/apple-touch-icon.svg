@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" role="img" aria-label="Atelier">
+  <rect width="180" height="180" rx="36" fill="#f4f1ea"/>
+  <text x="90" y="125"
+        text-anchor="middle"
+        font-family="Fraunces, Georgia, serif"
+        font-size="110"
+        font-weight="400"
+        letter-spacing="-0.04em"
+        fill="#1a1a1a">At<tspan font-style="italic" dx="-2" fill="#c8361d">.</tspan></text>
+</svg>

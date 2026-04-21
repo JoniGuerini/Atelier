@@ -1,6 +1,8 @@
 /// <reference types="vitest" />
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import { sitemapPlugin } from "./scripts/vite-plugin-sitemap.mjs";
+import { serviceWorkerPlugin } from "./scripts/vite-plugin-sw.mjs";
 
 /* ================================================================
    Atelier — vite + vitest config
@@ -17,7 +19,21 @@ import react from "@vitejs/plugin-react";
    ================================================================ */
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    /* sitemap.xml gerado no build a partir de src/lib/routes.ts.
+       Roadmap · fase 14.2 — define VITE_SITE_URL no .env.production
+       quando deployar em domínio real. */
+    sitemapPlugin({
+      siteUrl: process.env.VITE_SITE_URL || "https://atelier.dev",
+      locales: ["pt-BR", "en"],
+    }),
+    /* Service Worker full offline (Roadmap · 14.3) — gera dist/sw.js
+       com pre-cache de todos os chunks JS/CSS/SVG/manifest no build.
+       Estratégia: cache-first pra hash-named, network-first pra navegação,
+       stale-while-revalidate pra outros. Zero deps de runtime. */
+    serviceWorkerPlugin(),
+  ],
   server: {
     port: 5173,
     open: true,

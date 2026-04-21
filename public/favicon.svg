@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Atelier">
+  <style>
+    .ink { fill: #1a1a1a; }
+    .accent { fill: #c8361d; }
+    @media (prefers-color-scheme: dark) {
+      .ink { fill: #ede8dc; }
+      .accent { fill: #e5785e; }
+    }
+  </style>
+  <text x="16" y="25"
+        text-anchor="middle"
+        font-family="Fraunces, Georgia, serif"
+        font-size="24"
+        font-weight="400"
+        letter-spacing="-0.04em"
+        class="ink">At<tspan font-style="italic" dx="-0.5" class="accent">.</tspan></text>
+</svg>

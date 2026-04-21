@@ -94,7 +94,7 @@ export interface Roadmap {
 
 export const ROADMAP: Roadmap = {
   meta: {
-    version: "0.11",
+    version: "0.17",
     updated: "Abril 2026",
   },
 
@@ -793,7 +793,7 @@ export const ROADMAP: Roadmap = {
         },
         {
           name: "Página /onboarding",
-          note: "Tour vs Coachmark vs Empty State guiado — decision matrix + 5 princípios editoriais (skippable sempre, mostre não diga, etc).",
+          note: "Tour vs destaque contextual vs Empty State guiado — decision matrix + 5 princípios editoriais (skippable sempre, mostre não diga, etc).",
           routeId: "onboarding",
         },
         {
@@ -846,56 +846,55 @@ export const ROADMAP: Roadmap = {
       id: "phase-12",
       number: "12",
       title: "Editorial / About",
-      status: "next",
-      priority: "medium",
+      status: "done",
+      priority: "none",
       summary:
-        "O Atelier tem voz forte em todos os componentes mas nenhuma página sobre si mesmo. Fechar essa lacuna é parte do produto, não enfeite.",
-      tasks: [
+        "Cinco páginas narrativas (about, colophon, credits, license, press-kit) que dão voz ao Atelier sobre si mesmo. Novo grupo 'about' criado em routes (73-77) com layout editorial dedicado (.about-* no CSS) — prosa larga, métricas, paleta clicável e logo wordmark com variantes light/dark hardcoded para uso standalone.",
+      delivered: [
         {
-          id: "12.1",
-          title: "/about",
-          scope: [
-            "Manifesto longo: por que existe, decisões filosóficas, posição editorial",
-            "História curta: do primeiro commit ao estado atual",
-            "Não-objetivos declarados (ex: 'não competimos com Material UI')",
-          ],
+          name: "Grupo 'about' em src/lib/routes.ts (73-77)",
+          note: "5 entradas (about, colophon, credits, license, press-kit) num grupo editorial novo, fora do fluxo principal de docs de componentes. nav.groups.about e respectivos labels/descriptions em PT+EN.",
         },
         {
-          id: "12.2",
-          title: "/colophon",
-          scope: [
-            "Como foi feito: stack (React + Vite + TS, zero deps de runtime)",
-            "Tipografia: Fraunces, JetBrains Mono — por que essas escolhas",
-            "Paleta editorial: cor de marca, princípio do papel envelhecido",
-            "Métricas: tamanho do bundle, número de tokens, número de componentes",
-          ],
+          name: "Página /about — manifesto editorial",
+          note: "Manifesto longo, história resumida (do primeiro commit ao estado atual) e não-objetivos declarados. Prosa em larga measure (.about-prose) honra o tom de voz documentado em /voice.",
+          routeId: "about",
         },
         {
-          id: "12.3",
-          title: "/credits",
-          scope: [
-            "Inspirações declaradas: Vercel, Stripe, Linear, Nielsen Norman, Ruder, Müller-Brockmann",
-            "Bibliotecas open-source que estudamos sem usar (radix, ariakit, shadcn)",
-            "Pessoas, livros, manuais editoriais citados",
-          ],
+          name: "Página /colophon — como foi feito",
+          note: "Stack (React + Vite + TS, zero deps runtime), escolha tipográfica (Fraunces + JetBrains Mono), paleta com princípio editorial (papel envelhecido) e métricas vivas (tokens, componentes, hooks, páginas).",
+          routeId: "colophon",
         },
         {
-          id: "12.4",
-          title: "/license",
-          scope: [
-            "MIT (a definir) com anotações editoriais sobre uso",
-            "Como atribuir, o que não pode (logo Atelier)",
-          ],
+          name: "Página /credits — inspirações",
+          note: "Inspirações declaradas (Vercel, Stripe, Linear, Nielsen Norman, Ruder, Müller-Brockmann), libs open-source estudadas sem dependência (radix, ariakit, shadcn) e citações editoriais de livros/manuais.",
+          routeId: "credits",
         },
         {
-          id: "12.5",
-          title: "/press-kit",
-          scope: [
-            "Logo em SVG (light/dark)",
-            "Paleta primária com hex copiável",
-            "Screenshots em alta resolução",
-            "Boilerplate de descrição (1-line, 1-paragraph, 1-page)",
-          ],
+          name: "Página /license — MIT anotada",
+          note: "Texto MIT clássico envolvido em anotações editoriais sobre uso aceitável, atribuição e a única exceção (logo Atelier não pode ser reaproveitada).",
+          routeId: "license",
+        },
+        {
+          name: "Página /press-kit — recursos para terceiros",
+          note: "Logo SVG em variantes light/dark exibidas lado a lado em stages com paleta hardcoded (independente do tema atual). Botões de download por variante + cópia. Paleta hex clicável + 3 boilerplates (1-line, 1-paragraph, 1-page).",
+          routeId: "pressKit",
+        },
+        {
+          name: "buildLogoSvg() — wordmark fiel ao SidebarBrand",
+          note: "Função que monta SVG standalone com Atelier em Fraunces 48pt 300 + '.' italic colado via <tspan dx='-2'>. ViewBox 160×50 dimensionado ao glifo real, text-anchor=middle pra centralização robusta independente do fallback de fonte.",
+        },
+        {
+          name: "CSS .about-* — layout narrativo",
+          note: "Tipografia em prosa (large measure), citações destacadas, listas em bullets editoriais, métricas em grid 2x2, palette swatches clicáveis e about-logo-pair com stages light/dark hardcoded para evitar acoplamento ao tema atual.",
+        },
+        {
+          name: "i18n PT+EN — 5 blocos pages.* completos",
+          note: "Conteúdo bilíngue para about/colophon/credits/license/pressKit, incluindo strings de UI (downloadLight, downloadDark, copy, extrasHint) e blurbs do press-kit nos 3 tamanhos.",
+        },
+        {
+          name: "5 entradas em searchIndex",
+          note: "Páginas about descobertas via cmd-k com keywords editoriais (manifesto, stack, inspirações, MIT, logo, paleta, press, marca).",
         },
       ],
     },
@@ -949,40 +948,44 @@ export const ROADMAP: Roadmap = {
       id: "phase-14",
       number: "14",
       title: "Distribuição & web standards",
-      status: "next",
-      priority: "medium",
+      status: "done",
+      priority: "none",
       summary:
-        "Atelier hoje vive no app de docs. Para virar referência consumida, precisa estar instalável e descobrível.",
-      tasks: [
+        "Atelier deixou de ser só o app de docs: PWA offline completo, SEO (sitemap, robots, humans, OG por rota), favicon SVG tema-aware + página /favicon, pacotes NPM `@atelier/ds` (Vite library + dts + smoke) e `@atelier/cli` (shadcn-style, zero deps, smoke 10/10), documentação in-app de instalação + CLI (`/install`, `/cli`), README/CONTRIBUTING/SECURITY/CODE_OF_CONDUCT, templates GitHub e `docs/PUBLISHING.md` para publish manual.",
+      delivered: [
         {
-          id: "14.1",
-          title: "PWA + SEO",
-          scope: [
-            "manifest.json + ícones em múltiplas resoluções",
-            "Open Graph + Twitter cards por página",
-            "<title> e <meta name='description'> dinâmicos por rota",
-            "sitemap.xml gerado no build, robots.txt explícito",
-          ],
+          name: "[14.1] PWA + SEO + metadados",
+          note: "manifest.webmanifest, registerSW com offline agressivo em dev (unregister SW + limpar caches), plugin Vite que gera sitemap.xml + lista de URLs pro SW, robots.txt + humans.txt, PageHead com title/description/OG/Twitter por rota.",
         },
         {
-          id: "14.2",
-          title: "Pacote NPM",
-          scope: [
-            "@atelier/ds publicado com tree-shaking (sideEffects: false)",
-            "Build dual: ESM + CJS via tsup ou Vite library mode",
-            "Tipos exportados, peer deps de React 18+",
-            "CHANGELOG.md alimentado automaticamente (linka 7.4)",
-          ],
+          name: "[14.2] Favicon & identidade no browser",
+          note: "favicon.svg monograma At. com @media prefers-color-scheme, apple-touch-icon light/dark, página /favicon documentando decisões.",
+          routeId: "favicon",
         },
         {
-          id: "14.3",
-          title: "README de produção",
-          scope: [
-            "README curto com proposta + screenshot + comando de install",
-            "Link para docs (este app), changelog, license",
-            "Badges (npm version, bundle size, license)",
-            "Distinto do /code — esse é a porta de entrada de quem chega via GitHub",
-          ],
+          name: "[14.3] Pacote NPM @atelier/ds",
+          note: "Workspace packages/ds: sync-sources de src/, shims mínimos, exports granulares (components/hooks/tokens/styles), sideEffects false, build ESM+CJS+d.ts, smoke isolado com .npmrc registry público.",
+        },
+        {
+          name: "[14.4] Pacote NPM @atelier/cli",
+          note: "Workspace packages/cli: bin atelier.js, init/add/list, registry.json normalizado embutido, sync-sources, smoke pack+npx 10 checks, scripts root build:ds|cli, pack, smoke.",
+        },
+        {
+          name: "[14.5] Docs in-app: /install + /cli",
+          note: "Rota cli (69), i18n completo PT+EN, Install com seção ponte para CLI, searchIndex atualizado.",
+          routeId: "cli",
+        },
+        {
+          name: "[14.6] Repositório pronto pra comunidade",
+          note: "README.md produção, CONTRIBUTING.md, SECURITY.md (alinhado a .well-known/security.txt), CODE_OF_CONDUCT.md (Contributor Covenant 2.1), .github/ISSUE_TEMPLATE (bug + feature + config), PULL_REQUEST_TEMPLATE, CODEOWNERS comentado, FUNDING.yml stub, docs/PUBLISHING.md.",
+        },
+        {
+          name: "Badge NEW por visita (localStorage)",
+          note: "useVisitedRoutes + markVisited no App; Navbar/Sidebar usam isNewToUser — NEW some depois que o usuário abre a página.",
+        },
+        {
+          name: "Navbar: dropdown fecha ao navegar",
+          note: "MenuStateProvider.close() + NavbarDropdownItem chama close após seleção.",
         },
       ],
     },
@@ -994,57 +997,34 @@ export const ROADMAP: Roadmap = {
       id: "phase-15",
       number: "15",
       title: "Componentes long-tail",
-      status: "next",
-      priority: "medium",
+      status: "done",
+      priority: "none",
       summary:
-        "Componentes ainda ausentes do DS. Posicionados ao final do roadmap por decisão consciente: vêm depois de fundação (9), hooks (10), padrões (11) e distribuição (14) — assim cada componente novo nasce sobre tokens, hooks e patterns sólidos, em vez de criar dívida nova.",
-      tasks: [
+        "Quatro sub-fases ao final do roadmap (depois de fundação, hooks, padrões e distribuição): 15.1–15.4 entregues — disclosure, inputs avançados, data display avançado e app shell (inbox, comentários, snackbar ancorado, fila de upload).",
+      delivered: [
         {
-          id: "15.1",
-          title: "Disclosure & navegação",
-          scope: [
-            "Accordion / Disclosure / Collapsible — usa <Collapse> da 4.1",
-            "HoverCard — preview ao passar o mouse",
-            "Banner / Announcement bar — distinto de Alert (full-width, fechável, persistente)",
-            "SegmentedControl formal — hoje é variante de Tabs, virar componente próprio",
-            "DescriptionList — dt/dd editorial",
-            "Mark / Highlight — texto destacado inline",
-          ],
+          name: "[15.1] Disclosure & navegação",
+          note:
+            "Accordion, Collapsible/Disclosure, HoverCard, Banner, SegmentedControl, DescriptionList, Mark/Highlight. Doc em #/disclosure (Padrão · 80).",
+          routeId: "disclosure",
         },
         {
-          id: "15.2",
-          title: "Inputs avançados",
-          scope: [
-            "NumberInput (com stepper)",
-            "PinInput / OTP (4-6 dígitos, paste handling)",
-            "PasswordInput (toggle visibilidade + medidor de força)",
-            "PhoneInput (máscara por país)",
-            "TimePicker (gêmeo do DatePicker existente)",
-            "EditableText (clica e edita inline)",
-            "MentionInput (@menções com autocomplete)",
-          ],
+          name: "[15.2] Inputs avançados",
+          note:
+            "NumberInput, PinInput, PasswordInput, PhoneInput, TimePicker, EditableText, MentionInput. Doc em #/advanced-inputs (Padrão · 81).",
+          routeId: "advanced-inputs",
         },
         {
-          id: "15.3",
-          title: "Data display avançado",
-          scope: [
-            "Stat / Metric / KPI (cartão grande com número + delta + sparkline)",
-            "Comparison / Pricing table",
-            "DiffViewer (texto antes/depois, line-level)",
-            "Lightbox (imagem em zoom)",
-            "CircularProgress",
-          ],
+          name: "[15.3] Data display avançado",
+          note:
+            "Stat, PricingTable, DiffViewer, Lightbox, CircularProgress; refinos de doc (PricingTable coluna accent, Lightbox portal/tamanho/OG por tema). Rota #/data-display (Padrão · 82).",
+          routeId: "data-display",
         },
         {
-          id: "15.4",
-          title: "App shell",
-          scope: [
-            "Tour / Coachmark (onboarding guiado)",
-            "NotificationBell + InboxPanel",
-            "CommentThread / Annotations",
-            "Snackbar (≠ Toast — ancorado em elemento)",
-            "FileUploader avançado (Dropzone só inicia o fluxo — falta lista, retry, preview, progresso)",
-          ],
+          name: "[15.4] App shell",
+          note:
+            "NotificationBell + InboxPanel, CommentThread, Snackbar ancorado, FileUploadQueue (lista, retry, preview, progresso). Rota #/app-shell (Padrão · 83).",
+          routeId: "app-shell",
         },
       ],
     },
@@ -1082,7 +1062,8 @@ export const ROADMAP: Roadmap = {
     {
       title: "Badges de novidade",
       items: [
-        "isNew: true na rota durante 1 fase, removido na próxima",
+        "isNew: true na rota marca páginas novas no catálogo",
+        "useVisitedRoutes: o badge NEW some para cada utilizador depois da primeira visita (localStorage + sync entre separadores)",
       ],
     },
   ],
@@ -1090,24 +1071,18 @@ export const ROADMAP: Roadmap = {
   sequence: [
     {
       order: 1,
-      phaseRef: "12",
+      phaseRef: "14",
       reason:
-        "Editorial / About fecha a identidade do produto. Cinco páginas curtas (about, colophon, credits, license, press-kit) que dão voz ao Atelier sobre si mesmo — tarefa relativamente leve e narrativa.",
+        "Distribuição & web standards — concluída (0.13). PWA offline, SEO, favicon, pacotes @atelier/ds + @atelier/cli (pack/smoke prontos; publish manual), docs /install e /cli, README + CONTRIBUTING + SECURITY + CoC + templates GitHub + PUBLISHING.md.",
     },
     {
       order: 2,
-      phaseRef: "14",
+      phaseRef: "15",
       reason:
-        "Distribuição (NPM, PWA, SEO, sitemap) só faz sentido quando 12 está estável. Publicar antes congela API imatura.",
+        "Componentes long-tail por último — decisão consciente. Cada componente novo nasce sobre tokens (9 ✓), hooks (10 ✓), patterns (11 ✓), motion (4 ✓), a11y (6 ✓), DX (13 ✓), theme tooling (7 ✓) e identidade editorial (12 ✓) maduros. Evita dívida.",
     },
     {
       order: 3,
-      phaseRef: "15",
-      reason:
-        "Componentes long-tail por último — decisão consciente. Cada componente novo nasce sobre tokens (9 ✓), hooks (10 ✓), patterns (11 ✓), motion (4 ✓), a11y (6 ✓), DX (13 ✓) e theme tooling (7 ✓) maduros. Evita dívida.",
-    },
-    {
-      order: 4,
       phaseRef: "8 (resto) + 8.7 + 8.8 + 8.9",
       reason: "Dívida técnica e qualidade em background, contínuo durante toda a régua. Sub-fase 8.1 (code splitting) já entregue.",
     },

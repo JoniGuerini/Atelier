@@ -192,19 +192,20 @@ export interface PopoverContentProps {
   ariaLabel?: string;
 }
 
-interface Position {
+export interface PopoverPosition {
   top: number;
   left: number;
   side: PopoverSide;
   arrowOffset: number;
 }
 
-function computePosition(
+/** Usado por HoverCard — mesma geometria que PopoverContent. */
+export function computePosition(
   trigger: DOMRect,
   content: DOMRect,
   placement: PopoverPlacement,
   offset: number,
-): Position {
+): PopoverPosition {
   const [sideRaw, alignRaw] = placement.split("-") as [PopoverSide, PopoverAlign];
   let side = sideRaw;
 
@@ -279,7 +280,7 @@ export function PopoverContent({
     "PopoverContent",
   );
   const contentRef = useRef<HTMLDivElement | null>(null);
-  const [pos, setPos] = useState<Position | null>(null);
+  const [pos, setPos] = useState<PopoverPosition | null>(null);
 
   // Calcula posição quando abre + reposiciona em scroll/resize
   useLayoutEffect(() => {

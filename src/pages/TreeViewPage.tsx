@@ -29,6 +29,7 @@ const FILESYSTEM: TreeNode[] = [
         label: "pages/",
         glyph: "▸",
         children: [
+          { id: "home", label: "Home.tsx" },
           { id: "overview", label: "Overview.tsx" },
           { id: "code", label: "Code.tsx" },
         ],

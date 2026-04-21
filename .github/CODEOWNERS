@@ -1,0 +1,5 @@
+# Add default reviewers so GitHub auto-requests review, e.g.:
+# * @github-username
+# * @org/team-slug
+#
+# Until then, leave this file without active rules (comments only).

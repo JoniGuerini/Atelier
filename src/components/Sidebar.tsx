@@ -78,7 +78,7 @@ export function SidebarHead({ children }: SlotProps) {
   return <div className="sidebar-head">{children}</div>;
 }
 
-export function SidebarBrand({ onNavigate, target = "overview" }: SidebarBrandProps) {
+export function SidebarBrand({ onNavigate, target = "home" }: SidebarBrandProps) {
   const { t } = useT();
   return (
     <a
@@ -111,8 +111,9 @@ export function SidebarGroupTitle({ children }: SlotProps) {
   return <div className="group-title">{children}</div>;
 }
 
-export function SidebarNavItem({ n, active = false, onClick, children }: SidebarNavItemProps) {
+export function SidebarNavItem({ n, active = false, onClick, isNew = false, children }: SidebarNavItemProps) {
   const { collapsed } = useSidebar();
+  const { t } = useT();
   return (
     <button
       type="button"
@@ -121,7 +122,14 @@ export function SidebarNavItem({ n, active = false, onClick, children }: Sidebar
       tabIndex={collapsed ? -1 : 0}
     >
       {n != null && <span className="n">{n}</span>}
-      <span>{children}</span>
+      <span className="nav-item-label">
+        {children}
+        {isNew && !collapsed && (
+          <span className="nav-menu-new-badge" aria-label={t("nav.newBadge")}>
+            {t("nav.newBadge")}
+          </span>
+        )}
+      </span>
     </button>
   );
 }

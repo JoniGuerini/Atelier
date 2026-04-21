@@ -25,6 +25,7 @@ export const ROUTES: RouteGroup[] = [
   {
     groupKey: "start",
     items: [
+      { id: "home", n: "⌂" },
       { id: "overview", n: "00" },
       { id: "principles", n: "01" },
     ],
@@ -99,6 +100,25 @@ export const ROUTES: RouteGroup[] = [
       { id: "emptyStates", n: "51", route: "empty-states" },
       { id: "sidebar", n: "52" },
       { id: "navbar", n: "53" },
+      { id: "disclosure", n: "80", route: "disclosure", isNew: true },
+      {
+        id: "advancedInputs",
+        n: "81",
+        route: "advanced-inputs",
+        isNew: true,
+      },
+      {
+        id: "dataDisplay",
+        n: "82",
+        route: "data-display",
+        isNew: true,
+      },
+      {
+        id: "appShell",
+        n: "83",
+        route: "app-shell",
+        isNew: true,
+      },
     ],
   },
   {
@@ -119,10 +139,22 @@ export const ROUTES: RouteGroup[] = [
       { id: "print",           n: "66", isNew: true },
       { id: "i18nPatterns",    n: "67", route: "i18n-patterns",      isNew: true },
       { id: "install",         n: "68", isNew: true },
-      { id: "apiReference",    n: "69", route: "api-reference",      isNew: true },
-      { id: "browserSupport",  n: "70", route: "browser-support",    isNew: true },
-      { id: "performance",     n: "71", isNew: true },
-      { id: "recipes",         n: "72", isNew: true },
+      { id: "cli",             n: "69", isNew: true },
+      { id: "apiReference",    n: "70", route: "api-reference",      isNew: true },
+      { id: "browserSupport",  n: "71", route: "browser-support",    isNew: true },
+      { id: "performance",     n: "72" },
+      { id: "recipes",         n: "73" },
+    ],
+  },
+  {
+    groupKey: "about",
+    items: [
+      { id: "about",       n: "74", isNew: true },
+      { id: "colophon",    n: "75", isNew: true },
+      { id: "credits",     n: "76", isNew: true },
+      { id: "license",     n: "77", isNew: true },
+      { id: "pressKit",    n: "78", route: "press-kit", isNew: true },
+      { id: "favicon",     n: "79", isNew: true },
     ],
   },
   {

@@ -99,6 +99,22 @@ export function Welcome() {
   );
 }`}</Code>
       </Section>
+
+      <Section
+        num="v"
+        title={<>{t("pages.install.cliBridge.title")}</>}
+        kicker={t("pages.install.cliBridge.kicker")}
+      >
+        <p className="section-desc">{tr("pages.install.cliBridge.desc")}</p>
+        <Code lang="shell">{`npx atelier init
+npx atelier add Button DataTable Dialog`}</Code>
+        <p className="install-cli-link">
+          <a href="#/cli" className="install-cli-link-anchor">
+            {t("pages.install.cliBridge.linkLabel")}
+            <span className="install-cli-link-arrow" aria-hidden="true"> →</span>
+          </a>
+        </p>
+      </Section>
     </>
   );
 }

@@ -4,6 +4,140 @@ Todas as mudanças notáveis do Atelier — formato [Keep a Changelog](https://k
 
 ---
 
+## [0.17] — Abril 2026
+
+### Added — Componentes long-tail · 15.4 (App shell)
+
+- **`NotificationBell`**, **`InboxPanel`**, **`InboxHeader`**, **`InboxItem`**, **`InboxFooter`** — composição com **`Popover`** para centro de notificações.
+- **`CommentThread`** + **`Comment`** — feed de discussão / anotações (autor, hora, corpo).
+- **`Snackbar`** — feedback **ancorado** em `anchorRef` (distinto do **Toaster** global); ação opcional e auto-dismiss.
+- **`FileUploadQueue`** + **`FileUploadQueueItemRow`** — fila controlada com preview, progresso, estados, **retry** e remover; tipos em **`types.ts`** (`FileUploadQueueItem`).
+- **Página `#/app-shell`** (Padrão · 83) — rotas, `searchIndex`, i18n PT+EN, **`CompositionSection`**, estilos em **`index.css`**.
+- **`registry.json`** — 6 entradas novas (NotificationBell … FileUploadQueue).
+
+### Removed
+
+- **`Coachmark`** — componente retirado do código e da documentação; o padrão “destaque contextual” permanece descrito na página **Onboarding** sem implementação DS dedicada.
+
+### Roadmap
+
+- Fase **15** concluída; sub-fase **15.4** entregue em `src/lib/roadmap.ts`.
+
+---
+
+## [0.16] — Abril 2026
+
+### Added — Componentes long-tail · 15.3 (Data display avançado)
+
+- **`Stat`** + **`StatKicker`**, **`StatLabel`**, **`StatValue`**, **`StatDelta`**, **`StatSpark`** — cartão de KPI com delta (up/down/neutral) e **`Sparkline`** reutilizada de `Chart`.
+- **`PricingTable`** família — tabela de comparação / pricing com coluna de destaque e células de check.
+- **`DiffViewer`** + **`diffLines()`** — diff unificado linha a linha (LCS sobre linhas).
+- **`Lightbox`** — imagem ampliada, backdrop, Escape, **focus trap** + **scroll lock**.
+- **`CircularProgress`** — anel SVG 0–100 com label central opcional.
+- **Página `#/data-display`** (Padrão · 82) — rotas, `searchIndex`, i18n PT+EN, `CompositionSection`, estilos em `index.css`.
+- **`registry.json`** — 5 entradas novas (`Stat` → `Chart`, `Lightbox` → hooks).
+
+### Changed
+
+- **PricingTable** — refinamento da coluna em destaque (`accent`): continuidade visual, réguas e zebra; moldura + `border-radius` no `<table>` (scroll horizontal no wrapper); **`PricingTableTh`** aceita **`accent`**.
+- **Lightbox** — overlay renderizado com **`createPortal`** em `document.body`; painel e área da imagem maiores (`og-image.svg` com dimensões intrínsecas 1200×630); na página **`#/data-display`**, a demo usa **`/og-image-dark.svg`** em tema escuro e **`/og-image.svg`** em tema claro.
+
+### Roadmap
+
+- Sub-fase **15.3** da fase 15 marcada como entregue em `src/lib/roadmap.ts`.
+
+---
+
+## [0.15] — Abril 2026
+
+### Added — Componentes long-tail · 15.2 (Inputs avançados)
+
+- **`NumberInput`** — valor numérico com stepper − / +, `min` / `max` / `step`, commit em Enter ou blur.
+- **`PinInput`** — OTP 4–8 dígitos, colagem, navegação por setas; `onComplete` quando o comprimento fecha.
+- **`PasswordInput`** — alternar visibilidade e barras heurísticas de força (0–4).
+- **`PhoneInput`** — presets BR / US / PT com máscara nacional; helpers `phoneToE164`, `DEFAULT_COUNTRIES`.
+- **`TimePicker`** — HH:MM com grelha em `Popover`, alinhado ao padrão do `DatePicker`; `parseTime` / `formatTime`.
+- **`EditableText`** — leitura com clique para editar; Enter/blur grava, Esc cancela.
+- **`MentionInput`** — textarea com `@` e painel de sugestões.
+- **Página `#/advanced-inputs`** (Padrão · 81) — rota em `patterns`, `searchIndex`, i18n PT+EN, estilos em `index.css`, `CompositionSection`.
+- **`registry.json`** — 7 entradas novas (`TimePicker` → `Popover`).
+
+### Roadmap
+
+- Sub-fase **15.2** da fase 15 marcada como entregue em `src/lib/roadmap.ts`.
+
+---
+
+## [0.14] — Abril 2026
+
+### Added — Componentes long-tail · 15.1 (Disclosure & navegação)
+
+- **`Accordion`** (`src/ds/Accordion.tsx`) — modo `single` | `multiple`, `collapsible`, composição AccordionItem/Header/Trigger/Content; painéis animados com **`Collapse`** (`Motion`).
+- **`Collapsible`** + aliases **`Disclosure`**, **`DisclosureTrigger`**, **`DisclosureContent`** — um bloco com `aria-expanded` / `aria-controls`.
+- **`HoverCard`** — trigger por hover com `openDelay` / `closeDelay`; conteúdo posicionado com **`computePosition`** exportado de `Popover.tsx`.
+- **`Banner`**, **`BannerMessage`**, **`BannerAction`** — faixa full-width (variantes neutral / accent / ink), `sticky` opcional, dismiss.
+- **`SegmentedControl`** + **`SegmentedControlItem`** — `radiogroup`, visual alinhado ao segmented de Tabs sem painéis de conteúdo.
+- **`DescriptionList`** + **`DescriptionRow`** — `dl` editorial (grupo HTML5 `div` > dt + dd).
+- **`Mark`** + **`Highlight`** — `<mark>` com variantes `default` | `accent`.
+- **Página `#/disclosure`** (Padrão · 80) — exemplos por secção; rota em `patterns`, `searchIndex`, i18n PT+EN, `CompositionSection`.
+- **`registry.json`** — 6 entradas novas (deps: Accordion→Motion, HoverCard→Popover).
+
+### Changed
+
+- **`Popover.tsx`** — exporta `computePosition` e o tipo `PopoverPosition` para reutilização pelo HoverCard.
+
+### Roadmap
+
+- Sub-fase **15.1** da fase 15 marcada como entregue em `src/lib/roadmap.ts`.
+
+---
+
+## [0.13] — Abril 2026
+
+### Added — Distribuição & comunidade (Fase 14)
+
+- **`@atelier/ds` e `@atelier/cli`** — workspaces em `packages/` com `sync-sources`, builds publicáveis, `npm run smoke:ds` / `smoke:cli` (sandbox + checks). Publicação NPM continua **manual** — ver `docs/PUBLISHING.md`.
+- **Página `/cli`** — documentação completa dos comandos (`init`, `add`, `list`, flags, troubleshooting); rota 69, `searchIndex`, i18n PT+EN.
+- **`/install`** — seção ponte “via CLI” com link para `#/cli`.
+- **README de produção** — hero, badges, monorepo, tabela ds vs CLI, scripts, estrutura de pastas atualizada (TS, 36+18 registry, PWA).
+- **`CONTRIBUTING.md`** — setup, onde colocar cada tipo de mudança, estilo, commits, PR checklist.
+- **`SECURITY.md`** — escopo, disclosure coordenado, link para GitHub Security Advisories, alinhado a `public/.well-known/security.txt`.
+- **`CODE_OF_CONDUCT.md`** — Contributor Covenant **2.1** (inglês canônico).
+- **`.github/`** — `ISSUE_TEMPLATE/` (`bug_report.yml`, `feature_request.yml`, `config.yml` com link de segurança), `PULL_REQUEST_TEMPLATE.md`, `CODEOWNERS` (somente comentários até haver time), `FUNDING.yml` stub.
+- **`docs/PUBLISHING.md`** — checklist pré-publish, comandos `npm publish`, OTP/registry, o que não está automatizado.
+
+### Changed
+
+- **Roadmap** — Fase **14** marcada como `done`; `meta.version` **0.13**; sequência editorial atualizada.
+- **Versão do app** — `package.json` root **0.13.0**; kickers da página Roadmap em i18n; `ATELIER_VERSION` em `sandbox.ts` alinhado a **0.13**.
+- **Badge NEW** — passa a ser **por utilizador** (`localStorage` + evento): some após a primeira visita à rota; Navbar fecha dropdown ao navegar.
+
+### Roadmap
+
+- Fase **14** entregue. Próxima onda editorial na sequência: **Fase 15 — Componentes long-tail** (já listada no `roadmap.ts`).
+
+---
+
+## [0.12] — Abril 2026
+
+### Added — Editorial / About (Fase 12)
+
+- **Grupo `about` em routes** — 5 entradas novas (73-77): `/about`, `/colophon`, `/credits`, `/license`, `/press-kit`. Layout editorial dedicado, fora do fluxo de docs de componentes.
+- **Página `/about`** — manifesto longo, história curta (do primeiro commit ao estado atual) e não-objetivos declarados. Prosa em larga measure honra o tom de voz de `/voice`.
+- **Página `/colophon`** — stack (React + Vite + TS, zero deps runtime), escolhas tipográficas (Fraunces + JetBrains Mono), princípio editorial da paleta e métricas vivas.
+- **Página `/credits`** — inspirações declaradas (Vercel, Stripe, Linear, Nielsen Norman, Ruder, Müller-Brockmann), libs estudadas sem dependência (radix, ariakit, shadcn) e citações editoriais.
+- **Página `/license`** — MIT clássico envolvido em anotações editoriais sobre uso, atribuição e a única exceção (logo Atelier).
+- **Página `/press-kit`** — logo SVG em variantes light/dark exibidas lado a lado em stages com paleta hardcoded (independente do tema atual). Botões de download por variante + cópia. Paleta hex clicável + 3 boilerplates de descrição (1-line, 1-paragraph, 1-page).
+- **`buildLogoSvg()` — wordmark fiel ao SidebarBrand** — função que monta SVG standalone com Atelier em Fraunces 48pt 300 + `.` italic colado via `<tspan dx="-2">`. ViewBox `160×50` dimensionado ao glifo real, `text-anchor="middle"` pra centralização robusta independente do fallback de fonte.
+- **CSS `.about-*`** — tipografia em prosa, citações destacadas, métricas em grid 2x2, palette swatches clicáveis e `about-logo-pair` com stages light/dark hardcoded.
+- **i18n PT+EN completo** — 5 blocos `pages.*` bilíngues + `nav.groups.about` + 5 `nav.items` + 5 descriptions.
+
+### Roadmap
+
+- Fase **12** entregue → marcada como `done` no `src/lib/roadmap.ts`. Sequência atualizada: próxima é a **Fase 14 — Distribuição & web standards**.
+
+---
+
 ## [0.5] — Abril 2026
 
 ### Added — Theme tooling & DX

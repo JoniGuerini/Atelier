@@ -101,11 +101,11 @@ export default function Footer({ onNavigate }: FooterProps) {
       <div className="site-footer-inner">
         <div className="site-footer-brand">
           <a
-            href="#/overview"
+            href="#/"
             className="wordmark"
             onClick={(e) => {
               e.preventDefault();
-              onNavigate?.("overview");
+              onNavigate?.("home");
             }}
           >
             {t("nav.brand.title")}

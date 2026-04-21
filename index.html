@@ -1,13 +1,57 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" dir="ltr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Atelier — Design System</title>
+
+    <!-- Defaults SEO/social — sobrescritos por src/lib/usePageMeta.ts
+         em runtime conforme a rota. Estes valores servem de fallback
+         para crawlers que rodam sem JS (raros, mas existem) e como
+         valor inicial enquanto o React monta. -->
+    <title>Atelier — Design system editorial em React + Vite</title>
     <meta
       name="description"
-      content="Atelier — um design system editorial, silencioso e refinado. React + Vite."
+      content="Atelier — design system editorial silencioso e refinado. React + Vite, zero dependências de runtime, tipografia Fraunces, foco em acessibilidade e i18n."
     />
+
+    <!-- Theme color — light + dark via media query. Sincronizado com
+         os valores de bg em src/index.css (paleta neutral). -->
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f4f1ea" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#121110" />
+
+    <!-- Open Graph (defaults) — usePageMeta sobrescreve por rota -->
+    <meta property="og:site_name" content="Atelier" />
+    <meta property="og:title" content="Atelier — Design system editorial em React + Vite" />
+    <meta property="og:description" content="Design system editorial silencioso e refinado. React + Vite, zero dependências de runtime." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/og-image.svg" />
+    <meta property="og:image:type" content="image/svg+xml" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="pt_BR" />
+
+    <!-- Twitter cards (defaults) -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Atelier — Design system editorial em React + Vite" />
+    <meta name="twitter:description" content="Design system editorial silencioso e refinado. Zero dependências de runtime." />
+    <meta name="twitter:image" content="/og-image.svg" />
+
+    <!-- Favicon — SVG unico com <style> interno respondendo a
+         prefers-color-scheme do SO. Funciona em Chrome 79+, Firefox 80+,
+         Safari 14+ (todos os browsers modernos). UMA tag de link evita
+         o bug Chrome/Safari macOS que ignora media queries em multiplos
+         links de icon. Cache-bust via query string. -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=at5" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.svg?v=at5" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="mask-icon" href="/favicon.svg?v=at5" color="#c8361d" />
+
+    <!-- Apple PWA -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Atelier" />
+
+    <!-- Fontes — preconnect + load otimizado -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

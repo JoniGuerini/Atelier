@@ -1,0 +1,10 @@
+node_modules/
+*.tgz
+
+# Sincronizado em build time pelo sync-sources.mjs — fonte unica de verdade
+# vive em ../../src/. Evita drift entre app e CLI.
+components/
+hooks/
+lib/
+styles/
+registry.json

@@ -1,0 +1,19 @@
+# Atelier — Design System editorial
+# https://atelier.dev (placeholder até deploy real)
+#
+# Filosofia: docs públicas, indexação aberta. Não temos área
+# autenticada, dashboard, ou conteúdo gated. Tudo é doc.
+
+User-agent: *
+Allow: /
+Disallow:
+
+# Bots agressivos sem User-Agent identificável (spam scrapers)
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10
+
+# Sitemap — gerado no build pelo plugin sitemap em vite.config.js
+Sitemap: /sitemap.xml

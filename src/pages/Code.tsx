@@ -1032,7 +1032,7 @@ const { openHelp } = useShortcutsContext();
 <Breadcrumbs items={["A", "B", "C"]} separator="·" />
 
 <BreadcrumbsRoot>
-  <Breadcrumb href="#/overview">Atelier</Breadcrumb>
+  <Breadcrumb href="#/home">Atelier</Breadcrumb>
   <BreadcrumbSeparator />
   <BreadcrumbCurrent>Tabs</BreadcrumbCurrent>
 </BreadcrumbsRoot>`,

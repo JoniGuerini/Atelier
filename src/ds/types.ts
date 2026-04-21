@@ -744,3 +744,14 @@ export interface DataTableColumn<T = any> {
   className?: string;
   meta?: boolean;
 }
+
+/* ----------------- App shell (phase 15.4) ----------------- */
+export type FileUploadQueueStatus = "queued" | "uploading" | "error" | "done";
+export interface FileUploadQueueItem {
+  id: string;
+  name: string;
+  sizeLabel: string;
+  /** 0–100 */
+  progress: number;
+  status: FileUploadQueueStatus;
+}

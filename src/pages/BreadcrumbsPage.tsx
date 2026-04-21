@@ -102,7 +102,7 @@ export default function BreadcrumbsPage() {
           tech="composable"
           stack
           code={`<BreadcrumbsRoot>
-  <Breadcrumb href="#/overview">Atelier</Breadcrumb>
+  <Breadcrumb href="#/home">Atelier</Breadcrumb>
   <BreadcrumbSeparator />
   <Breadcrumb href="#/cards">Components</Breadcrumb>
   <BreadcrumbSeparator />
@@ -110,7 +110,7 @@ export default function BreadcrumbsPage() {
 </BreadcrumbsRoot>`}
         >
           <BreadcrumbsRoot>
-            <Breadcrumb href="#/overview">Atelier</Breadcrumb>
+            <Breadcrumb href="#/home">Atelier</Breadcrumb>
             <BreadcrumbSeparator />
             <Breadcrumb href="#/cards">Components</Breadcrumb>
             <BreadcrumbSeparator />

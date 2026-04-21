@@ -24,7 +24,7 @@ interface BreadcrumbSeparatorProps {
    Forma composable (controle total):
 
      <BreadcrumbsRoot>
-       <Breadcrumb href="#/overview">Atelier</Breadcrumb>
+       <Breadcrumb href="#/home">Atelier</Breadcrumb>
        <BreadcrumbSeparator />
        <Breadcrumb href="#/cards">Components</Breadcrumb>
        <BreadcrumbSeparator />

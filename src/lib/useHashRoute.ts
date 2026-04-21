@@ -4,7 +4,7 @@ export type Navigate = (to: string) => void;
 
 function readHash(): string {
   const h = window.location.hash.replace(/^#\/?/, "");
-  return h || "overview";
+  return h || "home";
 }
 
 export function useHashRoute(): [string, Navigate] {

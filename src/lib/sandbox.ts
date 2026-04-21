@@ -16,7 +16,7 @@
        suficiente pra qualquer Example editorial.
    ================================================================ */
 
-const ATELIER_VERSION = "0.9.0"; /* alinha com roadmap.meta.version */
+const ATELIER_VERSION = "0.17"; /* alinha com roadmap.meta.version */
 
 interface ProjectFiles {
   [path: string]: string;
