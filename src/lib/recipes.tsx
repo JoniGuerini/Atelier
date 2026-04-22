@@ -335,9 +335,9 @@ function OnboardingPreview() {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 24, maxWidth: 560 }}>
       <Stepper current={step} orientation="horizontal">
-        <Step n={1} label="Conta" description="Seus dados" />
-        <Step n={2} label="Workspace" description="Onde criar" />
-        <Step n={3} label="Convidar" description="Time inicial" />
+        <Step n="1" label="Conta" description="Seus dados" />
+        <Step n="2" label="Workspace" description="Onde criar" />
+        <Step n="3" label="Convidar" description="Time inicial" />
       </Stepper>
       <Alert variant="info">
         <AlertContent>
@@ -643,9 +643,9 @@ export default function App() {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
       <Stepper current={step} orientation="horizontal">
-        <Step n={1} label="Conta" description="Seus dados" />
-        <Step n={2} label="Workspace" description="Onde criar" />
-        <Step n={3} label="Convidar" description="Time inicial" />
+        <Step n="1" label="Conta" description="Seus dados" />
+        <Step n="2" label="Workspace" description="Onde criar" />
+        <Step n="3" label="Convidar" description="Time inicial" />
       </Stepper>
       <Alert variant="info">
         <AlertContent>

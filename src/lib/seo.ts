@@ -114,17 +114,25 @@ function readDict(dict: Record<string, any>, path: string): string | undefined {
 
 /** Mapeia LocaleId pro formato OG (substitui "-" por "_"). */
 function toOgLocale(locale: LocaleId): string {
-  if (locale === "pt-BR") return "pt_BR";
-  if (locale === "en") return "en_US";
-  return locale.replace("-", "_");
+  switch (locale) {
+    case "pt-BR":
+      return "pt_BR";
+    case "en":
+      return "en_US";
+    default: {
+      const _exhaust: never = locale;
+      return _exhaust;
+    }
+  }
 }
 
-/** Resolve direção a partir do locale (RTL pra ar/he/fa/ur). */
+/** Prefixos de idioma que exigem RTL quando forem adicionados a LOCALE_LIST. */
+const RTL_LANG_PREFIX = new Set(["ar", "he", "fa", "ur"]);
+
+/** Resolve direção a partir do locale (RTL quando o prefixo é RTL). */
 function resolveDir(locale: LocaleId): "ltr" | "rtl" {
-  if (locale === "ar" || locale === "he" || locale === "fa" || locale === "ur") {
-    return "rtl";
-  }
-  return "ltr";
+  const primary = locale.split("-")[0] ?? locale;
+  return RTL_LANG_PREFIX.has(primary) ? "rtl" : "ltr";
 }
 
 /** Monta URL absoluta se SITE_URL existir, relativa caso contrário. */

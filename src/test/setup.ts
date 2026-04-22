@@ -33,7 +33,7 @@ if (typeof window !== "undefined" && !("IntersectionObserver" in window)) {
     observe() {}
     unobserve() {}
     disconnect() {}
-    takeRecords() {
+    takeRecords(): IntersectionObserverEntry[] {
       return [];
     }
   }

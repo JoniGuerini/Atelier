@@ -386,7 +386,7 @@ export interface ExampleProps {
   sandboxTitle?: string;
 }
 export interface CodeProps {
-  lang?: "jsx" | "css" | "shell" | "html" | "ts" | "tsx";
+  lang?: "jsx" | "css" | "shell" | "bash" | "html" | "ts" | "tsx";
   copy?: boolean;
   children?: string;
 }

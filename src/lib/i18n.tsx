@@ -1,5 +1,7 @@
 import {
+  cloneElement,
   createContext,
+  isValidElement,
   useCallback,
   useContext,
   useEffect,
@@ -27,7 +29,8 @@ const RTL_LOCALES = new Set<string>(["ar", "he", "fa", "ur"]);
 
 export type Direction = "ltr" | "rtl";
 
-export type TranslationVars = Record<string, string | number>;
+/** Variáveis em `tr()` — strings/números ou nós React em `{nome}` (ex.: contador em negrito). */
+export type TranslationVars = Record<string, string | number | ReactNode>;
 
 export interface LocaleContextValue {
   locale: Locale;
@@ -170,11 +173,39 @@ function resolveKey(obj: any, key: string): any {
   return cur;
 }
 
+/** Só para `t()` — substitui placeholders por texto; ignora valores não primitivos. */
 function interpolate(str: string, vars?: TranslationVars): string {
   if (!vars) return str;
-  return str.replace(/\{(\w+)\}/g, (_, name) =>
-    name in vars ? String(vars[name]) : `{${name}}`
-  );
+  return str.replace(/\{(\w+)\}/g, (_, name) => {
+    if (!(name in vars)) return `{${name}}`;
+    const v = vars[name];
+    if (typeof v === "string" || typeof v === "number") return String(v);
+    return `{${name}}`;
+  });
+}
+
+/** Substitui `{var}` no fragmento; devolve string simples ou lista de nós. */
+function injectVars(chunk: string, vars?: TranslationVars): ReactNode {
+  if (!vars || !chunk.includes("{")) return chunk;
+  const bits: ReactNode[] = [];
+  const re = /\{(\w+)\}/g;
+  let last = 0;
+  let m: RegExpExecArray | null;
+  let ki = 0;
+  while ((m = re.exec(chunk)) !== null) {
+    if (m.index > last) bits.push(chunk.slice(last, m.index));
+    const name = m[1];
+    const val = vars[name];
+    if (val === undefined) bits.push(m[0]);
+    else if (typeof val === "string" || typeof val === "number") bits.push(String(val));
+    else if (isValidElement(val)) bits.push(cloneElement(val, { key: `trv-${ki++}` }));
+    else bits.push(String(val));
+    last = m.index + m[0].length;
+  }
+  if (last < chunk.length) bits.push(chunk.slice(last));
+  if (bits.length === 0) return chunk;
+  if (bits.length === 1) return bits[0];
+  return bits;
 }
 
 /* ---------- markup parser ----------
@@ -188,27 +219,28 @@ const MARKUP_RE = /\[(acc|em)\]([\s\S]*?)\[\/\1\]/g;
 
 function parseMarkup(raw: any, vars?: TranslationVars): ReactNode {
   if (typeof raw !== "string") return raw;
-  const str = interpolate(raw, vars);
   const out: ReactNode[] = [];
   let lastIndex = 0;
   let match: RegExpExecArray | null;
   let k = 0;
 
-  while ((match = MARKUP_RE.exec(str)) !== null) {
+  while ((match = MARKUP_RE.exec(raw)) !== null) {
     if (match.index > lastIndex) {
-      out.push(str.slice(lastIndex, match.index));
+      out.push(injectVars(raw.slice(lastIndex, match.index), vars));
     }
     const [full, tag, inner] = match;
     const cls = tag === "acc" ? "t-acc" : "t-em";
     out.push(
       <em key={`${tag}-${k++}`} className={cls}>
-        {inner}
+        {injectVars(inner, vars)}
       </em>
     );
     lastIndex = match.index + full.length;
   }
 
-  if (lastIndex < str.length) out.push(str.slice(lastIndex));
+  if (lastIndex < raw.length) {
+    out.push(injectVars(raw.slice(lastIndex), vars));
+  }
   MARKUP_RE.lastIndex = 0; // reset global regex
   return out.length === 1 ? out[0] : out;
 }

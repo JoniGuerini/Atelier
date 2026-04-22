@@ -21,13 +21,16 @@
     "smoke:ds": "npm run smoke --workspace=@atelier/ds",
     "build:cli": "npm run build --workspace=@atelier/cli",
     "pack:cli": "npm run pack --workspace=@atelier/cli",
-    "smoke:cli": "npm run smoke --workspace=@atelier/cli"
+    "smoke:cli": "npm run smoke --workspace=@atelier/cli",
+    "e2e": "playwright test",
+    "e2e:ui": "playwright test --ui"
   },
   "dependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.59.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",

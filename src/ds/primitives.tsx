@@ -30,6 +30,7 @@ import type {
   NavMode,
   Theme,
 } from "./types.ts";
+import { SpriteIcon } from "./SpriteIcon.tsx";
 
 interface SidebarToggleProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   collapsed?: boolean;
@@ -112,22 +113,7 @@ export function SidebarToggle({
       title={title ?? label}
       {...rest}
     >
-      <svg
-        viewBox="0 0 16 16"
-        width="14"
-        height="14"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <path
-          d="M10 3.5 5.5 8 10 12.5"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.25"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
+      <SpriteIcon name="chevron-right" />
     </button>
   );
 }
@@ -139,21 +125,7 @@ export function SidebarToggle({
      <NavModeToggle mode="navbar" onChange={setMode} />
 */
 function NavModeGlyph({ id }: { id: NavMode }) {
-  if (id === "sidebar") {
-    return (
-      <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false">
-        <rect x="1.5" y="2" width="4" height="12" fill="none" stroke="currentColor" strokeWidth="1.25" />
-        <rect x="6.5" y="2" width="8" height="12" fill="none" stroke="currentColor" strokeWidth="1.25" />
-      </svg>
-    );
-  }
-  // navbar — barra horizontal no topo
-  return (
-    <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false">
-      <rect x="1.5" y="2" width="13" height="3" fill="none" stroke="currentColor" strokeWidth="1.25" />
-      <rect x="1.5" y="6" width="13" height="8" fill="none" stroke="currentColor" strokeWidth="1.25" />
-    </svg>
-  );
+  return <SpriteIcon name={id === "sidebar" ? "nav-sidebar" : "nav-navbar"} />;
 }
 
 export function NavModeToggle({ mode = "navbar", onChange, className = "" }: NavModeToggleProps) {
@@ -259,22 +231,7 @@ export function BackToTop({
       aria-hidden={visible ? "false" : "true"}
       {...rest}
     >
-      <svg
-        viewBox="0 0 16 16"
-        width="14"
-        height="14"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <path
-          d="M8 11.5V4.5 M4.5 8 8 4.5 11.5 8"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.25"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
+      <SpriteIcon name="chevron-up" />
     </button>
   );
 }
@@ -290,52 +247,7 @@ export function BackToTop({
        - compact:   um único botão que alterna light/dark
 */
 function ThemeGlyph({ id, className = "" }: { id: Theme; className?: string }) {
-  if (id === "dark") {
-    return (
-      <svg
-        viewBox="0 0 16 16"
-        width="14"
-        height="14"
-        className={className}
-        aria-hidden="true"
-        focusable="false"
-      >
-        <path
-          d="M12.5 9.5A5 5 0 1 1 6.5 3.5a4 4 0 0 0 6 6z"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.25"
-          strokeLinejoin="round"
-        />
-      </svg>
-    );
-  }
-  // "light" — sol estilizado (padrão e fallback)
-  return (
-    <svg
-      viewBox="0 0 16 16"
-      width="14"
-      height="14"
-      className={className}
-      aria-hidden="true"
-      focusable="false"
-    >
-      <circle
-        cx="8"
-        cy="8"
-        r="3"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.25"
-      />
-      <path
-        d="M8 1.5V3 M8 13v1.5 M1.5 8H3 M13 8h1.5 M3.2 3.2l1.1 1.1 M11.7 11.7l1.1 1.1 M3.2 12.8l1.1-1.1 M11.7 4.3l1.1-1.1"
-        stroke="currentColor"
-        strokeWidth="1.25"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
+  return <SpriteIcon name={id === "dark" ? "theme-dark" : "theme-light"} className={className} />;
 }
 
 export function ThemeToggle({ variant = "segmented", className = "" }: ThemeToggleProps) {
@@ -723,7 +635,7 @@ export function Code({ children, lang = "jsx", copy = true }: CodeProps) {
   const raw = typeof children === "string" ? children : String(children);
   let html: string;
   if (lang === "css") html = highlightCss(raw);
-  else if (lang === "shell") html = highlightShell(raw);
+  else if (lang === "shell" || lang === "bash") html = highlightShell(raw);
   else html = highlightJsx(raw);
 
   return (

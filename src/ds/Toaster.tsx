@@ -3,10 +3,12 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useLayoutEffect,
   useRef,
   useState,
   type ReactNode,
 } from "react";
+import { createRoot, type Root } from "react-dom/client";
 
 /* ================================================================
    Toaster — sistema de notificações com queue, auto-dismiss e
@@ -15,8 +17,12 @@ import {
    Diferente do <Toast> existente (componente puro, controlado pelo
    consumidor), o Toaster é um SISTEMA:
 
-     1. Monte <Toaster /> uma vez no root da app (ex: dentro de App).
-     2. Em qualquer lugar use o hook useToast() pra disparar.
+   1. Monte <Toaster /> uma vez no root da app (ex: dentro de App).
+   2. Em qualquer lugar use o hook useToast() pra disparar.
+
+   Fase 8.3 — a stack visual não existe no bootstrap: só após o
+   primeiro toast() é criado um host em document.body com
+   createRoot (React 18). Fila vazia → portal desmontado de novo.
 
    API mínima:
      const { toast } = useToast();
@@ -153,6 +159,7 @@ export function Toaster({
 }: ToasterProps) {
   const [toasts, setToasts] = useState<ToastEntry[]>([]);
   const timersRef = useRef<Map<number, number>>(new Map());
+  const portalRef = useRef<{ root: Root; el: HTMLDivElement } | null>(null);
 
   const dismiss = useCallback((id: number) => {
     setToasts((curr) => curr.filter((t) => t.id !== id));
@@ -214,52 +221,101 @@ export function Toaster({
     setToasts([]);
   }, []);
 
-  // Cleanup geral ao desmontar
-  useEffect(() => {
-    return () => {
-      timersRef.current.forEach((t) => window.clearTimeout(t));
-      timersRef.current.clear();
-    };
+  const destroyPortal = useCallback(() => {
+    const p = portalRef.current;
+    if (!p) return;
+    try {
+      p.root.unmount();
+    } catch {
+      /* ignore double-unmount (Strict Mode) */
+    }
+    p.el.remove();
+    portalRef.current = null;
   }, []);
 
   // Pause-on-hover: cancelar timer; on leave: re-agendar com a duration original
-  const pauseTimer = (id: number) => {
+  const pauseTimer = useCallback((id: number) => {
     const t = timersRef.current.get(id);
     if (t) {
       window.clearTimeout(t);
       timersRef.current.delete(id);
     }
-  };
-  const resumeTimer = (entry: ToastEntry) => {
-    if (timersRef.current.has(entry.id)) return;
-    scheduleDismiss(entry.id, entry.duration);
-  };
+  }, []);
 
-  // top-* mostra mais novo no topo (ordem natural)
-  // bottom-* mostra mais novo embaixo (também natural — array final)
-  const visibleToasts = toasts;
+  const resumeTimer = useCallback(
+    (entry: ToastEntry) => {
+      if (timersRef.current.has(entry.id)) return;
+      scheduleDismiss(entry.id, entry.duration);
+    },
+    [scheduleDismiss],
+  );
+
+  /* Stack num segundo root — só existe quando há toasts (fase 8.3). */
+  useLayoutEffect(() => {
+    if (toasts.length === 0) {
+      destroyPortal();
+      return;
+    }
+    let p = portalRef.current;
+    if (!p) {
+      const el = document.createElement("div");
+      el.id = "ds-toaster-portal";
+      document.body.appendChild(el);
+      p = { root: createRoot(el), el };
+      portalRef.current = p;
+    }
+    p.root.render(
+      <ToasterStack
+        toasts={toasts}
+        position={position}
+        onDismiss={dismiss}
+        onPause={pauseTimer}
+        onResume={resumeTimer}
+      />,
+    );
+  }, [toasts, position, dismiss, pauseTimer, resumeTimer, destroyPortal]);
+
+  useEffect(
+    () => () => {
+      timersRef.current.forEach((t) => window.clearTimeout(t));
+      timersRef.current.clear();
+      destroyPortal();
+    },
+    [destroyPortal],
+  );
 
   return (
-    <ToasterContext.Provider value={{ toast, dismiss, clear }}>
-      {children}
-      <div
-        className={`ds-toaster position-${position}`}
-        role="region"
-        aria-label="Notifications"
-        aria-live="polite"
-      >
-        {visibleToasts.map((t) => (
-          <ToastItem
-            key={t.id}
-            entry={t}
-            position={position}
-            onDismiss={() => dismiss(t.id)}
-            onPause={() => pauseTimer(t.id)}
-            onResume={() => resumeTimer(t)}
-          />
-        ))}
-      </div>
-    </ToasterContext.Provider>
+    <ToasterContext.Provider value={{ toast, dismiss, clear }}>{children}</ToasterContext.Provider>
+  );
+}
+
+interface ToasterStackProps {
+  toasts: ToastEntry[];
+  position: ToasterPosition;
+  onDismiss: (id: number) => void;
+  onPause: (id: number) => void;
+  onResume: (entry: ToastEntry) => void;
+}
+
+function ToasterStack({ toasts, position, onDismiss, onPause, onResume }: ToasterStackProps) {
+  return (
+    <div
+      className={`ds-toaster position-${position}`}
+      role="region"
+      aria-label="Notifications"
+      aria-live="polite"
+    >
+      {toasts.map((t) => (
+        <ToastItem
+          key={t.id}
+          entry={t}
+          position={position}
+          onDismiss={() => onDismiss(t.id)}
+          onPause={() => onPause(t.id)}
+          onResume={() => onResume(t)}
+        />
+      ))}
+    </div>
   );
 }
 

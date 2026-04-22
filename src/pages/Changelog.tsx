@@ -4,7 +4,6 @@ import { useT } from "../lib/i18n.tsx";
 /* Vite ?raw — importa o arquivo como string em build-time, evitando
    fetch em runtime (zero round-trip, funciona em SSR e em qualquer
    hosting estático). */
-// @ts-expect-error — ?raw é resolvido pelo Vite, não tem tipo estático
 import changelogMd from "../../CHANGELOG.md?raw";
 
 /* ================================================================

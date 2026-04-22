@@ -326,7 +326,7 @@ export type ScrollRevealDirection = "up" | "down" | "left" | "right" | "none";
 
 export interface ScrollRevealProps {
   /** Tag a renderizar. Default: div. */
-  as?: keyof JSX.IntrinsicElements;
+  as?: keyof import("react").JSX.IntrinsicElements;
   /** Direção de entrada. Default: "up". */
   direction?: ScrollRevealDirection;
   /** Delay em ms antes da animação iniciar. */
