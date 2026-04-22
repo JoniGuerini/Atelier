@@ -1,8 +1,30 @@
 /// <reference types="vitest" />
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { sitemapPlugin } from "./scripts/vite-plugin-sitemap.mjs";
 import { serviceWorkerPlugin } from "./scripts/vite-plugin-sw.mjs";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+/** SpriteIcon usa <use href="#atelier-*">; o SVG tem de estar no mesmo documento
+ *  (referências a /icons.svg#id falham em Safari/WebKit e deixam o ícone vazio). */
+function inlinePublicSvgSprite() {
+  return {
+    name: "atelier-inline-svg-sprite",
+    transformIndexHtml(html) {
+      const file = path.join(__dirname, "public", "icons.svg");
+      let sprite = fs.readFileSync(file, "utf8").trim();
+      sprite = sprite.replace(
+        "<svg ",
+        '<svg style="position:absolute;width:0;height:0;overflow:hidden" '
+      );
+      return html.replace("<body>", `<body>\n    ${sprite}\n`);
+    },
+  };
+}
 
 /* ================================================================
    Atelier — vite + vitest config
@@ -20,6 +42,7 @@ import { serviceWorkerPlugin } from "./scripts/vite-plugin-sw.mjs";
 
 export default defineConfig({
   plugins: [
+    inlinePublicSvgSprite(),
     react(),
     /* sitemap.xml gerado no build a partir de src/lib/routes.ts.
        Roadmap · fase 14.2 — define VITE_SITE_URL no .env.production
@@ -42,6 +65,8 @@ export default defineConfig({
     globals: true,
     environment: "jsdom",
     setupFiles: ["./src/test/setup.ts"],
+    /* Playwright vive em e2e/ — não misturar com vitest. */
+    include: ["src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
     css: false,
     /* Excluir páginas/componentes de cobertura inicial — focamos em
        lib (hooks, contrast, tokens). */

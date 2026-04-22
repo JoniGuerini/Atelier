@@ -1,8 +1,9 @@
 /* ================================================================
-   SpriteIcon — referência a símbolos em /icons.svg (fase 8.4)
+   SpriteIcon — símbolos definidos em public/icons.svg (fase 8.4)
    ----------------------------------------------------------------
-   Caminhos duplicados saem do bundle JS; o ficheiro público pode
-   ser cacheado pelo browser. `currentColor` nos símbolos herda do
+   O Vite injeta esse ficheiro no <body> de index.html; cada ícone
+   usa <use href="#atelier-*"> no mesmo documento (referência externa
+   a /icons.svg#id falha em Safari/WebKit). `currentColor` herda do
    <svg> que envolve o <use>.
    ================================================================ */
 
@@ -23,11 +24,9 @@ export interface SpriteIconProps {
   className?: string;
 }
 
-const spriteUrl = `${import.meta.env.BASE_URL}icons.svg`;
-
 export function SpriteIcon({ name, size = 14, className = "" }: SpriteIconProps) {
   const id = `atelier-${name}`;
-  const href = `${spriteUrl}#${id}`;
+  const href = `#${id}`;
   return (
     <svg
       className={["ds-sprite-icon", className].filter(Boolean).join(" ")}

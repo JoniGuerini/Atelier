@@ -9,7 +9,24 @@
    de ambiente (useMediaQuery, usePrefersReducedMotion).
    ================================================================ */
 
+import fs from "node:fs";
+import path from "node:path";
 import "@testing-library/jest-dom/vitest";
+
+/* Mesmo sprite que index.html (vite) — <use href="#..."> precisa dos <symbol> no documento. */
+if (typeof document !== "undefined") {
+  try {
+    const spritePath = path.join(process.cwd(), "public", "icons.svg");
+    let sprite = fs.readFileSync(spritePath, "utf8").trim();
+    sprite = sprite.replace(
+      "<svg ",
+      '<svg style="position:absolute;width:0;height:0;overflow:hidden" '
+    );
+    document.body.insertAdjacentHTML("afterbegin", sprite);
+  } catch {
+    /* ignore — CI sem ficheiro ou path diferente */
+  }
+}
 
 /* Polyfill matchMedia (jsdom não implementa) */
 if (typeof window !== "undefined" && !window.matchMedia) {
